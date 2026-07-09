@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { accountsApi, transactionsApi } from '@/lib/api'
 import { formatIndianCurrency, formatDate } from '@/lib/utils'
@@ -14,8 +14,13 @@ export default function StatementsPage() {
   const { data: accounts } = useQuery({
     queryKey: ['accounts'],
     queryFn: () => accountsApi.list().then(r => r.data),
-    onSuccess: (d: any[]) => { if (d.length && !selectedAccount) setSelectedAccount(d[0].id) },
   })
+
+  useEffect(() => {
+    if (accounts && accounts.length && !selectedAccount) {
+      setSelectedAccount(accounts[0].id)
+    }
+  }, [accounts, selectedAccount])
 
   const getDateRange = () => {
     const to = new Date()

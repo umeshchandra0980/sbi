@@ -171,7 +171,7 @@ api.defaults.adapter = async (config) => {
   }
   
   if (originalAdapter) {
-    return originalAdapter(config);
+    return (originalAdapter as any)(config);
   }
   throw new Error('No adapter configured');
 };

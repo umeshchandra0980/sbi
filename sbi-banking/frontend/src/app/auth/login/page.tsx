@@ -343,7 +343,7 @@ export default function LoginPage() {
                       </button>
                       <button 
                         type="button" 
-                        onClick={() => { loginForm.reset(); setCaptchaText(generateCaptcha()); }} 
+                        onClick={() => { loginForm.reset(); refreshCaptcha(); }} 
                         className="login-btn-reset"
                       >
                         Reset

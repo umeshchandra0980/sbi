@@ -1,12 +1,12 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'next/navigation'
 import { accountsApi, transactionsApi } from '@/lib/api'
 import { formatIndianCurrency, formatDate } from '@/lib/utils'
 import { Search, Filter, Download, ChevronLeft, ChevronRight } from 'lucide-react'
 
-export default function TransactionsPage() {
+function TransactionsContent() {
   const searchParams = useSearchParams()
   const preselected = searchParams.get('account')
 
@@ -217,5 +217,13 @@ export default function TransactionsPage() {
         )}
       </div>
     </div>
+  )
+}
+
+export default function TransactionsPage() {
+  return (
+    <Suspense fallback={<div className="p-5 text-xs text-gray-500">Loading transactions...</div>}>
+      <TransactionsContent />
+    </Suspense>
   )
 }

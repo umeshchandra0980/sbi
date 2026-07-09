@@ -12,6 +12,8 @@ interface User {
   status: string
   phone?: string
   last_login?: string
+  is_verified?: boolean
+  created_at?: string
 }
 
 interface AuthState {
