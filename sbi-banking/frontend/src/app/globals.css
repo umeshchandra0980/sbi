@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --sbi-blue: #1a5276;
+  --sbi-blue-dark: #154360;
+  --sbi-blue-light: #2471a3;
+  --sbi-navy: #0d2137;
+  --sbi-purple: #6c3483;
+  --sbi-gold: #d4ac0d;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+}
+
+@layer components {
+  .sbi-btn-primary {
+    @apply bg-sbi-blue hover:bg-sbi-blue-dark text-white px-5 py-2 rounded text-sm font-medium transition-colors;
+  }
+  .sbi-btn-secondary {
+    @apply bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded text-sm font-medium transition-colors;
+  }
+  .sbi-input {
+    @apply w-full border border-gray-400 rounded px-2 py-1.5 text-sm bg-yellow-50 focus:outline-none focus:ring-2 focus:ring-sbi-blue-light focus:border-sbi-blue-light;
+  }
+  .sbi-card {
+    @apply bg-white border border-gray-200 rounded shadow-sm;
+  }
+  .sbi-table th {
+    @apply bg-sbi-blue text-white text-xs font-semibold px-3 py-2 text-left;
+  }
+  .sbi-table td {
+    @apply px-3 py-2 text-xs border-b border-gray-100;
+  }
+  .sbi-table tr:hover td {
+    @apply bg-blue-50;
+  }
+}

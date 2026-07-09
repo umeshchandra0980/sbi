@@ -1,0 +1,34 @@
+/* ===== SBI Clone — global base =====
+   Brand palette: purple #280071, yellow #ffd100, blue #12a8e0, pink #e6007e */
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --purple: #280071;
+  --yellow: #ffd100;
+  --blue: #12a8e0;
+  --pink: #e6007e;
+  --magenta: #c2185b;
+  --text: #333;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  color: var(--text);
+  background: #fff;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+
+.container {
+  width: 100%;
+  max-width: 1366px;
+  margin: 0 auto;
+  padding: 0 16px;
+}

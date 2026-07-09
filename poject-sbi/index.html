@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SBI - Personal Banking | State Bank of India</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ===== TOP UTILITY BAR ===== -->
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <nav class="topbar-left" aria-label="Utility navigation">
+        <a href="#main" class="skip-link">Skip to Main Content&nbsp;&nbsp;<span class="dash">|</span></a>
+        <a href="https://sbi.bank.in/web/about-us" target="_blank" rel="noopener">About Us</a><span class="dash">|</span>
+        <a href="https://sbi.bank.in/web/affiliates" target="_blank" rel="noopener">Subsidiaries</a><span class="dash">|</span>
+        <a href="https://sbi.bank.in/web/corporate-governance/corporate-governance" target="_blank" rel="noopener">Corporate Governance</a><span class="dash">|</span>
+        <a href="https://sbi.bank.in/web/investor-relations/investor-relations" target="_blank" rel="noopener">Investor Relations</a><span class="dash">|</span>
+        <a href="https://sbi.bank.in/web/sbi-in-the-news" target="_blank" rel="noopener">SBI In the News</a><span class="dash">|</span>
+        <a href="https://sbi.bank.in/web/get-business-product-information/grahak-setu" class="grahak" target="_blank" rel="noopener">Grahak Setu</a><span class="dash">|</span>
+        <a href="https://sbi.bank.in/web/personal-banking/feedback" target="_blank" rel="noopener">Feedback</a>
+        <button class="access-btn" aria-label="Accessibility options">
+          <svg width="20" height="20" viewBox="0 0 32 32" fill="#fff" aria-hidden="true">
+            <circle cx="16" cy="4" r="3.5"/>
+            <path d="M27 7c-1.2.3-6.8 1.9-10.8 1.9S6.6 7.4 5 7c-1.2-.3-2 .9-2 2s1 1.6 2 2l6 1.9c.6.2.8.5.8.7.3.7.1 2-.0 2.4l-2.4 12.9c-.1 1 .6 2 2 2 1.2 0 1.8-.8 2-2L15 21c.9 0 2.7 9.8 2.7 9.8.2 1.2.8 2 2 2 1.4 0 2.1-1 2-2L19.6 18c-.3-1.6-.1-2.2 0-2.3.1-.1.4-.4 1.1-.7l5.6-1.9c1-.4 2-.9 2-2S28.2 6.7 27 7z"/>
+          </svg>
+        </button>
+      </nav>
+      <nav class="topbar-right" aria-label="Secondary navigation">
+        <a href="https://sbi.bank.in/c/portal/update_language?p_l_id=79460&redirect=%2Fweb%2Fpersonal-banking%2Fhome&languageId=hi_IN" lang="hi" target="_blank" rel="noopener">हिंदी</a>
+        <a href="https://sbi.bank.in/web/customer-care/" target="_blank" rel="noopener">Customer Care</a>
+        <a href="https://sbi.bank.in/web/careers" target="_blank" rel="noopener">Careers</a>
+        <a href="https://www.onlinesbi.sbi" class="netbanking" target="_blank" rel="noopener">Net Banking</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- ===== BRAND + PRIMARY NAV ===== -->
+  <header class="brandbar">
+    <div class="container brandbar-inner">
+      <a href="https://sbi.bank.in/web/personal-banking/home" class="logo" aria-label="State Bank of India home" target="_blank" rel="noopener">
+        <img src="images/logo.png" alt="State Bank of India" class="logo-img" />
+      </a>
+
+      <nav class="primary-nav" aria-label="Primary navigation">
+        <a href="https://sbi.bank.in/web/personal-banking/home" class="active" target="_blank" rel="noopener">PERSONAL</a>
+        <a href="#">NRI</a>
+        <a href="#">BUSINESS</a>
+        <a href="#">AGRICULTURAL &amp; RURAL</a>
+        <a href="#">INTERNATIONAL BANKING</a>
+        <a href="#" class="brand-logo"><img src="images/wealth-logo.png" alt="SBI Wealth" /></a>
+        <a href="#" class="brand-logo"><img src="images/sbi-green-logo.png" alt="SBI Green" /></a>
+        <a href="#" class="brand-logo"><img src="images/chakra-logo.png" alt="SBI Chakra" /></a>
+        <a href="#" class="brand-logo"><img src="images/yono-logo.png" alt="YONO SBI" /></a>
+      </nav>
+
+      <form class="search" role="search" onsubmit="return false;">
+        <input type="text" placeholder="Search" aria-label="Search" />
+        <button type="submit" aria-label="Search">
+          <svg width="18" height="18" viewBox="0 0 512 512" fill="#280071" aria-hidden="true">
+            <path d="M503 468L370 334a206 206 0 1 0-36 36l134 134a26 26 0 0 0 35-36zM52 207a155 155 0 1 1 310 0 155 155 0 0 1-310 0z"/>
+          </svg>
+        </button>
+      </form>
+
+      <button class="hamburger" aria-label="Toggle menu" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== BLUE MEGA NAV =====
+       Links point to the live SBI site (open in a new tab).
+       Base host: https://sbi.bank.in -->
+  <nav class="bluebar" aria-label="Product categories" id="bluebar">
+    <div class="container bluebar-inner">
+
+      <!-- Accounts -->
+      <div class="bluebar-item">
+        <a href="#" class="bluebar-link"><img class="ic" src="images/icons/account.png" alt=""> Accounts</a>
+        <div class="mega">
+          <div class="mega-col">
+            <h3><a href="https://sbi.bank.in/web/personal-banking/accounts/saving-account" target="_blank" rel="noopener">Savings Accounts</a></h3>
+            <a href="https://sbi.bank.in/web/yono/insta-plus-savings-bank-account" target="_blank" rel="noopener">Savings Account through Video KYC</a>
+            <a href="https://sbi.bank.in/web/personal-banking/accounts/saving-account/basic-saving-bank-deposit-account-branch-channel" target="_blank" rel="noopener">Basic Savings Bank Deposit Account (Branch Channel)</a>
+            <a href="https://sbi.bank.in/web/personal-banking/accounts/saving-account/basic-savings-bank-deposit-account" target="_blank" rel="noopener">Basic Savings Bank Deposit Account</a>
+            <a href="https://sbi.bank.in/web/personal-banking/accounts/saving-account/basic-savings-bank-deposit-small-account" target="_blank" rel="noopener">Basic Savings Bank Deposit Small Account</a>
+            <a href="https://sbi.bank.in/web/personal-banking/accounts/saving-account/savings-bank-account" target="_blank" rel="noopener">Savings Bank Account</a>
+            <a href="https://sbi.bank.in/web/personal-banking/accounts/saving-account/savings-account-for-minors" target="_blank" rel="noopener">Savings Account for Minors</a>
+            <a href="https://sbi.bank.in/web/personal-banking/accounts/saving-account/savings-plus-account" target="_blank" rel="noopener">Savings Plus Account</a>
+            <a href="https://sbi.bank.in/web/personal-banking/accounts/saving-account/motor-accidents-claim-account-mact" target="_blank" rel="noopener">Motor Accidents Claim Account (MACT)</a>
+            <a href="https://sbi.bank.in/web/personal-banking/accounts/saving-account/resident-foreign-currency-domestic-account" target="_blank" rel="noopener">Resident Foreign Currency (Domestic) Account</a>
+            <a href="https://sbi.bank.in/web/personal-banking/accounts/saving-account/savings-bank-rulesabridged" target="_blank" rel="noopener">Savings Bank Rules (Abridged)</a>
+          </div>
+          <div class="mega-col">
+            <h3><a href="https://sbi.bank.in/web/salary-account/home" target="_blank" rel="noopener">Salary Accounts</a></h3>
+            <a href="https://sbi.bank.in/web/salary-account/corporate-salary-package" target="_blank" rel="noopener">Corporate / Institutions</a>
+            <a href="https://sbi.bank.in/web/salary-account/central-government-salary-package" target="_blank" rel="noopener">Central Government</a>
+            <a href="https://sbi.bank.in/web/salary-account/state-government-salary-package" target="_blank" rel="noopener">State Government</a>
+            <a href="https://sbi.bank.in/web/salary-account/railway-salary-package" target="_blank" rel="noopener">Indian Railways</a>
+            <a href="https://sbi.bank.in/web/salary-account/defence-salary-package" target="_blank" rel="noopener">Defence Forces</a>
+            <a href="https://sbi.bank.in/web/salary-account/para-military-salary-package" target="_blank" rel="noopener">Central Armed Police Forces</a>
+            <a href="https://sbi.bank.in/web/salary-account/police-salary-package" target="_blank" rel="noopener">Police Forces</a>
+            <a href="https://sbi.bank.in/web/salary-account/indian-coast-guard-salary-package" target="_blank" rel="noopener">Coast Guard</a>
+            <a href="https://sbi.bank.in/web/salary-account/sbi-rishtey" target="_blank" rel="noopener">SBI Rishtey</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Investments & Deposits -->
+      <div class="bluebar-item">
+        <a href="#" class="bluebar-link"><img class="ic" src="images/icons/investments_deposits.png" alt=""> Investments &amp; Deposits</a>
+        <div class="mega">
+          <div class="mega-col">
+            <h3><a href="https://sbi.bank.in/web/personal-banking/investments-deposits/deposits" target="_blank" rel="noopener">Deposits</a></h3>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/deposits/har-ghar-lakhpati" target="_blank" rel="noopener">Har Ghar Lakhpati</a>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/deposits/sbi-patrons" target="_blank" rel="noopener">SBI Patrons</a>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/deposits/sbi-green-rupee-term-deposit" target="_blank" rel="noopener">SBI Green Rupee Term Deposit (SGRTD)</a>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/deposits/fixed-deposit" target="_blank" rel="noopener">Fixed Deposit</a>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/deposits/recurring-deposit" target="_blank" rel="noopener">Recurring Deposit</a>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/deposits/annuity-deposit-scheme" target="_blank" rel="noopener">Annuity Deposit Scheme</a>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/deposits/mod" target="_blank" rel="noopener">Multi Option Deposit</a>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/deposits/sbi-tax-savings-scheme-2006" target="_blank" rel="noopener">SBI Tax Savings Scheme-2006</a>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/deposits/macad" target="_blank" rel="noopener">MACAD</a>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/deposits/reinvestment-plan" target="_blank" rel="noopener">Special Term Deposit</a>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/deposits/floating-rate-bulk-term-deposit" target="_blank" rel="noopener">Floating Rate Bulk Term Deposit (FRBTD)</a>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/deposits/non-callable-term-deposit-bulk-ncd-b" target="_blank" rel="noopener">Non Callable Term Deposit Bulk (NCD-B)</a>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/deposits/non-callable-term-deposit-retail-ncd-r" target="_blank" rel="noopener">Non Callable Term Deposit Retail (NCD-R)</a>
+          </div>
+          <div class="mega-col">
+            <h3><a href="https://sbi.bank.in/web/personal-banking/investments-deposits/govt-schemes" target="_blank" rel="noopener">Govt. Schemes</a></h3>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/govt-schemes/nps" target="_blank" rel="noopener">NPS</a>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/govt-schemes/ppf" target="_blank" rel="noopener">PPF</a>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/govt-schemes/capital-gains-account" target="_blank" rel="noopener">Capital Gains Account</a>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/govt-schemes/gold-banking" target="_blank" rel="noopener">Gold Banking</a>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/govt-schemes/senior-citizens-savings-scheme" target="_blank" rel="noopener">Senior Citizens Savings Scheme</a>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/govt-schemes/sukanya-samriddhi-yojana" target="_blank" rel="noopener">Sukanya Samriddhi Account Scheme 2019</a>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/govt-schemes/rbi-bonds" target="_blank" rel="noopener">RBI Bonds</a>
+          </div>
+          <div class="mega-col">
+            <h3><a href="https://sbi.bank.in/web/personal-banking/investments-deposits/stocks-securities" target="_blank" rel="noopener">Stocks &amp; Securities</a></h3>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/stocks-securities/asba" target="_blank" rel="noopener">ASBA</a>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/stocks-securities/demat-services" target="_blank" rel="noopener">Demat Services</a>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/stocks-securities/power-demat" target="_blank" rel="noopener">Power Demat</a>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/stocks-securities/equity-fund-scheme" target="_blank" rel="noopener">Equity Fund Scheme</a>
+            <a href="https://sbi.bank.in/web/personal-banking/investments-deposits/stocks-securities/3-in-1-account" target="_blank" rel="noopener">3 In 1 Account With E-Margin Facility</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loans -->
+      <div class="bluebar-item">
+        <a href="#" class="bluebar-link"><img class="ic" src="images/icons/loans.png" alt=""> Loans</a>
+        <div class="mega">
+          <div class="mega-col">
+            <h3><a href="https://sbi.bank.in/web/personal-banking/personal-finance" target="_blank" rel="noopener">Personal Finance</a></h3>
+            <a href="https://raas.sbi.bank.in/clap" target="_blank" rel="noopener">Loan Assistance</a>
+            <a href="https://homeloans.sbi.bank.in" target="_blank" rel="noopener">Home Loans</a>
+            <a href="https://sbi.bank.in/web/personal-banking/loans/personal-loans" target="_blank" rel="noopener">Personal Loans</a>
+            <a href="https://sbi.bank.in/web/personal-banking/pension-loans" target="_blank" rel="noopener">Pension Loans</a>
+            <a href="https://sbi.bank.in/web/personal-banking/loans/auto-loans" target="_blank" rel="noopener">Auto Loans</a>
+            <a href="https://sbi.bank.in/web/personal-banking/loans/education-loans" target="_blank" rel="noopener">Education Loan</a>
+            <a href="https://sbi.bank.in/web/personal-banking/loans/gold-loan" target="_blank" rel="noopener">Gold Loan</a>
+            <a href="https://sbi.bank.in/web/personal-banking/loans/loans-against-securities" target="_blank" rel="noopener">Loans against Securities</a>
+            <a href="https://sbi.bank.in/web/personal-banking/loans/loans-against-property" target="_blank" rel="noopener">Loans Against Property</a>
+            <a href="https://sbi.bank.in/web/personal-banking/loans/pm-surya-ghar-loan-for-solar-roof-top" target="_blank" rel="noopener">SBI Surya Ghar – Loan for Solar Roof Top</a>
+            <a href="https://sbi.bank.in/web/personal-banking/loans/calculators" target="_blank" rel="noopener">Calculators</a>
+            <a href="https://ots.sbi.bank.in:7443/OTS/cust/sbiots.do" target="_blank" rel="noopener">OTS / Compromise</a>
+            <a href="https://sbi.bank.in/web/personal-banking/irac-norms" target="_blank" rel="noopener">IRAC Norms</a>
+            <a href="https://www.sbiepay.sbi/secure/billpayment/checkout?m=0eb754aa77d0dea8efa1cbccd31c2a4f652e6b138a688d57d86837c685660446&u=0eb754aa77d0dea8efa1cbccd31c2a4f652e6b138a688d57d86837c685660446" target="_blank" rel="noopener">Loan Repayment via Digital Mode (ePay)</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cards -->
+      <div class="bluebar-item">
+        <a href="#" class="bluebar-link"><img class="ic" src="images/icons/cards.png" alt=""> Cards</a>
+        <div class="mega">
+          <div class="mega-col">
+            <h3><a href="https://sbi.bank.in/web/personal-banking/forex-cards" target="_blank" rel="noopener">Forex Card</a></h3>
+            <a href="https://sbi.bank.in/web/personal-banking/cards/debit-card" target="_blank" rel="noopener">Debit Card</a>
+            <a href="https://sbi.bank.in/web/personal-banking/cards/debit-card/business-debit-card" target="_blank" rel="noopener">Business Debit Card</a>
+            <a href="https://sbi.bank.in/web/personal-banking/cards/debit-card/prepaid-cards" target="_blank" rel="noopener">Prepaid Cards</a>
+            <a href="https://sbi.bank.in/web/personal-banking/cards/debit-card/green-remit-card" target="_blank" rel="noopener">Green Remit Card</a>
+            <a href="https://sbi.bank.in/web/personal-banking/cards/debit-card/debit-card-offers" target="_blank" rel="noopener">Debit Card Offers</a>
+            <a href="https://sbi.bank.in/web/personal-banking/sbi-nari-shakti-platinum-debit-card" target="_blank" rel="noopener">Nari Shakti Debit Card</a>
+            <a href="https://sbi.bank.in/web/personal-banking/sbi-pragati-platinum-debit-card" target="_blank" rel="noopener">Pragati Debit Card</a>
+            <a href="https://sbi.bank.in/web/personal-banking/sbi-one-touch" target="_blank" rel="noopener">SBI One Touch</a>
+            <a href="https://sbi.bank.in/web/personal-banking/cards/debit-card/insurance-covers-available" target="_blank" rel="noopener">Insurance Covers Available</a>
+            <a href="https://sbi.bank.in/documents/16012/78812/300922-FAQ+COFT+VER.pdf" target="_blank" rel="noopener">Card on File Tokenisation (COFT)</a>
+            <a href="https://retail.onlinesbi.sbi/retail/blockatmcardintermediate.htm" target="_blank" rel="noopener">To Block Debit Card</a>
+            <a href="https://sbi.bank.in/documents/16012/78812/190823-Debit+Card+Control.pdf" target="_blank" rel="noopener">Debit Card Control</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- SBI Rewardz -->
+      <div class="bluebar-item">
+        <a href="#" class="bluebar-link"><img class="ic" src="images/icons/cards.png" alt=""> SBI Rewardz</a>
+        <div class="mega mega-sm">
+          <div class="mega-col">
+            <h3><a href="https://rewardz.sbi/" target="_blank" rel="noopener">SBI Rewardz</a></h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- Digital -->
+      <div class="bluebar-item">
+        <a href="#" class="bluebar-link"><img class="ic" src="images/icons/digital.png" alt=""> Digital</a>
+        <div class="mega">
+          <div class="mega-col">
+            <h3><a href="https://sbi.bank.in/web/personal-banking/digital" target="_blank" rel="noopener">Digital</a></h3>
+            <a href="https://sbi.bank.in/web/personal-banking/digital/digital-lending" target="_blank" rel="noopener">Digital Lending</a>
+            <a href="https://sbi.bank.in/web/personal-banking/digital/internet-banking" target="_blank" rel="noopener">Internet Banking</a>
+            <a href="https://sbi.bank.in/web/personal-banking/digital/whatsapp-banking" target="_blank" rel="noopener">Whatsapp Banking</a>
+            <a href="https://sbi.bank.in/web/personal-banking/cyber-security" target="_blank" rel="noopener">Cyber Security</a>
+            <a href="https://sbi.bank.in/web/personal-banking/digital/bhim-sbi-pay" target="_blank" rel="noopener">Bhim SBI Pay</a>
+            <a href="https://mobilityretail.sbi.bank.in/" target="_blank" rel="noopener">Mobile Banking</a>
+            <a href="https://cdnweb.onlineyono.sbi.bank.in/accounts/re-kyc/kyc-entry?srcChn=BW" target="_blank" rel="noopener">Update KYC</a>
+            <a href="https://sbi.bank.in/web/personal-banking/yono" target="_blank" rel="noopener">Yono</a>
+            <a href="https://sbi.bank.in/web/personal-banking/digital/sbi-fastag" target="_blank" rel="noopener">SBI FASTag</a>
+            <a href="https://sbi.bank.in/web/personal-banking/digital/atm-services" target="_blank" rel="noopener">ATM Services</a>
+            <a href="https://sbi.bank.in/web/personal-banking/digital/cash-deposit-machines" target="_blank" rel="noopener">Cash Deposit Machines</a>
+            <a href="https://sbi.bank.in/web/personal-banking/digital/cbdc" target="_blank" rel="noopener">CBDC</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Information & Services -->
+      <div class="bluebar-item">
+        <a href="#" class="bluebar-link"><img class="ic" src="images/icons/information_services.png" alt=""> Information &amp; Services</a>
+        <div class="mega">
+          <div class="mega-col">
+            <h3>Misc Services</h3>
+            <a href="https://sbi.bank.in/documents/16012/0/11052026_form_no_97.pdf" target="_blank" rel="noopener">Form 60</a>
+            <a href="https://sbi.bank.in/documents/16012/22770835/30032026_Form+121.pdf" target="_blank" rel="noopener">Form 121</a>
+            <a href="https://sbi.bank.in/web/personal-banking/information-services/deceased-settlement" target="_blank" rel="noopener">Deceased Settlement</a>
+            <a href="https://bank.sbi/dsb" target="_blank" rel="noopener">Doorstep Banking Services</a>
+            <a href="https://sbi.bank.in/web/personal-banking/dicgc" target="_blank" rel="noopener">DICGC</a>
+            <a href="https://sbi.bank.in/web/personal-banking/misc/bharat-aadhaar-seeding-enabler" target="_blank" rel="noopener">Bharat Aadhaar Seeding Enabler</a>
+            <a href="https://sbi.bank.in/web/personal-banking/deposit-interest-certificate" target="_blank" rel="noopener">Deposit Interest Certificate</a>
+            <a href="https://sbi.bank.in/web/personal-banking/information-services/kyc-guidelines" target="_blank" rel="noopener">KYC Guidelines</a>
+            <a href="https://sbi.bank.in/web/personal-banking/information-services/positive-pay-system" target="_blank" rel="noopener">Positive Pay System</a>
+            <a href="https://sbi.bank.in/web/personal-banking/services" target="_blank" rel="noopener">Services</a>
+            <a href="https://sbi.bank.in/web/personal-banking/information-services/kyc-guidelines/safe-deposit-vaults" target="_blank" rel="noopener">Safe Deposit Lockers</a>
+            <a href="https://sbi.bank.in/web/personal-banking/information-services/kyc-guidelines/remittances" target="_blank" rel="noopener">Remittances</a>
+            <a href="https://sbi.bank.in/web/personal-banking/information-services/kyc-guidelines/sbi-incube" target="_blank" rel="noopener">SBI InCube</a>
+            <a href="https://sbi.bank.in/web/personal-banking/information-services/kyc-guidelines/cash-sbi" target="_blank" rel="noopener">Cash @ SBI</a>
+            <a href="https://sbi.bank.in/web/personal-banking/information-services/kyc-guidelines/revised-service-charges" target="_blank" rel="noopener">Revised Service Charges</a>
+            <a href="https://sbi.bank.in/web/personal-banking/information-services/kyc-guidelines/debit-card-related-charges" target="_blank" rel="noopener">Debit Card Related Charges</a>
+            <a href="https://sbi.bank.in/web/personal-banking/information-services/kyc-guidelines/broking-services" target="_blank" rel="noopener">Broking Services</a>
+            <a href="https://sbi.bank.in/web/personal-banking/information-services/kyc-guidelines/micr-codes" target="_blank" rel="noopener">MICR Codes</a>
+            <a href="https://sbi.bank.in/web/personal-banking/information-services/kyc-guidelines/e-rail" target="_blank" rel="noopener">E-Rail</a>
+            <a href="https://sbi.bank.in/web/personal-banking/information-services/kyc-guidelines/sbi-quick-missed-call-banking" target="_blank" rel="noopener">SBI Quick Missed Call Banking</a>
+            <a href="https://sbi.bank.in/web/personal-banking/information-services/kyc-guidelines/business-continuity-planning" target="_blank" rel="noopener">Business Continuity Planning</a>
+            <a href="https://sbi.bank.in/web/personal-banking/information-services/kyc-guidelines/inflation-indexed-national-savings-securities" target="_blank" rel="noopener">Inflation Indexed National Savings Securities</a>
+            <a href="https://sbi.bank.in/web/personal-banking/information-services/kyc-guidelines/foreign-inward-remittance" target="_blank" rel="noopener">Foreign Inward Remittance</a>
+            <a href="https://sbi.bank.in/web/personal-banking/kyc-guidelines/insurance-cover-for-deposits" target="_blank" rel="noopener">Insurance Cover For Deposits</a>
+            <a href="https://sbi.bank.in/web/personal-banking/fcra-amendment-2020" target="_blank" rel="noopener">FCRA Amendment 2020</a>
+            <a href="https://sbi.bank.in/web/personal-banking/nomination-facility" target="_blank" rel="noopener">Nomination Facility</a>
+            <a href="https://sbi.bank.in/web/personal-banking/donations" target="_blank" rel="noopener">Donations to Religious Entities</a>
+            <a href="https://sbi.bank.in/documents/16012/25448726/010723-account+aggregator+data+for+website+publication+english.pdf" target="_blank" rel="noopener">Account Aggregator</a>
+            <a href="https://udgam.rbi.org.in" target="_blank" rel="noopener">UDGAM</a>
+            <a href="https://sbi.bank.in/web/personal-banking/information-services/deaf-claim" target="_blank" rel="noopener">Unclaimed Deposit Accounts Claim</a>
+            <a href="https://sbi.bank.in/web/personal-banking/information-n-services/latest-tax-related-guidelines" target="_blank" rel="noopener">Latest Tax Related Guidelines</a>
+            <a href="https://sbi.bank.in/web/personal-banking/imformation_n_services/process-of-reactivation-of-inoperative-accounts" target="_blank" rel="noopener">Process of Reactivation of Inoperative Accounts</a>
+            <a href="https://sbi.bank.in/web/personal-banking/information-services/waiver-of-adwm-cash-deposit-charges" target="_blank" rel="noopener">Waiver of ADWM Cash Deposit Charges</a>
+            <a href="https://sbi.bank.in/documents/16012/22770835/Service-charges_in_english.pdf" target="_blank" rel="noopener">Revision of ADWM Cash Deposit Charges</a>
+            <a href="https://sbi.bank.in/documents/16012/396762/151024-Facilities+for+Senior+Citizens+updated+August+2024.pdf" target="_blank" rel="noopener">Facilities to Senior Citizens</a>
+          </div>
+          <div class="mega-col">
+            <h3><a href="https://sbi.bank.in/web/personal-banking/information-services/videos-and-information" target="_blank" rel="noopener">Videos &amp; Information</a></h3>
+            <a href="https://sbi.bank.in/web/personal-banking/information-services/videos-and-information" target="_blank" rel="noopener">CTS Continuous Clearing</a>
+            <a href="https://sbi.bank.in/documents/16012/22770835/BRANCH+ACCESSIBLE+TO+DIVYANGJAN.pdf" target="_blank" rel="noopener">Branches accessible to Divyangjan</a>
+            <a href="https://sbi.bank.in/documents/16012/22770835/TOUCH+POINTS+IDENTIFIED+AS+ACCESSIBLE+CENTRE+AS+ON+30.09.2025.pdf" target="_blank" rel="noopener">ATMs accessible to Divyangjan</a>
+          </div>
+          <div class="mega-col">
+            <h3><a href="https://sbi.bank.in/web/personal-banking/information-services/government-business" target="_blank" rel="noopener">Government Business</a></h3>
+            <a href="https://sbi.bank.in/web/personal-banking/information-services/government-business/direct-tax" target="_blank" rel="noopener">Direct Tax</a>
+            <a href="https://sbi.bank.in/web/personal-banking/information-services/government-business/indirect-taxes" target="_blank" rel="noopener">Indirect Taxes</a>
+            <a href="https://sbi.bank.in/web/personal-banking/information-services/government-business/passport-seva-kendra" target="_blank" rel="noopener">Passport Seva Kendra</a>
+            <a href="https://sbi.bank.in/web/personal-banking/information-services/government-business/pension" target="_blank" rel="noopener">Pension</a>
+            <a href="https://sbi.bank.in/web/personal-banking/information-services/government-business/state-gov-taxes" target="_blank" rel="noopener">State Gov Taxes</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Knowledge Hub -->
+      <div class="bluebar-item">
+        <a href="https://sbi.bank.in/web/personal-banking/home" class="bluebar-link" target="_blank" rel="noopener"><img class="ic" src="images/icons/information_services.png" alt=""> Knowledge Hub</a>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <main id="main">
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-content">
+          <a href="#" class="hero-logo" aria-label="SBI">
+            <img src="images/logo.png" alt="SBI" class="hero-logo-img" />
+            <span class="hero-logo-tag">The banker to every Indian</span>
+          </a>
+
+          <h1 class="hero-title">YOUR TRUSTED BANK'S EXCLUSIVE NEW NUMBERS</h1>
+
+          <div class="hero-number">1600 108 333</div>
+          <p class="hero-number-sub">For transactional or service calls</p>
+
+          <div class="hero-number">140 9768 333</div>
+          <p class="hero-number-sub">For promotional or marketing calls</p>
+
+          <div class="hero-pill">Only outgoing calls from our branches &amp; business units</div>
+          <div class="hero-pill">Our Contact Centre and Proactive Risk Management (PRM) Department are
+            using a different set of <strong>1600/140</strong>-series numbers to call customers</div>
+        </div>
+
+        <div class="hero-illustration" aria-hidden="true">
+          <div class="illus-circle"></div>
+          <div class="illus-people">👩‍💼👨‍💼👩‍💻</div>
+          <div class="illus-stars">★★★★★</div>
+        </div>
+
+        <!-- Right rail -->
+        <aside class="rail">
+          <div class="rail-rates">
+            <div class="rail-head">Interest Rates</div>
+            <div class="rail-select">Home Loan <span>▾</span></div>
+            <div class="rail-rate"><strong>7.25%*</strong> p.a.</div>
+            <div class="rail-rate-sub">onwards</div>
+            <div class="rail-wef">w.e.f. 01.04.2026</div>
+            <div class="rail-tc">*T&amp;C Apply.</div>
+            <div class="rail-btns">
+              <a href="#" class="btn-purple">SEE PRODUCTS</a>
+              <a href="#" class="btn-purple">APPLY NOW</a>
+            </div>
+          </div>
+          <div class="rail-links">
+            <div class="rail-links-head">Quick Links</div>
+            <a href="#">Doorstep Banking Services</a>
+            <a href="#">Tools &amp; Calculators</a>
+            <a href="#">FAQ's</a>
+            <a href="#">Interest Rates</a>
+            <a href="#">Unauthorized Digital Transaction Reporting</a>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Warning ticker -->
+      <div class="hero-warning">
+        <div class="container">
+          <p>• Bank never asks your OTP, Password or PIN number. Please do not fall prey to investment fraud in anticipation of high returns.</p>
+          <p>• Please do not fall prey to the threat of "Digital Arrest" in the name of Police, CBI or law enforcing agencies.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== INFO CARDS ===== -->
+    <section class="info-cards container">
+      <div class="info-card">
+        <div class="info-tag">TRENDING OFFERS @ SBI</div>
+        <div class="info-body">Explore the latest offers, cashbacks and seasonal deals curated for SBI customers.</div>
+      </div>
+      <div class="info-card">
+        <div class="info-tag">STRATEGIC TRAINING UNIT</div>
+        <div class="info-body">
+          <div class="stu-logo"><img src="images/logo.png" alt="SBI" /></div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-tag">ANNOUNCEMENTS</div>
+        <div class="info-body">
+          <p>✔ Empanelment of valuers — Circle</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER STRIP ===== -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="social">
+        <a href="#" aria-label="Pinterest">P</a>
+        <a href="#" aria-label="LinkedIn">in</a>
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="YouTube">▶</a>
+        <a href="#" aria-label="X">𝕏</a>
+        <a href="#" aria-label="Instagram">◎</a>
+        <a href="#" aria-label="Quora">Q</a>
+      </div>
+      <div class="footer-tools">
+        <button class="lang-btn">🌐 English ▾</button>
+        <a href="#" aria-label="Locations">📍</a>
+        <a href="#" aria-label="Call">📞</a>
+        <a href="#" aria-label="Email">✉</a>
+        <a href="#" aria-label="Support">🎧</a>
+      </div>
+    </div>
+    <div class="container footer-copy">
+      © State Bank of India. This is a static design clone built for learning purposes — not affiliated with SBI.
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
