@@ -219,29 +219,38 @@ export default function LoginPage() {
     router.push('/dashboard');
   }
 
+  const [capsLock, setCapsLock] = useState(false);
+
   function handleVkKeyPress(key: string) {
     const current = loginForm.getValues('password') || '';
     if (key === 'BACKSPACE') {
-      loginForm.setValue('password', current.slice(0, -1));
+      loginForm.setValue('password', current.slice(0, -1), { shouldValidate: true });
     } else if (key === 'CLEAR') {
-      loginForm.setValue('password', '');
+      loginForm.setValue('password', '', { shouldValidate: true });
+    } else if (key === 'CAPS LOCK') {
+      setCapsLock(!capsLock);
     } else {
-      loginForm.setValue('password', current + key);
+      const charToInsert = (capsLock && key.length === 1 && /[a-z]/i.test(key)) ? key.toUpperCase() : key;
+      loginForm.setValue('password', current + charToInsert, { shouldValidate: true });
     }
   }
 
-  const keyboardKeys = [
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
-    ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
-    ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
-    ['z', 'x', 'c', 'v', 'b', 'n', 'm', '@', '.', '#'],
-    ['CLEAR', 'BACKSPACE']
+  // Accessibility Font Sizing State (A-, A, A+)
+  const [fontSizeLevel, setFontSizeLevel] = useState<'small' | 'normal' | 'large'>('normal');
+
+  const keyboardKeysBase = [
+    ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+'],
+    ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '='],
+    ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '{', '}', '|'],
+    ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', '[', ']', '\\', '/'],
+    ['z', 'x', 'c', 'v', 'b', 'n', 'm', '<', '>', ';', ':', "'", '"'],
+    ['CAPS LOCK', 'CLEAR', 'BACKSPACE', '.', '?', ',']
   ];
 
   const isOtpComplete = otpDigits.every(d => d !== '');
 
   return (
-    <div className="login-page-wrapper">
+    <div className={`login-page-wrapper font-scale-${fontSizeLevel}`}>
       
       {/* ================= HEADER (app-registration-header) ================= */}
       <header className="header-container p-0">
@@ -283,9 +292,30 @@ export default function LoginPage() {
               </div>
               <div className="pipe" />
               <div className="fontSizing">
-                <span className="header-link top-row-text smallA" aria-label="A-">A-</span>
-                <span className="header-link top-row-text" aria-label="A">A</span>
-                <span className="header-link top-row-text bigA" aria-label="A+">A+</span>
+                <span 
+                  onClick={() => setFontSizeLevel('small')} 
+                  className={`header-link top-row-text smallA cursor-pointer ${fontSizeLevel === 'small' ? 'active' : ''}`} 
+                  aria-label="A-"
+                  title="Decrease font size"
+                >
+                  A-
+                </span>
+                <span 
+                  onClick={() => setFontSizeLevel('normal')} 
+                  className={`header-link top-row-text cursor-pointer ${fontSizeLevel === 'normal' ? 'active' : ''}`} 
+                  aria-label="A"
+                  title="Reset font size"
+                >
+                  A
+                </span>
+                <span 
+                  onClick={() => setFontSizeLevel('large')} 
+                  className={`header-link top-row-text bigA cursor-pointer ${fontSizeLevel === 'large' ? 'active' : ''}`} 
+                  aria-label="A+"
+                  title="Increase font size"
+                >
+                  A+
+                </span>
               </div>
             </div>
           </div>
@@ -517,40 +547,48 @@ export default function LoginPage() {
         <div className="custom-container">
           <div className="login-hero-grid">
             
-            {/* Left Hero Section */}
+            {/* Left Hero Section (Matching Console Snippet & Original Website) */}
             <div className="border_hello">
-              <h1 className="gradient-heading">
-                <span>Hello!</span>
-              </h1>
+              <div className="col-xs-12 col-md-12 col-lg-8 p-0">
+                <h1 className="gradient-heading">
+                  <span>Hello!</span>
+                </h1>
+              </div>
               <p className="header-1">Welcome to the world of YONO SBI</p>
               
               <p className="header-2 mb-0">Are you a new user?</p>
               <p className="paragraph-2">Choose one of the following options if you are a new user</p>
 
-              <div className="solid-button-container">
-                <button 
-                  type="button" 
-                  onClick={handleDemoLogin} 
-                  className="solid-button"
-                  aria-label="Register Now"
-                >
-                  Register Now
-                </button>
-                <button 
-                  type="button" 
-                  onClick={handleDemoLogin} 
-                  className="non-solid-button"
-                  aria-label="Activate Username"
-                >
-                  Activate Username
-                </button>
+              <div className="row solid-button-container">
+                <div className="col-5 custom-sm p-0">
+                  <button 
+                    type="button" 
+                    onClick={handleDemoLogin} 
+                    className="solid-button"
+                    tabIndex={0}
+                    aria-label="Register Now"
+                  >
+                    Register Now
+                  </button>
+                </div>
+                <div className="col-5 custom-sm p-0">
+                  <button 
+                    type="button" 
+                    onClick={handleDemoLogin} 
+                    className="non-solid-button activate-button-set-margin"
+                    tabIndex={0}
+                    aria-label="Activate Username"
+                  >
+                    Activate Username
+                  </button>
+                </div>
               </div>
 
               <div className="text-account">
                 Don’t have an account with SBI?{' '}
-                <span onClick={handleDemoLogin} className="openNowText cursor-pointer">
+                <a onClick={handleDemoLogin} className="openNowText cursor-pointer" tabIndex={0}>
                   Open Now
-                </span>
+                </a>
               </div>
             </div>
 
@@ -599,7 +637,7 @@ export default function LoginPage() {
                   <div className="mat-mdc-form-field">
                     <div className="mat-mdc-text-field-wrapper">
                       <input
-                        id="mat-input-1"
+                        id="username-input"
                         {...loginForm.register('username')}
                         type="text"
                         maxLength={20}
@@ -607,7 +645,7 @@ export default function LoginPage() {
                         placeholder=" "
                         autoComplete="username"
                       />
-                      <label htmlFor="mat-input-1" className="mat-mdc-floating-label">
+                      <label htmlFor="username-input" className="mat-mdc-floating-label">
                         Username
                       </label>
                     </div>
@@ -618,64 +656,149 @@ export default function LoginPage() {
                     </div>
                   </div>
 
-                  {/* Password Field */}
-                  <div className="mat-mdc-form-field">
-                    <div className="mat-mdc-text-field-wrapper">
-                      <input
-                        id="mat-input-2"
-                        {...loginForm.register('password')}
-                        type={showPassword ? 'text' : 'password'}
-                        maxLength={20}
-                        className="mat-mdc-input-element"
-                        placeholder=" "
-                        autoComplete="current-password"
-                      />
-                      <label htmlFor="mat-input-2" className="mat-mdc-floating-label">
-                        Password
-                      </label>
-                      <div className="mat-mdc-form-field-icon-suffix">
-                        <button
-                          type="button"
-                          onClick={() => setShowPassword(!showPassword)}
-                          className="iconbtn-mat"
-                          title={showPassword ? 'Hide password' : 'Show password'}
-                        >
-                          {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setShowVirtualKeyboard(!showVirtualKeyboard)}
-                          className="iconbtn-mat btn-vk"
-                          title="Virtual Keyboard"
-                        >
-                          <Keyboard size={18} />
-                        </button>
+                  {/* Password Field + App Virtual Keyboard (Matching Console Snippet & Original Website) */}
+                  <div className="position-relative mb-3">
+                    <div className="mat-mdc-form-field">
+                      <div className="mat-mdc-text-field-wrapper">
+                        <input
+                          id="password-input"
+                          {...loginForm.register('password')}
+                          type={showPassword ? 'text' : 'password'}
+                          maxLength={20}
+                          className="mat-mdc-input-element"
+                          placeholder=" "
+                          autoComplete="current-password"
+                        />
+                        <label htmlFor="password-input" className="mat-mdc-floating-label">
+                          Password
+                        </label>
+                        <div className="mat-mdc-form-field-icon-suffix">
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="iconbtn-eye"
+                            title={showPassword ? 'Hide password' : 'Show password'}
+                          >
+                            {showPassword ? <EyeOff size={18} className="text-slate-800" /> : <Eye size={18} className="text-slate-800" />}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setShowVirtualKeyboard(!showVirtualKeyboard)}
+                            className="iconbtn-keyboard"
+                            title="Virtual Keyboard"
+                          >
+                            <Keyboard size={18} className="text-purple-800" />
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="text-start">
+                        <Link href="/auth/activate" className="link-purple" aria-label="Forgot Password">
+                          Forgot Password?
+                        </Link>
                       </div>
                     </div>
-                    <div className="text-start">
-                      <Link href="/auth/activate" className="link-purple" aria-label="Forgot Password">
-                        Forgot Password?
-                      </Link>
-                    </div>
+
+                    {/* Absolute Popup Virtual Keyboard (Matching Console Code) */}
+                    {showVirtualKeyboard && (
+                      <div className="absolute-popup">
+                        <div className="virtual-keyboard">
+                          <table aria-hidden="true">
+                            <tbody>
+                              <tr>
+                                {['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+'].map((k) => (
+                                  <td key={k}>
+                                    <button type="button" id="key" onClick={() => handleVkKeyPress(k)}>{k}</button>
+                                  </td>
+                                ))}
+                              </tr>
+                              <tr>
+                                {['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '='].map((k) => (
+                                  <td key={k}>
+                                    <button type="button" id="key" onClick={() => handleVkKeyPress(k)}>{k}</button>
+                                  </td>
+                                ))}
+                              </tr>
+                              <tr>
+                                {['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '{', '}', '|'].map((k) => {
+                                  const displayChar = (capsLock && k.length === 1 && /[a-z]/i.test(k)) ? k.toUpperCase() : k;
+                                  return (
+                                    <td key={k}>
+                                      <button type="button" id="key" onClick={() => handleVkKeyPress(k)}>{displayChar}</button>
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                              <tr>
+                                {['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', '[', ']', '\\', '/'].map((k) => {
+                                  const displayChar = (capsLock && k.length === 1 && /[a-z]/i.test(k)) ? k.toUpperCase() : k;
+                                  return (
+                                    <td key={k}>
+                                      <button type="button" id="key" onClick={() => handleVkKeyPress(k)}>{displayChar}</button>
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                              <tr>
+                                {['z', 'x', 'c', 'v', 'b', 'n', 'm', '<', '>', ';', ':', "'", '"'].map((k) => {
+                                  const displayChar = (capsLock && k.length === 1 && /[a-z]/i.test(k)) ? k.toUpperCase() : k;
+                                  return (
+                                    <td key={k}>
+                                      <button type="button" id="key" onClick={() => handleVkKeyPress(k)}>{displayChar}</button>
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                              <tr>
+                                <td colSpan={3}>
+                                  <button type="button" id="capslock" className={capsLock ? 'active' : ''} onClick={() => handleVkKeyPress('CAPS LOCK')}>
+                                    CAPS LOCK
+                                  </button>
+                                </td>
+                                <td colSpan={3}>
+                                  <button type="button" id="clear" onClick={() => handleVkKeyPress('CLEAR')}>
+                                    CLEAR
+                                  </button>
+                                </td>
+                                <td colSpan={4}>
+                                  <button type="button" id="backspace" onClick={() => handleVkKeyPress('BACKSPACE')}>
+                                    BACKSPACE
+                                  </button>
+                                </td>
+                                <td>
+                                  <button type="button" id="key" onClick={() => handleVkKeyPress('.')}>.</button>
+                                </td>
+                                <td>
+                                  <button type="button" id="key" onClick={() => handleVkKeyPress('?')}>?</button>
+                                </td>
+                                <td>
+                                  <button type="button" id="key" onClick={() => handleVkKeyPress(',')}>,</button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
-                  {/* Captcha Field */}
-                  <div className="mat-mdc-form-field">
-                    <div className="mat-mdc-text-field-wrapper mb-2">
+                  {/* Captcha Field (Matching Image 1) */}
+                  <div className="captcha-field-row">
+                    <div className="captcha-input-container">
                       <input
-                        id="mat-input-0"
+                        id="captcha-input"
                         {...loginForm.register('captcha')}
                         type="text"
                         maxLength={5}
                         className="mat-mdc-input-element"
                         placeholder=" "
                       />
-                      <label htmlFor="mat-input-0" className="mat-mdc-floating-label">
+                      <label htmlFor="captcha-input" className="mat-mdc-floating-label">
                         Enter Captcha
                       </label>
                     </div>
 
-                    <div className="captcha-container">
+                    <div className="captcha-controls-wrapper">
                       <div className="captcha-box">
                         <span className="captcha-text-styled">{captchaText}</span>
                       </div>
@@ -683,18 +806,18 @@ export default function LoginPage() {
                         <button
                           type="button"
                           onClick={playAudioCaptcha}
-                          className="iconbtn"
+                          className="iconbtn-captcha"
                           title="Audio Captcha"
                         >
-                          <Volume2 size={14} />
+                          <Volume2 size={13} />
                         </button>
                         <button
                           type="button"
                           onClick={refreshCaptcha}
-                          className="iconbtn"
+                          className="iconbtn-captcha"
                           title="Refresh Captcha"
                         >
-                          <RotateCw size={14} />
+                          <RotateCw size={13} />
                         </button>
                       </div>
                     </div>
@@ -704,51 +827,17 @@ export default function LoginPage() {
                   <button
                     type="submit"
                     disabled={!isFormValid || loading}
-                    className={isFormValid ? "login-button" : "login-button-invalid"}
+                    className={`login-button-pill ${isFormValid && !loading ? 'active' : 'disabled'}`}
                   >
                     {loading ? 'Logging in...' : 'Login'}
                   </button>
 
-                  <div className="flex justify-end mt-2">
+                  <div className="flex justify-end mt-2 mb-1">
                     <a href="https://retail.sbi.bank.in" className="link-purple">
                       Lock/Unlock User
                     </a>
                   </div>
                 </form>
-
-                {/* Virtual Keyboard Popup */}
-                {showVirtualKeyboard && (
-                  <div className="virtual-keyboard-popup">
-                    <div className="d-flex justify-content-between align-items-center mb-2 pb-1 border-bottom">
-                      <span className="font-bold text-xs text-purple-900">Virtual Keyboard</span>
-                      <button 
-                        type="button" 
-                        onClick={() => setShowVirtualKeyboard(false)}
-                        className="text-gray-500 hover:text-black border-0 bg-none"
-                      >
-                        <X size={16} />
-                      </button>
-                    </div>
-
-                    <div className="d-flex flex-column gap-1">
-                      {keyboardKeys.map((row, rIdx) => (
-                        <div key={rIdx} className="d-flex justify-content-center gap-1">
-                          {row.map((key) => (
-                            <button
-                              key={key}
-                              type="button"
-                              onClick={() => handleVkKeyPress(key)}
-                              className={`btn btn-sm btn-light border ${key.length > 1 ? 'px-3 text-xs' : 'px-2'}`}
-                              style={{ minWidth: key.length > 1 ? '60px' : '30px' }}
-                            >
-                              {key}
-                            </button>
-                          ))}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
 
               </div>
             </div>
@@ -758,36 +847,42 @@ export default function LoginPage() {
         </div>
       </main>
 
-      {/* ================= AUTHENTIC YONO SBI OTP MODAL OVERLAY (Screenshot 1 Exact) ================= */}
+      {/* ================= AUTHENTIC YONO SBI OTP SIDE DRAWER PANEL (Matching User Screenshot & HTML) ================= */}
       {step === 'otp' && (
         <div className="sbi-otp-overlay">
-          <div className="sbi-otp-modal-box">
+          <div className="sbi-otp-drawer-panel">
             
-            {/* Upper Header */}
-            <div>
+            {/* Header section */}
+            <div className="otp-header">
               <div className="sbi-otp-header">
-                <h2 className="sbi-otp-greeting">Hi {userNameGreeting}</h2>
-                <button 
-                  type="button" 
-                  onClick={() => setStep('login')}
-                  className="sbi-otp-close-btn"
-                  aria-label="Close OTP Modal"
-                >
-                  <X size={18} />
-                </button>
+                <div>
+                  <h5 className="mpinHeader">Hi {userNameGreeting}</h5>
+                  <p id="dialogue_heading" className="subheading mpinSubHeader">
+                    <span>An OTP has been sent to your registered mobile number +91 ***** ***77</span>
+                  </p>
+                </div>
+                <div className="close-btn">
+                  <button 
+                    type="button" 
+                    onClick={() => setStep('login')}
+                    className="sbi-otp-close-btn"
+                    aria-label="CloseDialogue"
+                  >
+                    <X size={18} />
+                  </button>
+                </div>
               </div>
+            </div>
 
-              <p className="sbi-otp-subtitle">
-                An OTP has been sent to your registered mobile<br />
-                number +91 ***** ***33
-              </p>
-
-              <div className="mt-3 flex items-center justify-between bg-white/20 px-3.5 py-1.5 rounded-lg text-white">
+            {/* Middle Section: Demo Helper & MPIN / OTP Inputs */}
+            <div className="mpin-section">
+              {/* Demo Helper Badge */}
+              <div className="mb-4 flex items-center justify-between bg-white/20 px-3 py-1.5 rounded-lg text-white">
                 <span className="text-xs font-mono font-bold">Demo OTP: {demoOTP}</span>
                 <button
                   type="button"
                   onClick={fillDemoOTP}
-                  className="bg-white text-purple-900 font-bold px-2.5 py-1 rounded-md text-[11px] hover:bg-purple-100 transition-colors shadow-sm"
+                  className="bg-white text-purple-900 font-bold px-2 py-0.5 rounded text-[11px] hover:bg-purple-100 transition-colors shadow-sm"
                 >
                   Auto-Fill OTP
                 </button>
@@ -796,19 +891,21 @@ export default function LoginPage() {
               {/* Digits Input Row */}
               <div className="sbi-otp-inputs-wrapper">
                 <div className="sbi-otp-digit-row">
-                  {otpDigits.map((digit, idx) => (
-                    <input
-                      key={idx}
-                      ref={(el) => { otpInputRefs.current[idx] = el; }}
-                      type={showOtpText ? 'text' : 'password'}
-                      maxLength={1}
-                      value={digit}
-                      onChange={(e) => handleOtpChange(idx, e.target.value)}
-                      onKeyDown={(e) => handleOtpKeyDown(idx, e)}
-                      className="sbi-otp-digit-input"
-                      autoFocus={idx === 0}
-                    />
-                  ))}
+                  <div className="sbi-otp-digit-inputs">
+                    {otpDigits.map((digit, idx) => (
+                      <input
+                        key={idx}
+                        ref={(el) => { otpInputRefs.current[idx] = el; }}
+                        type={showOtpText ? 'text' : 'password'}
+                        maxLength={1}
+                        value={digit}
+                        onChange={(e) => handleOtpChange(idx, e.target.value)}
+                        onKeyDown={(e) => handleOtpKeyDown(idx, e)}
+                        className="sbi-otp-digit-input"
+                        autoFocus={idx === 0}
+                      />
+                    ))}
+                  </div>
                   
                   <button 
                     type="button" 
@@ -820,19 +917,37 @@ export default function LoginPage() {
                   </button>
                 </div>
 
+                {/* Resend OTP Row */}
                 <div className="sbi-otp-timer-row">
-                  Resend OTP <span className="font-bold">{resendTimer > 0 ? `${resendTimer}s` : 'Now'}</span>
+                  {resendTimer > 0 ? (
+                    <>
+                      <span className="opacity-80">Resend OTP</span>
+                      <span className="font-bold ml-1">{resendTimer}s</span>
+                    </>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setResendTimer(39);
+                        toast.success('New OTP sent to +91 ***** ***77');
+                      }}
+                      className="sbi-otp-resend-btn"
+                    >
+                      Resend OTP
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
 
-            {/* Lower Action Button */}
-            <div>
+            {/* Bottom Action Button */}
+            <div className="submitOtp">
               <button
                 type="button"
                 onClick={handleOtpSubmit}
                 disabled={!isOtpComplete || loading}
                 className={`sbi-otp-proceed-btn ${isOtpComplete && !loading ? 'active' : 'disabled'}`}
+                style={{ borderRadius: '40px' }}
               >
                 {loading ? 'Verifying...' : 'Proceed'}
               </button>
@@ -842,86 +957,131 @@ export default function LoginPage() {
         </div>
       )}
 
-      {/* ================= QUICK ACTIONS SECTION ================= */}
-      <aside className="quick-actions-bg" aria-label="Quick Actions">
-        <div className="custom-container">
-          <h1 className="header-titleClr">Quick Actions</h1>
-
+      {/* ================= QUICK ACTIONS SECTION (Matching Console Snippet & Original Website) ================= */}
+      <div className="quick-actions-bg">
+        <div className="quckatn-Content">
+          <div className="row">
+            <div>
+              <h1 className="header-titleClr">Quick Actions</h1>
+            </div>
+          </div>
           <div className="qa-container">
-            <div onClick={handleDemoLogin} className="qa-item">
-              <div className="qa-circle">
-                <div className="anchorLink" tabIndex={-1}>
-                  <img loading="lazy" alt="Complaints" src="/assets/images/registration/Mate IC_Complaints.svg" />
+            
+            {/* Complaints */}
+            <div className="optionsQAspace">
+              <div className="manageImageCenter">
+                <div className="qa-circle">
+                  <div className="anchorLink" tabIndex={-1}>
+                    <img loading="lazy" alt="Complaints" className="qa-options" src="/assets/images/registration/Mate IC_Complaints.svg" />
+                  </div>
                 </div>
               </div>
-              <span className="qa-label">Complaints</span>
+              <div className="qa-text">
+                <a role="link" onClick={handleDemoLogin} className="anchorLink card-link-purple cursor-pointer" tabIndex={0}>Complaints</a>
+              </div>
             </div>
 
-            <a href="https://crh.sbi.bank.in" target="_blank" rel="noopener noreferrer" className="qa-item">
-              <div className="qa-circle">
-                <div className="anchorLink" tabIndex={-1}>
-                  <img loading="lazy" alt="Report Unauthorized transaction" src="/assets/images/registration/Mate IC_Report_unauthorized.svg" />
+            {/* Report Unauthorized transaction */}
+            <div className="optionsQAspace">
+              <div className="manageImageCenter">
+                <div className="qa-circle">
+                  <div className="anchorLink" tabIndex={-1}>
+                    <img loading="lazy" alt="Report Unauthorized transaction" className="qa-options" src="/assets/images/registration/Mate IC_Report_unauthorized.svg" />
+                  </div>
                 </div>
               </div>
-              <span className="qa-label">Report Unauthorized transaction</span>
-            </a>
-
-            <div onClick={handleDemoLogin} className="qa-item">
-              <div className="qa-circle">
-                <div className="anchorLink" tabIndex={-1}>
-                  <img loading="lazy" alt="Doorstep Banking" src="/assets/images/registration/Mate IC_Doorstep_banking.svg" />
-                </div>
+              <div className="qa-text">
+                <a role="link" href="https://crh.sbi.bank.in" target="_blank" rel="noopener noreferrer" className="anchorLink card-link-purple" tabIndex={0}>Report Unauthorized transaction</a>
               </div>
-              <span className="qa-label">Doorstep Banking</span>
             </div>
 
-            <div onClick={handleDemoLogin} className="qa-item">
-              <div className="qa-circle">
-                <div className="anchorLink" tabIndex={-1}>
-                  <img loading="lazy" alt="FAQ" src="/assets/images/registration/Mate IC_FAQ.svg" />
+            {/* Doorstep Banking */}
+            <div className="optionsQAspace">
+              <div className="manageImageCenter">
+                <div className="qa-circle">
+                  <div className="anchorLink" tabIndex={-1}>
+                    <img loading="lazy" alt="Doorstep Banking" className="qa-options" src="/assets/images/registration/Mate IC_Doorstep_banking.svg" />
+                  </div>
                 </div>
               </div>
-              <span className="qa-label">FAQ</span>
+              <div className="qa-text">
+                <a role="link" onClick={handleDemoLogin} className="anchorLink card-link-purple cursor-pointer" tabIndex={0}>Doorstep Banking</a>
+              </div>
             </div>
 
-            <a href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" className="qa-item">
-              <div className="qa-circle">
-                <div className="anchorLink" tabIndex={-1}>
-                  <img loading="lazy" alt="Cyber Fraud" src="/assets/images/registration/Mate IC_Cyber_fraud.svg" />
+            {/* FAQ */}
+            <div className="optionsQAspace">
+              <div className="manageImageCenter">
+                <div className="qa-circle">
+                  <div className="anchorLink card-link-purple" tabIndex={-1}>
+                    <img loading="lazy" alt="FAQ" className="qa-options" src="/assets/images/registration/Mate IC_FAQ.svg" />
+                  </div>
                 </div>
               </div>
-              <span className="qa-label">Cyber Fraud</span>
-            </a>
+              <div className="qa-text">
+                <a role="link" onClick={handleDemoLogin} className="anchorLink card-link-purple cursor-pointer" tabIndex={0}>FAQ</a>
+              </div>
+            </div>
 
-            <a href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" className="qa-item">
-              <div className="qa-circle">
-                <div className="anchorLink" tabIndex={-1}>
-                  <img loading="lazy" alt="Password Management" src="/assets/images/registration/Mate IC_Password_management.svg" />
+            {/* Cyber Fraud */}
+            <div className="optionsQAspace">
+              <div className="manageImageCenter">
+                <div className="qa-circle">
+                  <div className="anchorLink" tabIndex={-1}>
+                    <img loading="lazy" alt="Cyber Fraud" className="qa-options" src="/assets/images/registration/Mate IC_Cyber_fraud.svg" />
+                  </div>
                 </div>
               </div>
-              <span className="qa-label">Password Management</span>
-            </a>
+              <div className="qa-text">
+                <a role="link" href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" className="anchorLink card-link-purple" tabIndex={0}>Cyber Fraud</a>
+              </div>
+            </div>
 
-            <a href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" className="qa-item">
-              <div className="qa-circle">
-                <div className="anchorLink" tabIndex={-1}>
-                  <img loading="lazy" alt="Security Tips" src="/assets/images/registration/Mate IC_Security_tips.svg" />
+            {/* Password Management */}
+            <div className="optionsQAspace">
+              <div className="manageImageCenter">
+                <div className="qa-circle">
+                  <div className="anchorLink" tabIndex={-1}>
+                    <img loading="lazy" alt="Password Management" className="qa-options" src="/assets/images/registration/Mate IC_Password_management.svg" />
+                  </div>
                 </div>
               </div>
-              <span className="qa-label">Security Tips</span>
-            </a>
+              <div className="qa-text">
+                <a role="link" href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" className="anchorLink card-link-purple" tabIndex={0}>Password Management</a>
+              </div>
+            </div>
 
-            <a href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" className="qa-item">
-              <div className="qa-circle">
-                <div className="anchorLink" tabIndex={-1}>
-                  <img loading="lazy" alt="Mate IC_Report  phishing" src="/assets/images/registration/Mate IC_Report  phishing.svg" />
+            {/* Security Tips */}
+            <div className="optionsQAspace">
+              <div className="manageImageCenter">
+                <div className="qa-circle">
+                  <div className="anchorLink" tabIndex={-1}>
+                    <img loading="lazy" alt="Security Tips" className="qa-options" src="/assets/images/registration/Mate IC_Security_tips.svg" />
+                  </div>
                 </div>
               </div>
-              <span className="qa-label">Report Phishing</span>
-            </a>
+              <div className="qa-text">
+                <a role="link" href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" className="anchorLink card-link-purple" tabIndex={0}>Security Tips</a>
+              </div>
+            </div>
+
+            {/* Report Phishing */}
+            <div className="optionsQAspace">
+              <div className="manageImageCenter">
+                <div className="qa-circle">
+                  <div className="anchorLink" tabIndex={-1}>
+                    <img loading="lazy" alt="Report Phishing" className="qa-options" src="/assets/images/registration/Mate IC_Report  phishing.svg" />
+                  </div>
+                </div>
+              </div>
+              <div className="qa-text">
+                <a role="link" href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" className="anchorLink card-link-purple" tabIndex={0}>Report Phishing</a>
+              </div>
+            </div>
+
           </div>
         </div>
-      </aside>
+      </div>
 
       {/* ================= IMPORTANT NOTICES & SECURITY BEST PRACTICES & DO'S AND DON'TS ================= */}
       <div className="containerBox">
