@@ -641,7 +641,7 @@ export default function LoginPage() {
                     <div className="text-start">
                       <Link href="/auth/activate" className="link-purple" aria-label="Forgot Username">
                         Forgot Username?
-                      </span>
+                      </Link>
                     </div>
                   </div>
 
@@ -682,7 +682,7 @@ export default function LoginPage() {
                     <div className="text-start">
                       <Link href="/auth/activate" className="link-purple" aria-label="Forgot Password">
                         Forgot Password?
-                      </span>
+                      </Link>
                     </div>
                   </div>
 
@@ -739,7 +739,7 @@ export default function LoginPage() {
                   <div className="flex justify-end mt-2">
                     <a href="https://retail.sbi.bank.in" className="link-purple">
                       Lock/Unlock User
-                    </span>
+                    </a>
                   </div>
                 </form>
 
@@ -894,7 +894,7 @@ export default function LoginPage() {
                 <HelpCircle size={24} />
               </div>
               <span className="qa-label">FAQ</span>
-            </a>
+            </div>
 
             <a href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" className="qa-item">
               <div className="qa-circle">
@@ -932,46 +932,44 @@ export default function LoginPage() {
         <div className="custom-container container-xxl pt-4">
           
           <aside aria-label="Important Notes & Security Best Practices">
-            <div className="imp-notices-container">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                
-                {/* Left Column: Important Notices */}
-                <div className="borderCont">
-                  <div className="flex justify-between items-baseline mb-4">
-                    <h2 className="headTxt">Important Notices</h2>
-                    <div className="tabText">
-                      <a href="javascript:void(0);" onClick={(e) => { e.preventDefault(); setShowNoticesModal(true); }} aria-label="View All Important Notices">
-                        View All
-                      </a>
-                    </div>
-                  </div>
-
-                  <ul className="space-y-4">
-                    <li className="flex items-start gap-3">
-                      <div className="bullet-arrow-circle">
-                        <ArrowRight size={14} />
-                      </div>
-                      <p className="imp-notice-txt m-0">
-                        Customers can now deposit Income Tax/Corporate Taxes using all Bank Debit Cards and Credit Cards under State Bank Payment Gateway.
-                      </p>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <div className="bullet-arrow-circle">
-                        <ArrowRight size={14} />
+            <div id="ImpNotice" className="pt-4 ImpNotice">
+              <div id="impnoticescontainer" className="imp-notices-container mb-4">
+                <div className="row">
+                  
+                  {/* Left Column: Important Notices */}
+                  <div className="col-12 col-sm-12 col-md-6 borderCont">
+                    <div className="d-flex align-items-baseline mb-3">
+                      <div className="col-8">
+                        <p className="headTxt">Important Notices</p>
                       </div>
                       <div className="col-md-4 d-flex justify-content-end tabText">
-                        <a role="link" aria-label="View All Important Notices" tabIndex={0} onClick={handleDemoLogin}>View All</a>
+                        <a href="javascript:void(0);" onClick={(e) => { e.preventDefault(); setShowNoticesModal(true); }} aria-label="View All Important Notices">
+                          View All
+                        </a>
                       </div>
                     </div>
 
-                {/* Right Column: Security Best Practices Carousel */}
-                <div>
-                  <div className="flex justify-between items-baseline mb-4">
-                    <h2 className="headSecurityTxt">Security Best Practices</h2>
-                    <div className="tabText">
-                      <a href="javascript:void(0);" onClick={(e) => { e.preventDefault(); setShowSecurityModal(true); }} aria-label="View All Security Best Practices">
-                        View All
-                      </a>
+                    <div className="container-card">
+                      <ul>
+                        <li className="mt-4 flex items-start gap-3">
+                          <img loading="lazy" alt="arrow" className="bullet-arrow" src="/assets/images/registration/bulletArrow.svg" />
+                          <p className="imp-notice-txt m-0 pe-4">
+                            Customers can now deposit Income Tax/Corporate Taxes using all Bank Debit Cards and Credit Cards under State Bank Payment Gateway.
+                          </p>
+                        </li>
+                        <li className="mt-4 flex items-start gap-3">
+                          <img loading="lazy" alt="arrow" className="bullet-arrow" src="/assets/images/registration/bulletArrow.svg" />
+                          <p className="imp-notice-txt m-0 pe-4">
+                            Call us toll free on 1800 1234 and 1800 2100 and get a wide range of services through SBI Contact Centre.&nbsp;
+                          </p>
+                        </li>
+                        <li className="mt-4 flex items-start gap-3">
+                          <img loading="lazy" alt="arrow" className="bullet-arrow" src="/assets/images/registration/bulletArrow.svg" />
+                          <p className="imp-notice-txt m-0 pe-4">
+                            SBI never asks for your Card/PIN/OTP/CVV details on phone, message or email. Please do not click on links received on your email or mobile asking your Bank/Card details.
+                          </p>
+                        </li>
+                      </ul>
                     </div>
                   </div>
 
@@ -982,7 +980,9 @@ export default function LoginPage() {
                         <p className="headSecurityTxt">Security Best Practices</p>
                       </div>
                       <div className="col-md-4 d-flex justify-content-end tabText">
-                        <a role="link" aria-label="View All Security Best Practices" tabIndex={0} onClick={handleDemoLogin}>View All</a>
+                        <a href="javascript:void(0);" onClick={(e) => { e.preventDefault(); setShowSecurityModal(true); }} aria-label="View All Security Best Practices">
+                          View All
+                        </a>
                       </div>
                     </div>
 
