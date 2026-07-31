@@ -3,6 +3,7 @@ import './Hero.css';
 
 // Home-page banner carousel — images downloaded from the live SBI site (1820×831).
 const banners = [
+  { isComponent: true },
   { src: '/images/banners/banner-01.png', alt: 'CoE', href: 'https://sbi.bank.in/web/coe-chakra/home' },
   { src: '/images/banners/banner-02.jpg', alt: 'SBI Contact Centre' },
   { src: '/images/banners/banner-03.png', alt: 'Digital Life Certificate' },
@@ -41,7 +42,47 @@ export default function Hero() {
 
   return (
     <section className="hero" aria-label="Home page banner carousel">
-      <AshaScholarship />
+      {/* clipped carousel viewport */}
+      <div className="hero-viewport">
+        <div className="hero-track" style={{ transform: `translateX(-${index * 100}%)` }}>
+          {banners.map((b, i) => {
+            if (b.isComponent) {
+              return (
+                <div className="hero-slide" key={i}>
+                  <AshaScholarship />
+                </div>
+              );
+            }
+            const img = (
+              <img src={b.src} alt={b.alt} className="hero-img" loading={i === 0 ? 'eager' : 'lazy'} />
+            );
+            return (
+              <div className="hero-slide" key={i}>
+                {b.href ? (
+                  <a href={b.href} target="_blank" rel="noopener noreferrer">{img}</a>
+                ) : (
+                  img
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        <button className="hero-arrow prev" onClick={() => go(index - 1)} aria-label="Previous banner">‹</button>
+        <button className="hero-arrow next" onClick={() => go(index + 1)} aria-label="Next banner">›</button>
+
+        <ul className="hero-dots">
+          {banners.map((_, i) => (
+            <li key={i}>
+              <button
+                className={i === index ? 'active' : ''}
+                onClick={() => go(i)}
+                aria-label={`Go to banner ${i + 1}`}
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
 
       {/* right-side overlay panel (background shape = dynamic_panel.png) */}
       <aside className="rate-panel">
