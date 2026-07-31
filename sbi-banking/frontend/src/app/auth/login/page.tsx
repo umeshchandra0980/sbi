@@ -943,9 +943,7 @@ export default function LoginPage() {
                           View All
                         </a>
                       </div>
-                    </li>
-                  </ul>
-                </div>
+                    </div>
 
                     <div className="container-card">
                       <ul>
