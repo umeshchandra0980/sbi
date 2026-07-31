@@ -203,10 +203,24 @@ body, html {
   stroke-width: 2.5;
 }
 
+/* Layout overrides for Bootstrap classes to prevent Tailwind collapse conflicts */
+.custom-navbar2.collapse {
+  display: flex !important;
+  visibility: visible !important;
+  align-items: center;
+}
+
+.navbar-nav {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 /* Multi-Column Dropdown Drawers */
 .drawer-dropdown {
   position: absolute;
-  top: 100%;
+  top: 24px;
   left: 0;
   width: 280px;
   background: #ffffff;
@@ -218,9 +232,19 @@ body, html {
   animation: fadeInDown 0.2s ease-out;
 }
 
+.drawer-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -24px;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background: transparent;
+}
+
 .drawer-dropdown-two-column {
   position: absolute;
-  top: 100%;
+  top: 24px;
   left: -140px;
   width: 720px;
   background: #ffffff;
@@ -231,6 +255,16 @@ body, html {
   display: flex;
   flex-direction: column;
   animation: fadeInDown 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.drawer-dropdown-two-column::before {
+  content: '';
+  position: absolute;
+  top: -24px;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background: transparent;
 }
 
 .drawer-dropdown-two-column-inner {
