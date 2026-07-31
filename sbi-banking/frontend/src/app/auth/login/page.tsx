@@ -41,6 +41,17 @@ export default function LoginPage() {
   const [showSecurityModal, setShowSecurityModal] = useState(false);
   const [hoveredSubItem, setHoveredSubItem] = useState<'savings' | 'current' | 'term' | 'kyc'>('savings');
 
+  useEffect(() => {
+    const handleDocumentClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest('.navbar-sbi')) {
+        setActiveDropdown(null);
+      }
+    };
+    document.addEventListener('click', handleDocumentClick);
+    return () => document.removeEventListener('click', handleDocumentClick);
+  }, []);
+
   // OTP Modal State (Matching Screenshot 1)
   const [otpDigits, setOtpDigits] = useState<string[]>(['', '', '', '', '', '']);
   const [showOtpText, setShowOtpText] = useState(false);
@@ -200,7 +211,7 @@ export default function LoginPage() {
         {/* Top Row: Purple header */}
         <div className="top-row">
           <div className="top-row-inner">
-            <div>
+            <div className="top-row-left-wrapper">
               <button type="button" className="top-row-left activebutton" aria-label="Personal Banking">
                 Personal Banking
               </button>
@@ -243,32 +254,32 @@ export default function LoginPage() {
         </div>
 
         {/* Main Navbar */}
-        <nav className="navbar navbar-expand-lg d-none d-xl-block navbar-sbi animate-fadeIn" aria-label="navbar">
-          <div className="container-xxl navbar-sbi-inner flex items-center justify-between max-w-[1400px] mx-auto px-4">
+        <nav className="navbar navbar-expand-lg navbar-sbi" aria-label="navbar">
+          <div className="container-xxl navbar-sbi-inner" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 16px', width: '100%' }}>
             <div className="bottom-col-left col-auto p-0 col-lg-2 pt-2">
               <Link href="/">
-                <img 
-                  loading="lazy" 
-                  className="header-logo" 
-                  src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/new-horz-logo_net-banking_svg" 
-                  alt="YONOSBILogo" 
-                />
+                <img loading="lazy" className="header-logo" src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/new-horz-logo_net-banking_svg" alt="YONOSBILogo" />
               </Link>
             </div>
 
-            <div id="navbarNavDarkDropdown" className="custom-navbar2 collapse navbar-collapse col-lg-8">
-              <div className="linksbottom" style={{ display: 'flex', height: '30px', marginLeft: '-76px' }}>
-                
-                {/* Home Link */}
-                <ul className="navbar-nav m-0 p-0 list-none">
-                  <div className="linkitem activeBack">
-                    <li className="nav-item dropdown relative">
-                      <Link href="/" className="nav-link nav-link-sbi active" style={{ padding: '5px 18px 0' }}>
+            <div id="navbarNavDarkDropdown" className="custom-navbar2">
+              <div className="linksbottom">
+
+                {/* Home */}
+                <ul className="navbar-nav">
+                  <div className={`linkitem ${activeDropdown === null ? 'activeBack' : ''}`}>
+                    <li className="nav-item dropdown">
+                      <Link 
+                        href="/" 
+                        onClick={() => setActiveDropdown(null)} 
+                        className={`nav-link ${activeDropdown === null ? 'active' : ''}`} 
+                        aria-label="Home"
+                      >
                         Home
                       </Link>
-                      <div className="base-line active">
+                      <div className={`base-line ${activeDropdown === null ? 'active' : ''}`}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="21" height="4" viewBox="0 0 21 4" fill="none">
-                          <path d="M1.5 2H19.5" strokeWidth="2.5" strokeLinecap="round" stroke="#673391" className="base-line-svg"></path>
+                          <path d="M1.5 2H19.5" strokeWidth="2.5" strokeLinecap="round" className="base-line-svg"></path>
                         </svg>
                       </div>
                     </li>
@@ -276,287 +287,181 @@ export default function LoginPage() {
                 </ul>
 
                 {/* Accounts & Deposits */}
-                <ul className="navbar-nav m-0 p-0 list-none">
+                <ul className="navbar-nav">
                   <div className={`linkitem ${activeDropdown === 'accounts' ? 'activeBack' : ''}`}>
-                    <li 
-                      className="nav-item dropdown relative"
-                      onMouseEnter={() => setActiveDropdown('accounts')}
-                      onMouseLeave={() => setActiveDropdown(null)}
-                    >
+                    <li className="nav-item dropdown">
                       <a 
                         href="#" 
-                        onClick={(e) => { e.preventDefault(); setActiveDropdown(activeDropdown === 'accounts' ? null : 'accounts'); }} 
-                        className={`nav-link nav-link-sbi ${activeDropdown === 'accounts' ? 'active' : ''}`}
-                        style={{ padding: '5px 18px 0' }}
+                        onClick={(e) => { 
+                          e.preventDefault(); 
+                          e.stopPropagation(); 
+                          setActiveDropdown(activeDropdown === 'accounts' ? null : 'accounts'); 
+                        }} 
+                        className={`nav-link ${activeDropdown === 'accounts' ? 'active' : ''}`} 
+                        aria-label="Accounts &amp; Deposits"
                       >
                         Accounts &amp; Deposits
                       </a>
-                      
                       <div className={`base-line ${activeDropdown === 'accounts' ? 'active' : ''}`}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="21" height="4" viewBox="0 0 21 4" fill="none">
-                          <path d="M1.5 2H19.5" strokeWidth="2.5" strokeLinecap="round" stroke="#673391" className="base-line-svg"></path>
+                          <path d="M1.5 2H19.5" strokeWidth="2.5" strokeLinecap="round" className="base-line-svg"></path>
                         </svg>
                       </div>
-
-                      {activeDropdown === 'accounts' && (
-                        <div className="drawer-dropdown-two-column text-left">
-                          <div className="drawer-dropdown-two-column-inner">
-                            {/* Left Menu Items Column */}
-                            <div className="drawer-left-col">
-                              <div 
-                                className={`drawer-left-item ${hoveredSubItem === 'savings' ? 'active' : ''}`}
-                                onMouseEnter={() => setHoveredSubItem('savings')}
-                                onClick={() => setHoveredSubItem('savings')}
-                              >
-                                <div className="item-icon-text">
-                                  <svg className="menu-icon" viewBox="0 0 24 24" width="18" height="18">
-                                    <rect x="3" y="10" width="18" height="10" rx="1" fill="none" stroke="currentColor" strokeWidth="2"/>
-                                    <path d="M12 5 L3 10 L21 10 Z" fill="none" stroke="currentColor" strokeWidth="2"/>
-                                    <circle cx="12" cy="15" r="2" fill="none" stroke="currentColor" strokeWidth="2"/>
-                                  </svg>
-                                  <span>Savings Account</span>
-                                </div>
-                                <ChevronRight size={14} className="chevron-arrow" />
+                      {/* Accounts Dropdown - Opened on Click */}
+                      <div className={`drawer-dropdown-two-column text-left ${activeDropdown === 'accounts' ? 'open' : ''}`}>
+                        <div className="drawer-dropdown-two-column-inner">
+                          <div className="drawer-left-col">
+                            <div className={`drawer-left-item ${hoveredSubItem === 'savings' ? 'active' : ''}`} onMouseEnter={() => setHoveredSubItem('savings')}>
+                              <div className="item-icon-text">
+                                <svg className="menu-icon" viewBox="0 0 24 24" width="18" height="18"><rect x="3" y="10" width="18" height="10" rx="1" fill="none" stroke="currentColor" strokeWidth="2"/><path d="M12 5 L3 10 L21 10 Z" fill="none" stroke="currentColor" strokeWidth="2"/><circle cx="12" cy="15" r="2" fill="none" stroke="currentColor" strokeWidth="2"/></svg>
+                                <span>Savings Account</span>
                               </div>
-
-                              <div 
-                                className={`drawer-left-item ${hoveredSubItem === 'current' ? 'active' : ''}`}
-                                onMouseEnter={() => setHoveredSubItem('current')}
-                                onClick={() => setHoveredSubItem('current')}
-                              >
-                                <div className="item-icon-text">
-                                  <svg className="menu-icon" viewBox="0 0 24 24" width="18" height="18">
-                                    <path d="M3 10 h18 v2 h-18 z" fill="none" stroke="currentColor" strokeWidth="2"/>
-                                    <path d="M12 4 L3 10 L21 10 Z" fill="none" stroke="currentColor" strokeWidth="2"/>
-                                    <path d="M5 12 v8 h14 v-8" fill="none" stroke="currentColor" strokeWidth="2"/>
-                                    <path d="M1 18 h22" stroke="currentColor" strokeWidth="2"/>
-                                  </svg>
-                                  <span>Current Account</span>
-                                </div>
-                                <ChevronRight size={14} className="chevron-arrow" />
-                              </div>
-
-                              <div 
-                                className={`drawer-left-item ${hoveredSubItem === 'term' ? 'active' : ''}`}
-                                onMouseEnter={() => setHoveredSubItem('term')}
-                                onClick={() => setHoveredSubItem('term')}
-                              >
-                                <div className="item-icon-text">
-                                  <svg className="menu-icon" viewBox="0 0 24 24" width="18" height="18">
-                                    <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2"/>
-                                    <path d="M12 7 v10 M9 10 h6 M9 14 h6" stroke="currentColor" strokeWidth="2"/>
-                                  </svg>
-                                  <span>Term Deposits</span>
-                                </div>
-                                <ChevronRight size={14} className="chevron-arrow" />
-                              </div>
-
-                              <div 
-                                className={`drawer-left-item ${hoveredSubItem === 'kyc' ? 'active' : ''}`}
-                                onMouseEnter={() => setHoveredSubItem('kyc')}
-                                onClick={() => setHoveredSubItem('kyc')}
-                              >
-                                <div className="item-icon-text">
-                                  <svg className="menu-icon" viewBox="0 0 24 24" width="18" height="18">
-                                    <rect x="5" y="2" width="14" height="20" rx="2" fill="none" stroke="currentColor" strokeWidth="2"/>
-                                    <circle cx="12" cy="18" r="1.5" fill="currentColor"/>
-                                    <path d="M9 5 h6" stroke="currentColor" strokeWidth="2"/>
-                                  </svg>
-                                  <span>Update KYC</span>
-                                </div>
-                                <ChevronRight size={14} className="chevron-arrow" />
-                              </div>
+                              <ChevronRight size={14} className="chevron-arrow" />
                             </div>
-
-                            {/* Right Details Column */}
-                            <div className="drawer-right-col text-left">
-                              {hoveredSubItem === 'savings' && (
-                                <div className="drawer-details-content">
-                                  <div className="details-header">
-                                    <span>Digital Savings Account</span>
-                                    <ChevronRight size={14} />
-                                  </div>
-                                  <ul className="details-bullets">
-                                    <li>Effortless, Paperless Account Opening with No Branch Visit Needed.</li>
-                                    <li>Conveniently access and manage your account through YONO.</li>
-                                  </ul>
-
-                                  <div className="details-header mt-4">
-                                    <span>3-in-1 Account</span>
-                                    <ChevronRight size={14} />
-                                  </div>
-                                  <ul className="details-bullets">
-                                    <li>Simplify your financial journey with 3-in-1 account opening.</li>
-                                    <li>All in one product that provide savings, demat and trading account.</li>
-                                  </ul>
-                                </div>
-                              )}
-
-                              {hoveredSubItem === 'current' && (
-                                <div className="drawer-details-content">
-                                  <div className="details-header">
-                                    <span>Open Now</span>
-                                    <ChevronRight size={14} />
-                                  </div>
-                                  <ul className="details-bullets">
-                                    <li>Effortless, Paperless Account Opening with No Branch Visit Needed.</li>
-                                    <li>Conveniently access and manage your account through YONO.</li>
-                                  </ul>
-                                </div>
-                              )}
-
-                              {hoveredSubItem === 'term' && (
-                                <div className="drawer-details-content">
-                                  <div className="details-header">
-                                    <span>Fixed Deposits</span>
-                                    <ChevronRight size={14} />
-                                  </div>
-                                  <ul className="details-bullets">
-                                    <li>Earn assured returns. Invest in Deposits with us.</li>
-                                    <li>Save and earn more with guaranteed returns on FD.</li>
-                                  </ul>
-
-                                  <div className="details-header mt-4">
-                                    <span>Recurring Deposits</span>
-                                    <ChevronRight size={14} />
-                                  </div>
-                                  <ul className="details-bullets">
-                                    <li>Grow your savings securely with our Recurring deposit scheme. Invest a fixed amount for a chosen tenure and earn assured returns with attractive interest rates, ensuring safety and steady growth.</li>
-                                  </ul>
-                                </div>
-                              )}
-
-                              {hoveredSubItem === 'kyc' && (
-                                <div className="drawer-details-content">
-                                  <div className="details-header">
-                                    <span>KYC</span>
-                                    <ChevronRight size={14} />
-                                  </div>
-                                  <ul className="details-bullets">
-                                    <li>Keep your KYC details updated to enjoy uninterrupted banking services.</li>
-                                    <li>Timely KYC updation helps protect your account and ensures regulatory compliance.</li>
-                                  </ul>
-                                </div>
-                              )}
+                            <div className={`drawer-left-item ${hoveredSubItem === 'current' ? 'active' : ''}`} onMouseEnter={() => setHoveredSubItem('current')}>
+                              <div className="item-icon-text">
+                                <svg className="menu-icon" viewBox="0 0 24 24" width="18" height="18"><path d="M3 10 h18 v2 h-18 z" fill="none" stroke="currentColor" strokeWidth="2"/><path d="M12 4 L3 10 L21 10 Z" fill="none" stroke="currentColor" strokeWidth="2"/><path d="M5 12 v8 h14 v-8" fill="none" stroke="currentColor" strokeWidth="2"/></svg>
+                                <span>Current Account</span>
+                              </div>
+                              <ChevronRight size={14} className="chevron-arrow" />
+                            </div>
+                            <div className={`drawer-left-item ${hoveredSubItem === 'term' ? 'active' : ''}`} onMouseEnter={() => setHoveredSubItem('term')}>
+                              <div className="item-icon-text">
+                                <svg className="menu-icon" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2"/><path d="M12 7 v10 M9 10 h6 M9 14 h6" stroke="currentColor" strokeWidth="2"/></svg>
+                                <span>Term Deposits</span>
+                              </div>
+                              <ChevronRight size={14} className="chevron-arrow" />
+                            </div>
+                            <div className={`drawer-left-item ${hoveredSubItem === 'kyc' ? 'active' : ''}`} onMouseEnter={() => setHoveredSubItem('kyc')}>
+                              <div className="item-icon-text">
+                                <svg className="menu-icon" viewBox="0 0 24 24" width="18" height="18"><rect x="5" y="2" width="14" height="20" rx="2" fill="none" stroke="currentColor" strokeWidth="2"/><circle cx="12" cy="18" r="1.5" fill="currentColor"/><path d="M9 5 h6" stroke="currentColor" strokeWidth="2"/></svg>
+                                <span>Update KYC</span>
+                              </div>
+                              <ChevronRight size={14} className="chevron-arrow" />
                             </div>
                           </div>
-
-                          <div className="drawer-dropdown-footer">
-                            Please register / login to explore more.
+                          <div className="drawer-right-col text-left">
+                            {hoveredSubItem === 'savings' && (<div className="drawer-details-content"><div className="details-header"><span>Digital Savings Account</span><ChevronRight size={14} /></div><ul className="details-bullets"><li>Effortless, Paperless Account Opening with No Branch Visit Needed.</li><li>Conveniently access and manage your account through YONO.</li></ul><div className="details-header mt-4"><span>3-in-1 Account</span><ChevronRight size={14} /></div><ul className="details-bullets"><li>Simplify your financial journey with 3-in-1 account opening.</li></ul></div>)}
+                            {hoveredSubItem === 'current' && (<div className="drawer-details-content"><div className="details-header"><span>Open Now</span><ChevronRight size={14} /></div><ul className="details-bullets"><li>Effortless, Paperless Account Opening with No Branch Visit Needed.</li><li>Conveniently access and manage your account through YONO.</li></ul></div>)}
+                            {hoveredSubItem === 'term' && (<div className="drawer-details-content"><div className="details-header"><span>Fixed Deposits</span><ChevronRight size={14} /></div><ul className="details-bullets"><li>Earn assured returns. Invest in Deposits with us.</li><li>Save and earn more with guaranteed returns on FD.</li></ul></div>)}
+                            {hoveredSubItem === 'kyc' && (<div className="drawer-details-content"><div className="details-header"><span>KYC</span><ChevronRight size={14} /></div><ul className="details-bullets"><li>Keep your KYC details updated to enjoy uninterrupted banking services.</li></ul></div>)}
                           </div>
                         </div>
-                      )}
+                        <div className="drawer-dropdown-footer">Please register / login to explore more.</div>
+                      </div>
                     </li>
                   </div>
                 </ul>
 
                 {/* Loans */}
-                <ul className="navbar-nav m-0 p-0 list-none">
+                <ul className="navbar-nav">
                   <div className={`linkitem ${activeDropdown === 'loans' ? 'activeBack' : ''}`}>
-                    <li 
-                      className="nav-item dropdown relative"
-                      onMouseEnter={() => setActiveDropdown('loans')}
-                      onMouseLeave={() => setActiveDropdown(null)}
-                    >
+                    <li className="nav-item dropdown">
                       <a 
                         href="#" 
-                        onClick={(e) => { e.preventDefault(); setActiveDropdown(activeDropdown === 'loans' ? null : 'loans'); }} 
-                        className={`nav-link nav-link-sbi ${activeDropdown === 'loans' ? 'active' : ''}`}
-                        style={{ padding: '5px 18px 0' }}
+                        onClick={(e) => { 
+                          e.preventDefault(); 
+                          e.stopPropagation(); 
+                          setActiveDropdown(activeDropdown === 'loans' ? null : 'loans'); 
+                        }} 
+                        className={`nav-link ${activeDropdown === 'loans' ? 'active' : ''}`} 
+                        aria-label="Loans"
                       >
                         Loans
                       </a>
-
                       <div className={`base-line ${activeDropdown === 'loans' ? 'active' : ''}`}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="21" height="4" viewBox="0 0 21 4" fill="none">
-                          <path d="M1.5 2H19.5" strokeWidth="2.5" strokeLinecap="round" stroke="#673391" className="base-line-svg"></path>
+                          <path d="M1.5 2H19.5" strokeWidth="2.5" strokeLinecap="round" className="base-line-svg"></path>
                         </svg>
                       </div>
-
-                      {activeDropdown === 'loans' && (
-                        <div className="drawer-dropdown">
-                          <a href="https://onlineapply.sbi.bank.in/personal-banking/personal-loan" target="_blank" rel="noopener noreferrer" className="optionsWithImage">Personal Loan</a>
-                          <a href="https://homeloans.sbi.bank.in/" target="_blank" rel="noopener noreferrer" className="optionsWithImage">Home Loan</a>
-                          <a href="https://sbi.bank.in/web/personal-banking/loans/gold-loan" target="_blank" rel="noopener noreferrer" className="optionsWithImage">Gold Loan</a>
-                          <a href="https://retail.sbi.bank.in/lamf/mflanding.htm" target="_blank" rel="noopener noreferrer" className="optionsWithImage">Loan Against Mutual Fund</a>
-                          <div className="dropdown-footer">
-                            Please register / login to explore more.
+                      <div className={`drawer-dropdown ${activeDropdown === 'loans' ? 'open' : ''}`}>
+                        <div className="outerDiv col-12">
+                          <div className="sublinks-header pt-0">
+                            <div className="sublinks-header_list">
+                              <div className="optionsWithImage"><span className="menu-text-item">Personal Loan</span><ChevronRight size={14} className="menu-arrow-icon" /></div>
+                              <div className="optionsWithImage"><span className="menu-text-item">OD against FD</span><ChevronRight size={14} className="menu-arrow-icon" /></div>
+                              <div className="optionsWithImage"><span className="menu-text-item">Home Loan</span><ChevronRight size={14} className="menu-arrow-icon" /></div>
+                              <div className="optionsWithImage"><span className="menu-text-item">Gold Loan</span><ChevronRight size={14} className="menu-arrow-icon" /></div>
+                              <div className="optionsWithImage"><span className="menu-text-item">Loan Against Mutual Fund</span><ChevronRight size={14} className="menu-arrow-icon" /></div>
+                              <div className="optionsWithImage"><span className="menu-text-item">Education Loan</span><ChevronRight size={14} className="menu-arrow-icon" /></div>
+                            </div>
                           </div>
                         </div>
-                      )}
+                        <div className="dropdown-footer">Please register / login to explore more.</div>
+                      </div>
                     </li>
                   </div>
                 </ul>
 
                 {/* Cards */}
-                <ul className="navbar-nav m-0 p-0 list-none">
+                <ul className="navbar-nav">
                   <div className={`linkitem ${activeDropdown === 'cards' ? 'activeBack' : ''}`}>
-                    <li 
-                      className="nav-item dropdown relative"
-                      onMouseEnter={() => setActiveDropdown('cards')}
-                      onMouseLeave={() => setActiveDropdown(null)}
-                    >
+                    <li className="nav-item dropdown">
                       <a 
                         href="#" 
-                        onClick={(e) => { e.preventDefault(); setActiveDropdown(activeDropdown === 'cards' ? null : 'cards'); }} 
-                        className={`nav-link nav-link-sbi ${activeDropdown === 'cards' ? 'active' : ''}`}
-                        style={{ padding: '5px 18px 0' }}
+                        onClick={(e) => { 
+                          e.preventDefault(); 
+                          e.stopPropagation(); 
+                          setActiveDropdown(activeDropdown === 'cards' ? null : 'cards'); 
+                        }} 
+                        className={`nav-link ${activeDropdown === 'cards' ? 'active' : ''}`} 
+                        aria-label="Cards"
                       >
                         Cards
                       </a>
-
                       <div className={`base-line ${activeDropdown === 'cards' ? 'active' : ''}`}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="21" height="4" viewBox="0 0 21 4" fill="none">
-                          <path d="M1.5 2H19.5" strokeWidth="2.5" strokeLinecap="round" stroke="#673391" className="base-line-svg"></path>
+                          <path d="M1.5 2H19.5" strokeWidth="2.5" strokeLinecap="round" className="base-line-svg"></path>
                         </svg>
                       </div>
-
-                      {activeDropdown === 'cards' && (
-                        <div className="drawer-dropdown">
-                          <a href="http://www.sbicard.com/" target="_blank" rel="noopener noreferrer" className="optionsWithImage">Credit Card</a>
-                          <a href="https://prepaid.sbi.bank.in/" target="_blank" rel="noopener noreferrer" className="optionsWithImage">Prepaid Card</a>
-                          <div className="dropdown-footer">
-                            Please register / login to explore more.
+                      <div className={`drawer-dropdown ${activeDropdown === 'cards' ? 'open' : ''}`}>
+                        <div className="outerDiv col-12">
+                          <div className="sublinks-header pt-0">
+                            <div className="sublinks-header_list">
+                              <div className="optionsWithImage"><span className="menu-text-item">Credit Card</span><ChevronRight size={14} className="menu-arrow-icon" /></div>
+                              <div className="optionsWithImage"><span className="menu-text-item">Prepaid Card</span><ChevronRight size={14} className="menu-arrow-icon" /></div>
+                            </div>
                           </div>
                         </div>
-                      )}
+                        <div className="dropdown-footer">Please register / login to explore more.</div>
+                      </div>
                     </li>
                   </div>
                 </ul>
 
                 {/* Investments */}
-                <ul className="navbar-nav m-0 p-0 list-none">
+                <ul className="navbar-nav">
                   <div className={`linkitem ${activeDropdown === 'investments' ? 'activeBack' : ''}`}>
-                    <li 
-                      className="nav-item dropdown relative"
-                      onMouseEnter={() => setActiveDropdown('investments')}
-                      onMouseLeave={() => setActiveDropdown(null)}
-                    >
+                    <li className="nav-item dropdown">
                       <a 
                         href="#" 
-                        onClick={(e) => { e.preventDefault(); setActiveDropdown(activeDropdown === 'investments' ? null : 'investments'); }} 
-                        className={`nav-link nav-link-sbi ${activeDropdown === 'investments' ? 'active' : ''}`}
-                        style={{ padding: '5px 18px 0' }}
+                        onClick={(e) => { 
+                          e.preventDefault(); 
+                          e.stopPropagation(); 
+                          setActiveDropdown(activeDropdown === 'investments' ? null : 'investments'); 
+                        }} 
+                        className={`nav-link ${activeDropdown === 'investments' ? 'active' : ''}`} 
+                        aria-label="Investments"
                       >
                         Investments
                       </a>
-
                       <div className={`base-line ${activeDropdown === 'investments' ? 'active' : ''}`}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="21" height="4" viewBox="0 0 21 4" fill="none">
-                          <path d="M1.5 2H19.5" strokeWidth="2.5" strokeLinecap="round" stroke="#673391" className="base-line-svg"></path>
+                          <path d="M1.5 2H19.5" strokeWidth="2.5" strokeLinecap="round" className="base-line-svg"></path>
                         </svg>
                       </div>
-
-                      {activeDropdown === 'investments' && (
-                        <div className="drawer-dropdown">
-                          <a href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" className="optionsWithImage">PPF Account</a>
-                          <a href="https://www.sbisecurities.in/" target="_blank" rel="noopener noreferrer" className="optionsWithImage">Demat &amp; Securities</a>
-                          <a href="https://www.sbisecurities.in/" target="_blank" rel="noopener noreferrer" className="optionsWithImage">3-in-1 Account</a>
-                          <div className="dropdown-footer">
-                            Please register / login to explore more.
+                      <div className={`drawer-dropdown ${activeDropdown === 'investments' ? 'open' : ''}`}>
+                        <div className="outerDiv col-12">
+                          <div className="sublinks-header pt-0">
+                            <div className="sublinks-header_list">
+                              <div className="optionsWithImage"><span className="menu-text-item">PPF Account</span><ChevronRight size={14} className="menu-arrow-icon" /></div>
+                              <div className="optionsWithImage"><span className="menu-text-item">Demat &amp; Securities</span><ChevronRight size={14} className="menu-arrow-icon" /></div>
+                              <div className="optionsWithImage"><span className="menu-text-item">3-in-1 Account</span><ChevronRight size={14} className="menu-arrow-icon" /></div>
+                            </div>
                           </div>
                         </div>
-                      )}
+                        <div className="dropdown-footer">Please register / login to explore more.</div>
+                      </div>
                     </li>
                   </div>
                 </ul>
@@ -641,7 +546,7 @@ export default function LoginPage() {
                     <div className="text-start">
                       <Link href="/auth/activate" className="link-purple" aria-label="Forgot Username">
                         Forgot Username?
-                      </span>
+                      </Link>
                     </div>
                   </div>
 
@@ -682,7 +587,7 @@ export default function LoginPage() {
                     <div className="text-start">
                       <Link href="/auth/activate" className="link-purple" aria-label="Forgot Password">
                         Forgot Password?
-                      </span>
+                      </Link>
                     </div>
                   </div>
 
@@ -739,7 +644,7 @@ export default function LoginPage() {
                   <div className="flex justify-end mt-2">
                     <a href="https://retail.sbi.bank.in" className="link-purple">
                       Lock/Unlock User
-                    </span>
+                    </a>
                   </div>
                 </form>
 
@@ -894,7 +799,7 @@ export default function LoginPage() {
                 <HelpCircle size={24} />
               </div>
               <span className="qa-label">FAQ</span>
-            </a>
+            </div>
 
             <a href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" className="qa-item">
               <div className="qa-circle">
@@ -962,7 +867,9 @@ export default function LoginPage() {
                       <div className="col-md-4 d-flex justify-content-end tabText">
                         <a role="link" aria-label="View All Important Notices" tabIndex={0} onClick={handleDemoLogin}>View All</a>
                       </div>
-                    </div>
+                    </li>
+                  </ul>
+                </div>
 
                 {/* Right Column: Security Best Practices Carousel */}
                 <div>
