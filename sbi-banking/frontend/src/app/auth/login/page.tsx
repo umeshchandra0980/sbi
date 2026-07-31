@@ -326,7 +326,13 @@ export default function LoginPage() {
           <div className="container-xxl navbar-sbi-inner" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 16px', width: '100%' }}>
             <div className="bottom-col-left col-auto p-0 col-lg-2 pt-2">
               <Link href="/">
-                <img loading="lazy" className="header-logo" src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/new-horz-logo_net-banking_svg" alt="YONOSBILogo" />
+                <img 
+                  loading="lazy" 
+                  className="header-logo" 
+                  src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/new-horz-logo_net-banking_svg" 
+                  onError={(e) => { (e.target as HTMLImageElement).src = '/assets/images/yono_logo.svg'; }}
+                  alt="YONOSBILogo" 
+                />
               </Link>
             </div>
 

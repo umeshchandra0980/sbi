@@ -24,9 +24,13 @@ import {
   TrendingUp,
   ArrowRight,
   Eye,
-  EyeOff
+  EyeOff,
+  Play,
+  Volume2,
+  X
 } from 'lucide-react';
 import './SbiLandingPageComponent.css';
+import SbiGlobalBrandHeader from './SbiGlobalBrandHeader';
 
 interface SbiLandingPageComponentProps {
   initialTab?: 'Transaction' | 'Deposits' | 'Loans' | 'Investments' | 'Insurance';
@@ -56,6 +60,8 @@ export default function SbiLandingPageComponent({
   const [includeAllSummary, setIncludeAllSummary] = useState(false);
   const [includeNominee, setIncludeNominee] = useState(false);
   const [showAccountNo, setShowAccountNo] = useState(false);
+  const [spendSubTab, setSpendSubTab] = useState<'Tutorials' | 'FAQs'>('Tutorials');
+  const [showNoRequestsModal, setShowNoRequestsModal] = useState(false);
 
   // Hover Mega Dropdown state
   const [hoveredNavTab, setHoveredNavTab] = useState<string | null>(null);
@@ -103,360 +109,8 @@ export default function SbiLandingPageComponent({
   return (
     <div className="sbi-portal-wrapper">
       
-      {/* 1. TOPMOST PURPLE UTILITY HEADER BAR */}
-      <div className="sbi-top-purple-bar">
-        <div className="sbi-top-purple-inner">
-          
-          {/* Left Top Sub-Tabs */}
-          <div className="sbi-top-left-nav">
-            <button type="button" className="sbi-top-tab active">
-              Banking
-            </button>
-            <button 
-              type="button" 
-              className="sbi-top-tab flex items-center gap-1.5" 
-              onClick={() => router.push('/home/landingPage/lifestyle')}
-            >
-              <ShoppingBag size={13} />
-              Lifestyle
-            </button>
-            <button type="button" className="sbi-top-tab flex items-center gap-1.5" onClick={() => toast('YONO Rewards')}>
-              <Gift size={13} />
-              Rewards
-            </button>
-            <div className="sbi-lite-toggle flex items-center gap-2 text-xs text-purple-100 ml-2">
-              <span className="font-semibold text-[11px]">YONO Net Banking Lite</span>
-              <button 
-                type="button"
-                onClick={() => setLiteMode(!liteMode)}
-                className={`sbi-toggle-btn ${liteMode ? 'on' : 'off'}`}
-                aria-label="Toggle YONO Net Banking Lite"
-              >
-                <span className="sbi-toggle-thumb"></span>
-                <span className="sbi-toggle-text">{liteMode ? 'ON' : 'OFF'}</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Right Utilities */}
-          <div className="sbi-top-right-nav">
-            <div className="sbi-top-util-item">
-              <span className="sbi-play-icon">▶</span>
-              <span>Get Help</span>
-              <span className="font-bold text-white">1800-11-1101</span>
-            </div>
-            <div className="sbi-top-util-item cursor-pointer">
-              <span>English</span>
-              <ChevronDown size={12} />
-            </div>
-            <div className="sbi-top-util-item sbi-font-sizer">
-              <button type="button">–</button>
-              <button type="button" className="font-bold">A</button>
-              <button type="button">+</button>
-            </div>
-            <button 
-              type="button" 
-              onClick={() => {
-                toast.success('Logged out successfully');
-                router.push('/auth/login');
-              }}
-              className="sbi-top-util-item hover:underline"
-            >
-              Logout
-            </button>
-          </div>
-
-        </div>
-      </div>
-
-      {/* 2. MAIN YONO NET-BANKING BRAND BAR */}
-      <header className="sbi-brand-header">
-        <div className="sbi-brand-header-inner">
-          
-          {/* Logo */}
-          <Link href="/dashboard" className="sbi-brand-logo flex items-center gap-2">
-            <img 
-              src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/new-horz-logo_net-banking_svg" 
-              onError={(e) => { (e.target as HTMLImageElement).src = 'https://onlinesbi.sbi.bank.in/sbijava/images/yono_netbanking.png'; }}
-              alt="YONO SBI Net-Banking Logo" 
-              className="h-9 w-auto object-contain"
-            />
-          </Link>
-
-          {/* Nav Items with Interactive Mega Dropdown Cards (Matching User Reference Image) */}
-          <nav className="sbi-main-nav relative flex items-center gap-1.5">
-            {[
-              {
-                id: 'Overview',
-                label: 'Overview',
-                href: '/dashboard',
-                col1Title: 'Quick Overview',
-                col1Items: [
-                  { label: 'Dashboard Summary', href: '/dashboard', icon: '📊' },
-                  { label: 'Relationship Overview', href: '/dashboard', icon: '🏦' },
-                  { label: 'Recent Activity', href: '/dashboard', icon: '⏱' },
-                ],
-                col2Title: 'Quick Links',
-                col2Items: [
-                  { label: 'View Profile', href: '/profile', icon: '👤' },
-                  { label: 'Settings', href: '/settings', icon: '⚙' },
-                ]
-              },
-              {
-                id: 'Accounts',
-                label: 'Accounts',
-                href: '/home/landingPage/manageRelationship/transactionAccounts',
-                onClick: () => handleTabChange('Transaction'),
-                col1Title: 'Accounts Summary',
-                col1Items: [
-                  { label: 'Savings Bank Account', href: '/home/landingPage/manageRelationship/transactionAccounts', icon: '🏦' },
-                  { label: 'Current Bank Account', href: '/home/landingPage/manageRelationship/transactionAccounts', icon: '💼' },
-                  { label: 'Apply for New Savings Account', href: '/accounts/open-savings-account', icon: '➕' },
-                  { label: 'Request Account Statement', href: '/home/landingPage/manageRelationship/transactionAccounts', icon: '📄' },
-                ],
-                col2Title: 'Quick Links',
-                col2Items: [
-                  { label: 'View All Accounts', href: '/accounts', icon: '👁' },
-                  { label: 'Spend Analysis', href: '/home/landingPage/manageRelationship/transactionAccounts', icon: '📊' },
-                ]
-              },
-              {
-                id: 'Payments',
-                label: 'Payments',
-                href: '/transfers',
-                col1Title: 'Fund Transfer',
-                col1Items: [
-                  { label: 'Quick Transfer', href: '/transfers', icon: '🔄' },
-                  { label: 'Send Money', href: '/transfers', icon: '📲' },
-                  { label: 'Manage Payee', href: '/transfers', icon: '👤' },
-                  { label: 'Schedule Payments', href: '/transfers', icon: '📅' },
-                  { label: 'Send Money Abroad', href: '/transfers', icon: '🔀' },
-                  { label: 'Bill Payments', href: '/transfers', icon: '🧾' },
-                ],
-                col2Title: 'Quick Links',
-                col2Items: [
-                  { label: 'Transaction History', href: '/home/landingPage/manageRelationship/transactionAccounts', icon: '⇄' },
-                  { label: 'Manage Limits', href: '/settings', icon: '⏲' },
-                ]
-              },
-              {
-                id: 'Deposits',
-                label: 'Deposits',
-                href: '/home/landingPage/manageRelationship/deposits',
-                onClick: () => handleTabChange('Deposits'),
-                col1Title: 'Term & Fixed Deposits',
-                col1Items: [
-                  { label: 'Fixed Deposit (FD)', href: '/home/landingPage/manageRelationship/deposits', icon: '📈' },
-                  { label: 'Recurring Deposit (RD)', href: '/home/landingPage/manageRelationship/deposits', icon: '🔁' },
-                  { label: 'Open Fixed Deposit', href: '/home/landingPage/manageRelationship/deposits', icon: '✨' },
-                  { label: 'Deposit Interest Certificate', href: '/home/landingPage/manageRelationship/deposits', icon: '📜' },
-                ],
-                col2Title: 'Quick Links',
-                col2Items: [
-                  { label: 'Sukanya Samriddhi Scheme', href: '/home/landingPage/manageRelationship/deposits', icon: '💡' },
-                  { label: 'Tax Saving Deposits', href: '/home/landingPage/manageRelationship/deposits', icon: '📋' },
-                ]
-              },
-              {
-                id: 'Loans',
-                label: 'Loans',
-                href: '/home/landingPage/manageRelationship/loans/loans',
-                onClick: () => handleTabChange('Loans'),
-                col1Title: 'Loan Products',
-                col1Items: [
-                  { label: 'Home Loan', href: '/home/landingPage/manageRelationship/loans/loans', icon: '🏠' },
-                  { label: 'Personal Loan', href: '/home/landingPage/manageRelationship/loans/loans', icon: '👤' },
-                  { label: 'Gold Loan', href: '/home/landingPage/manageRelationship/loans/loans', icon: '🥇' },
-                  { label: 'Business Loan', href: '/home/landingPage/manageRelationship/loans/loans', icon: '💼' },
-                ],
-                col2Title: 'Quick Links',
-                col2Items: [
-                  { label: 'Loan Eligibility Calculator', href: '/home/landingPage/manageRelationship/loans/loans', icon: '🧮' },
-                  { label: 'Loan Account Statement', href: '/home/landingPage/manageRelationship/loans/loans', icon: '📄' },
-                ]
-              },
-              {
-                id: 'Cards',
-                label: 'Cards',
-                href: '/cards',
-                col1Title: 'Card Services',
-                col1Items: [
-                  { label: 'SBI Credit Cards', href: '/cards', icon: '💳' },
-                  { label: 'Debit Card Management', href: '/cards', icon: '🎴' },
-                  { label: 'Block / Unblock Card', href: '/cards', icon: '🔒' },
-                  { label: 'Generate PIN', href: '/cards', icon: '🔑' },
-                ],
-                col2Title: 'Quick Links',
-                col2Items: [
-                  { label: 'Card Rewards Points', href: '/cards', icon: '🎁' },
-                  { label: 'Manage Card Limits', href: '/cards', icon: '📊' },
-                ]
-              },
-              {
-                id: 'Investments',
-                label: 'Investments',
-                href: '/home/landingPage/manageRelationship/investments/mutual-fund',
-                onClick: () => handleTabChange('Investments'),
-                col1Title: 'Investment Options',
-                col1Items: [
-                  { label: 'Mutual Funds', href: '/home/landingPage/manageRelationship/investments/mutual-fund', icon: '📊' },
-                  { label: 'Demat & Securities', href: '/home/landingPage/manageRelationship/investments/mutual-fund', icon: '📈' },
-                  { label: 'Public Provident Fund (PPF)', href: '/home/landingPage/manageRelationship/investments/mutual-fund', icon: '🐷' },
-                  { label: 'National Pension System (NPS)', href: '/home/landingPage/manageRelationship/investments/mutual-fund', icon: '🛡' },
-                ],
-                col2Title: 'Quick Links',
-                col2Items: [
-                  { label: 'Apply for IPO', href: '/home/landingPage/manageRelationship/investments/mutual-fund', icon: '🚀' },
-                  { label: 'Folio Summary', href: '/home/landingPage/manageRelationship/investments/mutual-fund', icon: '📑' },
-                ]
-              },
-              {
-                id: 'Insurance',
-                label: 'Insurance',
-                href: '/home/landingPage/manageRelationship/insurance',
-                onClick: () => handleTabChange('Insurance'),
-                col1Title: 'Insurance Plans',
-                col1Items: [
-                  { label: 'SBI Life Insurance', href: '/home/landingPage/manageRelationship/insurance', icon: '🛡' },
-                  { label: 'Health Insurance', href: '/home/landingPage/manageRelationship/insurance', icon: '🏥' },
-                  { label: 'Motor Insurance', href: '/home/landingPage/manageRelationship/insurance', icon: '🚗' },
-                  { label: 'Link Existing Policy', href: '/home/landingPage/manageRelationship/insurance', icon: '🔗' },
-                ],
-                col2Title: 'Quick Links',
-                col2Items: [
-                  { label: 'Buy New Policy', href: '/home/landingPage/manageRelationship/insurance', icon: '🛒' },
-                  { label: 'Download Policy Document', href: '/home/landingPage/manageRelationship/insurance', icon: '📄' },
-                ]
-              },
-              {
-                id: 'Services',
-                label: 'Services',
-                href: '/settings',
-                col1Title: 'Service Requests',
-                col1Items: [
-                  { label: 'Account Settings', href: '/settings', icon: '⚙' },
-                  { label: 'Change Login Password', href: '/settings', icon: '🔑' },
-                  { label: 'Update Mobile / KYC', href: '/settings', icon: '📱' },
-                  { label: 'Lock / Unlock User Access', href: '/settings', icon: '🛡' },
-                ],
-                col2Title: 'Quick Links',
-                col2Items: [
-                  { label: 'Customer Care Support', href: '/settings', icon: '📞' },
-                  { label: 'Download Tax Certificates', href: '/settings', icon: '📑' },
-                ]
-              }
-            ].map((tab) => {
-              const isHovered = hoveredNavTab === tab.id;
-              const isActive = (tab.id === 'Accounts' && activeTab === 'Transaction') || 
-                             (tab.id === 'Deposits' && activeTab === 'Deposits') ||
-                             (tab.id === 'Loans' && activeTab === 'Loans') ||
-                             (tab.id === 'Investments' && activeTab === 'Investments') ||
-                             (tab.id === 'Insurance' && activeTab === 'Insurance') ||
-                             (tab.id === 'Overview' && pathname === '/dashboard') ||
-                             (tab.id === 'Payments' && (pathname === '/transfers' || pathname === '/payments')) ||
-                             (tab.id === 'Cards' && pathname === '/cards') ||
-                             (tab.id === 'Services' && pathname === '/settings');
-
-              return (
-                <div 
-                  key={tab.id}
-                  className="relative"
-                  onMouseEnter={() => setHoveredNavTab(tab.id)}
-                  onMouseLeave={() => setHoveredNavTab(null)}
-                >
-                  <button
-                    type="button"
-                    onClick={tab.onClick ? tab.onClick : () => router.push(tab.href)}
-                    className={`relative px-4 py-2 text-xs font-bold transition-all rounded-t-xl cursor-pointer ${
-                      isHovered || isActive 
-                        ? 'bg-[#f4edf9] text-[#673391]' 
-                        : 'text-slate-600 hover:text-[#673391] hover:bg-slate-50'
-                    }`}
-                  >
-                    <span>{tab.label}</span>
-                    {(isHovered || isActive) && (
-                      <div className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#673391] rounded-full" />
-                    )}
-                  </button>
-
-                  {/* Mega Dropdown Hover Card (Exact Match to User Image) */}
-                  {isHovered && (
-                    <div className="absolute top-full left-0 mt-1 w-[460px] bg-[#f8f8fc] rounded-2xl p-5 shadow-2xl border border-purple-100/70 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                      <div className="grid grid-cols-2 gap-5">
-                        
-                        {/* Column 1 */}
-                        <div>
-                          <h4 className="text-xs font-extrabold text-[#30135d] mb-2.5 pb-1.5 border-b border-purple-100">
-                            {tab.col1Title}
-                          </h4>
-                          <div className="space-y-1">
-                            {tab.col1Items.map((item) => (
-                              <Link
-                                key={item.label}
-                                href={item.href}
-                                className="flex items-center gap-2.5 py-1.5 px-2 rounded-xl hover:bg-white transition-all group border-b border-slate-100/60"
-                              >
-                                <div className="w-7 h-7 rounded-full border border-purple-200 bg-white text-[#673391] flex items-center justify-center text-xs shadow-xs group-hover:scale-110 transition-transform">
-                                  {item.icon}
-                                </div>
-                                <span className="text-[11px] font-bold text-slate-800 group-hover:text-[#673391]">
-                                  {item.label}
-                                </span>
-                              </Link>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Column 2 */}
-                        <div>
-                          <h4 className="text-xs font-extrabold text-[#30135d] mb-2.5 pb-1.5 border-b border-purple-100">
-                            {tab.col2Title}
-                          </h4>
-                          <div className="space-y-1">
-                            {tab.col2Items.map((item) => (
-                              <Link
-                                key={item.label}
-                                href={item.href}
-                                className="flex items-center gap-2.5 py-1.5 px-2 rounded-xl hover:bg-white transition-all group border-b border-slate-100/60"
-                              >
-                                <div className="w-7 h-7 rounded-full border border-purple-200 bg-white text-[#673391] flex items-center justify-center text-xs shadow-xs group-hover:scale-110 transition-transform">
-                                  {item.icon}
-                                </div>
-                                <span className="text-[11px] font-bold text-slate-800 group-hover:text-[#673391]">
-                                  {item.label}
-                                </span>
-                              </Link>
-                            ))}
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                  )}
-
-                </div>
-              );
-            })}
-          </nav>
-
-          {/* Right Header Actions */}
-          <div className="sbi-header-actions">
-            <button type="button" className="sbi-icon-btn" aria-label="Search">
-              <Search size={18} />
-            </button>
-            <button type="button" className="sbi-icon-btn" aria-label="Notifications">
-              <Bell size={18} />
-            </button>
-            
-            {/* User Profile Capsule matching screenshot */}
-            <Link href="/profile" className="sbi-profile-pill">
-              <div className="sbi-avatar-circle">DV</div>
-              <span className="sbi-profile-text">My Profile</span>
-            </Link>
-          </div>
-
-        </div>
-      </header>
+      {/* ================= GLOBAL BRAND HEADER ================= */}
+      <SbiGlobalBrandHeader activeNav="Accounts" />
 
       {/* 3. BREADCRUMB & MAIN BODY CONTENT */}
       <main className="sbi-main-body">
@@ -504,6 +158,85 @@ export default function SbiLandingPageComponent({
         {/* 5. ACTIVE TAB MAIN WORKSPACE AREA */}
         <div className="sbi-workspace-area">
 
+          {/* ================= MODAL: NO PENDING REQUESTS (EXACT MATCH TO SCREENSHOT 2) ================= */}
+          {showNoRequestsModal && (
+            <div 
+              className="fixed inset-0 bg-black/40 backdrop-blur-xs flex items-center justify-center z-50 p-4 animate-in fade-in duration-150"
+              onClick={() => setShowNoRequestsModal(false)}
+            >
+              <div 
+                className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl relative border border-slate-100 animate-in zoom-in-95 duration-150"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Close Button X */}
+                <button
+                  type="button"
+                  onClick={() => setShowNoRequestsModal(false)}
+                  className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1 rounded-full transition-colors"
+                  aria-label="Close"
+                >
+                  <X size={18} />
+                </button>
+
+                {/* Modal Title */}
+                <h3 className="text-base font-extrabold text-[#673391] mb-6">
+                  No pending requests
+                </h3>
+
+                {/* Triangle Pole Warning Graphic & Text */}
+                <div className="flex flex-col md:flex-row items-center gap-6 py-2">
+                  <div className="w-40 h-32 relative flex items-center justify-center shrink-0">
+                    <svg viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                      {/* Soft Background Hills */}
+                      <path d="M10 120 C40 100 80 110 120 120 Z" fill="#f5edfc" />
+                      <path d="M70 120 C100 95 130 110 150 120 Z" fill="#eee3fa" />
+
+                      {/* Ground Base */}
+                      <line x1="5" y1="120" x2="155" y2="120" stroke="#d8c5f2" strokeWidth="1.5" strokeDasharray="3 3" />
+
+                      {/* Pole */}
+                      <line x1="75" y1="50" x2="75" y2="120" stroke="#702082" strokeWidth="2.5" strokeLinecap="round" />
+
+                      {/* Triangle Sign */}
+                      <path 
+                        d="M75 15 L100 55 L50 55 Z" 
+                        fill="#ffffff" 
+                        stroke="#702082" 
+                        strokeWidth="3.5" 
+                        strokeLinejoin="round" 
+                      />
+                      {/* Exclamation Point */}
+                      <path d="M75 28 L75 41" stroke="#702082" strokeWidth="3" strokeLinecap="round" />
+                      <circle cx="75" cy="48" r="1.8" fill="#702082" />
+
+                      {/* Cactus Graphic at Base */}
+                      <g transform="translate(58, 95)">
+                        <rect x="8" y="6" width="5" height="20" rx="2.5" fill="#a855f7" fillOpacity="0.4" />
+                        <path d="M4 12 C4 18 8 18 8 18" stroke="#a855f7" strokeWidth="2" strokeLinecap="round" fill="none" />
+                        <path d="M17 14 C17 20 13 20 13 20" stroke="#a855f7" strokeWidth="2" strokeLinecap="round" fill="none" />
+                      </g>
+                    </svg>
+                  </div>
+
+                  <div className="flex-1 text-slate-700 text-xs font-medium leading-relaxed">
+                    There are no pending requests that requires your approval (BSTDC038)
+                  </div>
+                </div>
+
+                {/* Bottom Okay Action Button */}
+                <div className="flex justify-end pt-4 mt-2 border-t border-slate-100">
+                  <button
+                    type="button"
+                    onClick={() => setShowNoRequestsModal(false)}
+                    className="px-6 py-1.5 text-xs font-bold text-[#673391] border border-[#673391] rounded-full hover:bg-purple-50 transition-colors"
+                  >
+                    Okay
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* ========================================================================= */}
           {/* TAB 1: DEPOSITS (MATCHING SCREENSHOT 1) */}
           {/* ========================================================================= */}
@@ -528,10 +261,10 @@ export default function SbiLandingPageComponent({
                   </button>
                 </div>
 
-                {/* Requests Accordion Card */}
+                {/* Requests Accordion Card (Matching Screenshot 1 & 2) */}
                 <div 
-                  onClick={() => toast('Account Requests Section')}
-                  className="sbi-menu-card flex items-center justify-between cursor-pointer"
+                  onClick={() => setShowNoRequestsModal(true)}
+                  className="sbi-menu-card flex items-center justify-between cursor-pointer hover:bg-slate-50 transition-colors"
                 >
                   <span className="text-xs font-semibold text-gray-700">Requests</span>
                   <ChevronRight size={16} className="text-gray-400" />
@@ -779,57 +512,44 @@ export default function SbiLandingPageComponent({
                       {investmentSubTab}
                     </div>
 
-                    {/* Main Content inside Mutual Fund */}
+                    {/* Main Content inside Investments (Matching Screenshot 4) */}
                     <div className="p-8 flex-1 flex flex-col items-center justify-center text-center">
                       
-                      <h2 className="text-xl font-bold text-[#30135d] mb-6">
-                        Start {investmentSubTab} Investments
-                      </h2>
-
-                      {/* Vector Shield with Rupee & Sprout Plant Illustration */}
-                      <div className="w-56 h-48 relative mb-6 flex items-center justify-center">
+                      {/* Mobile Phone Vector Illustration with Hourglass & Progress Bar */}
+                      <div className="w-56 h-48 relative mb-4 flex items-center justify-center">
                         <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                          {/* Soft Purple Background Oval */}
+                          <ellipse cx="100" cy="115" rx="75" ry="25" fill="#f3e8ff" opacity="0.6" />
                           
-                          {/* Background Upward Arrow */}
-                          <path d="M120 100 L150 40 L165 55 M150 40 L135 55" stroke="#f472b6" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none" opacity="0.6" />
-                          <path d="M100 130 C120 100 140 70 150 40" stroke="#f472b6" strokeWidth="4" strokeDasharray="4 4" fill="none" opacity="0.6" />
+                          {/* Hourglass in Background */}
+                          <path d="M125 45 C125 45 155 45 155 70 C155 85 140 95 140 95 C140 95 155 105 155 120 C155 145 125 145 125 145 L125 45 Z" fill="#fce7f3" opacity="0.7" />
+                          <path d="M130 50 L150 50 L140 80 Z" fill="#ec4899" opacity="0.3" />
+                          
+                          {/* Mobile Phone Container */}
+                          <rect x="75" y="25" width="50" height="95" rx="8" fill="#ffffff" stroke="#30135d" strokeWidth="3" />
+                          <rect x="90" y="29" width="20" height="3" rx="1.5" fill="#e2e8f0" />
+                          <circle cx="100" cy="112" r="3" fill="#e2e8f0" />
 
-                          {/* Background Folio / Document Card */}
-                          <rect x="50" y="70" width="80" height="50" rx="4" fill="#e9d5ff" opacity="0.7" />
-                          <circle cx="65" cy="85" r="5" fill="#a855f7" />
-                          <line x1="75" y1="83" x2="110" y2="83" stroke="#a855f7" strokeWidth="2" strokeLinecap="round" />
-                          <line x1="75" y1="88" x2="98" y2="88" stroke="#a855f7" strokeWidth="2" strokeLinecap="round" />
+                          {/* Pink Loading Progress Bar on Phone Screen */}
+                          <rect x="83" y="70" width="34" height="6" rx="3" fill="#fce7f3" />
+                          <rect x="83" y="70" width="22" height="6" rx="3" fill="#d92588" />
+                          <circle cx="87" cy="73" r="1" fill="#ffffff" />
+                          <circle cx="92" cy="73" r="1" fill="#ffffff" />
+                          <circle cx="97" cy="73" r="1" fill="#ffffff" />
 
-                          {/* Shield Outline & Body */}
-                          <path 
-                            d="M100 35 C100 35 130 42 130 75 C130 110 100 130 100 130 C100 130 70 110 70 75 C70 42 100 35 100 35 Z" 
-                            fill="#ffffff" 
-                            stroke="#30135d" 
-                            strokeWidth="4" 
-                            strokeLinejoin="round" 
-                          />
-
-                          {/* Pink Circle inside Shield with ₹ Symbol */}
-                          <circle cx="100" cy="80" r="15" fill="#a855f7" />
-                          <text x="100" y="86" textAnchor="middle" fill="#ffffff" fontSize="16" fontWeight="bold">₹</text>
-
-                          {/* Green & Pink Plant Sprout on top of Shield */}
-                          <path d="M100 35 Q92 20 80 25 Q95 30 100 35" fill="#ec4899" />
-                          <path d="M100 35 Q108 20 120 25 Q105 30 100 35" fill="#a855f7" />
+                          {/* Curved Dotted Flight Arrow Path */}
+                          <path d="M50 100 C40 60 70 40 75 50" stroke="#818cf8" strokeWidth="2" strokeDasharray="3 3" fill="none" />
+                          <path d="M130 90 C150 70 140 50 145 60" stroke="#818cf8" strokeWidth="2" strokeDasharray="3 3" fill="none" />
                         </svg>
                       </div>
 
-                      <p className="text-xs font-medium text-gray-600 mb-6">
-                        Start investing today with SBI Mutual Funds
-                      </p>
+                      <h2 className="text-lg font-extrabold text-[#30135d] mb-1.5">
+                        Coming Soon
+                      </h2>
 
-                      <button
-                        type="button"
-                        onClick={() => toast.success('Redirecting to Create Folio page')}
-                        className="sbi-btn-pill-purple"
-                      >
-                        Create Folio
-                      </button>
+                      <p className="text-xs text-slate-500 max-w-sm leading-relaxed">
+                        We are preparing to help you access this Service shortly
+                      </p>
 
                     </div>
 
@@ -1341,6 +1061,171 @@ export default function SbiLandingPageComponent({
                           </div>
                         </div>
 
+                      </div>
+
+                      {/* Tutorials & FAQs Sub-Tabs (Matching User Image 2) */}
+                      <div className="pt-6 border-t border-slate-100">
+                        <div className="flex items-center gap-6 mb-4">
+                          <button
+                            type="button"
+                            onClick={() => setSpendSubTab('Tutorials')}
+                            className={`text-xs font-bold transition-all relative pb-2 ${
+                              spendSubTab === 'Tutorials' ? 'text-[#673391]' : 'text-slate-500 hover:text-slate-800'
+                            }`}
+                          >
+                            <span>Tutorials</span>
+                            {spendSubTab === 'Tutorials' && (
+                              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#673391] rounded-full" />
+                            )}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setSpendSubTab('FAQs')}
+                            className={`text-xs font-bold transition-all relative pb-2 ${
+                              spendSubTab === 'FAQs' ? 'text-[#673391]' : 'text-slate-500 hover:text-slate-800'
+                            }`}
+                          >
+                            <span>FAQs</span>
+                            {spendSubTab === 'FAQs' && (
+                              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#673391] rounded-full" />
+                            )}
+                          </button>
+                        </div>
+
+                        {spendSubTab === 'Tutorials' ? (
+                          <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs">
+                            {/* Learn More about Spend Analysis Card Box */}
+                            <div className="flex items-center justify-between mb-4">
+                              <h3 className="text-sm font-bold text-slate-800">Learn More about Spend Analysis</h3>
+                              <button
+                                type="button"
+                                onClick={() => toast.success('Opening all Spend Analysis tutorials')}
+                                className="text-xs font-bold text-[#673391] hover:underline"
+                              >
+                                View All
+                              </button>
+                            </div>
+
+                            {/* 4 Video Cards Grid */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                              
+                              {/* Card 1 */}
+                              <div className="flex flex-col space-y-2 group cursor-pointer" onClick={() => toast.success('Playing: Get to Know Your Spending Patterns')}>
+                                <div className="bg-gradient-to-br from-[#2a0845] to-[#642b73] h-32 rounded-xl relative p-3 flex flex-col justify-between overflow-hidden shadow-xs group-hover:shadow-md transition-shadow">
+                                  <div className="flex justify-end">
+                                    <span className="text-white/70 hover:text-white text-xs">⋮</span>
+                                  </div>
+                                  <div className="flex items-center justify-center">
+                                    <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-xs flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+                                      <Play size={18} className="fill-white ml-0.5" />
+                                    </div>
+                                  </div>
+                                  <div className="flex items-center justify-between text-white/80 text-[10px]">
+                                    <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden">
+                                      <div className="w-1/3 h-full bg-[#d92588]"></div>
+                                    </div>
+                                    <Volume2 size={12} className="ml-2" />
+                                  </div>
+                                </div>
+                                <h4 className="text-xs font-bold text-slate-900 group-hover:text-[#673391] transition-colors leading-tight">
+                                  Get to Know Your Spending Patterns
+                                </h4>
+                                <p className="text-[11px] text-slate-500 leading-normal line-clamp-3">
+                                  See how Spend Analysis breaks down your daily expenses in a clear, simple way for better financial insights.
+                                </p>
+                              </div>
+
+                              {/* Card 2 */}
+                              <div className="flex flex-col space-y-2 group cursor-pointer" onClick={() => toast.success('Playing: Easy Way to Manage Your Budget')}>
+                                <div className="bg-gradient-to-br from-[#2a0845] to-[#642b73] h-32 rounded-xl relative p-3 flex flex-col justify-between overflow-hidden shadow-xs group-hover:shadow-md transition-shadow">
+                                  <div className="flex justify-end">
+                                    <span className="text-white/70 hover:text-white text-xs">⋮</span>
+                                  </div>
+                                  <div className="flex items-center justify-center">
+                                    <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-xs flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+                                      <Play size={18} className="fill-white ml-0.5" />
+                                    </div>
+                                  </div>
+                                  <div className="flex items-center justify-between text-white/80 text-[10px]">
+                                    <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden">
+                                      <div className="w-1/2 h-full bg-[#d92588]"></div>
+                                    </div>
+                                    <Volume2 size={12} className="ml-2" />
+                                  </div>
+                                </div>
+                                <h4 className="text-xs font-bold text-slate-900 group-hover:text-[#673391] transition-colors leading-tight">
+                                  Easy Way to Manage Your Budget
+                                </h4>
+                                <p className="text-[11px] text-slate-500 leading-normal line-clamp-3">
+                                  A quick guide to setting up, tracking, and staying on top of your monthly budget.
+                                </p>
+                              </div>
+
+                              {/* Card 3 */}
+                              <div className="flex flex-col space-y-2 group cursor-pointer" onClick={() => toast.success('Playing: All Your Spending, in One Visual View')}>
+                                <div className="bg-gradient-to-br from-[#2a0845] to-[#642b73] h-32 rounded-xl relative p-3 flex flex-col justify-between overflow-hidden shadow-xs group-hover:shadow-md transition-shadow">
+                                  <div className="flex justify-end">
+                                    <span className="text-white/70 hover:text-white text-xs">⋮</span>
+                                  </div>
+                                  <div className="flex items-center justify-center">
+                                    <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-xs flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+                                      <Play size={18} className="fill-white ml-0.5" />
+                                    </div>
+                                  </div>
+                                  <div className="flex items-center justify-between text-white/80 text-[10px]">
+                                    <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden">
+                                      <div className="w-2/3 h-full bg-[#d92588]"></div>
+                                    </div>
+                                    <Volume2 size={12} className="ml-2" />
+                                  </div>
+                                </div>
+                                <h4 className="text-xs font-bold text-slate-900 group-hover:text-[#673391] transition-colors leading-tight">
+                                  All Your Spending, in One Visual View
+                                </h4>
+                                <p className="text-[11px] text-slate-500 leading-normal line-clamp-3">
+                                  Explore the features and visuals that give you a clear, meaningful view of your money.
+                                </p>
+                              </div>
+
+                              {/* Card 4 */}
+                              <div className="flex flex-col space-y-2 group cursor-pointer" onClick={() => toast.success('Playing: Turn Your Card Statements into Quick Insights')}>
+                                <div className="bg-gradient-to-br from-[#2a0845] to-[#642b73] h-32 rounded-xl relative p-3 flex flex-col justify-between overflow-hidden shadow-xs group-hover:shadow-md transition-shadow">
+                                  <div className="flex justify-end">
+                                    <span className="text-white/70 hover:text-white text-xs">⋮</span>
+                                  </div>
+                                  <div className="flex items-center justify-center">
+                                    <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-xs flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+                                      <Play size={18} className="fill-white ml-0.5" />
+                                    </div>
+                                  </div>
+                                  <div className="flex items-center justify-between text-white/80 text-[10px]">
+                                    <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden">
+                                      <div className="w-1/4 h-full bg-[#d92588]"></div>
+                                    </div>
+                                    <Volume2 size={12} className="ml-2" />
+                                  </div>
+                                </div>
+                                <h4 className="text-xs font-bold text-slate-900 group-hover:text-[#673391] transition-colors leading-tight">
+                                  Turn Your Card Statements into Quick Insights
+                                </h4>
+                                <p className="text-[11px] text-slate-500 leading-normal line-clamp-3">
+                                  Gain a complete, integrated view of your spending by uploading your credit card statements.
+                                </p>
+                              </div>
+
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs space-y-3 text-xs text-slate-700">
+                            <h3 className="text-sm font-bold text-slate-800">Frequently Asked Questions (FAQs)</h3>
+                            <div className="space-y-2">
+                              <p className="font-semibold text-[#673391]">Q: How is Spend Analysis calculated?</p>
+                              <p className="text-slate-600">Spend Analysis automatically categorizes your debit and credit transactions into intuitive spending buckets like Shopping, Travel, Bills, and Investments.</p>
+                              <p className="font-semibold text-[#673391]">Q: Can I set custom monthly budget limits?</p>
+                              <p className="text-slate-600">Yes, you can define budget thresholds per category and receive notifications when you reach 80% or 100% of your limit.</p>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   )}

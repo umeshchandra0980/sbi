@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import './profile.css';
 import '../dashboard/dashboard.css';
+import SbiGlobalBrandHeader from '@/components/banking/SbiGlobalBrandHeader';
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -58,92 +59,8 @@ export default function SettingsPage() {
   return (
     <div className="dashboard-wrapper">
       
-      {/* ================= HEADER (app-latest-header matching Screenshot) ================= */}
-      <header className="dash-header">
-        
-        {/* Top Dark Purple Bar */}
-        <div className="dash-top-bar">
-          <div className="dash-top-bar-inner">
-            <div className="dash-top-left-tabs">
-              <button type="button" className="dash-top-tab active">
-                Banking
-              </button>
-              <button 
-                type="button" 
-                className="dash-top-tab"
-                onClick={() => router.push('/home/landingPage/lifestyle')}
-              >
-                Lifestyle
-              </button>
-              <button type="button" className="dash-top-tab">
-                Rewards
-              </button>
-
-              <div className="dash-lite-switch">
-                <span>YONO Net Banking Lite</span>
-                <span className="switch-badge bg-gray-400 text-white">OFF</span>
-              </div>
-            </div>
-
-            <div className="dash-top-right-info">
-              <a href="https://crh.sbi.bank.in" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-white text-xs hover:underline">
-                <HelpCircle size={13} />
-                Get Help
-              </a>
-              <span className="helpline-text">
-                <b>022-20744646</b> (8AM-8PM) | ynbsupport@sbi.co.in | <b>1800-11-1101</b> (24x7)
-              </span>
-              <span className="text-xs">English ▾</span>
-              <span className="text-xs font-bold cursor-pointer">- A +</span>
-              <button type="button" onClick={handleLogout} className="logout-btn-dash">
-                Logout
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Main White Navbar */}
-        <nav className="dash-main-navbar" aria-label="Main Navigation">
-          <div className="dash-main-navbar-inner">
-            <Link href="/dashboard" className="flex items-center gap-2">
-              <img 
-                src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/new-horz-logo_net-banking_svg" 
-                alt="YONO SBI Net-Banking Logo" 
-                className="dash-brand-logo"
-              />
-            </Link>
-
-            <ul className="dash-nav-links">
-              {[
-                'Overview', 'Accounts', 'Payments', 'Deposits', 
-                'Loans', 'Cards', 'Investments', 'Insurance', 'Services'
-              ].map((tab) => (
-                <li key={tab} className="dash-nav-item">
-                  <Link href="/dashboard" className="dash-nav-link">
-                    <span>{tab}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-
-            <div className="flex items-center gap-4">
-              <button type="button" className="text-gray-600 hover:text-purple-900" title="Search">
-                <Search size={18} />
-              </button>
-              <button type="button" className="text-gray-600 hover:text-purple-900 relative" title="Notifications">
-                <Bell size={18} />
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] w-3.5 h-3.5 rounded-full flex items-center justify-center font-bold">
-                  2
-                </span>
-              </button>
-              <div className="dash-user-profile-badge">
-                <div className="dash-user-avatar-circle">{initials}</div>
-                <span>My Profile</span>
-              </div>
-            </div>
-          </div>
-        </nav>
-      </header>
+      {/* ================= GLOBAL BRAND HEADER ================= */}
+      <SbiGlobalBrandHeader activeNav="Services" />
 
       {/* ================= MAIN PROFILE CONTENT ================= */}
       <main className="profile-page-wrapper">

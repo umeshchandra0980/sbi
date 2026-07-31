@@ -91,8 +91,9 @@ export default function OpenSavingsAccountPage() {
             <Link href="/dashboard" className="flex items-center gap-2 mr-10">
               <img 
                 src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/new-horz-logo_net-banking_svg" 
+                onError={(e) => { (e.target as HTMLImageElement).src = '/assets/images/yono_logo.svg'; }}
                 alt="YONO SBI Net-Banking Logo" 
-                className="h-8 object-contain"
+                className="h-9 w-auto object-contain"
               />
             </Link>
 

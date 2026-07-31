@@ -31,6 +31,7 @@ import {
   Ticket
 } from 'lucide-react';
 import './lifestyle.css';
+import SbiGlobalBrandHeader from '@/components/banking/SbiGlobalBrandHeader';
 
 export default function SbiLifestylePage() {
   const router = useRouter();
@@ -57,68 +58,11 @@ export default function SbiLifestylePage() {
   return (
     <div className="lifestyle-wrapper">
       
-      {/* 1. TOP PURPLE UTILITY NAVBAR */}
-      <header className="lifestyle-top-purple-bar">
-        <div className="lifestyle-top-purple-inner">
-          
-          <div className="lifestyle-top-left-nav">
-            <Link href="/home/landingPage/homePage" className="lifestyle-top-tab">
-              Banking
-            </Link>
-            <button type="button" className="lifestyle-top-tab active">
-              Lifestyle
-            </button>
-            <button 
-              type="button" 
-              className="lifestyle-top-tab"
-              onClick={() => toast.success('YONO Rewards portal active')}
-            >
-              <Gift size={13} />
-              Rewards
-            </button>
-            
-            <div className="lifestyle-lite-toggle">
-              <span className="font-semibold text-[11px]">YONO Net Banking Lite</span>
-              <button 
-                type="button"
-                onClick={() => setLiteMode(!liteMode)}
-                className={`lifestyle-toggle-btn ${liteMode ? 'on' : 'off'}`}
-                aria-label="Toggle YONO Net Banking Lite"
-              >
-                <span className="lifestyle-toggle-thumb"></span>
-                <span className="lifestyle-toggle-text">{liteMode ? 'ON' : 'OFF'}</span>
-              </button>
-            </div>
-          </div>
+      {/* ================= GLOBAL BRAND HEADER ================= */}
+      <SbiGlobalBrandHeader activeTopTab="Lifestyle" />
 
-          <div className="lifestyle-top-right-tools">
-            <span className="lifestyle-tool-link flex items-center gap-1" onClick={() => toast('Support Centre: 1800 11 1101')}>
-              <HelpCircle size={14} /> Get Help
-            </span>
-            <span className="font-bold">1800-11-1101</span>
-            <span className="lifestyle-tool-link">English &#9660;</span>
-            <div className="flex items-center gap-1 font-bold text-xs">
-              <button type="button" className="hover:text-amber-300">&#8722;</button>
-              <span>A</span>
-              <button type="button" className="hover:text-amber-300">&#43;</button>
-            </div>
-            <button 
-              type="button" 
-              className="lifestyle-logout-btn"
-              onClick={() => {
-                toast.success('Logged out successfully');
-                router.push('/auth/login');
-              }}
-            >
-              Logout
-            </button>
-          </div>
-
-        </div>
-      </header>
-
-      {/* 2. MAIN WHITE NAVBAR */}
-      <nav className="lifestyle-main-navbar">
+      {/* 3. LIFESTYLE SUB-NAVIGATION BAR (BELOW GLOBAL HEADER) */}
+      <nav className="lifestyle-main-navbar bg-slate-50 border-b border-slate-200">
         <div className="lifestyle-main-navbar-inner">
           
           <Link href="/home/landingPage/homePage" className="lifestyle-brand-logo">

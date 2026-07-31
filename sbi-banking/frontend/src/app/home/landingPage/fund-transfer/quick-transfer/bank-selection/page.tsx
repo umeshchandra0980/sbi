@@ -9,6 +9,7 @@ import {
   CheckCircle, ArrowRight, ShieldCheck, Download, RefreshCw, Copy
 } from 'lucide-react';
 import './quick-transfer.css';
+import SbiGlobalBrandHeader from '@/components/banking/SbiGlobalBrandHeader';
 
 // Custom SVG Logos for 12 Popular Indian Banks
 const BankLogos: Record<string, JSX.Element> = {
@@ -199,83 +200,8 @@ export default function QuickTransferPage() {
 
   return (
     <div className="qt-container">
-      {/* ================= HEADER ================= */}
-      <header className="w-full">
-        {/* Dark Purple Top Bar */}
-        <div className="qt-top-bar">
-          <div className="qt-top-bar-inner">
-            <div className="flex items-center gap-2">
-              <button type="button" className="bg-white text-[#302985] font-bold px-3 py-1 rounded-t text-xs">
-                Banking
-              </button>
-              <button type="button" className="text-white/80 hover:text-white px-3 py-1 text-xs">
-                Lifestyle
-              </button>
-              <button type="button" className="text-white/80 hover:text-white px-3 py-1 text-xs">
-                Rewards
-              </button>
-              <div className="flex items-center gap-1.5 ml-4 font-semibold text-xs text-white">
-                <span>YONO Net Banking Lite</span>
-                <span className="bg-gray-400 text-white px-1.5 py-0.5 rounded text-[10px]">OFF</span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4 text-xs text-white/90">
-              <a href="https://crh.sbi.bank.in" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:underline">
-                <HelpCircle size={13} />
-                Get Help
-              </a>
-              <span><b>022-20744646</b> (8AM-8PM) | ynbsupport@sbi.co.in | <b>1800-11-1101</b> (24x7)</span>
-              <span>English ▾</span>
-              <span className="font-bold cursor-pointer">- A +</span>
-              <button type="button" onClick={() => router.push('/auth/login')} className="border border-white/60 hover:bg-white/10 px-2 py-0.5 rounded text-xs">
-                Logout
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Main White Header */}
-        <nav className="qt-main-nav" aria-label="Quick Transfer Navigation">
-          <div className="qt-main-nav-inner">
-            <Link href="/dashboard" className="flex items-center gap-2">
-              <img 
-                src="/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/new_horz_logo_net_banking_svg" 
-                alt="YONO SBI Net-Banking Logo" 
-                className="h-8 object-contain"
-              />
-            </Link>
-
-            <ul className="flex items-center gap-4">
-              {['Overview', 'Accounts', 'Payments', 'Deposits', 'Loans', 'Cards', 'Investments', 'Insurance', 'Services'].map((tab) => (
-                <li key={tab}>
-                  <Link 
-                    href={tab === 'Overview' ? '/dashboard' : '#'}
-                    className={`qt-nav-link ${tab === 'Payments' ? 'active' : ''}`}
-                  >
-                    <span>{tab}</span>
-                    {tab === 'Payments' && <div className="qt-nav-active-line" />}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-
-            <div className="flex items-center gap-4">
-              <button type="button" className="text-gray-600 hover:text-[#302985]">
-                <Search size={18} />
-              </button>
-              <button type="button" className="text-gray-600 hover:text-[#302985] relative">
-                <Bell size={18} />
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] w-3.5 h-3.5 rounded-full flex items-center justify-center font-bold">2</span>
-              </button>
-              <div className="flex items-center gap-2 bg-[#f1f5f9] px-2.5 py-1 rounded-full border border-slate-200">
-                <div className="w-7 h-7 rounded-full bg-[#302985] text-white flex items-center justify-center font-bold text-xs">DV</div>
-                <span className="text-xs font-bold text-slate-700">My Profile</span>
-              </div>
-            </div>
-          </div>
-        </nav>
-      </header>
+      {/* ================= GLOBAL BRAND HEADER ================= */}
+      <SbiGlobalBrandHeader activeNav="Payments" />
 
       {/* ================= SUB-HEADER & STEPPER ================= */}
       <div className="qt-sub-header">

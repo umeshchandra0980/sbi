@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 60" fill="none">
+  {/* YONO Donut Symbol */}
+  <circle cx="30" cy="30" r="24" fill="#D92588"/>
+  <circle cx="30" cy="30" r="8" fill="#FFFFFF"/>
+  <rect x="27.5" y="30" width="5" height="15" fill="#FFFFFF"/>
+  <circle cx="30" cy="42" r="3.5" fill="#00A5EC"/>
+
+  {/* YONO Text */}
+  <text x="62" y="38" font-family="'Outfit', 'Inter', system-ui, sans-serif" font-size="28" font-weight="900" fill="#30135D" letter-spacing="-0.5">yono</text>
+  
+  {/* by SBI Badge */}
+  <circle cx="140" cy="22" r="5" fill="#00A5EC"/>
+  <text x="148" y="26" font-family="'Outfit', 'Inter', system-ui, sans-serif" font-size="12" font-weight="800" fill="#00A5EC">SBI</text>
+  
+  {/* NET-BANKING Tag */}
+  <text x="62" y="52" font-family="'Outfit', 'Inter', system-ui, sans-serif" font-size="11" font-weight="800" fill="#30135D" letter-spacing="2">NET-BANKING</text>
+</svg>
