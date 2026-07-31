@@ -1,0 +1,341 @@
+/* quick-transfer.css - Authentic YONO SBI Quick Transfer Flow Styling */
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+
+.qt-container {
+  background-color: #f3f4f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #1e293b;
+}
+
+/* Multi-tier Header */
+.qt-top-bar {
+  background: linear-gradient(90deg, #443c9e 0%, #302985 100%);
+  color: #ffffff;
+  font-size: 12px;
+}
+
+.qt-top-bar-inner {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 38px;
+}
+
+.qt-main-nav {
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.qt-main-nav-inner {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+}
+
+.qt-nav-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  padding: 20px 8px;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.qt-nav-link.active {
+  color: #302985;
+  font-weight: 700;
+}
+
+.qt-nav-active-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: #302985;
+  border-radius: 3px 3px 0 0;
+}
+
+/* Sub-header & Stepper */
+.qt-sub-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 16px 0;
+}
+
+.qt-stepper-container {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.qt-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #302985;
+  font-weight: 600;
+  text-decoration: none;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.qt-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #302985;
+  margin-bottom: 16px;
+}
+
+/* Stepper Tabs */
+.qt-stepper-track {
+  display: flex;
+  border-bottom: 1px solid #cbd5e1;
+}
+
+.qt-step-item {
+  flex: 1;
+  padding-bottom: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  text-align: center;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.qt-step-item.active {
+  color: #302985;
+  font-weight: 700;
+}
+
+.qt-step-item.completed {
+  color: #059669;
+}
+
+.qt-step-line {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #302985;
+}
+
+/* Main Content Area */
+.qt-content-body {
+  max-width: 1360px;
+  margin: 24px auto;
+  padding: 0 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.qt-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  padding: 28px;
+  border: 1px solid #f1f5f9;
+}
+
+.qt-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.qt-card-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #302985;
+}
+
+.qt-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #302985;
+  font-weight: 600;
+  font-size: 13px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.qt-action-btn:hover {
+  background: #f1f5f9;
+}
+
+.qt-section-heading {
+  font-size: 14px;
+  font-weight: 700;
+  color: #302985;
+  margin-bottom: 16px;
+}
+
+/* Bank Grid */
+.qt-bank-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 1024px) {
+  .qt-bank-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .qt-bank-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.qt-bank-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  height: 96px;
+  box-sizing: border-box;
+}
+
+.qt-bank-card:hover {
+  border-color: #302985;
+  box-shadow: 0 4px 12px rgba(48, 41, 133, 0.12);
+  transform: translateY(-2px);
+}
+
+.qt-bank-card.selected {
+  border: 2px solid #302985;
+  background: #f8fafc;
+  box-shadow: 0 4px 14px rgba(48, 41, 133, 0.16);
+}
+
+.qt-bank-icon-box {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.qt-bank-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+  text-align: center;
+}
+
+/* Floating Bottom Bar */
+.qt-bottom-nav {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-top: 20px;
+  border-top: 1px solid #f1f5f9;
+  margin-top: 24px;
+}
+
+.qt-next-btn {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: right;
+}
+
+.qt-next-subtitle {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.qt-next-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #302985;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Quick Amount Chips */
+.qt-amount-chip {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.qt-amount-chip:hover {
+  background: #e2e8f0;
+  border-color: #302985;
+}
+
+.qt-amount-chip.active {
+  background: #302985;
+  color: #ffffff;
+  border-color: #302985;
+}
+
+/* Receipt Card */
+.qt-receipt-banner {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.qt-receipt-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px dashed #e2e8f0;
+  font-size: 13px;
+}
+
+.qt-receipt-label {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.qt-receipt-value {
+  color: #1e293b;
+  font-weight: 700;
+}

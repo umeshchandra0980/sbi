@@ -1,0 +1,132 @@
+/* QuickFeatureBanners.css - Authentic SBI YONO 2.0 Feature Banners */
+
+.quick-banners-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 16px;
+  width: 100%;
+  margin-top: 18px;
+  margin-bottom: 24px;
+}
+
+@media (min-width: 768px) {
+  .quick-banners-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+/* Individual Banner Pill Card */
+.quick-banner-card {
+  position: relative;
+  background: linear-gradient(90deg, #701a75 0%, #86198f 55%, #931b6e 100%);
+  border-radius: 20px;
+  height: 82px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  color: #ffffff;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(112, 26, 117, 0.14);
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.quick-banner-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(112, 26, 117, 0.25);
+}
+
+.quick-banner-card:focus-visible {
+  outline: 3px solid #be185d;
+  outline-offset: 2px;
+}
+
+/* Left Text Section */
+.banner-content-left {
+  padding-left: 22px;
+  padding-right: 12px;
+  z-index: 3;
+}
+
+.banner-text-wrapper {
+  margin: 0;
+  color: #ffffff;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.25;
+}
+
+small.check {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 0.1px;
+}
+
+.banner-heading {
+  font-size: 17px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.2px;
+}
+
+.pfm-heading {
+  font-size: 16px;
+  line-height: 1.2;
+}
+
+.banner-chevron-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 4px;
+  color: #ffffff;
+  transition: transform 0.2s ease;
+}
+
+.quick-banner-card:hover .banner-chevron-icon {
+  transform: translateX(4px);
+}
+
+/* Right Illustration Section */
+.banner-illustration-area {
+  position: relative;
+  width: 175px;
+  height: 100%;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* Cutout Curved White Background */
+.banner-cutout-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Graphic Container */
+.banner-graphic-container {
+  position: absolute;
+  top: 0;
+  right: 6px;
+  bottom: 0;
+  width: 130px;
+  height: 100%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.credit-gauge-svg,
+.pfm-illustration-svg {
+  width: 100%;
+  height: 100%;
+  max-height: 76px;
+  object-fit: contain;
+}

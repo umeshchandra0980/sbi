@@ -1,0 +1,651 @@
+/* SbiLandingPageComponent.css */
+
+.sbi-portal-wrapper {
+  background-color: #f4f4f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Open Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #1f2937;
+}
+
+/* 1. TOP PURPLE UTILITY BAR */
+.sbi-top-purple-bar {
+  background-color: #351664;
+  color: #ffffff;
+  font-size: 11px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+}
+
+.sbi-top-purple-inner {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sbi-top-left-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sbi-top-tab {
+  background: transparent;
+  color: #e9d5ff;
+  border: none;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sbi-top-tab.active {
+  background-color: #ffffff;
+  color: #351664;
+  font-weight: 700;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.sbi-top-tab:hover:not(.active) {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sbi-toggle-btn {
+  width: 44px;
+  height: 18px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 9px;
+  border: none;
+  position: relative;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px;
+  transition: background-color 0.2s;
+}
+
+.sbi-toggle-btn.on {
+  background-color: #10b981;
+}
+
+.sbi-toggle-thumb {
+  width: 14px;
+  height: 14px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.sbi-toggle-btn.on .sbi-toggle-thumb {
+  transform: translateX(26px);
+}
+
+.sbi-toggle-text {
+  font-size: 8px;
+  font-weight: 800;
+  color: #ffffff;
+  position: absolute;
+  right: 5px;
+}
+
+.sbi-toggle-btn.on .sbi-toggle-text {
+  left: 5px;
+  right: auto;
+}
+
+.sbi-top-right-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.sbi-top-util-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #e9d5ff;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.sbi-play-icon {
+  font-size: 9px;
+  color: #c084fc;
+}
+
+.sbi-font-sizer button {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 11px;
+  padding: 0 2px;
+  cursor: pointer;
+}
+
+/* 2. MAIN BRAND HEADER */
+.sbi-brand-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  height: 64px;
+  display: flex;
+  align-items: center;
+}
+
+.sbi-brand-header-inner {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sbi-main-nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.sbi-nav-item {
+  background: transparent;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4b5563;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+  text-decoration: none;
+}
+
+.sbi-nav-item:hover {
+  color: #351664;
+}
+
+.sbi-nav-item.active {
+  color: #351664;
+  font-weight: 700;
+  background-color: #f5eeff;
+}
+
+.sbi-nav-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: -16px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: #702082;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+}
+
+.sbi-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sbi-icon-btn {
+  background: transparent;
+  border: none;
+  color: #351664;
+  padding: 6px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s;
+}
+
+.sbi-icon-btn:hover {
+  background-color: #f3e8ff;
+}
+
+.sbi-profile-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #faf5ff;
+  border: 1px solid #d8b4fe;
+  border-radius: 9999px;
+  padding: 3px 12px 3px 4px;
+  text-decoration: none;
+  transition: background-color 0.15s;
+}
+
+.sbi-profile-pill:hover {
+  background-color: #f3e8ff;
+}
+
+.sbi-avatar-circle {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #702082, #a855f7);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sbi-profile-text {
+  font-size: 11px;
+  font-weight: 700;
+  color: #351664;
+}
+
+/* 3. MAIN BODY & BREADCRUMB */
+.sbi-main-body {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 24px;
+  width: 100%;
+  flex: 1;
+}
+
+.sbi-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 20px;
+}
+
+.sbi-bc-home {
+  color: #351664;
+  display: flex;
+  align-items: center;
+}
+
+.sbi-bc-sep {
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+.sbi-bc-current {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* 4. SUB-NAVIGATION TABS BAR */
+.sbi-tabs-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 24px;
+  padding-bottom: 0;
+}
+
+.sbi-tabs-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sbi-tab-btn {
+  background: transparent;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  padding: 10px 18px 12px 18px;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.15s;
+}
+
+.sbi-tab-btn:hover {
+  color: #1f2937;
+}
+
+.sbi-tab-btn.active {
+  color: #351664;
+  font-weight: 700;
+  background-color: #ffffff;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.sbi-tab-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 18px;
+  right: 18px;
+  height: 3px;
+  background-color: #702082;
+  border-radius: 2px;
+}
+
+.sbi-view-all-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 1.5px solid #702082;
+  color: #702082;
+  background: transparent;
+  border-radius: 9999px;
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.sbi-view-all-btn:hover {
+  background-color: #f3e8ff;
+}
+
+/* 5. CARDS & SIDEBARS */
+.sbi-content-card {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.sbi-search-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 10px 14px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.sbi-search-input {
+  width: 100%;
+  font-size: 12px;
+  background: transparent;
+  outline: none;
+  color: #374151;
+}
+
+.sbi-menu-card {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px 16px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.sbi-sukanya-banner {
+  background: linear-gradient(135deg, #4d2882 0%, #782890 100%);
+  color: #ffffff;
+  padding: 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.sbi-sukanya-banner:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(112, 32, 130, 0.25);
+}
+
+.sbi-sukanya-text-col {
+  max-width: 68%;
+  z-index: 2;
+}
+
+.sbi-sukanya-sub {
+  font-size: 10px;
+  color: #e9d5ff;
+  font-weight: 600;
+}
+
+.sbi-sukanya-title {
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 4px;
+  line-height: 1.3;
+}
+
+.sbi-sukanya-graphic {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  right: 2px;
+  bottom: 0;
+  z-index: 1;
+}
+
+.sbi-deposit-box {
+  background-color: #faf5ff;
+  border: 1px solid #e9d5ff;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.sbi-deposit-type {
+  font-size: 11px;
+  font-weight: 800;
+  color: #351664;
+  letter-spacing: 0.5px;
+}
+
+.sbi-badge-active {
+  background-color: #d1fae5;
+  color: #065f46;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.sbi-info-bar {
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.sbi-btn-primary {
+  background-color: #351664;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.sbi-btn-primary:hover {
+  background-color: #280e4f;
+}
+
+.sbi-btn-outline {
+  border: 1.5px solid #351664;
+  color: #351664;
+  background: transparent;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.sbi-btn-outline:hover {
+  background-color: #f3e8ff;
+}
+
+/* INVESTMENTS MENU & BUTTONS */
+.sbi-inv-menu-btn {
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  background-color: #f3f0f7;
+  color: #4b5563;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.sbi-inv-menu-btn.selected {
+  background-color: #681d82;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.sbi-inv-header-tag {
+  background-color: #681d82;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 24px;
+  border-bottom-right-radius: 12px;
+  display: inline-block;
+  align-self: flex-start;
+}
+
+.sbi-btn-pill-purple {
+  background-color: #681d82;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 32px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s;
+  box-shadow: 0 4px 10px rgba(104, 29, 130, 0.2);
+}
+
+.sbi-btn-pill-purple:hover {
+  background-color: #531668;
+}
+
+.sbi-action-pill-btn {
+  width: 100%;
+  border: 1.5px solid #681d82;
+  color: #681d82;
+  background-color: #ffffff;
+  border-radius: 9999px;
+  padding: 10px 20px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.sbi-action-pill-btn:hover {
+  background-color: #fdf4ff;
+}
+
+/* BUSINESS LOAN BANNER (SCREENSHOT 5) */
+.sbi-business-banner {
+  background: linear-gradient(135deg, #4338ca 0%, #3b82f6 100%);
+  border-radius: 16px;
+  padding: 24px 32px;
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sbi-bb-content {
+  z-index: 2;
+  max-width: 60%;
+}
+
+.sbi-bb-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 16px;
+  letter-spacing: -0.2px;
+}
+
+.sbi-bb-btn {
+  background-color: #ffffff;
+  color: #3730a3;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 10px 24px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.sbi-bb-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.sbi-bb-circles {
+  position: absolute;
+  right: -20px;
+  bottom: -40px;
+  width: 220px;
+  height: 220px;
+  z-index: 1;
+  pointer-events-none: none;
+}
+
+.sbi-circle-1 {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.08);
+  right: 0;
+  bottom: 0;
+}
+
+.sbi-circle-2 {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.12);
+  right: 30px;
+  bottom: 30px;
+}
+
+/* FOOTER */
+.sbi-footer-bar {
+  background-color: #2d2d2d;
+  padding: 14px 24px;
+  margin-top: 32px;
+}
