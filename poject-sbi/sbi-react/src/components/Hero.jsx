@@ -25,6 +25,8 @@ const banners = [
   { src: '/images/banners/banner-20.jpg', alt: 'Premier Banking (VRM)' },
 ];
 
+import AshaScholarship from './AshaScholarship';
+
 export default function Hero() {
   const [index, setIndex] = useState(0);
   const count = banners.length;
@@ -39,40 +41,7 @@ export default function Hero() {
 
   return (
     <section className="hero" aria-label="Home page banner carousel">
-      {/* clipped carousel viewport */}
-      <div className="hero-viewport">
-        <div className="hero-track" style={{ transform: `translateX(-${index * 100}%)` }}>
-          {banners.map((b, i) => {
-            const img = (
-              <img src={b.src} alt={b.alt} className="hero-img" loading={i === 0 ? 'eager' : 'lazy'} />
-            );
-            return (
-              <div className="hero-slide" key={i}>
-                {b.href ? (
-                  <a href={b.href} target="_blank" rel="noopener noreferrer">{img}</a>
-                ) : (
-                  img
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        <button className="hero-arrow prev" onClick={() => go(index - 1)} aria-label="Previous banner">‹</button>
-        <button className="hero-arrow next" onClick={() => go(index + 1)} aria-label="Next banner">›</button>
-
-        <ul className="hero-dots">
-          {banners.map((_, i) => (
-            <li key={i}>
-              <button
-                className={i === index ? 'active' : ''}
-                onClick={() => go(i)}
-                aria-label={`Go to banner ${i + 1}`}
-              />
-            </li>
-          ))}
-        </ul>
-      </div>
+      <AshaScholarship />
 
       {/* right-side overlay panel (background shape = dynamic_panel.png) */}
       <aside className="rate-panel">
