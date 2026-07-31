@@ -1,0 +1,10 @@
+/* relationship-overview.css */
+
+.rel-wrapper {
+  background-color: #f3f4f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #1e293b;
+}

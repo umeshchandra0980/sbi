@@ -4,10 +4,12 @@ import React, { useState } from 'react';
 import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import toast from 'react-hot-toast';
 import { 
-  Eye, EyeOff, Edit2, CheckCircle2, ChevronRight, Home, 
+  Eye, EyeOff, Edit2, CheckCircle2, ChevronRight, ChevronDown, Home, 
   User, CreditCard, Shield, Lock, Award, HelpCircle, MessageSquare, 
-  Search, Bell, Building2, Phone, X, Info
+  Search, Bell, Building2, Phone, X, Info, Share2, AlertTriangle, 
+  FileText, Gauge, DollarSign, Ban, Key, Car, Sparkles
 } from 'lucide-react';
 import './profile.css';
 import '../dashboard/dashboard.css';
@@ -15,20 +17,34 @@ import '../dashboard/dashboard.css';
 export default function SettingsPage() {
   const router = useRouter();
   const { logout, user } = useAuthStore();
-  const [activeTab, setActiveTab] = useState<'personal' | 'professional'>('personal');
+  
+  // Navigation States
   const [activeSidebarMenu, setActiveSidebarMenu] = useState('Manage My Profile');
+  const [profileTab, setProfileTab] = useState<'personal' | 'professional'>('personal');
+  const [accountsSubTab, setAccountsSubTab] = useState('Account Details');
+  const [settingsSubTab, setSettingsSubTab] = useState('Payments');
 
-  // Eye Mask Toggle States
+  // View 1: Personal Details Eye Toggles
   const [showCif, setShowCif] = useState(false);
   const [showDob, setShowDob] = useState(false);
   const [showMobile, setShowMobile] = useState(false);
   const [showCkyc, setShowCkyc] = useState(false);
   const [showPan, setShowPan] = useState(false);
 
-  // Form State
+  // View 1: Personal Details Form
   const [maritalStatus, setMaritalStatus] = useState('Single');
   const [religion, setReligion] = useState('Hindu');
   const [category, setCategory] = useState('General');
+
+  // View 1: Professional Details Form (Screenshot 1)
+  const [occupation, setOccupation] = useState('Others');
+  const [occupationSubType, setOccupationSubType] = useState('Students');
+  const [education, setEducation] = useState('Matriculate');
+  const [annualIncome, setAnnualIncome] = useState('2,00,000');
+  const [sourceOfIncome, setSourceOfIncome] = useState('Allowance / Savings');
+
+  // View 3: Access Services Search
+  const [serviceSearch, setServiceSearch] = useState('');
 
   const fullName = user?.full_name || 'DUMPALA VISHNU VARDHAN';
   const nameParts = fullName.split(' ');
@@ -129,13 +145,19 @@ export default function SettingsPage() {
       <main className="profile-page-wrapper">
         <div className="profile-main-container">
           
-          {/* Breadcrumb */}
+          {/* Dynamic Breadcrumb */}
           <div className="profile-breadcrumb">
             <Link href="/dashboard" className="flex items-center gap-1">
               <Home size={15} />
             </Link>
             <span>›</span>
             <span>Profile</span>
+            {activeSidebarMenu !== 'Manage My Profile' && (
+              <>
+                <span>›</span>
+                <span>{activeSidebarMenu}</span>
+              </>
+            )}
           </div>
 
           <div className="profile-grid-layout">
@@ -208,181 +230,522 @@ export default function SettingsPage() {
             {/* Right Main Panel */}
             <div className="profile-right-panel">
               
-              {/* Tabs Header Row */}
-              <div className="profile-tabs-header">
-                <div className="profile-tabs-left">
+              {/* ================= VIEW 1: MANAGE MY PROFILE (Screenshot 1 Exact) ================= */}
+              {activeSidebarMenu === 'Manage My Profile' && (
+                <div>
+                  
+                  {/* Tabs Header Row */}
+                  <div className="profile-tabs-header">
+                    <div className="profile-tabs-left">
+                      <button 
+                        type="button" 
+                        onClick={() => setProfileTab('personal')}
+                        className={`profile-tab-btn ${profileTab === 'personal' ? 'active' : ''}`}
+                      >
+                        Personal Details
+                        <span className="info-circle-badge">!</span>
+                      </button>
+
+                      <button 
+                        type="button" 
+                        onClick={() => setProfileTab('professional')}
+                        className={`profile-tab-btn ${profileTab === 'professional' ? 'active' : ''}`}
+                      >
+                        Professional Details
+                        <span className="info-circle-badge">!</span>
+                      </button>
+                    </div>
+
+                    <div className="profile-completion-meter">
+                      Profile Completion: 66%
+                    </div>
+                  </div>
+
+                  {/* Green KYC Banner */}
+                  <div className="kyc-updated-banner">
+                    <div className="kyc-banner-left">
+                      <CheckCircle2 size={20} className="text-green-600" />
+                      <span>KYC Updated</span>
+                    </div>
+                    <a href="https://cdnweb.onlineyono.sbi.bank.in/accounts/re-kyc/kyc-entry" target="_blank" rel="noopener noreferrer" className="kyc-update-now-link">
+                      Update Now
+                    </a>
+                  </div>
+
+                  {/* Personal Details Tab Content */}
+                  {profileTab === 'personal' && (
+                    <div>
+                      {/* Personal Info Gray Box */}
+                      <div className="personal-details-gray-box">
+                        <div>
+                          <span className="detail-field-item">Date of Birth</span>
+                          <div className="detail-field-val">
+                            <span>{showDob ? '15/08/2000' : 'XX/XX/2000'}</span>
+                            <button type="button" onClick={() => setShowDob(!showDob)} className="eye-mask-icon bg-none border-0 p-0">
+                              {showDob ? <EyeOff size={16} /> : <Eye size={16} />}
+                            </button>
+                          </div>
+                        </div>
+
+                        <div>
+                          <span className="detail-field-item">Mobile number</span>
+                          <div className="detail-field-val">
+                            <span>{showMobile ? '9876545933' : 'XXXXXX5933'}</span>
+                            <button type="button" onClick={() => setShowMobile(!showMobile)} className="eye-mask-icon bg-none border-0 p-0">
+                              {showMobile ? <EyeOff size={16} /> : <Eye size={16} />}
+                            </button>
+                          </div>
+                        </div>
+
+                        <div>
+                          <span className="detail-field-item flex items-center gap-1">
+                            CKYC Number <Info size={13} className="text-purple-800" />
+                          </span>
+                          <div className="detail-field-val">
+                            <span>{showCkyc ? '987654322966' : 'XXXXXXXX2966'}</span>
+                            <button type="button" onClick={() => setShowCkyc(!showCkyc)} className="eye-mask-icon bg-none border-0 p-0">
+                              {showCkyc ? <EyeOff size={16} /> : <Eye size={16} />}
+                            </button>
+                          </div>
+                        </div>
+
+                        <div>
+                          <span className="detail-field-item">PAN</span>
+                          <div className="detail-field-val">
+                            <span>{showPan ? 'ABCDE6421H' : 'XXXXXX642H'}</span>
+                            <button type="button" onClick={() => setShowPan(!showPan)} className="eye-mask-icon bg-none border-0 p-0">
+                              {showPan ? <EyeOff size={16} /> : <Eye size={16} />}
+                            </button>
+                          </div>
+                        </div>
+
+                        <div className="col-span-1 md:col-span-2">
+                          <span className="detail-field-item">Father&apos;s Name</span>
+                          <div className="detail-field-val text-slate-800">
+                            D SHYAMSUNDER
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Email & Addresses */}
+                      <div className="address-field-block">
+                        <span className="address-title">Email ID</span>
+                        <div className="address-text lowercase font-normal text-slate-700">
+                          {user?.email || 'dumpala.vishnu@example.com'}
+                        </div>
+                      </div>
+
+                      <div className="address-field-block">
+                        <span className="address-title">Communication Address</span>
+                        <p className="address-text m-0">
+                          H NO 6-20 KUNARAM PEDDAPALLI TELANGANA 505174
+                        </p>
+                        <Edit2 size={16} className="address-edit-pencil" />
+                      </div>
+
+                      <div className="address-field-block">
+                        <span className="address-title">Permanent Address</span>
+                        <p className="address-text m-0">
+                          H NO 6-20 KUNARAM KALVASRIRAMPUR Srirampur KARIMNAGAR TELANGANA 505174
+                        </p>
+                        <Edit2 size={16} className="address-edit-pencil" />
+                      </div>
+
+                      <div className="profile-select-grid mt-6">
+                        <div className="profile-select-wrapper">
+                          <label htmlFor="marital-status" className="profile-select-label">Marital Status</label>
+                          <select id="marital-status" value={maritalStatus} onChange={(e) => setMaritalStatus(e.target.value)} className="profile-select-input">
+                            <option value="Single">Single</option>
+                            <option value="Married">Married</option>
+                          </select>
+                        </div>
+
+                        <div className="profile-select-wrapper">
+                          <label htmlFor="religion" className="profile-select-label">Religion</label>
+                          <select id="religion" value={religion} onChange={(e) => setReligion(e.target.value)} className="profile-select-input">
+                            <option value="Hindu">Hindu</option>
+                            <option value="Muslim">Muslim</option>
+                            <option value="Christian">Christian</option>
+                            <option value="Sikh">Sikh</option>
+                          </select>
+                        </div>
+
+                        <div className="profile-select-wrapper">
+                          <label htmlFor="category" className="profile-select-label">Category</label>
+                          <select id="category" value={category} onChange={(e) => setCategory(e.target.value)} className="profile-select-input">
+                            <option value="General">General</option>
+                            <option value="OBC">OBC</option>
+                            <option value="SC">SC</option>
+                            <option value="ST">ST</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Professional Details Tab Content (Screenshot 1 Exact) */}
+                  {profileTab === 'professional' && (
+                    <div className="pt-4">
+                      <div className="profile-select-grid">
+                        
+                        {/* Occupation */}
+                        <div className="profile-select-wrapper">
+                          <label htmlFor="occupation" className="profile-select-label">Occupation</label>
+                          <select id="occupation" value={occupation} onChange={(e) => setOccupation(e.target.value)} className="profile-select-input">
+                            <option value="Others">Others</option>
+                            <option value="Salaried">Salaried</option>
+                            <option value="Self Employed">Self Employed</option>
+                            <option value="Business">Business</option>
+                          </select>
+                        </div>
+
+                        {/* Occupation Sub-Type */}
+                        <div className="profile-select-wrapper">
+                          <label htmlFor="occupation-sub-type" className="profile-select-label">Occupation Sub-Type</label>
+                          <select id="occupation-sub-type" value={occupationSubType} onChange={(e) => setOccupationSubType(e.target.value)} className="profile-select-input">
+                            <option value="Students">Students</option>
+                            <option value="Housewife">Housewife</option>
+                            <option value="Retired">Retired</option>
+                            <option value="Student / Scholar">Student / Scholar</option>
+                          </select>
+                        </div>
+
+                        {/* Education Qualification */}
+                        <div className="profile-select-wrapper">
+                          <label htmlFor="education-qualification" className="profile-select-label">Education Qualification</label>
+                          <select id="education-qualification" value={education} onChange={(e) => setEducation(e.target.value)} className="profile-select-input">
+                            <option value="Matriculate">Matriculate</option>
+                            <option value="Under Graduate">Under Graduate</option>
+                            <option value="Graduate">Graduate</option>
+                            <option value="Post Graduate">Post Graduate</option>
+                            <option value="Professional">Professional</option>
+                          </select>
+                        </div>
+
+                        {/* Annual Income */}
+                        <div className="profile-select-wrapper">
+                          <label htmlFor="annual-income-input" className="profile-select-label">Annual Income</label>
+                          <div className="flex items-center gap-1">
+                            <span className="text-slate-400 font-bold text-sm">₹</span>
+                            <input 
+                              id="annual-income-input"
+                              type="text" 
+                              value={annualIncome} 
+                              onChange={(e) => setAnnualIncome(e.target.value)}
+                              className="profile-select-input" 
+                            />
+                          </div>
+                        </div>
+
+                        {/* Source of income */}
+                        <div className="profile-select-wrapper">
+                          <label htmlFor="source-of-income" className="profile-select-label">Source of income</label>
+                          <select id="source-of-income" value={sourceOfIncome} onChange={(e) => setSourceOfIncome(e.target.value)} className="profile-select-input">
+                            <option value="Allowance / Savings">Allowance / Savings</option>
+                            <option value="Salary">Salary</option>
+                            <option value="Business Income">Business Income</option>
+                            <option value="Investments">Investments</option>
+                          </select>
+                        </div>
+
+                      </div>
+
+                      <div className="mt-8 flex justify-end">
+                        <button 
+                          type="button" 
+                          onClick={() => toast.success("Professional Details updated successfully!")}
+                          className="bg-purple-900 text-white font-bold px-8 py-2.5 rounded-full hover:bg-purple-950 transition-all text-sm"
+                        >
+                          Save Changes
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                </div>
+              )}
+
+              {/* ================= VIEW 2: MANAGE MY ACCOUNTS (Screenshot 2 Exact) ================= */}
+              {activeSidebarMenu === 'Manage My Accounts' && (
+                <div>
+                  
+                  {/* Top Apply for Joint Savings Account */}
+                  <div className="acc-header-links">
+                    <a href="https://onlineapply.sbi.bank.in" target="_blank" rel="noopener noreferrer" className="joint-acc-link">
+                      Apply for Joint Savings Account
+                    </a>
+                  </div>
+
+                  {/* Horizontal Tabs Row */}
+                  <div className="acc-tabs-row">
+                    {[
+                      'Account Details', 'Change Home Branch', 'Convert to Salary Account', 
+                      'Manage Nominee', 'Manage Transfer Limits'
+                    ].map((tab) => (
+                      <button 
+                        key={tab} 
+                        type="button" 
+                        onClick={() => setAccountsSubTab(tab)}
+                        className={`acc-tab-btn ${accountsSubTab === tab ? 'active' : ''}`}
+                      >
+                        {tab}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Account Selector Box */}
+                  <div className="acc-select-box-wrapper">
+                    <div className="acc-select-left">
+                      <div className="acc-sbi-icon-circle">SBI</div>
+                      <div>
+                        <div className="acc-select-number">XXXXXXX7054</div>
+                        <div className="acc-select-ifsc">IFSC -SBIN0020138</div>
+                      </div>
+                    </div>
+                    <ChevronDown size={20} className="text-gray-600" />
+                  </div>
+
+                  {/* Account Info Gray Card */}
+                  <div className="acc-info-gray-card">
+                    <button 
+                      type="button" 
+                      onClick={() => toast.success("Account Details Copied / Shared!")}
+                      className="share-details-link border-0 bg-none"
+                    >
+                      <Share2 size={16} />
+                      <span>Share Details</span>
+                    </button>
+
+                    <div className="acc-details-grid">
+                      <div>
+                        <div className="acc-detail-label">Account Number</div>
+                        <div className="acc-detail-val">37608427054</div>
+                      </div>
+
+                      <div>
+                        <div className="acc-detail-label">Account Holder&apos;s Name</div>
+                        <div className="acc-detail-val">{fullName}</div>
+                      </div>
+
+                      <div>
+                        <div className="acc-detail-label">Account Type</div>
+                        <div className="acc-detail-val">Savings Account</div>
+                      </div>
+
+                      <div>
+                        <div className="acc-detail-label">Bank Name</div>
+                        <div className="acc-detail-val">SBI</div>
+                      </div>
+
+                      <div>
+                        <div className="acc-detail-label">Bank Branch</div>
+                        <div className="acc-detail-val">PEDDAPALLI</div>
+                      </div>
+
+                      <div>
+                        <div className="acc-detail-label">IFSC</div>
+                        <div className="acc-detail-val">SBIN0020138</div>
+                      </div>
+
+                      <div>
+                        <div className="acc-detail-label">MMID</div>
+                        <div className="acc-detail-val">-</div>
+                      </div>
+
+                      <div>
+                        <div className="acc-detail-label">VPA</div>
+                        <div className="acc-detail-val">NA</div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+              )}
+
+              {/* ================= VIEW 3: ACCESS SERVICES (Screenshot 3 Exact) ================= */}
+              {activeSidebarMenu === 'Access Services' && (
+                <div>
+                  
+                  {/* Search Input */}
+                  <div className="relative">
+                    <Search size={18} className="absolute left-3.5 top-3.5 text-gray-400" />
+                    <input 
+                      type="text" 
+                      placeholder="Search here..." 
+                      value={serviceSearch}
+                      onChange={(e) => setServiceSearch(e.target.value)}
+                      className="services-search-input"
+                    />
+                  </div>
+
+                  {/* Quick Services Section */}
+                  <h3 className="services-section-title">Quick Services</h3>
+                  <div className="services-cards-grid">
+                    <div className="service-card-item" onClick={() => toast.success("Stop Cheque service requested")}>
+                      <div className="service-card-left">
+                        <div className="service-card-icon-box"><FileText size={18} /></div>
+                        <span className="service-card-label">Stop Cheque</span>
+                      </div>
+                      <ChevronRight size={16} className="text-gray-400" />
+                    </div>
+
+                    <div className="service-card-item" onClick={() => toast.success("Block Card requested")}>
+                      <div className="service-card-left">
+                        <div className="service-card-icon-box"><Ban size={18} /></div>
+                        <span className="service-card-label">Block Card</span>
+                      </div>
+                      <ChevronRight size={16} className="text-gray-400" />
+                    </div>
+
+                    <div className="service-card-item" onClick={() => toast.success("Report Unauthorized Transactions")}>
+                      <div className="service-card-left">
+                        <div className="service-card-icon-box text-amber-600"><AlertTriangle size={18} /></div>
+                        <span className="service-card-label">Report Unauthorized<br />Transactions</span>
+                      </div>
+                      <ChevronRight size={16} className="text-gray-400" />
+                    </div>
+
+                    <div className="service-card-item" onClick={() => toast.success("e-Secure Lock activated")}>
+                      <div className="service-card-left">
+                        <div className="service-card-icon-box"><Lock size={18} /></div>
+                        <span className="service-card-label">e-Secure Lock</span>
+                      </div>
+                      <ChevronRight size={16} className="text-gray-400" />
+                    </div>
+                  </div>
+
+                  {/* Other Services Section */}
+                  <h3 className="services-section-title">Other Services</h3>
+                  <div className="services-cards-grid">
+                    <div className="service-card-item" onClick={() => toast.success("Account Related Services")}>
+                      <div className="service-card-left">
+                        <div className="service-card-icon-box"><Building2 size={18} /></div>
+                        <span className="service-card-label">Account Related</span>
+                      </div>
+                      <ChevronRight size={16} className="text-gray-400" />
+                    </div>
+
+                    <div className="service-card-item" onClick={() => toast.success("Pension Related Services")}>
+                      <div className="service-card-left">
+                        <div className="service-card-icon-box"><User size={18} /></div>
+                        <span className="service-card-label">Pension Related</span>
+                      </div>
+                      <ChevronRight size={16} className="text-gray-400" />
+                    </div>
+
+                    <div className="service-card-item" onClick={() => toast.success("Tax Related Services")}>
+                      <div className="service-card-left">
+                        <div className="service-card-icon-box"><DollarSign size={18} /></div>
+                        <span className="service-card-label">Tax Related</span>
+                      </div>
+                      <ChevronRight size={16} className="text-gray-400" />
+                    </div>
+
+                    <div className="service-card-item" onClick={() => toast.success("Cheque Services")}>
+                      <div className="service-card-left">
+                        <div className="service-card-icon-box"><FileText size={18} /></div>
+                        <span className="service-card-label">Cheque Services</span>
+                      </div>
+                      <ChevronRight size={16} className="text-gray-400" />
+                    </div>
+
+                    <div className="service-card-item" onClick={() => toast.success("Doorstep Banking Requested")}>
+                      <div className="service-card-left">
+                        <div className="service-card-icon-box"><Building2 size={18} /></div>
+                        <span className="service-card-label">Doorstep Banking</span>
+                      </div>
+                      <ChevronRight size={16} className="text-gray-400" />
+                    </div>
+
+                    <div className="service-card-item" onClick={() => toast.success("FASTag Services")}>
+                      <div className="service-card-left">
+                        <div className="service-card-icon-box text-orange-600"><Car size={18} /></div>
+                        <span className="service-card-label">Apply/Manage<br />FASTag</span>
+                      </div>
+                      <ChevronRight size={16} className="text-gray-400" />
+                    </div>
+                  </div>
+
+                </div>
+              )}
+
+              {/* ================= VIEW 4: SETTINGS (Screenshot 4 Exact) ================= */}
+              {activeSidebarMenu === 'Settings' && (
+                <div>
+                  
+                  {/* Settings Tabs Row */}
+                  <div className="settings-tabs-row">
+                    <button 
+                      type="button" 
+                      onClick={() => setSettingsSubTab('Payments')}
+                      className={`settings-tab-btn ${settingsSubTab === 'Payments' ? 'active' : ''}`}
+                    >
+                      Payments
+                    </button>
+                    <button 
+                      type="button" 
+                      onClick={() => setSettingsSubTab('Personalise Settings')}
+                      className={`settings-tab-btn ${settingsSubTab === 'Personalise Settings' ? 'active' : ''}`}
+                    >
+                      Personalise Settings
+                    </button>
+                  </div>
+
+                  {/* Payments Tab Content */}
+                  {settingsSubTab === 'Payments' && (
+                    <div className="pt-2">
+                      <div 
+                        className="manage-limits-card"
+                        onClick={() => toast.success("Opening Manage Transfer Limits Modal")}
+                      >
+                        <div className="limits-left">
+                          <div className="limits-icon-box">
+                            <Gauge size={20} />
+                          </div>
+                          <span className="limits-label">Manage Limits</span>
+                        </div>
+                        <ChevronRight size={18} className="text-gray-400" />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Personalise Settings Tab Content */}
+                  {settingsSubTab === 'Personalise Settings' && (
+                    <div className="pt-4 space-y-4 max-w-md">
+                      <div className="flex items-center justify-between p-3 border rounded-xl bg-slate-50">
+                        <span className="text-sm font-bold text-slate-800">SMS Notifications</span>
+                        <input type="checkbox" defaultChecked className="toggle-checkbox" />
+                      </div>
+                      <div className="flex items-center justify-between p-3 border rounded-xl bg-slate-50">
+                        <span className="text-sm font-bold text-slate-800">2-Factor OTP Verification</span>
+                        <input type="checkbox" defaultChecked className="toggle-checkbox" />
+                      </div>
+                    </div>
+                  )}
+
+                </div>
+              )}
+
+              {/* Other Sidebar Views (Update Security, Support, Rewards, Feedback) */}
+              {['Update My Security', 'Refer & Earn Rewards', 'Get Support', 'Share Feedback'].includes(activeSidebarMenu) && (
+                <div className="p-6 text-center">
+                  <div className="w-16 h-16 rounded-full bg-purple-100 text-purple-900 flex items-center justify-center mx-auto mb-4 font-bold text-xl">
+                    <Sparkles size={28} />
+                  </div>
+                  <h3 className="font-bold text-lg text-slate-800 mb-2">{activeSidebarMenu}</h3>
+                  <p className="text-slate-500 text-sm max-w-sm mx-auto mb-6">
+                    This module is active and ready for your banking preferences and security configurations.
+                  </p>
                   <button 
-                    type="button" 
-                    onClick={() => setActiveTab('personal')}
-                    className={`profile-tab-btn ${activeTab === 'personal' ? 'active' : ''}`}
+                    type="button"
+                    onClick={() => setActiveSidebarMenu('Manage My Profile')}
+                    className="bg-purple-900 text-white font-bold px-6 py-2 rounded-full text-xs hover:bg-purple-950"
                   >
-                    Personal Details
-                    <span className="info-circle-badge">!</span>
-                  </button>
-
-                  <button 
-                    type="button" 
-                    onClick={() => setActiveTab('professional')}
-                    className={`profile-tab-btn ${activeTab === 'professional' ? 'active' : ''}`}
-                  >
-                    Professional Details
-                    <span className="info-circle-badge">!</span>
+                    Back to Profile
                   </button>
                 </div>
-
-                <div className="profile-completion-meter">
-                  Profile Completion: 66%
-                </div>
-              </div>
-
-              {/* Green KYC Updated Banner */}
-              <div className="kyc-updated-banner">
-                <div className="kyc-banner-left">
-                  <CheckCircle2 size={20} className="text-green-600" />
-                  <span>KYC Updated</span>
-                </div>
-                <a href="https://cdnweb.onlineyono.sbi.bank.in/accounts/re-kyc/kyc-entry" target="_blank" rel="noopener noreferrer" className="kyc-update-now-link">
-                  Update Now
-                </a>
-              </div>
-
-              {/* Personal Details Gray Box (Masked Fields with Eye Toggles) */}
-              <div className="personal-details-gray-box">
-                
-                {/* Date of Birth */}
-                <div>
-                  <span className="detail-field-item">Date of Birth</span>
-                  <div className="detail-field-val">
-                    <span>{showDob ? '15/08/2000' : 'XX/XX/2000'}</span>
-                    <button type="button" onClick={() => setShowDob(!showDob)} className="eye-mask-icon bg-none border-0 p-0">
-                      {showDob ? <EyeOff size={16} /> : <Eye size={16} />}
-                    </button>
-                  </div>
-                </div>
-
-                {/* Mobile Number */}
-                <div>
-                  <span className="detail-field-item">Mobile number</span>
-                  <div className="detail-field-val">
-                    <span>{showMobile ? '9876545933' : 'XXXXXX5933'}</span>
-                    <button type="button" onClick={() => setShowMobile(!showMobile)} className="eye-mask-icon bg-none border-0 p-0">
-                      {showMobile ? <EyeOff size={16} /> : <Eye size={16} />}
-                    </button>
-                  </div>
-                </div>
-
-                {/* CKYC Number */}
-                <div>
-                  <span className="detail-field-item flex items-center gap-1">
-                    CKYC Number <Info size={13} className="text-purple-800" />
-                  </span>
-                  <div className="detail-field-val">
-                    <span>{showCkyc ? '987654322966' : 'XXXXXXXX2966'}</span>
-                    <button type="button" onClick={() => setShowCkyc(!showCkyc)} className="eye-mask-icon bg-none border-0 p-0">
-                      {showCkyc ? <EyeOff size={16} /> : <Eye size={16} />}
-                    </button>
-                  </div>
-                </div>
-
-                {/* PAN */}
-                <div>
-                  <span className="detail-field-item">PAN</span>
-                  <div className="detail-field-val">
-                    <span>{showPan ? 'ABCDE6421H' : 'XXXXXX642H'}</span>
-                    <button type="button" onClick={() => setShowPan(!showPan)} className="eye-mask-icon bg-none border-0 p-0">
-                      {showPan ? <EyeOff size={16} /> : <Eye size={16} />}
-                    </button>
-                  </div>
-                </div>
-
-                {/* Father's Name */}
-                <div className="col-span-1 md:col-span-2">
-                  <span className="detail-field-item">Father&apos;s Name</span>
-                  <div className="detail-field-val text-slate-800">
-                    D SHYAMSUNDER
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Email ID Field */}
-              <div className="address-field-block">
-                <span className="address-title">Email ID</span>
-                <div className="address-text lowercase font-normal text-slate-700">
-                  {user?.email || 'dumpala.vishnu@example.com'}
-                </div>
-              </div>
-
-              {/* Communication Address */}
-              <div className="address-field-block">
-                <span className="address-title">Communication Address</span>
-                <p className="address-text m-0">
-                  H NO 6-20 KUNARAM PEDDAPALLI TELANGANA 505174
-                </p>
-                <Edit2 size={16} className="address-edit-pencil" title="Edit Communication Address" />
-              </div>
-
-              {/* Permanent Address */}
-              <div className="address-field-block">
-                <span className="address-title">Permanent Address</span>
-                <p className="address-text m-0">
-                  H NO 6-20 KUNARAM KALVASRIRAMPUR Srirampur KARIMNAGAR TELANGANA 505174
-                </p>
-                <Edit2 size={16} className="address-edit-pencil" title="Edit Permanent Address" />
-              </div>
-
-              {/* Dropdown Select Fields */}
-              <div className="profile-select-grid mt-6">
-                
-                {/* Marital Status */}
-                <div className="profile-select-wrapper">
-                  <label htmlFor="marital-status" className="profile-select-label">Marital Status</label>
-                  <select 
-                    id="marital-status"
-                    value={maritalStatus} 
-                    onChange={(e) => setMaritalStatus(e.target.value)}
-                    className="profile-select-input"
-                  >
-                    <option value="Single">Single</option>
-                    <option value="Married">Married</option>
-                    <option value="Other">Other</option>
-                  </select>
-                </div>
-
-                {/* Religion */}
-                <div className="profile-select-wrapper">
-                  <label htmlFor="religion" className="profile-select-label">Religion</label>
-                  <select 
-                    id="religion"
-                    value={religion} 
-                    onChange={(e) => setReligion(e.target.value)}
-                    className="profile-select-input"
-                  >
-                    <option value="Hindu">Hindu</option>
-                    <option value="Muslim">Muslim</option>
-                    <option value="Christian">Christian</option>
-                    <option value="Sikh">Sikh</option>
-                    <option value="Other">Other</option>
-                  </select>
-                </div>
-
-                {/* Category */}
-                <div className="profile-select-wrapper">
-                  <label htmlFor="category" className="profile-select-label">Category</label>
-                  <select 
-                    id="category"
-                    value={category} 
-                    onChange={(e) => setCategory(e.target.value)}
-                    className="profile-select-input"
-                  >
-                    <option value="General">General</option>
-                    <option value="OBC">OBC</option>
-                    <option value="SC">SC</option>
-                    <option value="ST">ST</option>
-                  </select>
-                </div>
-
-              </div>
+              )}
 
             </div>
 

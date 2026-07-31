@@ -1,9 +1,9 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import Cookies from 'js-cookie'
-import { authApi } from '@/lib/api'
+import { MOCK_USER } from '@/lib/mockData'
 
-interface User {
+export interface User {
   id: string
   username: string
   email: string
@@ -30,27 +30,26 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set, get) => ({
-      user: null,
-      isAuthenticated: false,
+    (set) => ({
+      user: MOCK_USER,
+      isAuthenticated: true,
       isLoading: false,
-      sessionToken: null,
+      sessionToken: 'session_mock_123',
 
       setSessionToken: (token) => set({ sessionToken: token }),
 
       setTokens: (access, refresh) => {
-        Cookies.set('access_token', access, { expires: 1/48, secure: true, sameSite: 'strict' })
-        Cookies.set('refresh_token', refresh, { expires: 7, secure: true, sameSite: 'strict' })
+        Cookies.set('access_token', access, { expires: 1 })
+        Cookies.set('refresh_token', refresh, { expires: 7 })
         set({ isAuthenticated: true })
       },
 
       setUser: (user) => set({ user, isAuthenticated: true }),
 
       logout: () => {
-        authApi.logout().catch(() => {})
         Cookies.remove('access_token')
         Cookies.remove('refresh_token')
-        set({ user: null, isAuthenticated: false, sessionToken: null })
+        set({ user: MOCK_USER, isAuthenticated: true, sessionToken: null })
         window.location.href = '/auth/login'
       },
     }),

@@ -1,54 +1,55 @@
 'use client'
 
-import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { dashboardApi } from '@/lib/api';
+import React, { useState, useRef } from 'react';
 import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import toast from 'react-hot-toast';
 import { 
-  Eye, EyeOff, Search, Bell, ChevronRight, ArrowUpRight, 
-  ArrowDownLeft, ShieldCheck, Lock, Sparkles, CreditCard, 
-  TrendingUp, HelpCircle, Phone, ArrowRight, RefreshCw, Send,
-  FileText, CheckCircle2, UserCheck, Layers, DollarSign, Wallet
+  Eye, EyeOff, Search, Bell, HelpCircle, ChevronRight, ChevronLeft
 } from 'lucide-react';
-import { formatIndianCurrency, formatDate } from '@/lib/utils';
+import { MOCK_USER, MOCK_ACCOUNTS } from '@/lib/mockData';
+import { RelationshipOverviewCards } from '@/components/banking/RelationshipOverviewCards';
+import { QuickFeatureBanners } from '@/components/banking/QuickFeatureBanners';
 import './dashboard.css';
 
 export default function DashboardPage() {
   const router = useRouter();
-  const { logout, user: authUser } = useAuthStore();
+  const { logout, user } = useAuthStore();
   const [showBalance, setShowBalance] = useState(false);
-  const [liteSwitch, setLiteSwitch] = useState(false);
   const [activeTab, setActiveTab] = useState('Overview');
+  const [paymentsSubTab, setPaymentsSubTab] = useState<'transfer' | 'bills'>('transfer');
+  
+  // Banner Carousel State
+  const [bannerSlide, setBannerSlide] = useState(0);
 
-  const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ['dashboard'],
-    queryFn: () => dashboardApi.get().then(r => r.data),
-  });
+  const bannerImages = [
+    "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/welcome_64x64",
+    "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/credit_card_web_873x203",
+    "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/873_by_203",
+    "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/pabl_banner",
+    "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/feedback_banner_2_2_873x203"
+  ];
+
+  const currentUser = user || MOCK_USER;
+  const fullName = currentUser.full_name || 'DUMPALA VISHNU VARDHAN';
+  const nameParts = fullName.split(' ');
+  const initials = nameParts.map((n: string) => n[0]).join('').slice(0, 2).toUpperCase() || 'DU';
+
+  const primaryAccount = MOCK_ACCOUNTS[0];
 
   const handleLogout = () => {
     logout();
     router.push('/auth/login');
   };
 
-  const user = data?.user || authUser || { full_name: 'Dumpala' };
-  const accounts = data?.accounts || [];
-  const recentTransactions = data?.recent_transactions || [];
-  const totalBalance = data?.total_balance || 245890.50;
-
-  // Initial user name uppercase greeting matching Screenshot 2
-  const nameParts = user.full_name ? user.full_name.split(' ') : ['Dumpala'];
-  const firstName = nameParts[0];
-  const userInitials = nameParts.map((n: string) => n[0]).join('').slice(0, 2).toUpperCase() || 'DV';
-
   return (
     <div className="dashboard-wrapper">
       
-      {/* ================= HEADER (app-latest-header matching Screenshot 2) ================= */}
+      {/* ================= HEADER (Authentic Multi-Tier Navbar) ================= */}
       <header className="dash-header">
         
-        {/* Top Dark Purple Bar */}
+        {/* Dark Purple Top Bar */}
         <div className="dash-top-bar">
           <div className="dash-top-bar-inner">
             <div className="dash-top-left-tabs">
@@ -64,13 +65,7 @@ export default function DashboardPage() {
 
               <div className="dash-lite-switch">
                 <span>YONO Net Banking Lite</span>
-                <button 
-                  type="button" 
-                  onClick={() => setLiteSwitch(!liteSwitch)}
-                  className={`switch-badge ${liteSwitch ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
-                >
-                  {liteSwitch ? 'ON' : 'OFF'}
-                </button>
+                <span className="switch-badge bg-gray-400 text-white">OFF</span>
               </div>
             </div>
 
@@ -96,7 +91,7 @@ export default function DashboardPage() {
           <div className="dash-main-navbar-inner">
             <Link href="/dashboard" className="flex items-center gap-2">
               <img 
-                src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/new-horz-logo_net-banking_svg" 
+                src="/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/new_horz_logo_net_banking_svg" 
                 alt="YONO SBI Net-Banking Logo" 
                 className="dash-brand-logo"
               />
@@ -108,13 +103,18 @@ export default function DashboardPage() {
                 'Loans', 'Cards', 'Investments', 'Insurance', 'Services'
               ].map((tab) => (
                 <li key={tab} className="dash-nav-item">
-                  <div 
-                    onClick={() => setActiveTab(tab)} 
+                  <button 
+                    type="button" 
+                    onClick={() => {
+                      setActiveTab(tab);
+                      if (tab === 'Accounts') router.push('/accounts');
+                      if (tab === 'Cards') router.push('/cards');
+                    }}
                     className={`dash-nav-link ${activeTab === tab ? 'active' : ''}`}
                   >
                     <span>{tab}</span>
-                    {activeTab === tab && <div className="dash-nav-indicator" />}
-                  </div>
+                    {activeTab === tab && <div className="nav-active-line" />}
+                  </button>
                 </li>
               ))}
             </ul>
@@ -129,311 +129,392 @@ export default function DashboardPage() {
                   2
                 </span>
               </button>
-              <div className="dash-user-profile-badge">
-                <div className="dash-user-avatar-circle">{userInitials}</div>
+              <Link href="/settings" className="dash-user-profile-badge">
+                <div className="dash-user-avatar-circle">{initials}</div>
                 <span>My Profile</span>
-              </div>
+              </Link>
             </div>
           </div>
         </nav>
       </header>
 
-      {/* ================= MAIN DASHBOARD BODY (Screenshot 2 Exact Replicated) ================= */}
-      <main className="dash-main-container">
-        
-        {/* Top Greeting */}
-        <h1 className="dash-greeting-text">
-          Hello {firstName}, Let&apos;s get started!
-        </h1>
-
-        {/* Feature Circles Story Carousel (Exact 8 items from Screenshot 2) */}
-        <div className="dash-stories-carousel">
-          {[
-            { label: 'Welcome to Yono', icon: Sparkles },
-            { label: 'Fraud Awareness', icon: ShieldCheck },
-            { label: 'Tax Related Services', icon: FileText },
-            { label: 'e-Secure Lock', icon: Lock },
-            { label: 'Sustainability', icon: CheckCircle2 },
-            { label: 'SIP', icon: TrendingUp },
-            { label: 'Credit Card', icon: CreditCard },
-            { label: 'Invest Now', icon: DollarSign },
-          ].map((item, idx) => {
-            const Icon = item.icon;
-            return (
-              <div key={idx} className="dash-story-item">
-                <div className="dash-story-circle">
-                  <Icon size={22} />
-                </div>
-                <span className="dash-story-label">{item.label}</span>
-              </div>
-            );
-          })}
-          <div className="dash-story-item">
-            <div className="dash-story-circle bg-gray-100 border-gray-300 text-gray-600">
-              <ArrowRight size={20} />
-            </div>
-          </div>
-        </div>
-
-        {/* ================= RELATIONSHIP OVERVIEW CARDS ================= */}
-        <section className="relationship-overview-section">
-          <div className="relationship-header-row">
-            <h2 className="relationship-title">Relationship Overview</h2>
-            <Link href="/accounts" className="view-accounts-btn">
-              View All Accounts <ChevronRight size={14} />
-            </Link>
-          </div>
-
-          <div className="relationship-cards-grid">
+      {/* ================= MAIN DASHBOARD OVERVIEW BODY (SBI 8-Col / 4-Col Grid) ================= */}
+      <main className="dash-body-container">
+        <div className="dash-container-xxl">
+          <div className="dash-row">
             
-            {/* Card 1: TRANSACTION ACCOUNTS (Magenta Gradient Card) */}
-            <div className="card-transaction-accounts">
-              <div>
-                <div className="card-top-row">
-                  <span className="card-title-text">TRANSACTION ACCOUNTS</span>
-                  <button 
-                    type="button" 
-                    onClick={() => setShowBalance(!showBalance)}
-                    className="text-white opacity-80 hover:opacity-100 bg-none border-0 cursor-pointer"
-                    title={showBalance ? "Hide Balance" : "Show Balance"}
-                  >
-                    {showBalance ? <EyeOff size={18} /> : <Eye size={18} />}
+            {/* LEFT MAIN COLUMN (8 Columns = 66.66%) */}
+            <div className="dash-col-8">
+              
+              {/* Salutation Greeting & Quick Links Carousel */}
+              <div className="salutation-box">
+                <div className="salutation-txt-box">
+                  Hello <span className="font-extrabold">{fullName.split(' ')[0]}</span>, Let&apos;s get started!
+                </div>
+
+                <div className="scroll-container">
+                  {[
+                    { label: 'Welcome to Yono', img: '/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/welcome_64x64' },
+                    { label: 'Fraud Awareness', img: '/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/fraudawareness2_thumbnail_64x6' },
+                    { label: 'Tax Related Services', img: '/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/welcome_64x64' },
+                    { label: 'e - Secure Lock', img: '/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/yp_secure_lock_banner_sbi_thumbnail_64x64_23_11zon' },
+                    { label: 'Sustainability', img: '/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/sustainibility_thumbnail_64x64' },
+                    { label: 'SIP', img: '/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/sip_thumbnail_product_creative_64x64' },
+                    { label: 'Credit Card', img: '/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/welcome_64x64' },
+                    { label: 'Invest Now', img: '/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/sip_thumbnail_product_creative_64x64' },
+                  ].map((story, sIdx) => (
+                    <div key={sIdx} className="circle-container" onClick={() => toast.success(`Opening ${story.label}`)}>
+                      <div className="circle">
+                        <img src={story.img} alt={story.label} />
+                      </div>
+                      <p className="storyname">{story.label}</p>
+                    </div>
+                  ))}
+
+                  <button type="button" className="story-next-btn" aria-label="Next Stories">
+                    <ChevronRight size={18} />
                   </button>
                 </div>
-
-                <div className="card-combined-balance-label">Combined Balance</div>
-                <div className="card-balance-amount">
-                  {showBalance ? formatIndianCurrency(totalBalance) : '₹XXXX.XX'}
-                </div>
               </div>
 
-              <div className="card-bottom-actions">
-                <Link href="/accounts" className="card-action-link">View Accounts</Link>
-                <Link href="/transactions" className="card-action-link">Transactions</Link>
-              </div>
-            </div>
-
-            {/* Card 2: DEPOSITS (Lavender Card) */}
-            <div className="card-lavender">
-              <div>
-                <span className="card-lavender-title">DEPOSITS</span>
-                <p className="card-lavender-desc">
-                  Grow your money faster <br />
-                  <span className="text-xs text-gray-500 font-normal">Check out our high-yield deposits</span>
-                </p>
-              </div>
-              <div>
-                <Link href="/web/personal-banking/accounts/saving-account" className="card-lavender-link">
-                  Explore →
-                </Link>
-              </div>
-            </div>
-
-            {/* Card 3: LOANS (Lavender Card) */}
-            <div className="card-lavender">
-              <div>
-                <span className="card-lavender-title">LOANS</span>
-                <p className="card-lavender-desc">
-                  Find the perfect loan <br />
-                  <span className="text-xs text-gray-500 font-normal">Ready to make that big purchase?</span>
-                </p>
-              </div>
-              <div className="flex justify-between items-center">
-                <Link href="/transfers" className="card-lavender-link">
-                  Manage loans →
-                </Link>
-                <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-purple-900 shadow-sm cursor-pointer">
-                  <ChevronRight size={16} />
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        {/* ================= TWO COLUMN LAYOUT (Left Services & Recent Txns / Right Sidebar Products) ================= */}
-        <div className="dashboard-two-col">
-          
-          {/* Left Column */}
-          <div className="space-y-6">
-            
-            {/* Payments & Transfers Actions */}
-            <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-base font-bold text-slate-800">Payments &amp; Transfers</h3>
-                <Link href="/transfers" className="text-xs font-bold text-purple-900 hover:underline">
-                  View All Transfers →
-                </Link>
+              {/* Relationship Overview Section */}
+              <div className="mb-4">
+                <RelationshipOverviewCards
+                  combinedBalance={primaryAccount.balance}
+                  onViewAllClick={() => router.push('/accounts')}
+                />
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                {[
-                  { label: 'Quick Transfer', href: '/transfers?type=NEFT', icon: Send, bg: 'bg-purple-50 text-purple-900' },
-                  { label: 'Send Money', href: '/transfers', icon: ArrowUpRight, bg: 'bg-pink-50 text-pink-700' },
-                  { label: 'Manage Payee', href: '/transfers/beneficiaries', icon: UserCheck, bg: 'bg-blue-50 text-blue-700' },
-                  { label: 'Bill Payments', href: '/transfers', icon: CreditCard, bg: 'bg-amber-50 text-amber-800' },
-                ].map((item, idx) => {
-                  const Icon = item.icon;
-                  return (
-                    <Link 
-                      key={idx} 
-                      href={item.href}
-                      className="flex flex-col items-center p-3 rounded-xl border border-gray-100 hover:shadow-md transition-all text-center group"
-                    >
-                      <div className={`w-11 h-11 rounded-full ${item.bg} flex items-center justify-center mb-2 group-hover:scale-110 transition-transform`}>
-                        <Icon size={20} />
+              {/* Quick Feature Banners (Check Credit Score & PFM) */}
+              <div className="mb-6">
+                <QuickFeatureBanners 
+                  onCreditScoreClick={() => toast.success('Checking your Credit Score... CIBIL Score: 785')}
+                />
+              </div>
+
+              {/* Lower Row Widgets (Payments & Transfers 6-Col + Upcoming Payments 6-Col) */}
+              <div className="dash-inner-row">
+                
+                {/* Payments & Transfers (Left 6 Columns) */}
+                <div className="dash-col-6">
+                  <div className="main-container-pt">
+                    <div>
+                      <h1 className="title-pt">Payments &amp; Transfers</h1>
+                      
+                      <div className="tabs-conatiner-pt">
+                        <button 
+                          type="button" 
+                          onClick={() => setPaymentsSubTab('transfer')}
+                          className={`pt-tab ${paymentsSubTab === 'transfer' ? 'active' : ''}`}
+                        >
+                          Fund Transfer
+                        </button>
+                        <button 
+                          type="button" 
+                          onClick={() => setPaymentsSubTab('bills')}
+                          className={`pt-tab ${paymentsSubTab === 'bills' ? 'active' : ''}`}
+                        >
+                          <img src="/assets/images/bill_payments/BBPS Logo.svg" alt="BBPS Logo" className="bbps-tag-img" />
+                          Bill payments
+                        </button>
                       </div>
-                      <span className="text-xs font-bold text-slate-700">{item.label}</span>
-                    </Link>
-                  );
-                })}
+
+                      <div className="optionsFT">
+                        <div className="iconWithTitle-pt" onClick={() => router.push('/home/landingPage/fund-transfer/quick-transfer/bank-selection')}>
+                          <div className="pt-icon-circle">
+                            <img src="/assets/images/landing_page/quicktransfer.svg" alt="Quick Transfer" className="w-5 h-5" />
+                          </div>
+                          <span className="pt-title">Quick Transfer</span>
+                          <span className="pt-subTitle">Upto ₹50,000</span>
+                        </div>
+
+                        <div className="iconWithTitle-pt" onClick={() => toast.success("Send Money To own/other account")}>
+                          <div className="pt-icon-circle">
+                            <img src="/assets/images/landing_page/sendmoney.svg" alt="Send Money" className="w-5 h-5" />
+                          </div>
+                          <span className="pt-title">Send Money</span>
+                          <span className="pt-subTitle">To own/other account</span>
+                        </div>
+
+                        <div className="iconWithTitle-pt" onClick={() => toast.success("Send Money Abroad")}>
+                          <div className="pt-icon-circle">
+                            <img src="/assets/images/landing_page/sendmoneyabroad.svg" alt="Send Money Abroad" className="w-5 h-5" />
+                          </div>
+                          <span className="pt-title">Send Money Abroad</span>
+                        </div>
+
+                        <div className="iconWithTitle-pt" onClick={() => toast.success("Schedule Payments")}>
+                          <div className="pt-icon-circle">
+                            <img src="/assets/images/landing_page/schedulepayments.svg" alt="Schedule Payments" className="w-5 h-5" />
+                          </div>
+                          <span className="pt-title">Schedule Payments</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="first-transfer-box">
+                      <span className="text-[11px] text-slate-600 font-medium">
+                        You’re yet to make your first transfer. Start now with our quick and easy options!
+                      </span>
+                      <button type="button" onClick={() => router.push('/home/landingPage/fund-transfer/quick-transfer/bank-selection')} className="try-now-button">
+                        Try now <ChevronRight size={12} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Upcoming Payments (Right 6 Columns) */}
+                <div className="dash-col-6">
+                  <div className="upcoming-payment-container">
+                    <h1 className="title-pt">Upcoming Payments</h1>
+                    
+                    <div className="flex-1 flex flex-col items-center justify-center text-center p-4">
+                      <img src="/assets/images/landing_page/IC_Bill_Payment_Schedule.svg" alt="Bill Payment Schedule" className="w-20 h-20 mb-3" />
+                      <div className="font-bold text-slate-800 text-xs">Never Miss Your Payments Now</div>
+                      <p className="text-[11px] text-slate-500 mt-1 mb-4">Track and get reminder for your upcoming Payments</p>
+                      <button 
+                        type="button" 
+                        onClick={() => toast.success("Opening Pay Bills")} 
+                        className="pay-bills-btn"
+                      >
+                        Pay Bills
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
               </div>
+
+              {/* Promo Banner Carousel (873x203 DOM Exact) */}
+              <div className="banner-page-carousel">
+                <img 
+                  src={bannerImages[bannerSlide]} 
+                  alt="SBI Promo Banner" 
+                  className="banner-img-main" 
+                />
+
+                <div className="carousel-indicators-dots">
+                  {bannerImages.map((_, bIdx) => (
+                    <span 
+                      key={bIdx} 
+                      onClick={() => setBannerSlide(bIdx)}
+                      className={`dot-indicator ${bannerSlide === bIdx ? 'active' : ''}`}
+                    />
+                  ))}
+                </div>
+              </div>
+
             </div>
 
-            {/* Accounts Summary & Recent Transactions Table */}
-            <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-base font-bold text-slate-800">Recent Transactions</h3>
-                <Link href="/transactions" className="text-xs font-bold text-purple-900 hover:underline">
-                  Full History →
-                </Link>
+            {/* RIGHT SIDEBAR COLUMN (4 Columns = 33.33%) */}
+            <div className="dash-col-4">
+              
+              {/* Investments Panel */}
+              <div className="rightside-content-box">
+                <div className="rightside-header-row">
+                  <h1 className="rightside-title">Investments</h1>
+                  <span className="viewAll-side">View All</span>
+                </div>
+                <div className="rightside-grid">
+                  <div className="rightside-item" onClick={() => toast.success("Mutual Funds")}>
+                    <div className="rightside-icon-box">
+                      <img src="/assets/images/landing_page/ic__20newmutualfunds.svg" alt="Mutual Funds" className="w-5 h-5" />
+                    </div>
+                    <span className="rightside-item-name">Mutual Funds</span>
+                  </div>
+                  <div className="rightside-item" onClick={() => toast.success("Demat & Securities")}>
+                    <div className="rightside-icon-box">
+                      <img src="/assets/images/landing_page/cate_20ic_demat_20acc.svg" alt="Demat Account" className="w-5 h-5" />
+                    </div>
+                    <span className="rightside-item-name">Demat &amp; Securities</span>
+                  </div>
+                  <div className="rightside-item" onClick={() => toast.success("NPS")}>
+                    <div className="rightside-icon-box">
+                      <img src="/assets/images/landing_page/ic__20newnps.svg" alt="NPS" className="w-5 h-5" />
+                    </div>
+                    <span className="rightside-item-name">NPS</span>
+                  </div>
+                  <div className="rightside-item" onClick={() => toast.success("PPF")}>
+                    <div className="rightside-icon-box">
+                      <img src="/assets/images/landing_page/ic__20newppf.svg" alt="PPF" className="w-5 h-5" />
+                    </div>
+                    <span className="rightside-item-name">PPF</span>
+                  </div>
+                </div>
               </div>
 
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs">
-                  <thead>
-                    <tr className="border-b border-gray-200 text-gray-500 font-bold">
-                      <th className="pb-3">Date</th>
-                      <th className="pb-3">Description</th>
-                      <th className="pb-3">Ref No.</th>
-                      <th className="pb-3 text-right">Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-100">
-                    {recentTransactions.length === 0 ? (
-                      <tr>
-                        <td colSpan={4} className="py-6 text-center text-gray-400">
-                          No recent transaction records found.
-                        </td>
-                      </tr>
-                    ) : (
-                      recentTransactions.slice(0, 5).map((txn: any) => (
-                        <tr key={txn.id} className="hover:bg-gray-50/80 transition-colors">
-                          <td className="py-3 font-semibold text-slate-700">{formatDate(txn.value_date, 'short')}</td>
-                          <td className="py-3 max-w-[200px] truncate text-slate-800 font-medium">{txn.description}</td>
-                          <td className="py-3 font-mono text-[10px] text-gray-400">{txn.transaction_ref?.slice(0, 10)}...</td>
-                          <td className={`py-3 text-right font-bold ${txn.type === 'credit' ? 'text-green-600' : 'text-red-600'}`}>
-                            {txn.type === 'credit' ? '+' : '-'}{formatIndianCurrency(txn.amount)}
-                          </td>
-                        </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
+              {/* Loans Panel */}
+              <div className="rightside-content-box">
+                <div className="rightside-header-row">
+                  <h1 className="rightside-title">Loans</h1>
+                  <span className="viewAll-side">View All</span>
+                </div>
+                <div className="rightside-grid">
+                  <div className="rightside-item" onClick={() => toast.success("Personal Loan")}>
+                    <div className="rightside-icon-box">
+                      <img src="/assets/images/landing_page/ic_newpersonalloan.svg" alt="Personal Loan" className="w-5 h-5" />
+                    </div>
+                    <span className="rightside-item-name">Personal Loan</span>
+                  </div>
+                  <div className="rightside-item" onClick={() => toast.success("Loan Against Mutual Fund")}>
+                    <div className="rightside-icon-box">
+                      <img src="/assets/images/landing_page/ic_newpersonalloan.svg" alt="Loan Against Mutual Fund" className="w-5 h-5" />
+                    </div>
+                    <span className="rightside-item-name">Loan Against Mutual Fund</span>
+                  </div>
+                  <div className="rightside-item" onClick={() => toast.success("Home Loan")}>
+                    <div className="rightside-icon-box">
+                      <img src="/assets/images/landing_page/ic_newhomeloan.svg" alt="Home Loan" className="w-5 h-5" />
+                    </div>
+                    <span className="rightside-item-name">Home Loan</span>
+                  </div>
+                  <div className="rightside-item" onClick={() => toast.success("Gold Loan")}>
+                    <div className="rightside-icon-box">
+                      <img src="/assets/images/landing_page/ic_newgoldloan.svg" alt="Gold Loan" className="w-5 h-5" />
+                    </div>
+                    <span className="rightside-item-name">Gold Loan</span>
+                  </div>
+                </div>
               </div>
+
+              {/* Deposits Panel */}
+              <div className="rightside-content-box">
+                <div className="rightside-header-row">
+                  <h1 className="rightside-title">Deposits</h1>
+                </div>
+                <div className="rightside-grid">
+                  <div className="rightside-item" onClick={() => toast.success("Fixed Deposit")}>
+                    <div className="rightside-icon-box">
+                      <img src="/assets/images/landing_page/ic_fixeddeposit.svg" alt="Fixed Deposit" className="w-5 h-5" />
+                    </div>
+                    <span className="rightside-item-name">Fixed Deposit</span>
+                  </div>
+                  <div className="rightside-item" onClick={() => toast.success("Recurring Deposit")}>
+                    <div className="rightside-icon-box">
+                      <img src="/assets/images/landing_page/ic__20newrecurringdeposit.svg" alt="Recurring Deposit" className="w-5 h-5" />
+                    </div>
+                    <span className="rightside-item-name">Recurring Deposit</span>
+                  </div>
+                  <div className="rightside-item" onClick={() => toast.success("Annuity Deposit")}>
+                    <div className="rightside-icon-box">
+                      <img src="/assets/images/landing_page/cate_20ic_annuity_20deposit.svg" alt="Annuity Deposit" className="w-5 h-5" />
+                    </div>
+                    <span className="rightside-item-name">Annuity Deposit</span>
+                  </div>
+                  <div className="rightside-item" onClick={() => toast.success("Auto Sweep")}>
+                    <div className="rightside-icon-box">
+                      <img src="/assets/images/landing_page/cate_20ic_autosweep.svg" alt="Auto Sweep" className="w-5 h-5" />
+                    </div>
+                    <span className="rightside-item-name">Auto Sweep</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Insurance Panel */}
+              <div className="rightside-content-box">
+                <div className="rightside-header-row">
+                  <h1 className="rightside-title">Insurance</h1>
+                  <span className="viewAll-side">View All</span>
+                </div>
+                <div className="rightside-grid">
+                  <div className="rightside-item" onClick={() => toast.success("Life Insurance")}>
+                    <div className="rightside-icon-box">
+                      <img src="/assets/images/landing_page/ic_newlifeinsurance.svg" alt="Life Insurance" className="w-5 h-5" />
+                    </div>
+                    <span className="rightside-item-name">Life</span>
+                  </div>
+                  <div className="rightside-item" onClick={() => toast.success("Health Insurance")}>
+                    <div className="rightside-icon-box">
+                      <img src="/assets/images/landing_page/ic_newhealthinsurance.svg" alt="Health Insurance" className="w-5 h-5" />
+                    </div>
+                    <span className="rightside-item-name">Health</span>
+                  </div>
+                  <div className="rightside-item" onClick={() => toast.success("Accident Insurance")}>
+                    <div className="rightside-icon-box">
+                      <img src="/assets/images/landing_page/ic_newaccidentinsurance.svg" alt="Accident Insurance" className="w-5 h-5" />
+                    </div>
+                    <span className="rightside-item-name">Accident</span>
+                  </div>
+                  <div className="rightside-item" onClick={() => toast.success("Motor Insurance")}>
+                    <div className="rightside-icon-box">
+                      <img src="/assets/images/landing_page/ic_newcarinsurance.svg" alt="Motor Insurance" className="w-5 h-5" />
+                    </div>
+                    <span className="rightside-item-name">Motor</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Cards Panel */}
+              <div className="rightside-content-box">
+                <div className="rightside-header-row">
+                  <h1 className="rightside-title">Cards</h1>
+                </div>
+                <div className="rightside-grid">
+                  <div className="rightside-item" onClick={() => router.push('/cards')}>
+                    <div className="rightside-icon-box">
+                      <img src="/assets/images/landing_page/ic_newcreditcard.svg" alt="Credit Cards" className="w-5 h-5" />
+                    </div>
+                    <span className="rightside-item-name">Credit Cards</span>
+                  </div>
+                  <div className="rightside-item" onClick={() => toast.success("Debit Cards")}>
+                    <div className="rightside-icon-box">
+                      <img src="/assets/images/landing_page/ic_newdebitcard.svg" alt="Debit Cards" className="w-5 h-5" />
+                    </div>
+                    <span className="rightside-item-name">Debit Cards</span>
+                  </div>
+                  <div className="rightside-item" onClick={() => toast.success("Forex Cards")}>
+                    <div className="rightside-icon-box">
+                      <img src="/assets/images/landing_page/ic_newforexcard.svg" alt="Forex Cards" className="w-5 h-5" />
+                    </div>
+                    <span className="rightside-item-name">Forex Cards</span>
+                  </div>
+                  <div className="rightside-item" onClick={() => toast.success("Prepaid Cards")}>
+                    <div className="rightside-icon-box">
+                      <img src="/assets/images/landing_page/ncmc_card.svg" alt="Prepaid Cards" className="w-5 h-5" />
+                    </div>
+                    <span className="rightside-item-name">Prepaid Cards</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Services Panel */}
+              <div className="rightside-content-box">
+                <div className="rightside-header-row">
+                  <h1 className="rightside-title">Services</h1>
+                  <span className="viewAll-side">View All</span>
+                </div>
+                <div className="rightside-grid">
+                  <div className="rightside-item" onClick={() => toast.success("Account Related Services")}>
+                    <div className="rightside-icon-box">
+                      <img src="/assets/images/landing_page/cate_20ic_app_20experience.svg" alt="Account Related" className="w-5 h-5" />
+                    </div>
+                    <span className="rightside-item-name">Account Related</span>
+                  </div>
+                  <div className="rightside-item" onClick={() => toast.success("Tax Related Services")}>
+                    <div className="rightside-icon-box">
+                      <img src="/assets/images/landing_page/ic_taxrelated.svg" alt="Tax Related" className="w-5 h-5" />
+                    </div>
+                    <span className="rightside-item-name">Tax Related</span>
+                  </div>
+                  <div className="rightside-item" onClick={() => toast.success("Cheque Services")}>
+                    <div className="rightside-icon-box">
+                      <img src="/assets/images/landing_page/cheque_services_icon_n.svg" alt="Cheque Services" className="w-5 h-5" />
+                    </div>
+                    <span className="rightside-item-name">Cheque Services</span>
+                  </div>
+                  <div className="rightside-item" onClick={() => toast.success("e-Secure Lock")}>
+                    <div className="rightside-icon-box">
+                      <img src="/assets/images/landing_page/cate_20ic_esecure_20lock.svg" alt="e-Secure Lock" className="w-5 h-5" />
+                    </div>
+                    <span className="rightside-item-name">e-Secure Lock</span>
+                  </div>
+                </div>
+              </div>
+
             </div>
 
           </div>
-
-          {/* Right Column Sidebar Panels (Screenshot 2 Exact) */}
-          <div>
-            
-            {/* Investments Box */}
-            <div className="product-widget-box">
-              <div className="widget-header-row">
-                <span className="widget-title">Investments</span>
-                <a href="https://www.sbisecurities.in/" target="_blank" rel="noopener noreferrer" className="widget-view-all">View All</a>
-              </div>
-              <div className="widget-icons-grid">
-                <div className="widget-icon-item">
-                  <div className="widget-icon-box"><TrendingUp size={18} /></div>
-                  <span className="widget-icon-label">Mutual Funds</span>
-                </div>
-                <div className="widget-icon-item">
-                  <div className="widget-icon-box"><Layers size={18} /></div>
-                  <span className="widget-icon-label">Demat &amp; Securities</span>
-                </div>
-                <div className="widget-icon-item">
-                  <div className="widget-icon-box"><FileText size={18} /></div>
-                  <span className="widget-icon-label">NPS</span>
-                </div>
-                <div className="widget-icon-item">
-                  <div className="widget-icon-box"><Wallet size={18} /></div>
-                  <span className="widget-icon-label">PPF</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Loans Box */}
-            <div className="product-widget-box">
-              <div className="widget-header-row">
-                <span className="widget-title">Loans</span>
-                <a href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" className="widget-view-all">View All</a>
-              </div>
-              <div className="widget-icons-grid">
-                <div className="widget-icon-item">
-                  <div className="widget-icon-box"><DollarSign size={18} /></div>
-                  <span className="widget-icon-label">Personal Loan</span>
-                </div>
-                <div className="widget-icon-item">
-                  <div className="widget-icon-box"><TrendingUp size={18} /></div>
-                  <span className="widget-icon-label">Loan Against Mutual Fund</span>
-                </div>
-                <div className="widget-icon-item">
-                  <div className="widget-icon-box"><Lock size={18} /></div>
-                  <span className="widget-icon-label">Home Loan</span>
-                </div>
-                <div className="widget-icon-item">
-                  <div className="widget-icon-box"><Sparkles size={18} /></div>
-                  <span className="widget-icon-label">Gold Loan</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Deposits Box */}
-            <div className="product-widget-box">
-              <div className="widget-header-row">
-                <span className="widget-title">Deposits</span>
-              </div>
-              <div className="widget-icons-grid">
-                <div className="widget-icon-item">
-                  <div className="widget-icon-box"><Lock size={18} /></div>
-                  <span className="widget-icon-label">Fixed Deposit</span>
-                </div>
-                <div className="widget-icon-item">
-                  <div className="widget-icon-box"><RefreshCw size={18} /></div>
-                  <span className="widget-icon-label">Recurring Deposit</span>
-                </div>
-                <div className="widget-icon-item">
-                  <div className="widget-icon-box"><Wallet size={18} /></div>
-                  <span className="widget-icon-label">Annuity Deposit</span>
-                </div>
-                <div className="widget-icon-item">
-                  <div className="widget-icon-box"><Layers size={18} /></div>
-                  <span className="widget-icon-label">Auto Sweep</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Insurance Box */}
-            <div className="product-widget-box">
-              <div className="widget-header-row">
-                <span className="widget-title">Insurance</span>
-                <a href="https://www.sbigeneral.in" target="_blank" rel="noopener noreferrer" className="widget-view-all">View All</a>
-              </div>
-              <div className="flex items-center gap-3 bg-purple-50 p-3 rounded-xl">
-                <ShieldCheck size={28} className="text-purple-900" />
-                <div>
-                  <p className="text-xs font-bold text-slate-800">Comprehensive SBI Health Cover</p>
-                  <p className="text-[10px] text-gray-500">Protect your family with zero hassle</p>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
         </div>
-
       </main>
 
       {/* ================= FOOTER ================= */}

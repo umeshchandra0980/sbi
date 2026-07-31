@@ -1,0 +1,306 @@
+/* RelationshipOverviewCards.css - Authentic SBI YONO 2.0 Card Carousel Design */
+
+.rel-overview-section {
+  width: 100%;
+  margin-bottom: 24px;
+  position: relative;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Header Row */
+.rel-overview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.rel-overview-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #302985;
+  margin: 0;
+  letter-spacing: -0.2px;
+}
+
+.rel-view-all-btn {
+  background: #ffffff;
+  border: 1px solid #7c3aed;
+  color: #5b21b6;
+  border-radius: 9999px;
+  padding: 6px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px rgba(124, 58, 237, 0.08);
+}
+
+.rel-view-all-btn:hover {
+  background: #f5f3ff;
+  border-color: #6d28d9;
+  color: #4c1d95;
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.15);
+  transform: translateY(-1px);
+}
+
+/* Carousel Wrapper */
+.rel-carousel-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* Scroll Container */
+.rel-slideshow-container {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 4px 4px 16px 4px;
+  margin-bottom: -12px;
+
+  /* Hide scrollbars cleanly */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.rel-slideshow-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Base Card Style */
+.rel-card {
+  position: relative;
+  width: 270px;
+  min-width: 270px;
+  max-width: 270px;
+  min-height: 185px;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  user-select: none;
+}
+
+.rel-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.09);
+}
+
+/* SVG Background Curves */
+.rel-card-bg-circles {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 150px;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.rel-card-bg-circles svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Card Content Z-Index */
+.rel-card-header,
+.rel-card-body,
+.rel-card-footer {
+  position: relative;
+  z-index: 2;
+}
+
+/* Header */
+.rel-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rel-card-title {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.rel-title-dark {
+  color: #4c1d95;
+}
+
+/* Eye Icon Button */
+.rel-eye-btn {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.9;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.rel-eye-btn:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.rel-eye-dark {
+  color: #4c1d95;
+}
+
+/* Card Body */
+.rel-card-body {
+  margin-top: 10px;
+  margin-bottom: 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.rel-card-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 2px 0;
+}
+
+.rel-card-balance {
+  font-size: 24px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.rel-card-main-heading {
+  font-size: 14px;
+  font-weight: 800;
+  color: #2e1065;
+  margin: 0 0 4px 0;
+  line-height: 1.3;
+}
+
+.rel-card-subtext {
+  font-size: 11px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.35;
+}
+
+/* Card Footer */
+.rel-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.rel-card-soft-purple .rel-card-footer,
+.rel-card-soft-pink .rel-card-footer,
+.rel-card-soft-blue .rel-card-footer {
+  border-top: 1px solid rgba(124, 58, 237, 0.15);
+}
+
+.rel-footer-link {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.rel-footer-link:hover {
+  opacity: 0.85;
+}
+
+.rel-link-dark {
+  color: #4c1d95;
+}
+
+/* Card Color Variants */
+
+/* Card 1: Magenta / Deep Wine Gradient */
+.rel-card-transaction {
+  background: linear-gradient(135deg, #a21daf 0%, #701a75 50%, #4a044e 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.rel-card-transaction .rel-card-title {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* Soft Purple Card (Deposits, Loans, Investments, General Insurance) */
+.rel-card-soft-purple {
+  background: #eceaf7;
+  border: 1px solid #dfd8f0;
+  color: #1e293b;
+}
+
+/* Soft Pink Card (Credit Cards) */
+.rel-card-soft-pink {
+  background: #f7eaf0;
+  border: 1px solid #f0d8e4;
+  color: #1e293b;
+}
+
+/* Soft Blue Card (PFM, Life Insurance) */
+.rel-card-soft-blue {
+  background: #eaeef7;
+  border: 1px solid #d8e0f0;
+  color: #1e293b;
+}
+
+/* Carousel Navigation Arrows */
+.rel-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: none;
+  color: #4c1d95;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+
+.rel-carousel-arrow:hover {
+  background: #ffffff;
+  color: #302985;
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.rel-carousel-arrow-left {
+  left: -14px;
+}
+
+.rel-carousel-arrow-right {
+  right: -14px;
+}
