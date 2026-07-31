@@ -23,7 +23,7 @@ const productsData: AccountProduct[] = [
     id: '0',
     title: 'Savings Account through Video KYC',
     subtitle: 'Savings Account through Video KYC',
-    href: '/web/yono/insta-plus-savings-bank-account',
+    href: '/accounts/open-savings-account',
     icon: '/o/SBI-Theme/images/custom/icons/basic_saving_account.png',
     features: 'Open a fully functional savings account online using Video call verification. 100% paperless onboarding, instant activation of account and digital banking services. Generates an instant Classic Debit Card.',
     eligibility: 'Resident Indian individuals of age 18 years and above. Must possess a valid Aadhaar Number and physical PAN Card. Not applicable for joint accounts.',

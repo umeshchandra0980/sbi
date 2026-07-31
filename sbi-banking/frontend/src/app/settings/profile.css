@@ -1,0 +1,697 @@
+/* profile.css - Authentic YONO SBI User Profile & Settings Page Design System */
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+
+.profile-page-wrapper {
+  background-color: #f3f4f9;
+  min-height: calc(100vh - 120px);
+  padding: 24px 16px 60px;
+  width: 100%;
+}
+
+.profile-main-container {
+  max-width: 1360px;
+  margin: 0 auto;
+}
+
+/* Breadcrumb Navigation */
+.profile-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4b1774;
+  margin-bottom: 20px;
+}
+
+.profile-breadcrumb a {
+  color: #4b1774;
+  text-decoration: none;
+}
+
+.profile-breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+/* Grid Layout (Left 320px / Right Flexible) */
+.profile-grid-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (min-width: 992px) {
+  .profile-grid-layout {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+/* Left Sidebar */
+.profile-left-sidebar {
+  width: 100%;
+}
+
+@media (min-width: 992px) {
+  .profile-left-sidebar {
+    width: 320px;
+    flex-shrink: 0;
+  }
+}
+
+.profile-user-card {
+  background: #f4edf9;
+  border-radius: 16px;
+  padding: 28px 16px 20px;
+  text-align: center;
+  margin-bottom: 20px;
+  border: 1px solid #e9ddf2;
+}
+
+.profile-avatar-wrapper {
+  position: relative;
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 14px;
+}
+
+.profile-avatar-circle {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: #c8b3e6;
+  color: #4b1774;
+  font-size: 26px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ffffff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.avatar-pencil-badge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #4b1774;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.profile-user-name {
+  font-size: 16px;
+  font-weight: 800;
+  color: #4b1774;
+  margin: 0 0 4px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.profile-cif-text {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.profile-last-login {
+  font-size: 11px;
+  color: #64748b;
+  margin-top: 8px;
+}
+
+/* Sidebar Menu Box */
+.profile-menu-box {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.profile-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+  text-decoration: none;
+  border-bottom: 1px solid #f1f5f9;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.profile-menu-item:last-child {
+  border-bottom: none;
+}
+
+.profile-menu-item:hover {
+  background: #f8f4fc;
+  color: #4b1774;
+}
+
+.profile-menu-item.active {
+  color: #4b1774;
+  font-weight: 700;
+  background: #f8f4fc;
+  border-left: 4px solid #4b1774;
+}
+
+.profile-menu-item-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile-menu-icon {
+  color: #4b1774;
+  display: flex;
+  align-items: center;
+}
+
+/* Right Main Panel */
+.profile-right-panel {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  padding: 28px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  min-height: 580px;
+}
+
+/* Tabs Header */
+.profile-tabs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+}
+
+.profile-tabs-left {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.profile-tab-btn {
+  font-size: 15px;
+  font-weight: 700;
+  color: #64748b;
+  background: none;
+  border: none;
+  padding-bottom: 12px;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.profile-tab-btn.active {
+  color: #4b1774;
+}
+
+.profile-tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -13px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #4b1774;
+  border-radius: 2px;
+}
+
+.info-circle-badge {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #f97316;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-completion-meter {
+  font-size: 12px;
+  font-weight: 700;
+  color: #f97316;
+}
+
+/* KYC Banner */
+.kyc-updated-banner {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  padding: 12px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #166534;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.kyc-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kyc-update-now-link {
+  color: #166534;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+/* Personal Info Gray Card */
+.personal-details-gray-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 28px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .personal-details-gray-box {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 40px;
+  }
+}
+
+.detail-field-item {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.detail-field-val {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1e293b;
+  font-family: monospace;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.eye-mask-icon {
+  color: #4b1774;
+  cursor: pointer;
+}
+
+/* Address Fields */
+.address-field-block {
+  border-bottom: 1px solid #cbd5e1;
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.address-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+  margin-bottom: 6px;
+}
+
+.address-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: #334155;
+  line-height: 1.5;
+  text-transform: uppercase;
+  padding-right: 30px;
+}
+
+.address-edit-pencil {
+  position: absolute;
+  right: 0;
+  bottom: 12px;
+  color: #4b1774;
+  cursor: pointer;
+}
+
+/* Dropdown Underline Fields */
+.profile-select-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px 32px;
+}
+
+@media (min-width: 768px) {
+  .profile-select-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.profile-select-wrapper {
+  border-bottom: 1px solid #cbd5e1;
+  padding-bottom: 6px;
+  margin-bottom: 20px;
+}
+
+.profile-select-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.profile-select-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1e293b;
+  outline: none;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   VIEW 2: MANAGE MY ACCOUNTS STYLES (Screenshot 2 Exact)
+   ========================================================================== */
+
+.acc-header-links {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.joint-acc-link {
+  color: #4b1774;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: underline;
+}
+
+.acc-tabs-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+  overflow-x: auto;
+}
+
+.acc-tab-btn {
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  background: none;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  padding-bottom: 12px;
+  position: relative;
+}
+
+.acc-tab-btn.active {
+  color: #4b1774;
+  font-weight: 800;
+}
+
+.acc-tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -13px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #4b1774;
+  border-radius: 2px;
+}
+
+.acc-select-box-wrapper {
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.acc-select-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.acc-sbi-icon-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #00a0e9;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.acc-select-number {
+  font-size: 15px;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.acc-select-ifsc {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.acc-info-gray-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 28px;
+  position: relative;
+}
+
+.share-details-link {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #4b1774;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.acc-details-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .acc-details-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px 48px;
+  }
+}
+
+.acc-detail-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.acc-detail-val {
+  font-size: 14px;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+/* ==========================================================================
+   VIEW 3: ACCESS SERVICES STYLES (Screenshot 3 Exact)
+   ========================================================================== */
+
+.services-search-input {
+  width: 100%;
+  height: 46px;
+  padding: 12px 16px 12px 42px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
+  outline: none;
+  margin-bottom: 24px;
+}
+
+.services-section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 16px;
+}
+
+.services-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.service-card-item {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 18px 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 84px;
+}
+
+.service-card-item:hover {
+  transform: translateY(-2px);
+  border-color: #4b1774;
+  box-shadow: 0 6px 16px rgba(75, 23, 116, 0.08);
+}
+
+.service-card-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.service-card-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #f4edf9;
+  color: #4b1774;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.service-card-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.3;
+}
+
+/* ==========================================================================
+   VIEW 4: SETTINGS STYLES (Screenshot 4 Exact)
+   ========================================================================== */
+
+.settings-tabs-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+}
+
+.settings-tab-btn {
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding-bottom: 12px;
+  position: relative;
+}
+
+.settings-tab-btn.active {
+  color: #4b1774;
+  font-weight: 800;
+}
+
+.settings-tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -13px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #4b1774;
+  border-radius: 2px;
+}
+
+.manage-limits-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 340px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.manage-limits-card:hover {
+  border-color: #4b1774;
+  box-shadow: 0 4px 12px rgba(75, 23, 116, 0.08);
+}
+
+.limits-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.limits-icon-box {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #f4edf9;
+  color: #4b1774;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.limits-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1e293b;
+}

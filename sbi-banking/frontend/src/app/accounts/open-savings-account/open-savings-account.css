@@ -1,0 +1,346 @@
+/* open-savings-account.css - Authentic YONO SBI Savings Account Onboarding System */
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+
+.osa-wrapper {
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #1e293b;
+}
+
+/* Header Navbar */
+.osa-top-bar {
+  background: linear-gradient(90deg, #443c9e 0%, #302985 100%);
+  color: #ffffff;
+  font-size: 12px;
+}
+
+.osa-top-bar-inner {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 38px;
+}
+
+.osa-main-nav {
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.osa-main-nav-inner {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  height: 64px;
+}
+
+.osa-nav-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  padding: 22px 18px 0;
+  position: relative;
+  transition: color 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.osa-nav-link.active {
+  color: #302985;
+  font-weight: 700;
+}
+
+.osa-nav-line {
+  height: 3px;
+  width: 24px;
+  background-color: #302985;
+  border-radius: 3px 3px 0 0;
+  margin-top: 18px;
+}
+
+/* Page Body */
+.osa-body {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.osa-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #302985;
+  font-weight: 600;
+  text-decoration: none;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.osa-page-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #302985;
+  margin-bottom: 32px;
+}
+
+/* Left 4-step list */
+.osa-step-heading {
+  font-size: 18px;
+  font-weight: 700;
+  color: #302985;
+  margin-bottom: 24px;
+}
+
+.osa-step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.osa-step-icon-circle {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background-color: #f1f0fb;
+  border: 1px dashed #7b2cbf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #302985;
+}
+
+.osa-step-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #302985;
+  margin-bottom: 4px;
+}
+
+.osa-step-desc {
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+/* Right Form Card */
+.osa-form-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.osa-form-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #302985;
+  margin-bottom: 24px;
+}
+
+.osa-input-field {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.osa-input-field:focus {
+  border-color: #302985;
+  box-shadow: 0 0 0 2px rgba(48, 41, 133, 0.1);
+}
+
+.osa-radio-group {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 8px;
+}
+
+.osa-radio-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+}
+
+.osa-btn-purple {
+  background: linear-gradient(135deg, #443c9e 0%, #302985 100%);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 14px;
+  border-radius: 25px;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity 0.2s;
+}
+
+.osa-btn-purple:disabled {
+  background: #e2e8f0;
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.osa-btn-purple:not(:disabled):hover {
+  opacity: 0.92;
+}
+
+/* Lower Section Tabs */
+.osa-tab-list {
+  display: flex;
+  gap: 24px;
+  border-bottom: 1px solid #e2e8f0;
+  margin-top: 48px;
+  margin-bottom: 32px;
+}
+
+.osa-tab-button {
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+}
+
+.osa-tab-button.active {
+  color: #302985;
+  font-weight: 700;
+}
+
+.osa-tab-line {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: #302985;
+  border-radius: 3px 3px 0 0;
+}
+
+/* Top 3 Banners */
+.osa-banner-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .osa-banner-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.osa-banner-card {
+  padding: 20px 24px;
+  border-radius: 12px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.osa-banner-1 {
+  background: linear-gradient(135deg, #a81c60 0%, #7b1248 100%);
+}
+
+.osa-banner-2 {
+  background: linear-gradient(135deg, #4d2b8c 0%, #351c63 100%);
+}
+
+.osa-banner-3 {
+  background: linear-gradient(135deg, #2b438c 0%, #1c2b5c 100%);
+}
+
+.osa-banner-text {
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* Features Grid */
+.osa-features-layout {
+  display: grid;
+  grid-template-columns: 4fr 8fr;
+  gap: 20px;
+}
+
+@media (max-width: 1024px) {
+  .osa-features-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.osa-video-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.osa-feature-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .osa-feature-mini-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.osa-feature-mini-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.osa-feature-mini-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #ede9fe;
+  color: #302985;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
