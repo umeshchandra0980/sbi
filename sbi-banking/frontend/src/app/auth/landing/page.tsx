@@ -99,7 +99,17 @@ export default function LandingPage() {
         <div className="flex items-center">
           <a href="#mainContent" className="auth-landing-skip-link">Skip to main content</a>
           <div className="auth-landing-logo-right">
-            <img src="/images/yono-logo.png" alt="YONO SBI Logo" />
+            <div className="yono-sbi-square-badge">
+              <span className="yono-text"><span className="pink-char">y</span>ono</span>
+              <span className="sbi-text">
+                <svg className="sbi-logo-inline" viewBox="0 0 30 30" width="10" height="10">
+                  <circle cx="15" cy="15" r="14" fill="#ffffff"/>
+                  <circle cx="15" cy="15" r="4.5" fill="#242e65"/>
+                  <rect x="13.5" y="15" width="3" height="15" fill="#242e65"/>
+                </svg>
+                SBI
+              </span>
+            </div>
           </div>
         </div>
       </header>
@@ -398,7 +408,7 @@ export default function LandingPage() {
               id="message"
               style={{ animationPlayState: marqueeScrolling ? 'running' : 'paused' }}
             >
-              SBI Authenticator App is now LIVE for our YONo Net-banking! Download and Log in SBI Authenticator App to enable YONO Net-banking for getting OTPs on SBI Authenticator App.
+              enable YONO Net-banking for getting OTPs on SBI Authenticator App.
             </p>
           </div>
         </div>
@@ -410,7 +420,20 @@ export default function LandingPage() {
           <div className="banking-box-card">
             <div>
               <div className="banking-box-logo">
-                <img src="/images/yono_netbanking.png" alt="Yono Netbanking" />
+                <div className="yono-netbanking-logo">
+                  <div className="logo-main-row">
+                    <span className="yono-brand"><span className="pink-char">y</span>ono</span>
+                    <span className="sbi-brand">
+                      <svg className="sbi-logo-inline-blue" viewBox="0 0 30 30">
+                        <circle cx="15" cy="15" r="14" fill="#00a3e0"/>
+                        <circle cx="15" cy="15" r="4.5" fill="#ffffff"/>
+                        <rect x="13.5" y="15" width="3" height="15" fill="#ffffff"/>
+                      </svg>
+                      SBI
+                    </span>
+                  </div>
+                  <div className="logo-sub-row">NET-BANKING</div>
+                </div>
               </div>
               <h1 style={{ margin: 0 }}>
                 <a href="https://retail.sbi.bank.in/npersonal/sbi_home.html" className="banking-box-title">
@@ -420,8 +443,7 @@ export default function LandingPage() {
 
               <div className="text-center">
                 <Link href="/auth/security" className="banking-box-login-btn">
-                  <span>LOGIN</span>
-                  <img src="/images/arrow.png" alt="Personal Login" />
+                  LOGIN <span className="login-arrows">&gt;&gt;</span>
                 </Link>
               </div>
             </div>
@@ -453,7 +475,20 @@ export default function LandingPage() {
           <div className="banking-box-card">
             <div>
               <div className="banking-box-logo">
-                <img src="/images/ybbi_corp.png" alt="yono BUSINESS" />
+                <div className="yono-business-logo">
+                  <div className="logo-main-row">
+                    <span className="yono-brand"><span className="pink-char">y</span>ono</span>
+                    <span className="sbi-brand">
+                      <svg className="sbi-logo-inline-blue" viewBox="0 0 30 30">
+                        <circle cx="15" cy="15" r="14" fill="#00a3e0"/>
+                        <circle cx="15" cy="15" r="4.5" fill="#ffffff"/>
+                        <rect x="13.5" y="15" width="3" height="15" fill="#ffffff"/>
+                      </svg>
+                      SBI
+                    </span>
+                  </div>
+                  <div className="logo-sub-row-business">BUSINESS</div>
+                </div>
               </div>
               <h2 style={{ margin: 0 }}>
                 <a href="https://yonobusiness.sbi.bank.in/" className="banking-box-title">
@@ -463,8 +498,7 @@ export default function LandingPage() {
 
               <div className="text-center">
                 <a href="https://yonobusiness.sbi.bank.in/" className="banking-box-login-btn">
-                  <span>LOGIN</span>
-                  <img src="/images/arrow.png" alt="Corporate Login" />
+                  LOGIN <span className="login-arrows">&gt;&gt;</span>
                 </a>
               </div>
               
@@ -499,7 +533,7 @@ export default function LandingPage() {
         <div className="useful-links-section" id="useful-links">
           <div className="useful-links-grid">
             <a href="https://crh.sbi.bank.in" target="_blank" rel="noopener noreferrer" className="useful-links-link">
-              <span>›</span> Register Complaint of Unauthorized Transaction <sup className="new-blink-badge">New</sup>
+              <span>›</span> Register Complaint of Unauthorized Transaction <sup className="useful-new-badge">New</sup>
             </a>
             <a href="https://qms.sbi.bank.in/" target="_blank" rel="noopener noreferrer" className="useful-links-link">
               <span>›</span> QMS (e-Appointment)
