@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -8,7 +8,11 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 import Cookies from 'js-cookie';
-import { RefreshCw, Globe, Play, UserCheck, ShieldAlert, Sparkles, UserPlus } from 'lucide-react';
+import { 
+  Eye, EyeOff, Keyboard, Volume2, RotateCw, ChevronDown, ChevronLeft, ChevronRight,
+  Sparkles, Play, UserCheck, ShieldAlert, UserPlus, HelpCircle, MessageSquare, 
+  Building2, Phone, X, Shield, Lock, FileText, ArrowRight, Check, AlertTriangle
+} from 'lucide-react';
 import { authApi, captchaApi } from '@/lib/api';
 import { useAuthStore } from '@/store/authStore';
 import './login.css';
@@ -16,85 +20,169 @@ import './login.css';
 const loginSchema = z.object({
   username: z.string().min(1, 'Username is required'),
   password: z.string().min(1, 'Password is required'),
-  captcha: z.string().min(1, 'Please enter the captcha'),
-});
-
-const otpSchema = z.object({
-  otp: z.string().length(6, 'OTP must be 6 digits'),
+  captcha: z.string().min(1, 'Please enter captcha'),
 });
 
 type LoginForm = z.infer<typeof loginSchema>;
-type OTPForm = z.infer<typeof otpSchema>;
 
 export default function LoginPage() {
   const router = useRouter();
   const { setTokens, setUser, setSessionToken, sessionToken } = useAuthStore();
   const [step, setStep] = useState<'login' | 'otp'>('login');
+  
+  // Captcha State
+  const [captchaText, setCaptchaText] = useState('1AFLO');
   const [captchaToken, setCaptchaToken] = useState('');
   const [captchaSrc, setCaptchaSrc] = useState('');
   const [demoOTP, setDemoOTP] = useState('');
   const [loading, setLoading] = useState(false);
-  const [captchaType, setCaptchaType] = useState<'IMG' | 'AUD'>('IMG');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showVirtualKeyboard, setShowVirtualKeyboard] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
-  const loginForm = useForm<LoginForm>({ resolver: zodResolver(loginSchema) });
-  const otpForm = useForm<OTPForm>({ resolver: zodResolver(otpSchema) });
+  // OTP Modal State (Matching Screenshot 1)
+  const [otpDigits, setOtpDigits] = useState<string[]>(['', '', '', '', '', '']);
+  const [showOtpText, setShowOtpText] = useState(false);
+  const [resendTimer, setResendTimer] = useState(39);
+  const [userNameGreeting, setUserNameGreeting] = useState('DUMPALA');
+  const otpInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-  async function loadCaptcha(type: 'IMG' | 'AUD' = 'IMG') {
+  // Security Carousel State
+  const [securitySlide, setSecuritySlide] = useState(0);
+
+  const securityCards = [
+    {
+      title: "Be Vigilant. Be Safe.",
+      desc: "While the bank will make every effort to ensure your safety...",
+      img: "https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/best_practices_be_vigilent_be_safe"
+    },
+    {
+      title: "Confidentiality",
+      desc: "SBI never asks for confidential information such as PIN or OTP...",
+      img: "https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/best_practices_confedentiality"
+    },
+    {
+      title: "Beware of Phishing attacks",
+      desc: "Phishing is a fraudulent attempt, usually made through email...",
+      img: "https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/best_practices_beware_of_phishing"
+    }
+  ];
+
+  const loginForm = useForm<LoginForm>({ 
+    resolver: zodResolver(loginSchema),
+    defaultValues: { username: '', password: '', captcha: '' } 
+  });
+
+  const usernameVal = loginForm.watch('username');
+  const passwordVal = loginForm.watch('password');
+  const captchaVal = loginForm.watch('captcha');
+
+  const isFormValid = usernameVal?.trim().length > 0 && passwordVal?.trim().length > 0 && captchaVal?.trim().length > 0;
+
+  function generateRandomCaptcha() {
+    const chars = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
+    let result = '';
+    for (let i = 0; i < 5; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  }
+
+  async function loadCaptcha() {
     try {
       const res = await captchaApi.image();
       const token = res.headers['x-captcha-token'] as string;
       const url = URL.createObjectURL(res.data);
       setCaptchaToken(token);
       setCaptchaSrc(url);
-      if (type === 'AUD') playAudio(token);
     } catch {
-      toast.error('Failed to load captcha');
+      setCaptchaText(generateRandomCaptcha());
     }
-  }
-
-  function playAudio(token: string) {
-    captchaApi.audio(token).then((res) => {
-      const url = URL.createObjectURL(res.data);
-      const audio = new Audio(url);
-      audio.play().catch(() => {});
-    });
   }
 
   useEffect(() => {
-    loadCaptcha('IMG');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    loadCaptcha();
   }, []);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (step === 'otp' && resendTimer > 0) {
+      timer = setInterval(() => {
+        setResendTimer(prev => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [step, resendTimer]);
 
   function refreshCaptcha() {
     if (captchaSrc) URL.revokeObjectURL(captchaSrc);
-    loadCaptcha(captchaType);
+    setCaptchaSrc('');
+    setCaptchaText(generateRandomCaptcha());
+    loadCaptcha();
+  }
+
+  function playAudioCaptcha() {
+    if ('speechSynthesis' in window) {
+      const textToSpeak = captchaText.split('').join(' ');
+      const utterance = new SpeechSynthesisUtterance(`Captcha text is ${textToSpeak}`);
+      utterance.rate = 0.8;
+      window.speechSynthesis.speak(utterance);
+    } else {
+      toast.success(`Captcha code: ${captchaText}`);
+    }
   }
 
   async function handleLogin(data: LoginForm) {
-    // Verify captcha with backend first
-    try {
-      await captchaApi.verify(captchaToken, data.captcha);
-    } catch {
-      loginForm.setError('captcha', { message: 'Incorrect captcha. Please try again.' });
-      refreshCaptcha();
-      return;
-    }
     setLoading(true);
     try {
+      if (captchaToken) {
+        try {
+          await captchaApi.verify(captchaToken, data.captcha);
+        } catch {
+          loginForm.setError('captcha', { message: 'Incorrect captcha text.' });
+          refreshCaptcha();
+          setLoading(false);
+          return;
+        }
+      }
+
       const res = await authApi.login({ username: data.username, password: data.password });
       setSessionToken(res.data.session_token);
-      setDemoOTP(res.data.message?.match(/Demo OTP: (\d+)/)?.[1] || '');
+      setDemoOTP(res.data.message?.match(/Demo OTP: (\d+)/)?.[1] || '123456');
+      setUserNameGreeting(data.username.toUpperCase());
+      setOtpDigits(['', '', '', '', '', '']);
+      setResendTimer(39);
       toast.success('OTP sent to your registered mobile number');
       setStep('otp');
     } catch (err: any) {
-      toast.error(err.response?.data?.detail || 'Login failed');
+      toast.error(err.response?.data?.detail || 'Login failed. Please check credentials.');
       refreshCaptcha();
     } finally {
       setLoading(false);
     }
   }
 
-  async function handleOTP(data: OTPForm) {
+  function handleOtpChange(index: number, value: string) {
+    if (!/^\d*$/.test(value)) return;
+    const newDigits = [...otpDigits];
+    newDigits[index] = value.slice(-1);
+    setOtpDigits(newDigits);
+
+    if (value && index < 5) {
+      otpInputRefs.current[index + 1]?.focus();
+    }
+  }
+
+  function handleOtpKeyDown(index: number, e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Backspace' && !otpDigits[index] && index > 0) {
+      otpInputRefs.current[index - 1]?.focus();
+    }
+  }
+
+  async function handleOtpSubmit() {
+    const fullOtp = otpDigits.join('');
+    if (fullOtp.length !== 6) return;
+
     if (!sessionToken) {
       toast.error('Session expired. Please login again.');
       setStep('login');
@@ -102,7 +190,7 @@ export default function LoginPage() {
     }
     setLoading(true);
     try {
-      const res = await authApi.verifyOTP({ session_token: sessionToken, otp: data.otp });
+      const res = await authApi.verifyOTP({ session_token: sessionToken, otp: fullOtp });
       setTokens(res.data.access_token, res.data.refresh_token);
       setUser(res.data.user);
       toast.success(`Welcome, ${res.data.user.full_name}!`);
@@ -123,457 +211,801 @@ export default function LoginPage() {
         Cookies.set('refresh_token', 'mock-refresh-token', { expires: 7 });
         setUser({
           id: 'mock-user-id',
-          username: 'demo.bypass',
-          email: 'demo.bypass@example.com',
-          full_name: 'Bypassed Demo User',
+          username: 'dumpala',
+          email: 'dumpala@example.com',
+          full_name: 'Dumpala',
           role: 'customer',
           status: 'active',
           is_verified: true,
           created_at: new Date().toISOString()
         });
-        toast.success('Bypassed Authentication (Mock Mode)!');
+        toast.success('LoggedIn via Mock Demo Mode!');
         router.push('/dashboard');
         return;
       }
 
       let payload: { username?: string; create_new?: boolean } = {};
-      if (type === 'customer') {
-        payload = { username: 'rahul.sharma' };
-      } else if (type === 'admin') {
-        payload = { username: 'admin' };
-      } else if (type === 'create_new') {
-        payload = { create_new: true };
-      }
+      if (type === 'customer') payload = { username: 'rahul.sharma' };
+      else if (type === 'admin') payload = { username: 'admin' };
+      else if (type === 'create_new') payload = { create_new: true };
 
       const res = await authApi.demoLogin(payload);
       setTokens(res.data.access_token, res.data.refresh_token);
       setUser(res.data.user);
-      toast.success(
-        type === 'create_new'
-          ? `Generated & Logged in as ${res.data.user.full_name}!`
-          : `Welcome back, ${res.data.user.full_name}!`
-      );
+      toast.success(`Welcome back, ${res.data.user.full_name}!`);
       if (res.data.user.role === 'admin') router.push('/admin');
       else router.push('/dashboard');
     } catch (err: any) {
-      toast.error(err.response?.data?.detail || 'Demo login failed. Make sure the backend is running.');
+      toast.error(err.response?.data?.detail || 'Demo login failed.');
     } finally {
       setLoading(false);
     }
   }
 
+  function handleVkKeyPress(key: string) {
+    const current = loginForm.getValues('password') || '';
+    if (key === 'BACKSPACE') {
+      loginForm.setValue('password', current.slice(0, -1));
+    } else if (key === 'CLEAR') {
+      loginForm.setValue('password', '');
+    } else {
+      loginForm.setValue('password', current + key);
+    }
+  }
+
+  const keyboardKeys = [
+    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
+    ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+    ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
+    ['z', 'x', 'c', 'v', 'b', 'n', 'm', '@', '.', '#'],
+    ['CLEAR', 'BACKSPACE']
+  ];
+
+  const isOtpComplete = otpDigits.every(d => d !== '');
+
   return (
     <div className="login-page-wrapper">
       
-      {/* Top Header layout */}
-      <header className="login-header">
-        <div className="login-logo-left">
-          <a href="/" title="Logo" aria-label="SBI Logo">
-            <img src="/images/logo.png" alt="SBI Logo" />
-          </a>
-        </div>
-        <div>
-          <ul className="login-header-links">
-            <li><a href="#mainContent" className="login-header-link">Skip to main content</a></li>
-            <li className="login-header-divider">|</li>
-            <li><a href="/" className="login-header-link">About OnlineSBI</a></li>
-            <li className="login-header-divider">|</li>
-            <li><a href="/" className="login-header-link">Forms</a></li>
-            <li className="login-header-divider">|</li>
-            <li><a href="/" className="login-header-link">Net Banking Branches</a></li>
-            <li className="login-header-divider">|</li>
-            <li className="login-home-loan-btn">
-              <a href="/" target="_blank" rel="noopener noreferrer">
-                <img src="/images/HomeLoanButton.png" alt="SBI Home Loan" />
-              </a>
-            </li>
-            <li className="login-header-divider">|</li>
-            <li>
-              <button className="bg-gray-500 text-white px-3 py-1 rounded text-xs flex items-center gap-1">
-                <Globe size={10} /> Language ▾
+      {/* ================= HEADER (app-registration-header) ================= */}
+      <header className="header-container p-0">
+        
+        {/* Top Row: Purple header */}
+        <div className="top-row">
+          <div className="top-row-inner">
+            <div>
+              <button type="button" className="top-row-left activebutton" aria-label="Personal Banking">
+                Personal Banking
               </button>
-            </li>
-          </ul>
+            </div>
+
+            <div className="rightSideSection">
+              <a href="#mainContent" className="top-row-text cursor-pointer main-content-link" aria-label="Skip to main content">
+                Skip to main content
+              </a>
+              <div className="pipe" />
+              <div className="whatsNew top-row-text" aria-label="Corporate website">
+                Corporate website
+                <Building2 size={13} className="ps-1" />
+              </div>
+              <div className="pipe" />
+              <a className="header-link top-row-text" aria-label="get Help" href="https://crh.sbi.bank.in" target="_blank" rel="noopener noreferrer">
+                Get Help
+                <HelpCircle size={13} className="ps-1" />
+              </a>
+              <div className="pipe" />
+              <a className="header-link top-row-text" aria-label="WhatsApp" href="https://sbi.bank.in/web/personal-banking/digital/whatsapp-banking" target="_blank" rel="noopener noreferrer">
+                WhatsApp
+                <MessageSquare size={13} className="ps-1" />
+              </a>
+              <div className="pipe" />
+              <div className="dropdown">
+                <button type="button" className="btn lang-dropdown top-row-text" style={{ background: 'none', border: 'none' }}>
+                  <span>English</span>
+                  <ChevronDown size={12} className="ms-1" />
+                </button>
+              </div>
+              <div className="pipe" />
+              <div className="fontSizing">
+                <span className="header-link top-row-text smallA" aria-label="A-">A-</span>
+                <span className="header-link top-row-text" aria-label="A">A</span>
+                <span className="header-link top-row-text bigA" aria-label="A+">A+</span>
+              </div>
+            </div>
+          </div>
         </div>
+
+        {/* Main Navbar */}
+        <nav className="navbar-sbi" aria-label="navbar">
+          <div className="navbar-sbi-inner">
+            <Link href="/" className="bottom-col-left">
+              <img 
+                loading="lazy" 
+                className="header-logo" 
+                src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/new-horz-logo_net-banking_svg" 
+                alt="YONOSBILogo" 
+              />
+            </Link>
+
+            <ul className="navbar-nav-sbi">
+              <li className="nav-item-sbi">
+                <Link href="/" className="nav-link-sbi active">
+                  Home
+                </Link>
+              </li>
+
+              {/* Accounts & Deposits */}
+              <li 
+                className="nav-item-sbi"
+                onMouseEnter={() => setActiveDropdown('accounts')}
+                onMouseLeave={() => setActiveDropdown(null)}
+              >
+                <div className="nav-link-sbi">
+                  Accounts &amp; Deposits <ChevronDown size={14} />
+                </div>
+                {activeDropdown === 'accounts' && (
+                  <div className="drawer-dropdown">
+                    <Link href="/web/personal-banking/accounts/saving-account" className="optionsWithImage">
+                      <div className="sublinks-header-icon"><FileText size={16} /></div>
+                      <span>Savings Account</span>
+                    </Link>
+                    <Link href="/web/personal-banking/accounts/saving-account" className="optionsWithImage">
+                      <div className="sublinks-header-icon"><Building2 size={16} /></div>
+                      <span>Current Account</span>
+                    </Link>
+                    <Link href="/web/personal-banking/accounts/saving-account" className="optionsWithImage">
+                      <div className="sublinks-header-icon"><Lock size={16} /></div>
+                      <span>Term Deposits</span>
+                    </Link>
+                    <a href="https://cdnweb.onlineyono.sbi.bank.in/accounts/re-kyc/kyc-entry" target="_blank" rel="noopener noreferrer" className="optionsWithImage">
+                      <div className="sublinks-header-icon"><Shield size={16} /></div>
+                      <span>Update KYC</span>
+                    </a>
+                    <div className="dropdown-footer">
+                      Please register / login to explore more.
+                    </div>
+                  </div>
+                )}
+              </li>
+
+              {/* Loans */}
+              <li 
+                className="nav-item-sbi"
+                onMouseEnter={() => setActiveDropdown('loans')}
+                onMouseLeave={() => setActiveDropdown(null)}
+              >
+                <div className="nav-link-sbi">
+                  Loans <ChevronDown size={14} />
+                </div>
+                {activeDropdown === 'loans' && (
+                  <div className="drawer-dropdown">
+                    <a href="https://onlineapply.sbi.bank.in/personal-banking/personal-loan" target="_blank" rel="noopener noreferrer" className="optionsWithImage">Personal Loan</a>
+                    <a href="https://homeloans.sbi.bank.in/" target="_blank" rel="noopener noreferrer" className="optionsWithImage">Home Loan</a>
+                    <a href="https://sbi.bank.in/web/personal-banking/loans/gold-loan" target="_blank" rel="noopener noreferrer" className="optionsWithImage">Gold Loan</a>
+                    <a href="https://retail.sbi.bank.in/lamf/mflanding.htm" target="_blank" rel="noopener noreferrer" className="optionsWithImage">Loan Against Mutual Fund</a>
+                    <div className="dropdown-footer">
+                      Please register / login to explore more.
+                    </div>
+                  </div>
+                )}
+              </li>
+
+              {/* Cards */}
+              <li 
+                className="nav-item-sbi"
+                onMouseEnter={() => setActiveDropdown('cards')}
+                onMouseLeave={() => setActiveDropdown(null)}
+              >
+                <div className="nav-link-sbi">
+                  Cards <ChevronDown size={14} />
+                </div>
+                {activeDropdown === 'cards' && (
+                  <div className="drawer-dropdown">
+                    <a href="http://www.sbicard.com/" target="_blank" rel="noopener noreferrer" className="optionsWithImage">Credit Card</a>
+                    <a href="https://prepaid.sbi.bank.in/" target="_blank" rel="noopener noreferrer" className="optionsWithImage">Prepaid Card</a>
+                    <div className="dropdown-footer">
+                      Please register / login to explore more.
+                    </div>
+                  </div>
+                )}
+              </li>
+
+              {/* Investments */}
+              <li 
+                className="nav-item-sbi"
+                onMouseEnter={() => setActiveDropdown('investments')}
+                onMouseLeave={() => setActiveDropdown(null)}
+              >
+                <div className="nav-link-sbi">
+                  Investments <ChevronDown size={14} />
+                </div>
+                {activeDropdown === 'investments' && (
+                  <div className="drawer-dropdown">
+                    <a href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" className="optionsWithImage">PPF Account</a>
+                    <a href="https://www.sbisecurities.in/" target="_blank" rel="noopener noreferrer" className="optionsWithImage">Demat &amp; Securities</a>
+                    <a href="https://www.sbisecurities.in/" target="_blank" rel="noopener noreferrer" className="optionsWithImage">3-in-1 Account</a>
+                    <div className="dropdown-footer">
+                      Please register / login to explore more.
+                    </div>
+                  </div>
+                )}
+              </li>
+            </ul>
+          </div>
+        </nav>
       </header>
 
-      {/* Navigation bar */}
-      <nav className="login-navbar" aria-label="Main menu">
-        <ul className="login-navbar-list">
-          <li className="login-navbar-item">
-            <a className="login-navbar-link" href="/">Home</a>
-          </li>
-          <li className="login-navbar-item">
-            <a className="login-navbar-link" href="/" onClick={(e) => { e.preventDefault(); }}>Products &amp; Services</a>
-          </li>
-          <li className="login-navbar-item">
-            <a className="login-navbar-link" href="/" target="_blank" rel="noopener noreferrer">How Do I (Help)</a>
-          </li>
-          <li className="login-navbar-item">
-            <a className="login-navbar-link" href="/" target="_blank" rel="noopener noreferrer">Manage Debit Card E-Mandate</a>
-          </li>
-          <li className="login-navbar-item">
-            <a className="login-navbar-link" href="/" target="_blank" rel="noopener noreferrer">Contact Us</a>
-          </li>
-        </ul>
-      </nav>
+      {/* ================= MAIN HERO BODY (app-welcome-login) ================= */}
+      <main id="mainContent" className="bgImageLogin">
+        <div className="bgImageLoginWave" />
 
-      {/* Sub Header bar */}
-      <div className="login-sub-header">
-        <h1 className="login-sub-header-title">Login to OnlineSBI</h1>
-        <div className="login-sub-header-welcome">Welcome to Personal Internet Banking</div>
-      </div>
-
-      {/* Main Form container */}
-      <main id="mainContent" className="login-main-container">
-        
-        {/* Step: Login Form */}
-        {step === 'login' ? (
-          <div className="login-content-grid">
+        <div className="custom-container">
+          <div className="login-hero-grid">
             
-            {/* Left side form */}
-            <div className="login-form-side">
-              <p className="login-care-text">
-                (<span>CARE:</span> Username and password are case sensitive.)
-              </p>
+            {/* Left Hero Section */}
+            <div className="border_hello">
+              <h1 className="gradient-heading">
+                <span>Hello!</span>
+              </h1>
+              <p className="header-1">Welcome to the world of YONO SBI</p>
+              
+              <p className="header-2 mb-0">Are you a new user?</p>
+              <p className="paragraph-2">Choose one of the following options if you are a new user</p>
 
-              <form onSubmit={loginForm.handleSubmit(handleLogin)}>
-                <div className="login-fields-and-links">
+              <div className="solid-button-container">
+                <button 
+                  type="button" 
+                  onClick={() => router.push('/auth/register')} 
+                  className="solid-button"
+                  aria-label="Register Now"
+                >
+                  Register Now
+                </button>
+                <button 
+                  type="button" 
+                  onClick={() => router.push('/auth/activate')} 
+                  className="non-solid-button"
+                  aria-label="Activate Username"
+                >
+                  Activate Username
+                </button>
+              </div>
+
+              <div className="text-account">
+                Don’t have an account with SBI?{' '}
+                <Link href="/web/personal-banking/accounts/saving-account" className="openNowText">
+                  Open Now
+                </Link>
+              </div>
+            </div>
+
+            {/* Right Side Login Card */}
+            <div className="login-registration-container">
+              
+              <button type="button" id="defaultOpen" className="tablink activetab" aria-label="Username / Password">
+                <span>Username / Password</span>
+                <Lock size={16} />
+              </button>
+
+              <div className="tabcontent">
+                
+                <form onSubmit={loginForm.handleSubmit(handleLogin)} className="ng-untouched">
                   
-                  {/* Left inputs column */}
-                  <div>
-                    <div className="login-form-group">
-                      <label htmlFor="username">Username*</label>
-                      <input 
-                        id="username"
-                        {...loginForm.register('username')} 
-                        type="text" 
-                        className="login-input-field" 
+                  {/* Username Field */}
+                  <div className="mat-mdc-form-field">
+                    <div className="mat-mdc-text-field-wrapper">
+                      <input
+                        id="mat-input-1"
+                        {...loginForm.register('username')}
+                        type="text"
+                        maxLength={20}
+                        className="mat-mdc-input-element"
+                        placeholder=" "
                         autoComplete="username"
                       />
-                      {loginForm.formState.errors.username && (
-                        <p className="text-red-500 text-xs mt-1">{loginForm.formState.errors.username.message}</p>
-                      )}
+                      <label htmlFor="mat-input-1" className="mat-mdc-floating-label">
+                        Username
+                      </label>
                     </div>
-
-                    <div className="login-form-group">
-                      <label htmlFor="password">Password*</label>
-                      <input 
-                        id="password"
-                        {...loginForm.register('password')} 
-                        type="password" 
-                        className="login-input-field" 
-                        autoComplete="current-password"
-                      />
-                      {loginForm.formState.errors.password && (
-                        <p className="text-red-500 text-xs mt-1">{loginForm.formState.errors.password.message}</p>
-                      )}
+                    <div className="text-end">
+                      <Link href="/auth/activate" className="link-purple" aria-label="Forgot Username">
+                        Forgot Username?
+                      </Link>
                     </div>
-
-                    <div className="login-form-group">
-                      <label htmlFor="captcha">Enter the text as shown in the image*</label>
-                      <input 
-                        id="captcha"
-                        {...loginForm.register('captcha')} 
-                        type="text" 
-                        className="login-input-field"
-                      />
-                      {loginForm.formState.errors.captcha && (
-                        <p className="text-red-500 text-xs mt-1">{loginForm.formState.errors.captcha.message}</p>
-                      )}
-                    </div>
-
-                    <div className="login-captcha-options">
-                      <span className="login-captcha-options-label">Select one of the Captcha options*</span>
-                      <div className="login-captcha-options-radios">
-                        <label>
-                          <input 
-                            type="radio" 
-                            name="captchaOpt" 
-                            checked={captchaType === 'IMG'} 
-                            onChange={() => { setCaptchaType('IMG'); if (!captchaSrc) loadCaptcha('IMG'); }}
-                          />
-                          Image Captcha
-                        </label>
-                        <label>
-                          <input 
-                            type="radio" 
-                            name="captchaOpt" 
-                            checked={captchaType === 'AUD'} 
-                            onChange={() => { setCaptchaType('AUD'); playAudio(captchaToken); }}
-                          />
-                          Audio Captcha
-                        </label>
-                      </div>
-                    </div>
-
-                    {captchaType === 'IMG' ? (
-                      <div className="login-captcha-display-row">
-                        <div className="login-captcha-image-box">
-                          {captchaSrc ? (
-                            <img src={captchaSrc} alt="CAPTCHA" className="login-captcha-image" />
-                          ) : (
-                            <span>Loading...</span>
-                          )}
-                        </div>
-                        <button 
-                          type="button" 
-                          onClick={refreshCaptcha} 
-                          className="login-captcha-refresh-btn"
-                          aria-label="Refresh Captcha"
-                        >
-                          <RefreshCw size={16} />
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="mt-2">
-                        <button
-                          type="button"
-                          onClick={() => playAudio(captchaToken)}
-                          className="login-btn-reset"
-                        >
-                          ▶ Play Audio Captcha
-                        </button>
-                      </div>
+                    {loginForm.formState.errors.username && (
+                      <p className="text-red-600 text-xs mt-1">{loginForm.formState.errors.username.message}</p>
                     )}
-
-                    <div className="login-buttons-row">
-                      <button type="submit" disabled={loading} className="login-btn-submit">
-                        {loading ? 'Please wait...' : 'Login'}
-                      </button>
-                      <button 
-                        type="button" 
-                        onClick={() => { loginForm.reset(); refreshCaptcha(); }} 
-                        className="login-btn-reset"
-                      >
-                        Reset
-                      </button>
-                    </div>
-
                   </div>
 
-                  {/* Right sub links column */}
-                  <div className="login-quick-links-panel">
-                    <a className="login-quick-link-item" href="/auth/register">
-                      New User ? Register here/Activate
-                    </a>
-                    <a className="login-quick-link-item" href="/auth/activate">
-                      Forgot Username / Login Password
-                    </a>
+                  {/* Password Field */}
+                  <div className="mat-mdc-form-field">
+                    <div className="mat-mdc-text-field-wrapper">
+                      <input
+                        id="mat-input-2"
+                        {...loginForm.register('password')}
+                        type={showPassword ? 'text' : 'password'}
+                        maxLength={20}
+                        className="mat-mdc-input-element"
+                        placeholder=" "
+                        autoComplete="current-password"
+                      />
+                      <label htmlFor="mat-input-2" className="mat-mdc-floating-label">
+                        Password
+                      </label>
+                      <div className="mat-mdc-form-field-icon-suffix">
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="iconbtn-mat"
+                          title={showPassword ? 'Hide password' : 'Show password'}
+                        >
+                          {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setShowVirtualKeyboard(!showVirtualKeyboard)}
+                          className="iconbtn-mat btn-vk"
+                          title="Virtual Keyboard"
+                        >
+                          <Keyboard size={18} />
+                        </button>
+                      </div>
+                    </div>
+                    <div className="text-end">
+                      <Link href="/auth/activate" className="link-purple" aria-label="Forgot Password">
+                        Forgot Password?
+                      </Link>
+                    </div>
+                    {loginForm.formState.errors.password && (
+                      <p className="text-red-600 text-xs mt-1">{loginForm.formState.errors.password.message}</p>
+                    )}
+                  </div>
 
-                    <label className="login-vk-checkbox-label">
-                      <input type="checkbox" id="vk-kb" />
-                      Enable Virtual Keyboard
-                    </label>
+                  {/* Captcha Field */}
+                  <div className="mat-mdc-form-field">
+                    <div className="mat-mdc-text-field-wrapper mb-2">
+                      <input
+                        id="mat-input-0"
+                        {...loginForm.register('captcha')}
+                        type="text"
+                        maxLength={5}
+                        className="mat-mdc-input-element"
+                        placeholder=" "
+                      />
+                      <label htmlFor="mat-input-0" className="mat-mdc-floating-label">
+                        Enter Captcha
+                      </label>
+                    </div>
 
-                    <div className="login-actfast-box">
-                      <a href="/" target="_blank" rel="noopener noreferrer">
-                        <img src="/images/actfast.png" alt="ACT FAST" />
+                    <div className="captcha-container">
+                      <div className="captcha-box">
+                        {captchaSrc ? (
+                          <img src={captchaSrc} alt="CAPTCHA" className="h-full w-full object-cover" />
+                        ) : (
+                          <span className="captcha-text-styled">{captchaText}</span>
+                        )}
+                      </div>
+                      <div className="audio-refresh-buttons">
+                        <button
+                          type="button"
+                          onClick={playAudioCaptcha}
+                          className="iconbtn"
+                          title="Audio Captcha"
+                        >
+                          <Volume2 size={14} />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={refreshCaptcha}
+                          className="iconbtn"
+                          title="Refresh Captcha"
+                        >
+                          <RotateCw size={14} />
+                        </button>
+                      </div>
+                    </div>
+                    {loginForm.formState.errors.captcha && (
+                      <p className="text-red-600 text-xs mt-1">{loginForm.formState.errors.captcha.message}</p>
+                    )}
+                  </div>
+
+                  {/* Submit Login Button */}
+                  <button
+                    type="submit"
+                    disabled={!isFormValid || loading}
+                    className={isFormValid ? "login-button" : "login-button-invalid"}
+                  >
+                    {loading ? 'Logging in...' : 'Login'}
+                  </button>
+
+                  <div className="d-flex justify-content-end mt-2">
+                    <a href="https://retail.sbi.bank.in" className="link-purple">
+                      Lock/Unlock User
+                    </a>
+                  </div>
+                </form>
+
+                {/* Virtual Keyboard Popup */}
+                {showVirtualKeyboard && (
+                  <div className="virtual-keyboard-popup">
+                    <div className="d-flex justify-content-between align-items-center mb-2 pb-1 border-bottom">
+                      <span className="font-bold text-xs text-purple-900">Virtual Keyboard</span>
+                      <button 
+                        type="button" 
+                        onClick={() => setShowVirtualKeyboard(false)}
+                        className="text-gray-500 hover:text-black border-0 bg-none"
+                      >
+                        <X size={16} />
+                      </button>
+                    </div>
+
+                    <div className="d-flex flex-column gap-1">
+                      {keyboardKeys.map((row, rIdx) => (
+                        <div key={rIdx} className="d-flex justify-content-center gap-1">
+                          {row.map((key) => (
+                            <button
+                              key={key}
+                              type="button"
+                              onClick={() => handleVkKeyPress(key)}
+                              className={`btn btn-sm btn-light border ${key.length > 1 ? 'px-3 text-xs' : 'px-2'}`}
+                              style={{ minWidth: key.length > 1 ? '60px' : '30px' }}
+                            >
+                              {key}
+                            </button>
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+              </div>
+            </div>
+
+          </div>
+
+          {/* Quick Demo Access Bar for Developers/Reviewers */}
+          <div className="mt-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 text-white">
+            <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
+              <div className="flex items-center gap-2">
+                <Sparkles size={18} className="text-yellow-300 animate-pulse" />
+                <span className="font-bold text-sm">Direct Demo Access (Skip Captcha/OTP Verification)</span>
+              </div>
+              <span className="text-xs text-purple-200">Click any mode to enter dashboard instantly:</span>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <button
+                type="button"
+                onClick={() => handleDemoLogin('mock')}
+                className="bg-white/15 hover:bg-white/25 border border-white/30 rounded-xl p-3 text-left transition-all text-xs"
+              >
+                <div className="flex items-center justify-between font-bold mb-1">
+                  <span>Mock Mode</span>
+                  <Play size={12} />
+                </div>
+                <p className="text-[10px] text-purple-100">Bypass server &amp; test UI</p>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleDemoLogin('customer')}
+                className="bg-white/15 hover:bg-white/25 border border-white/30 rounded-xl p-3 text-left transition-all text-xs"
+              >
+                <div className="flex items-center justify-between font-bold mb-1">
+                  <span>Customer Portal</span>
+                  <UserCheck size={12} />
+                </div>
+                <p className="text-[10px] text-purple-100">Login as Rahul Sharma</p>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleDemoLogin('admin')}
+                className="bg-white/15 hover:bg-white/25 border border-white/30 rounded-xl p-3 text-left transition-all text-xs"
+              >
+                <div className="flex items-center justify-between font-bold mb-1">
+                  <span>Admin Panel</span>
+                  <ShieldAlert size={12} />
+                </div>
+                <p className="text-[10px] text-purple-100">Manage bank system</p>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleDemoLogin('create_new')}
+                className="bg-white/15 hover:bg-white/25 border border-white/30 rounded-xl p-3 text-left transition-all text-xs"
+              >
+                <div className="flex items-center justify-between font-bold mb-1">
+                  <span>New User</span>
+                  <UserPlus size={12} />
+                </div>
+                <p className="text-[10px] text-purple-100">Auto generate DB user</p>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </main>
+
+      {/* ================= AUTHENTIC YONO SBI OTP MODAL OVERLAY (Screenshot 1 Exact) ================= */}
+      {step === 'otp' && (
+        <div className="sbi-otp-overlay">
+          <div className="sbi-otp-modal-box">
+            
+            {/* Upper Header */}
+            <div>
+              <div className="sbi-otp-header">
+                <h2 className="sbi-otp-greeting">Hi {userNameGreeting}</h2>
+                <button 
+                  type="button" 
+                  onClick={() => setStep('login')}
+                  className="sbi-otp-close-btn"
+                  aria-label="Close OTP Modal"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              <p className="sbi-otp-subtitle">
+                An OTP has been sent to your registered mobile<br />
+                number +91 ***** ***33
+              </p>
+
+              {demoOTP && (
+                <div className="mt-2 text-xs font-mono bg-white/20 px-3 py-1.5 rounded-md inline-block text-white font-bold">
+                  Demo OTP: {demoOTP}
+                </div>
+              )}
+
+              {/* Digits Input Row */}
+              <div className="sbi-otp-inputs-wrapper">
+                <div className="sbi-otp-digit-row">
+                  {otpDigits.map((digit, idx) => (
+                    <input
+                      key={idx}
+                      ref={(el) => { otpInputRefs.current[idx] = el; }}
+                      type={showOtpText ? 'text' : 'password'}
+                      maxLength={1}
+                      value={digit}
+                      onChange={(e) => handleOtpChange(idx, e.target.value)}
+                      onKeyDown={(e) => handleOtpKeyDown(idx, e)}
+                      className="sbi-otp-digit-input"
+                      autoFocus={idx === 0}
+                    />
+                  ))}
+                  
+                  <button 
+                    type="button" 
+                    onClick={() => setShowOtpText(!showOtpText)}
+                    className="sbi-otp-eye-btn"
+                    title={showOtpText ? "Hide OTP" : "Show OTP"}
+                  >
+                    {showOtpText ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                </div>
+
+                <div className="sbi-otp-timer-row">
+                  Resend OTP <span className="font-bold">{resendTimer > 0 ? `${resendTimer}s` : 'Now'}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Lower Action Button */}
+            <div>
+              <button
+                type="button"
+                onClick={handleOtpSubmit}
+                disabled={!isOtpComplete || loading}
+                className={`sbi-otp-proceed-btn ${isOtpComplete && !loading ? 'active' : 'disabled'}`}
+              >
+                {loading ? 'Verifying...' : 'Proceed'}
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* ================= QUICK ACTIONS SECTION ================= */}
+      <aside className="quick-actions-bg" aria-label="Quick Actions">
+        <div className="custom-container">
+          <h1 className="header-titleClr">Quick Actions</h1>
+
+          <div className="qa-container">
+            <a href="https://crh.sbi.bank.in" target="_blank" rel="noopener noreferrer" className="qa-item">
+              <div className="qa-circle">
+                <FileText size={24} />
+              </div>
+              <span className="qa-label">Complaints</span>
+            </a>
+
+            <a href="https://retail.sbi.bank.in" target="_blank" rel="noopener noreferrer" className="qa-item">
+              <div className="qa-circle">
+                <Lock size={24} />
+              </div>
+              <span className="qa-label">Lock/Unlock User</span>
+            </a>
+
+            <a href="https://www.psballiance.com/doorstep-banking.html" target="_blank" rel="noopener noreferrer" className="qa-item">
+              <div className="qa-circle">
+                <Building2 size={24} />
+              </div>
+              <span className="qa-label">Doorstep Banking</span>
+            </a>
+
+            <a href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" className="qa-item">
+              <div className="qa-circle">
+                <Phone size={24} />
+              </div>
+              <span className="qa-label">Contact Us</span>
+            </a>
+          </div>
+        </div>
+      </aside>
+
+      {/* ================= IMPORTANT NOTICES & SECURITY BEST PRACTICES & DO'S AND DON'TS (Exact Layout) ================= */}
+      <div className="containerBox">
+        <div className="custom-container">
+          
+          {/* Important Notices & Security Best Practices Container Box */}
+          <aside aria-label="Important Notes & Security Best Practices">
+            <div className="imp-notices-container">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                {/* Left Column: Important Notices */}
+                <div className="borderCont">
+                  <div className="flex justify-between items-baseline mb-4">
+                    <h2 className="headTxt">Important Notices</h2>
+                    <div className="tabText">
+                      <a href="https://retail.sbi.bank.in" target="_blank" rel="noopener noreferrer" aria-label="View All Important Notices">
+                        View All
                       </a>
                     </div>
                   </div>
 
+                  <ul className="space-y-4">
+                    <li className="flex items-start gap-3">
+                      <div className="bullet-arrow-circle">
+                        <ArrowRight size={14} />
+                      </div>
+                      <p className="imp-notice-txt m-0">
+                        Customers can now deposit Income Tax/Corporate Taxes using all Bank Debit Cards and Credit Cards under State Bank Payment Gateway.
+                      </p>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="bullet-arrow-circle">
+                        <ArrowRight size={14} />
+                      </div>
+                      <p className="imp-notice-txt m-0">
+                        Call us toll free on 1800 1234 and 1800 2100 and get a wide range of services through SBI Contact Centre.
+                      </p>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="bullet-arrow-circle">
+                        <ArrowRight size={14} />
+                      </div>
+                      <p className="imp-notice-txt m-0">
+                        SBI never asks for your Card/PIN/OTP/CVV details on phone, message or email. Please do not click on links received on your email or mobile asking your Bank/Card details.
+                      </p>
+                    </li>
+                  </ul>
                 </div>
-              </form>
 
-              <div className="text-xs text-gray-500 border-t pt-3 mt-4">
-                For better security use the Online Virtual Keyboard to login. <a href="/" className="text-sbi-blue font-bold hover:underline">More ...</a>
-              </div>
-            </div>
-
-            {/* Right side banner panel */}
-            <div className="login-banner-side">
-              <div className="login-right-yono-banner">
-                <img src="/images/Yono-login-Banner.jpg" alt="Internet Banking is now live in new avatar" />
-              </div>
-              <div className="login-right-notice-box">
-                <p><strong>Dear Customer,</strong></p>
-                <ul>
-                  <li>OTP based login &amp; Mandatory login password change after 180 days introduced for added security.</li>
-                  <li>Please do not share OTP/password/user information with anyone. Bank never asks for such information.</li>
-                  <li>For better control &amp; security of your account, you can Lock or Unlock your INB access through link &quot;Lock &amp; Unlock User&quot; available at bottom of this Page.</li>
-                  <li><strong>SBI Secure OTP application</strong> has been discontinued. For uninterrupted services, Please use OTP received on your registered mobile number or download <strong>SBI Authenticator app</strong> from play store or app store.</li>
-                </ul>
-              </div>
-            </div>
-
-          </div>
-        ) : (
-          /* Step: OTP Verification Form */
-          <div className="login-content-grid" style={{ gridTemplateColumns: '1fr', maxWidth: '600px', margin: '0 auto 24px' }}>
-            <div className="p-4">
-              <div className="bg-blue-50 border border-blue-200 rounded p-4 text-xs text-sbi-blue mb-4">
-                <p className="font-bold text-sm mb-1">OTP Verification</p>
-                <p>An OTP has been sent to your registered mobile number.</p>
-                {demoOTP && (
-                  <div className="mt-3 bg-yellow-50 border border-yellow-300 rounded p-2 text-yellow-800">
-                    <p className="font-bold">Demo OTP: {demoOTP}</p>
+                {/* Right Column: Security Best Practices Carousel */}
+                <div>
+                  <div className="flex justify-between items-baseline mb-4">
+                    <h2 className="headSecurityTxt">Security Best Practices</h2>
+                    <div className="tabText">
+                      <a href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" aria-label="View All Security Best Practices">
+                        View All
+                      </a>
+                    </div>
                   </div>
-                )}
+
+                  <div className="security-carousel-row">
+                    <button 
+                      type="button" 
+                      onClick={() => setSecuritySlide(prev => (prev - 1 + securityCards.length) % securityCards.length)}
+                      className="nav-arrow-btn"
+                      aria-label="Previous Security Tip"
+                    >
+                      <ChevronLeft size={18} />
+                    </button>
+
+                    <div className="security-card-box">
+                      <img 
+                        loading="lazy" 
+                        alt="Security Tip" 
+                        className="security-img" 
+                        src={securityCards[securitySlide].img} 
+                      />
+                      <h3 className="security-card-title">{securityCards[securitySlide].title}</h3>
+                      <p className="security-card-desc">{securityCards[securitySlide].desc}</p>
+                    </div>
+
+                    <button 
+                      type="button" 
+                      onClick={() => setSecuritySlide(prev => (prev + 1) % securityCards.length)}
+                      className="nav-arrow-btn"
+                      aria-label="Next Security Tip"
+                    >
+                      <ChevronRight size={18} />
+                    </button>
+                  </div>
+                </div>
+
               </div>
-              
-              <form onSubmit={otpForm.handleSubmit(handleOTP)} className="space-y-4">
-                <div className="login-form-group">
-                  <label htmlFor="otp-field" className="block text-xs font-bold mb-1">Enter OTP *</label>
-                  <input
-                    id="otp-field"
-                    {...otpForm.register('otp')}
-                    className="login-input-field"
-                    maxLength={6}
-                    placeholder="6-digit OTP"
-                  />
-                  {otpForm.formState.errors.otp && (
-                    <p className="text-red-500 text-xs mt-1">{otpForm.formState.errors.otp.message}</p>
-                  )}
-                </div>
-
-                <div className="flex gap-2">
-                  <button type="submit" disabled={loading} className="login-btn-submit">
-                    {loading ? 'Verifying...' : 'Verify OTP'}
-                  </button>
-                  <button type="button" onClick={() => setStep('login')} className="login-btn-reset">
-                    Back
-                  </button>
-                </div>
-              </form>
             </div>
-          </div>
-        )}
+          </aside>
 
-        {/* Developer & Demo Access Panel */}
-        <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white rounded-lg p-6 shadow-xl mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <Sparkles className="text-yellow-400 animate-pulse" size={24} />
-            <div>
-              <h2 className="text-lg font-bold tracking-wide">Developer &amp; Demo Access Portal</h2>
-              <p className="text-xs text-blue-200">Bypass standard Captcha/OTP validation and log in directly using one of the modes below.</p>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-2">
+          {/* Do's & Don'ts Section */}
+          <aside aria-label="Do's & Don'ts">
+            <h2 className="headTxt py-3">Do&apos;s &amp; Don&apos;ts</h2>
             
-            {/* Mock Client Mode */}
-            <button 
-              type="button"
-              onClick={() => handleDemoLogin('mock')}
-              className="bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg p-4 text-left transition-all duration-200 hover:shadow-lg focus:outline-none"
-            >
-              <div className="flex items-center justify-between mb-2">
-                <span className="bg-slate-700 text-slate-200 text-[10px] uppercase px-2 py-0.5 rounded font-mono">Mock Mode</span>
-                <Play size={14} className="text-slate-400" />
+            <div className="dos-donts-grid">
+              
+              {/* Do Card 1 */}
+              <div className="do-card">
+                <div className="do-badge-circle">
+                  <Check size={24} />
+                </div>
+                <div>
+                  <div className="dos-card-header">Always</div>
+                  <span className="dos-card-content">keep your computer free of malware</span>
+                </div>
               </div>
-              <p className="font-bold text-xs">Client-Only Bypass</p>
-              <p className="text-[10px] text-slate-400 mt-1">Simulated frontend dashboard with local mock data. Backend server not required.</p>
-            </button>
 
-            {/* Seed User - Rahul Sharma */}
-            <button 
-              type="button"
-              onClick={() => handleDemoLogin('customer')}
-              className="bg-indigo-950 hover:bg-indigo-900 border border-indigo-700 rounded-lg p-4 text-left transition-all duration-200 hover:shadow-lg focus:outline-none"
-            >
-              <div className="flex items-center justify-between mb-2">
-                <span className="bg-blue-800 text-blue-100 text-[10px] uppercase px-2 py-0.5 rounded font-mono">Seed User</span>
-                <UserCheck size={14} className="text-blue-300" />
+              {/* Do Card 2 */}
+              <div className="do-card">
+                <div className="do-badge-circle">
+                  <Check size={24} />
+                </div>
+                <div>
+                  <div className="dos-card-header">Always</div>
+                  <span className="dos-card-content">change your passwords periodically</span>
+                </div>
               </div>
-              <p className="font-bold text-xs">Rahul Sharma (Customer)</p>
-              <p className="text-[10px] text-blue-300 mt-1">Log in as the primary customer database account (pre-seeded details/balances).</p>
-            </button>
 
-            {/* Seed User - Admin */}
-            <button 
-              type="button"
-              onClick={() => handleDemoLogin('admin')}
-              className="bg-rose-950 hover:bg-rose-900 border border-rose-800 rounded-lg p-4 text-left transition-all duration-200 hover:shadow-lg focus:outline-none"
-            >
-              <div className="flex items-center justify-between mb-2">
-                <span className="bg-rose-800 text-rose-100 text-[10px] uppercase px-2 py-0.5 rounded font-mono">Admin Portal</span>
-                <ShieldAlert size={14} className="text-rose-300" />
+              {/* Don't Card 1 */}
+              <div className="dont-card">
+                <div className="dont-badge-circle">
+                  <X size={24} />
+                </div>
+                <div>
+                  <div className="donts-card-header">Never</div>
+                  <span className="donts-card-content">respond to communication seeking your passwords</span>
+                </div>
               </div>
-              <p className="font-bold text-xs">SBI Administrator</p>
-              <p className="text-[10px] text-rose-300 mt-1">Access the admin features (manage users, lock/unlock accounts, review audit logs).</p>
-            </button>
 
-            {/* Create New Dummy User */}
-            <button 
-              type="button"
-              onClick={() => handleDemoLogin('create_new')}
-              className="bg-emerald-950 hover:bg-emerald-900 border border-emerald-800 rounded-lg p-4 text-left transition-all duration-200 hover:shadow-lg focus:outline-none"
-            >
-              <div className="flex items-center justify-between mb-2">
-                <span className="bg-emerald-800 text-emerald-100 text-[10px] uppercase px-2 py-0.5 rounded font-mono">Dynamic Generator</span>
-                <UserPlus size={14} className="text-emerald-300" />
+              {/* Don't Card 2 */}
+              <div className="dont-card">
+                <div className="dont-badge-circle">
+                  <X size={24} />
+                </div>
+                <div>
+                  <div className="donts-card-header">Never</div>
+                  <span className="donts-card-content">reveal your passwords or card details to anyone</span>
+                </div>
               </div>
-              <p className="font-bold text-xs">Generate New Demo User</p>
-              <p className="text-[10px] text-emerald-300 mt-1">Register &amp; activate a brand new customer in PostgreSQL with full accounts &amp; history.</p>
-            </button>
 
-          </div>
-        </div>
-
-        {/* 3 bottom information cards */}
-        <div className="login-three-cards-grid">
-          
-          {/* Card 1: Info icon text */}
-          <div className="login-bottom-card text-center">
-            <div className="login-bottom-card-icon mx-auto">ℹ</div>
-            <p className="login-bottom-card-text">
-              NEVER respond to any popup, email, SMS or phone call, no matter how appealing or official looking, seeking your personal information such as username, password(s), mobile number, ATM Card details, etc. Such communications are sent or created by fraudsters to trick you into parting with your credentials.
-            </p>
-          </div>
-
-          {/* Card 2: Links */}
-          <div className="login-bottom-card">
-            <div className="login-bottom-card-links">
-              <a className="login-bottom-card-link-item" href="https://crh.sbi.bank.in">Complaints</a>
-              <a className="login-bottom-card-link-item" href="#">About Phishing</a>
-              <a className="login-bottom-card-link-item" href="#">Trouble logging in</a>
-              <a className="login-bottom-card-link-item" href="#">Report Phishing</a>
-              <a className="login-bottom-card-link-item" href="#">Password Management</a>
-              <a className="login-bottom-card-link-item red-link" href="#">Lock &amp; Unlock User</a>
-              <a className="login-bottom-card-link-item" href="#">Security Tips</a>
-              <a className="login-bottom-card-link-item" href="#">Block ATM Card</a>
-              <a className="login-bottom-card-link-item" href="#">FAQ</a>
-              <a className="login-bottom-card-link-item red-link" href="#">Unlock SBI Authenticator</a>
             </div>
-          </div>
-
-          {/* Card 3: Shield icon text */}
-          <div className="login-bottom-card text-center">
-            <div className="login-bottom-card-icon mx-auto">🛡</div>
-            <p className="login-bottom-card-text">
-              This site is certified by Verisign as a secure and trusted site. All information sent or received in this site is encrypted using 256-bit encryption.
-            </p>
-          </div>
+          </aside>
 
         </div>
+      </div>
 
-        {/* Guidelines List */}
-        <ul className="login-guidelines-list">
-          <li>Mandatory fields are marked with an asterisk (*)</li>
-          <li>Do not provide your username and password anywhere other than in this page.</li>
-          <li>Your username and password are highly confidential. Never part with them. <strong>SBI</strong> will never ask for this information.</li>
-        </ul>
-
-        {/* Footer info and logos */}
-        <footer className="login-footer" id="footer">
-          <div className="login-footer-area">
-            <div className="login-footer-verisign">
-              <img src="/images/veriSign_logo.png" alt="VeriSign" title="VeriSign" />
-            </div>
-          </div>
-          <div className="login-footer-bestview">
-            <div className="float-start">
-              <p>© State Bank of India (APM Id: Serv_Tran_552)</p>
-            </div>
-            <div className="float-end login-footer-hidden">
-              <p>Site best viewed at 1024 x 768 resolution in Microsoft Edge 79 +, Mozilla 96 +, Google Chrome 97 +</p>
-            </div>
-          </div>
-          <div className="login-footer-scrollup" title="Move To Top" id="scrollup" style={{ display: 'none' }}></div>
-        </footer>
-
-      </main>
+      {/* ================= LEGAL FOOTER BAR ================= */}
+      <footer className="sbi-legal-footer">
+        <div className="sbi-legal-footer-links">
+          <a href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" className="sbi-legal-footer-link">RBI Limited Liability Policy</a>
+          <span>|</span>
+          <a href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" className="sbi-legal-footer-link">Privacy Statement</a>
+          <span>|</span>
+          <a href="https://onlinesbi.sbi.bank.in" target="_blank" rel="noopener noreferrer" className="sbi-legal-footer-link">Terms of Service (Terms &amp; Conditions)</a>
+          <span>|</span>
+          <a href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" className="sbi-legal-footer-link">Disclosure</a>
+        </div>
+      </footer>
 
     </div>
   );

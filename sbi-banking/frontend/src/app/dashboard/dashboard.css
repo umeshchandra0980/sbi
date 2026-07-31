@@ -1,0 +1,513 @@
+/* dashboard.css - Authentic Logged-in YONO SBI Dashboard System */
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+
+:root {
+  --yono-purple: #673391;
+  --yono-purple-dark: #302888;
+  --yono-purple-bg: #4b1774;
+  --yono-card-magenta: linear-gradient(135deg, #7c1363 0%, #4b0d40 100%);
+  --yono-card-lavender: #eceaf7;
+  --yono-text-dark: #1e293b;
+  --yono-text-gray: #64748b;
+  --yono-border: #e2e8f0;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  background-color: #f3f4f9;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--yono-text-dark);
+}
+
+.dashboard-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f3f4f9;
+}
+
+/* ==========================================================================
+   TOP HEADER (app-latest-header)
+   ========================================================================== */
+
+.dash-header {
+  width: 100%;
+  background: #ffffff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  position: relative;
+  z-index: 100;
+}
+
+.dash-top-bar {
+  background: #4b1774;
+  color: #ffffff;
+  font-size: 12px;
+  height: 36px;
+}
+
+.dash-top-bar-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 16px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dash-top-left-tabs {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.dash-top-tab {
+  padding: 6px 16px;
+  border-radius: 4px 4px 0 0;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.dash-top-tab.active {
+  background: #ffffff;
+  color: var(--yono-purple);
+  font-weight: 700;
+}
+
+.dash-lite-switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 12px;
+  font-size: 12px;
+}
+
+.switch-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.dash-top-right-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.helpline-text {
+  font-size: 11px;
+  opacity: 0.9;
+}
+
+.logout-btn-dash {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border: none;
+  padding: 4px 14px;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.logout-btn-dash:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* Main Navigation Bar */
+.dash-main-navbar {
+  background: #ffffff;
+  border-bottom: 1px solid #e9ecef;
+  padding: 8px 16px;
+}
+
+.dash-main-navbar-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dash-brand-logo {
+  height: 38px;
+  width: auto;
+}
+
+.dash-nav-links {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 4px;
+}
+
+.dash-nav-item {
+  position: relative;
+}
+
+.dash-nav-link {
+  color: #333333;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 14px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.dash-nav-link.active {
+  color: var(--yono-purple);
+  font-weight: 700;
+}
+
+.dash-nav-indicator {
+  width: 20px;
+  height: 3px;
+  background: var(--yono-purple);
+  border-radius: 2px;
+  margin-top: 2px;
+}
+
+.dash-user-profile-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--yono-purple);
+  color: #ffffff;
+  padding: 4px 14px 4px 4px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.dash-user-avatar-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--yono-purple);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* ==========================================================================
+   MAIN DASHBOARD CONTENT
+   ========================================================================== */
+
+.dash-main-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+  width: 100%;
+}
+
+.dash-greeting-text {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--yono-purple-dark);
+  margin-bottom: 20px;
+}
+
+/* Story/Feature Circles Carousel */
+.dash-stories-carousel {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 12px 4px 20px;
+  margin-bottom: 24px;
+}
+
+.dash-story-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 80px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.dash-story-item:hover {
+  transform: translateY(-3px);
+}
+
+.dash-story-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border: 2px solid var(--yono-purple);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--yono-purple);
+  margin-bottom: 8px;
+}
+
+.dash-story-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #475569;
+  max-width: 84px;
+  line-height: 1.2;
+}
+
+/* Relationship Overview Cards Section */
+.relationship-overview-section {
+  margin-bottom: 32px;
+}
+
+.relationship-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.relationship-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.view-accounts-btn {
+  border: 1px solid var(--yono-purple);
+  color: var(--yono-purple);
+  background: #ffffff;
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.view-accounts-btn:hover {
+  background: var(--yono-purple);
+  color: #ffffff;
+}
+
+.relationship-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+/* Card 1: Transaction Accounts (Magenta/Purple Gradient Card) */
+.card-transaction-accounts {
+  background: linear-gradient(135deg, #7c1363 0%, #4b0d40 100%);
+  color: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(124, 19, 99, 0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 180px;
+}
+
+.card-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-title-text {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.card-combined-balance-label {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-top: 14px;
+}
+
+.card-balance-amount {
+  font-size: 28px;
+  font-weight: 800;
+  margin-top: 4px;
+  letter-spacing: -0.5px;
+}
+
+.card-bottom-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.card-action-link {
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Card 2 & 3: Lavender Cards */
+.card-lavender {
+  background: #edeaf7;
+  color: #1e293b;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 180px;
+  border: 1px solid #e2ddf2;
+}
+
+.card-lavender-title {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--yono-purple);
+}
+
+.card-lavender-desc {
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+  margin-top: 12px;
+  line-height: 1.4;
+}
+
+.card-lavender-link {
+  color: var(--yono-purple);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 20px;
+  display: inline-block;
+}
+
+/* Dashboard Two-Column Grid */
+.dashboard-two-col {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 992px) {
+  .dashboard-two-col {
+    grid-template-columns: 1.8fr 1.2fr;
+  }
+}
+
+/* Right Sidebar Product Cards Grid */
+.product-widget-box {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  margin-bottom: 20px;
+}
+
+.widget-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.widget-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.widget-view-all {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--yono-purple);
+  text-decoration: none;
+}
+
+.widget-icons-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  text-align: center;
+}
+
+.widget-icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.widget-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #f4edf9;
+  color: var(--yono-purple);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+
+.widget-icon-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #475569;
+  line-height: 1.2;
+}
+
+/* Bottom Footer */
+.dash-footer {
+  background: #302888;
+  color: #ffffff;
+  text-align: center;
+  padding: 14px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: auto;
+}
+
+.dash-footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.dash-footer-link {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.dash-footer-link:hover {
+  text-decoration: underline;
+}
