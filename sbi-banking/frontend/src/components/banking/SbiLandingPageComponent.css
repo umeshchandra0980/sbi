@@ -31,33 +31,32 @@
 
 .sbi-top-left-nav {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  align-items: flex-end;
+  height: 100%;
+  gap: 4px;
 }
 
 .sbi-top-tab {
   background: transparent;
-  color: #e9d5ff;
+  color: #ffffff;
   border: none;
-  font-size: 11px;
+  font-size: 12.5px;
   font-weight: 600;
-  padding: 4px 12px;
-  border-radius: 4px;
+  padding: 8px 18px 6px;
+  border-radius: 8px 8px 0 0;
   cursor: pointer;
   transition: all 0.2s ease;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .sbi-top-tab.active {
   background-color: #ffffff;
-  color: #351664;
+  color: #302985;
   font-weight: 700;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-}
-
-.sbi-top-tab:hover:not(.active) {
-  color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .sbi-toggle-btn {

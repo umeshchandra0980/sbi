@@ -19,6 +19,7 @@ export default function DashboardPage() {
   const [showBalance, setShowBalance] = useState(false);
   const [activeTab, setActiveTab] = useState('Overview');
   const [paymentsSubTab, setPaymentsSubTab] = useState<'transfer' | 'bills'>('transfer');
+  const [hoveredNavTab, setHoveredNavTab] = useState<string | null>(null);
   
   // Banner Carousel State
   const [bannerSlide, setBannerSlide] = useState(0);
@@ -56,7 +57,11 @@ export default function DashboardPage() {
               <button type="button" className="dash-top-tab active">
                 Banking
               </button>
-              <button type="button" className="dash-top-tab">
+              <button 
+                type="button" 
+                className="dash-top-tab"
+                onClick={() => router.push('/home/landingPage/lifestyle')}
+              >
                 Lifestyle
               </button>
               <button type="button" className="dash-top-tab">
@@ -91,32 +96,256 @@ export default function DashboardPage() {
           <div className="dash-main-navbar-inner">
             <Link href="/dashboard" className="flex items-center gap-2">
               <img 
-                src="/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/new_horz_logo_net_banking_svg" 
+                src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/new-horz-logo_net-banking_svg" 
+                onError={(e) => { (e.target as HTMLImageElement).src = 'https://onlinesbi.sbi.bank.in/sbijava/images/yono_netbanking.png'; }}
                 alt="YONO SBI Net-Banking Logo" 
                 className="dash-brand-logo"
               />
             </Link>
 
-            <ul className="dash-nav-links">
+            <ul className="dash-nav-links relative flex items-center gap-1.5">
               {[
-                'Overview', 'Accounts', 'Payments', 'Deposits', 
-                'Loans', 'Cards', 'Investments', 'Insurance', 'Services'
-              ].map((tab) => (
-                <li key={tab} className="dash-nav-item">
-                  <button 
-                    type="button" 
-                    onClick={() => {
-                      setActiveTab(tab);
-                      if (tab === 'Accounts') router.push('/accounts');
-                      if (tab === 'Cards') router.push('/cards');
-                    }}
-                    className={`dash-nav-link ${activeTab === tab ? 'active' : ''}`}
+                {
+                  id: 'Overview',
+                  label: 'Overview',
+                  href: '/dashboard',
+                  col1Title: 'Quick Overview',
+                  col1Items: [
+                    { label: 'Dashboard Summary', href: '/dashboard', icon: '📊' },
+                    { label: 'Relationship Overview', href: '/dashboard', icon: '🏦' },
+                    { label: 'Recent Activity', href: '/dashboard', icon: '⏱' },
+                  ],
+                  col2Title: 'Quick Links',
+                  col2Items: [
+                    { label: 'View Profile', href: '/profile', icon: '👤' },
+                    { label: 'Settings', href: '/settings', icon: '⚙' },
+                  ]
+                },
+                {
+                  id: 'Accounts',
+                  label: 'Accounts',
+                  href: '/home/landingPage/manageRelationship/transactionAccounts',
+                  col1Title: 'Accounts Summary',
+                  col1Items: [
+                    { label: 'Savings Bank Account', href: '/home/landingPage/manageRelationship/transactionAccounts', icon: '🏦' },
+                    { label: 'Current Bank Account', href: '/home/landingPage/manageRelationship/transactionAccounts', icon: '💼' },
+                    { label: 'Apply for New Savings Account', href: '/accounts/open-savings-account', icon: '➕' },
+                    { label: 'Request Account Statement', href: '/home/landingPage/manageRelationship/transactionAccounts', icon: '📄' },
+                  ],
+                  col2Title: 'Quick Links',
+                  col2Items: [
+                    { label: 'View All Accounts', href: '/accounts', icon: '👁' },
+                    { label: 'Spend Analysis', href: '/home/landingPage/manageRelationship/transactionAccounts', icon: '📊' },
+                  ]
+                },
+                {
+                  id: 'Payments',
+                  label: 'Payments',
+                  href: '/transfers',
+                  col1Title: 'Fund Transfer',
+                  col1Items: [
+                    { label: 'Quick Transfer', href: '/transfers', icon: '🔄' },
+                    { label: 'Send Money', href: '/transfers', icon: '📲' },
+                    { label: 'Manage Payee', href: '/transfers', icon: '👤' },
+                    { label: 'Schedule Payments', href: '/transfers', icon: '📅' },
+                    { label: 'Send Money Abroad', href: '/transfers', icon: '🔀' },
+                    { label: 'Bill Payments', href: '/transfers', icon: '🧾' },
+                  ],
+                  col2Title: 'Quick Links',
+                  col2Items: [
+                    { label: 'Transaction History', href: '/home/landingPage/manageRelationship/transactionAccounts', icon: '⇄' },
+                    { label: 'Manage Limits', href: '/settings', icon: '⏲' },
+                  ]
+                },
+                {
+                  id: 'Deposits',
+                  label: 'Deposits',
+                  href: '/home/landingPage/manageRelationship/deposits',
+                  col1Title: 'Term & Fixed Deposits',
+                  col1Items: [
+                    { label: 'Fixed Deposit (FD)', href: '/home/landingPage/manageRelationship/deposits', icon: '📈' },
+                    { label: 'Recurring Deposit (RD)', href: '/home/landingPage/manageRelationship/deposits', icon: '🔁' },
+                    { label: 'Open Fixed Deposit', href: '/home/landingPage/manageRelationship/deposits', icon: '✨' },
+                    { label: 'Deposit Interest Certificate', href: '/home/landingPage/manageRelationship/deposits', icon: '📜' },
+                  ],
+                  col2Title: 'Quick Links',
+                  col2Items: [
+                    { label: 'Sukanya Samriddhi Scheme', href: '/home/landingPage/manageRelationship/deposits', icon: '💡' },
+                    { label: 'Tax Saving Deposits', href: '/home/landingPage/manageRelationship/deposits', icon: '📋' },
+                  ]
+                },
+                {
+                  id: 'Loans',
+                  label: 'Loans',
+                  href: '/home/landingPage/manageRelationship/loans/loans',
+                  col1Title: 'Loan Products',
+                  col1Items: [
+                    { label: 'Home Loan', href: '/home/landingPage/manageRelationship/loans/loans', icon: '🏠' },
+                    { label: 'Personal Loan', href: '/home/landingPage/manageRelationship/loans/loans', icon: '👤' },
+                    { label: 'Gold Loan', href: '/home/landingPage/manageRelationship/loans/loans', icon: '🥇' },
+                    { label: 'Business Loan', href: '/home/landingPage/manageRelationship/loans/loans', icon: '💼' },
+                  ],
+                  col2Title: 'Quick Links',
+                  col2Items: [
+                    { label: 'Loan Eligibility Calculator', href: '/home/landingPage/manageRelationship/loans/loans', icon: '🧮' },
+                    { label: 'Loan Account Statement', href: '/home/landingPage/manageRelationship/loans/loans', icon: '📄' },
+                  ]
+                },
+                {
+                  id: 'Cards',
+                  label: 'Cards',
+                  href: '/cards',
+                  col1Title: 'Card Services',
+                  col1Items: [
+                    { label: 'SBI Credit Cards', href: '/cards', icon: '💳' },
+                    { label: 'Debit Card Management', href: '/cards', icon: '🎴' },
+                    { label: 'Block / Unblock Card', href: '/cards', icon: '🔒' },
+                    { label: 'Generate PIN', href: '/cards', icon: '🔑' },
+                  ],
+                  col2Title: 'Quick Links',
+                  col2Items: [
+                    { label: 'Card Rewards Points', href: '/cards', icon: '🎁' },
+                    { label: 'Manage Card Limits', href: '/cards', icon: '📊' },
+                  ]
+                },
+                {
+                  id: 'Investments',
+                  label: 'Investments',
+                  href: '/home/landingPage/manageRelationship/investments/mutual-fund',
+                  col1Title: 'Investment Options',
+                  col1Items: [
+                    { label: 'Mutual Funds', href: '/home/landingPage/manageRelationship/investments/mutual-fund', icon: '📊' },
+                    { label: 'Demat & Securities', href: '/home/landingPage/manageRelationship/investments/mutual-fund', icon: '📈' },
+                    { label: 'Public Provident Fund (PPF)', href: '/home/landingPage/manageRelationship/investments/mutual-fund', icon: '🐷' },
+                    { label: 'National Pension System (NPS)', href: '/home/landingPage/manageRelationship/investments/mutual-fund', icon: '🛡' },
+                  ],
+                  col2Title: 'Quick Links',
+                  col2Items: [
+                    { label: 'Apply for IPO', href: '/home/landingPage/manageRelationship/investments/mutual-fund', icon: '🚀' },
+                    { label: 'Folio Summary', href: '/home/landingPage/manageRelationship/investments/mutual-fund', icon: '📑' },
+                  ]
+                },
+                {
+                  id: 'Insurance',
+                  label: 'Insurance',
+                  href: '/home/landingPage/manageRelationship/insurance',
+                  col1Title: 'Insurance Plans',
+                  col1Items: [
+                    { label: 'SBI Life Insurance', href: '/home/landingPage/manageRelationship/insurance', icon: '🛡' },
+                    { label: 'Health Insurance', href: '/home/landingPage/manageRelationship/insurance', icon: '🏥' },
+                    { label: 'Motor Insurance', href: '/home/landingPage/manageRelationship/insurance', icon: '🚗' },
+                    { label: 'Link Existing Policy', href: '/home/landingPage/manageRelationship/insurance', icon: '🔗' },
+                  ],
+                  col2Title: 'Quick Links',
+                  col2Items: [
+                    { label: 'Buy New Policy', href: '/home/landingPage/manageRelationship/insurance', icon: '🛒' },
+                    { label: 'Download Policy Document', href: '/home/landingPage/manageRelationship/insurance', icon: '📄' },
+                  ]
+                },
+                {
+                  id: 'Services',
+                  label: 'Services',
+                  href: '/settings',
+                  col1Title: 'Service Requests',
+                  col1Items: [
+                    { label: 'Account Settings', href: '/settings', icon: '⚙' },
+                    { label: 'Change Login Password', href: '/settings', icon: '🔑' },
+                    { label: 'Update Mobile / KYC', href: '/settings', icon: '📱' },
+                    { label: 'Lock / Unlock User Access', href: '/settings', icon: '🛡' },
+                  ],
+                  col2Title: 'Quick Links',
+                  col2Items: [
+                    { label: 'Customer Care Support', href: '/settings', icon: '📞' },
+                    { label: 'Download Tax Certificates', href: '/settings', icon: '📑' },
+                  ]
+                }
+              ].map((tab) => {
+                const isHovered = hoveredNavTab === tab.id;
+                const isActive = activeTab === tab.id;
+
+                return (
+                  <li 
+                    key={tab.id}
+                    className="relative"
+                    onMouseEnter={() => setHoveredNavTab(tab.id)}
+                    onMouseLeave={() => setHoveredNavTab(null)}
                   >
-                    <span>{tab}</span>
-                    {activeTab === tab && <div className="nav-active-line" />}
-                  </button>
-                </li>
-              ))}
+                    <button 
+                      type="button" 
+                      onClick={() => {
+                        setActiveTab(tab.id);
+                        router.push(tab.href);
+                      }}
+                      className={`relative px-4 py-2 text-xs font-bold transition-all rounded-t-xl cursor-pointer ${
+                        isHovered || isActive 
+                          ? 'bg-[#f4edf9] text-[#673391]' 
+                          : 'text-slate-600 hover:text-[#673391] hover:bg-slate-50'
+                      }`}
+                    >
+                      <span>{tab.label}</span>
+                      {(isHovered || isActive) && (
+                        <div className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#673391] rounded-full" />
+                      )}
+                    </button>
+
+                    {/* Mega Dropdown Hover Card (Exact Match to User Image) */}
+                    {isHovered && (
+                      <div className="absolute top-full left-0 mt-1 w-[460px] bg-[#f8f8fc] rounded-2xl p-5 shadow-2xl border border-purple-100/70 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                        <div className="grid grid-cols-2 gap-5">
+                          
+                          {/* Column 1 */}
+                          <div>
+                            <h4 className="text-xs font-extrabold text-[#30135d] mb-2.5 pb-1.5 border-b border-purple-100">
+                              {tab.col1Title}
+                            </h4>
+                            <div className="space-y-1">
+                              {tab.col1Items.map((item) => (
+                                <Link
+                                  key={item.label}
+                                  href={item.href}
+                                  className="flex items-center gap-2.5 py-1.5 px-2 rounded-xl hover:bg-white transition-all group border-b border-slate-100/60"
+                                >
+                                  <div className="w-7 h-7 rounded-full border border-purple-200 bg-white text-[#673391] flex items-center justify-center text-xs shadow-xs group-hover:scale-110 transition-transform">
+                                    {item.icon}
+                                  </div>
+                                  <span className="text-[11px] font-bold text-slate-800 group-hover:text-[#673391]">
+                                    {item.label}
+                                  </span>
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Column 2 */}
+                          <div>
+                            <h4 className="text-xs font-extrabold text-[#30135d] mb-2.5 pb-1.5 border-b border-purple-100">
+                              {tab.col2Title}
+                            </h4>
+                            <div className="space-y-1">
+                              {tab.col2Items.map((item) => (
+                                <Link
+                                  key={item.label}
+                                  href={item.href}
+                                  className="flex items-center gap-2.5 py-1.5 px-2 rounded-xl hover:bg-white transition-all group border-b border-slate-100/60"
+                                >
+                                  <div className="w-7 h-7 rounded-full border border-purple-200 bg-white text-[#673391] flex items-center justify-center text-xs shadow-xs group-hover:scale-110 transition-transform">
+                                    {item.icon}
+                                  </div>
+                                  <span className="text-[11px] font-bold text-slate-800 group-hover:text-[#673391]">
+                                    {item.label}
+                                  </span>
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    )}
+
+                  </li>
+                );
+              })}
             </ul>
 
             <div className="flex items-center gap-4">
@@ -253,12 +482,21 @@ export default function DashboardPage() {
                     </div>
 
                     <div className="first-transfer-box">
-                      <span className="text-[11px] text-slate-600 font-medium">
-                        You’re yet to make your first transfer. Start now with our quick and easy options!
-                      </span>
-                      <button type="button" onClick={() => router.push('/home/landingPage/fund-transfer/quick-transfer/bank-selection')} className="try-now-button">
-                        Try now <ChevronRight size={12} />
-                      </button>
+                      <div className="max-w-[220px]">
+                        <p className="text-xs text-slate-700 font-medium leading-relaxed m-0">
+                          You&apos;re yet to make your first <span className="font-bold text-slate-900">transfer</span>. Start now with our quick and easy options!
+                        </p>
+                        <button type="button" onClick={() => router.push('/home/landingPage/fund-transfer/quick-transfer/bank-selection')} className="try-now-button">
+                          Try now <ChevronRight size={14} />
+                        </button>
+                      </div>
+                      <div className="relative w-24 h-20 flex items-center justify-center">
+                        <img 
+                          src="/assets/images/landing_page/sendmoney.svg" 
+                          alt="Transfer Money Illustration" 
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -266,12 +504,14 @@ export default function DashboardPage() {
                 {/* Upcoming Payments (Right 6 Columns) */}
                 <div className="dash-col-6">
                   <div className="upcoming-payment-container">
-                    <h1 className="title-pt">Upcoming Payments</h1>
+                    <h1 className="title-pt w-full text-left">Upcoming Payments</h1>
                     
-                    <div className="flex-1 flex flex-col items-center justify-center text-center p-4">
-                      <img src="/assets/images/landing_page/IC_Bill_Payment_Schedule.svg" alt="Bill Payment Schedule" className="w-20 h-20 mb-3" />
-                      <div className="font-bold text-slate-800 text-xs">Never Miss Your Payments Now</div>
-                      <p className="text-[11px] text-slate-500 mt-1 mb-4">Track and get reminder for your upcoming Payments</p>
+                    <div className="flex-1 flex flex-col items-center justify-center text-center p-2">
+                      <div className="w-28 h-28 mb-2 flex items-center justify-center">
+                        <img src="/assets/images/landing_page/IC_Bill_Payment_Schedule.svg" alt="Calendar Schedule" className="w-full h-full object-contain" />
+                      </div>
+                      <div className="font-extrabold text-slate-900 text-sm">Never Miss Your Payments Now</div>
+                      <p className="text-xs text-slate-600 mt-1 mb-4">Track and get reminder for your upcoming Payments</p>
                       <button 
                         type="button" 
                         onClick={() => toast.success("Opening Pay Bills")} 

@@ -4,26 +4,17 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import './landing.css';
 
-// Carousel banner list using downloaded image cycle to prevent broken images on local
+// Carousel banner list using official online SBI image URLs
 const carouselBanners = [
-  { id: 0, title: "YONO Net Banking", src: "/images/banner15.jpg", href: null },
-  { id: 1, title: "AWARENESS OF THE PUBLIC", src: "/images/banner16.jpg", href: null },
-  { id: 2, title: "Register Complaint of Unauthorized Transaction", src: "/images/banner13.jpg", href: "https://crh.sbi.bank.in" },
-  { id: 3, title: "Publicizing the centralized number series 1600", src: "/images/banner29.jpg", href: null },
-  { id: 4, title: "SBI Mutual Fund", src: "/images/banner1.jpg", href: null },
-  { id: 5, title: "PM-Vidyalaxmi Scheme", src: "/images/banner3.jpg", href: "https://sbi.bank.in/web/personal-banking/sbi-pm-vidyalaxmi" },
-  { id: 6, title: "SBISSL Banner", src: "/images/banner15.jpg", href: null },
-  { id: 7, title: "Loan Against Mutual Fund", src: "/images/banner16.jpg", href: null },
-  { id: 8, title: "SBI Card", src: "/images/banner13.jpg", href: null },
-  { id: 9, title: "Digital eRupee", src: "/images/banner29.jpg", href: null },
-  { id: 10, title: "PSB", src: "/images/banner1.jpg", href: null },
-  { id: 11, title: "SBI PMJJBY-PMSBY Schemes", src: "/images/banner3.jpg", href: null },
-  { id: 12, title: "DICGC", src: "/images/banner15.jpg", href: null },
-  { id: 13, title: "RESERVE BANK-INTEGRATED OMBUDSMAN SCHEME", src: "/images/banner16.jpg", href: null },
-  { id: 14, title: "RBI-Integrated Ombudsman Scheme", src: "/images/banner13.jpg", href: null },
-  { id: 15, title: "MEET ALL OF YOUR BANKING AND FINANCIAL NEEDS", src: "/images/banner29.jpg", href: null },
-  { id: 16, title: "BEWARE OF CYBER FRAUDS!", src: "/images/banner1.jpg", href: null },
-  { id: 17, title: "BEWARE OF CYBER FRAUDS!", src: "/images/banner3.jpg", href: null }
+  { id: 0, title: "YONO Net Banking Special Banner", src: "https://onlinesbi.sbi.bank.in/sbijava/images/banner9.jpg", href: null },
+  { id: 1, title: "SBI Banking Services Banner 4", src: "https://onlinesbi.sbi.bank.in/sbijava/images/banner4.jpg", href: null },
+  { id: 2, title: "SBI Offers Banner 5", src: "https://onlinesbi.sbi.bank.in/sbijava/images/banner5.jpg", href: null },
+  { id: 3, title: "SBI Cyber Fraud Awareness Banner 33", src: "https://onlinesbi.sbi.bank.in/sbijava/images/banner33.jpg", href: null },
+  { id: 4, title: "Publicizing Centralized Number Series 1600 Banner 29", src: "https://onlinesbi.sbi.bank.in/sbijava/images/banner29.jpg", href: null },
+  { id: 5, title: "SBI Mutual Fund Banner 1", src: "https://onlinesbi.sbi.bank.in/sbijava/images/banner1.jpg", href: null },
+  { id: 6, title: "SBI Card Special Banner 15", src: "https://onlinesbi.sbi.bank.in/sbijava/images/banner15.jpg", href: null },
+  { id: 7, title: "Register Complaint of Unauthorized Transaction", src: "https://onlinesbi.sbi.bank.in/sbijava/images/banner13.jpg", href: "https://crh.sbi.bank.in" },
+  { id: 8, title: "PM-Vidyalaxmi Scheme", src: "https://onlinesbi.sbi.bank.in/sbijava/images/banner3.jpg", href: "https://sbi.bank.in/web/personal-banking/sbi-pm-vidyalaxmi" },
 ];
 
 export default function LandingPage() {
@@ -34,7 +25,7 @@ export default function LandingPage() {
   const [marqueeScrolling, setMarqueeScrolling] = useState(true);
 
   // Carousel controls
-  const [currentSlide, setCurrentSlide] = useState(16); // Match default active slide (BEWARE OF CYBER FRAUDS! - 16)
+  const [currentSlide, setCurrentSlide] = useState(0);
   const [carouselPlaying, setCarouselPlaying] = useState(true);
 
   // Useful links collapse state
@@ -419,21 +410,12 @@ export default function LandingPage() {
           {/* Personal Banking Card */}
           <div className="banking-box-card">
             <div>
-              <div className="banking-box-logo">
-                <div className="yono-netbanking-logo">
-                  <div className="logo-main-row">
-                    <span className="yono-brand"><span className="pink-char">y</span>ono</span>
-                    <span className="sbi-brand">
-                      <svg className="sbi-logo-inline-blue" viewBox="0 0 30 30">
-                        <circle cx="15" cy="15" r="14" fill="#00a3e0"/>
-                        <circle cx="15" cy="15" r="4.5" fill="#ffffff"/>
-                        <rect x="13.5" y="15" width="3" height="15" fill="#ffffff"/>
-                      </svg>
-                      SBI
-                    </span>
-                  </div>
-                  <div className="logo-sub-row">NET-BANKING</div>
-                </div>
+              <div className="banking-box-logo flex justify-center mb-3">
+                <img 
+                  src="https://onlinesbi.sbi.bank.in/sbijava/images/yono_netbanking.png" 
+                  alt="Personal Banking YONO Netbanking Logo" 
+                  style={{ height: '48px', objectFit: 'contain' }}
+                />
               </div>
               <h1 style={{ margin: 0 }}>
                 <a href="https://retail.sbi.bank.in/npersonal/sbi_home.html" className="banking-box-title">
@@ -474,21 +456,12 @@ export default function LandingPage() {
           {/* Corporate Banking Card */}
           <div className="banking-box-card">
             <div>
-              <div className="banking-box-logo">
-                <div className="yono-business-logo">
-                  <div className="logo-main-row">
-                    <span className="yono-brand"><span className="pink-char">y</span>ono</span>
-                    <span className="sbi-brand">
-                      <svg className="sbi-logo-inline-blue" viewBox="0 0 30 30">
-                        <circle cx="15" cy="15" r="14" fill="#00a3e0"/>
-                        <circle cx="15" cy="15" r="4.5" fill="#ffffff"/>
-                        <rect x="13.5" y="15" width="3" height="15" fill="#ffffff"/>
-                      </svg>
-                      SBI
-                    </span>
-                  </div>
-                  <div className="logo-sub-row-business">BUSINESS</div>
-                </div>
+              <div className="banking-box-logo flex justify-center mb-3">
+                <img 
+                  src="https://onlinesbi.sbi.bank.in/sbijava/images/ybbi_corp.png" 
+                  alt="Corporate Banking YONO Business Logo" 
+                  style={{ height: '48px', objectFit: 'contain' }}
+                />
               </div>
               <h2 style={{ margin: 0 }}>
                 <a href="https://yonobusiness.sbi.bank.in/" className="banking-box-title">
@@ -699,48 +672,11 @@ export default function LandingPage() {
         </div>
 
         {/* Footer layout */}
-        <footer className="landing-footer" id="footer">
-          <div className="landing-footer-copy">
-            <p>© State Bank of India (APM Id:Serv_Tran_564)</p>
-          </div>
-          
-          <nav className="landing-footer-social" aria-label="Social media links">
-            <a className="landing-footer-social-link" target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/StateBankofIndia">
-              <span className="landing-footer-social-icon" id="icon_linkfb">&nbsp;</span>
-              <span>Facebook</span>
-            </a>
-            <a className="landing-footer-social-link" target="_blank" rel="noopener noreferrer" href="https://twitter.com/TheOfficialSBI">
-              <span className="landing-footer-social-icon" id="icon_linktw">&nbsp;</span>
-              <span>Twitter</span>
-            </a>
-            <a className="landing-footer-social-link" target="_blank" rel="noopener noreferrer" href="http://www.youtube.com/theofficialsbi">
-              <span className="landing-footer-social-icon" id="icon_linkyt">&nbsp;</span>
-              <span>YouTube</span>
-            </a>
-            <a className="landing-footer-social-link" target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/company/state-bank-of-india/">
-              <span className="landing-footer-social-icon" id="icon_linklindn">&nbsp;</span>
-              <span>LinkedIn</span>
-            </a>
-            <a className="landing-footer-social-link" target="_blank" rel="noopener noreferrer" href="https://instagram.com/theofficialsbi/">
-              <span className="landing-footer-social-icon" id="icon_linkinst">&nbsp;</span>
-              <span>Instagram</span>
-            </a>
-            <a className="landing-footer-social-link" target="_blank" rel="noopener noreferrer" href="https://www.pinterest.com/TheOfficialSBI/">
-              <span className="landing-footer-social-icon" id="icon_linkpint">&nbsp;</span>
-              <span>Pinterest</span>
-            </a>
-            <a className="landing-footer-social-link" target="_blank" rel="noopener noreferrer" href="https://retail.sbi.bank.in/npersonal/contact_us.html">
-              <span className="landing-footer-social-icon" id="icon_contus" style={{ background: '#777', borderRadius: '50%' }}>&nbsp;</span>
-              <span>Contact Us</span>
-            </a>
-            <a className="landing-footer-social-link" target="_blank" rel="noopener noreferrer" href="https://sbi.bank.in/web/personal-banking/digital/whatsapp-banking">
-              <span className="landing-footer-social-icon" id="icon_whatsapp" style={{ background: '#25D366', borderRadius: '50%' }}>&nbsp;</span>
-              <span>Whatsapp Banking</span>
-            </a>
-          </nav>
-
-          <div className="landing-footer-view">
-            <p>Site best viewed at 1280 × 720 resolution in Microsoft Edge 100+, Mozilla 100+, Google Chrome 111+</p>
+        {/* Official Dark Navy Blue SBI Footer */}
+        <footer className="landing-footer-sbi-dark" id="footer">
+          <div className="landing-footer-inner">
+            <p className="copy-text">© State Bank of India (APM Id:Serv_Tran_564)</p>
+            <p className="res-text">Site best viewed at 1280 × 720 resolution in Microsoft Edge 100+, Mozilla 100+, Google Chrome 111+</p>
           </div>
         </footer>
 

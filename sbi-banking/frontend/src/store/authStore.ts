@@ -49,7 +49,15 @@ export const useAuthStore = create<AuthState>()(
       logout: () => {
         Cookies.remove('access_token')
         Cookies.remove('refresh_token')
-        set({ user: MOCK_USER, isAuthenticated: true, sessionToken: null })
+        if (typeof window !== 'undefined') {
+          try {
+            localStorage.clear()
+            sessionStorage.clear()
+          } catch (e) {
+            console.error('Failed to clear storage:', e)
+          }
+        }
+        set({ user: null, isAuthenticated: false, sessionToken: null })
         window.location.href = '/auth/login'
       },
     }),

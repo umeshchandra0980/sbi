@@ -24,7 +24,7 @@ export default function ManageRelationshipPage() {
       initialTab = 'Insurance';
     } else if (firstSlug === 'deposits') {
       initialTab = 'Deposits';
-    } else if (firstSlug === 'transaction-accounts') {
+    } else if (firstSlug === 'transaction-accounts' || firstSlug === 'transactionaccounts') {
       initialTab = 'Transaction';
     }
   }

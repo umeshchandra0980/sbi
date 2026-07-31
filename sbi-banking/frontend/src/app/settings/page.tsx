@@ -68,7 +68,11 @@ export default function SettingsPage() {
               <button type="button" className="dash-top-tab active">
                 Banking
               </button>
-              <button type="button" className="dash-top-tab">
+              <button 
+                type="button" 
+                className="dash-top-tab"
+                onClick={() => router.push('/home/landingPage/lifestyle')}
+              >
                 Lifestyle
               </button>
               <button type="button" className="dash-top-tab">

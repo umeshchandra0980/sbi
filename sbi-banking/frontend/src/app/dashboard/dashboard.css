@@ -25,44 +25,52 @@
 }
 
 .dash-top-bar {
-  background: linear-gradient(90deg, #443c9e 0%, #302985 100%);
+  background: #302985;
   color: #ffffff;
   padding: 0;
   font-size: 12px;
+  height: 42px;
 }
 
 .dash-top-bar-inner {
-  max-width: 1360px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 16px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  height: 38px;
+  align-items: flex-end;
+  height: 100%;
 }
 
 .dash-top-left-tabs {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  height: 100%;
   gap: 6px;
 }
 
 .dash-top-tab {
   background: transparent;
-  color: rgba(255, 255, 255, 0.85);
+  color: #ffffff;
   border: none;
-  padding: 6px 14px;
-  font-size: 13px;
+  padding: 8px 20px 6px;
+  font-size: 13.5px;
   font-weight: 600;
-  border-radius: 4px 4px 0 0;
+  border-radius: 10px 10px 0 0;
   cursor: pointer;
   transition: all 0.2s ease;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .dash-top-tab.active {
   background: #ffffff;
   color: #302985;
   font-weight: 700;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.08);
+  height: 36px;
 }
 
 .dash-lite-switch {
@@ -73,6 +81,7 @@
   font-size: 12px;
   font-weight: 600;
   color: #ffffff;
+  margin-bottom: 8px;
 }
 
 .switch-badge {
@@ -86,19 +95,24 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  height: 100%;
+  padding-bottom: 6px;
 }
 
 .helpline-text {
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.9);
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.95);
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .logout-btn-dash {
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.7);
   color: #ffffff;
-  border-radius: 4px;
-  padding: 3px 12px;
+  border-radius: 6px;
+  padding: 3px 14px;
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
@@ -117,7 +131,7 @@
 }
 
 .dash-main-navbar-inner {
-  max-width: 1360px;
+  max-width: 1400px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -125,7 +139,7 @@
 }
 
 .dash-brand-logo {
-  height: 36px;
+  height: 40px;
   width: auto;
   object-fit: contain;
 }
@@ -144,29 +158,36 @@
 }
 
 .dash-nav-link {
-  color: #334155;
+  color: #475569;
   font-size: 13.5px;
   font-weight: 600;
-  padding: 10px 12px;
+  padding: 6px 14px;
   text-decoration: none;
-  background: none;
+  background: transparent;
   border: none;
+  border-radius: 10px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  transition: color 0.2s ease;
+  justify-content: center;
+  transition: all 0.2s ease;
+  position: relative;
 }
 
-.dash-nav-link:hover,
+.dash-nav-link:hover {
+  color: #302985;
+  background: #f8fafc;
+}
+
 .dash-nav-link.active {
   color: #302985;
   font-weight: 700;
+  background: #f1edf8;
 }
 
 .nav-active-line {
-  width: 22px;
+  width: 18px;
   height: 3px;
   background: #302985;
   border-radius: 2px;
@@ -523,34 +544,42 @@
 
 .optionsFT {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
 .iconWithTitle-pt {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  text-align: center;
   gap: 6px;
   cursor: pointer;
   text-decoration: none;
 }
 
 .pt-icon-circle {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: #f4edf9;
   color: #302985;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.iconWithTitle-pt:hover .pt-icon-circle {
+  transform: scale(1.08);
 }
 
 .pt-title {
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
-  color: #1e293b;
+  color: #334155;
+  line-height: 1.2;
 }
 
 .pt-subTitle {
@@ -559,27 +588,34 @@
 }
 
 .first-transfer-box {
-  background: #f8fafc;
-  border: 1px dashed #cbd5e1;
-  border-radius: 12px;
-  padding: 12px 14px;
+  background: #fdfafe;
+  border: 1px solid #f3e8ff;
+  border-radius: 14px;
+  padding: 16px 18px;
   margin-top: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
+  overflow: hidden;
 }
 
 .try-now-button {
-  background: #302985;
-  color: #ffffff;
-  font-size: 11px;
-  font-weight: 700;
-  border-radius: 16px;
-  padding: 4px 12px;
+  background: transparent;
+  color: #673391;
+  font-size: 13px;
+  font-weight: 800;
+  border: none;
+  padding: 0;
   display: inline-flex;
   align-items: center;
   gap: 4px;
   cursor: pointer;
+  margin-top: 8px;
+}
+
+.try-now-button:hover {
+  text-decoration: underline;
 }
 
 /* Upcoming Payments Box */
@@ -592,7 +628,26 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+
+.pay-bills-btn {
+  background: #f4edf9;
+  color: #673391;
+  border: 1px solid #673391;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 20px;
+  padding: 8px 28px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 12px;
+}
+
+.pay-bills-btn:hover {
+  background: #673391;
+  color: #ffffff;
 }
 
 .pay-bills-btn {

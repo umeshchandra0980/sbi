@@ -100,7 +100,33 @@ export default function LoginPage() {
     return result;
   }
 
+  function clearAllStorage() {
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.clear();
+        sessionStorage.clear();
+        Cookies.remove('access_token');
+        Cookies.remove('refresh_token');
+        loginForm.reset({ username: '', password: '', captcha: '' });
+        toast.success('localStorage & sessionStorage cleared!');
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  }
+
   useEffect(() => {
+    // Automatically clear localStorage & sessionStorage on mount for clean recording
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.clear();
+        sessionStorage.clear();
+        Cookies.remove('access_token');
+        Cookies.remove('refresh_token');
+      } catch (err) {
+        console.error(err);
+      }
+    }
     setCaptchaText(generateRandomCaptcha());
   }, []);
 
@@ -116,6 +142,18 @@ export default function LoginPage() {
 
   function refreshCaptcha() {
     setCaptchaText(generateRandomCaptcha());
+  }
+
+  function fillDemoCredentials() {
+    loginForm.setValue('username', 'dumpala', { shouldValidate: true });
+    loginForm.setValue('password', 'SBI@1234', { shouldValidate: true });
+    loginForm.setValue('captcha', captchaText, { shouldValidate: true });
+    toast.success('Demo credentials filled!');
+  }
+
+  function fillDemoOTP() {
+    setOtpDigits(['1', '2', '3', '4', '5', '6']);
+    toast.success('Demo OTP filled!');
   }
 
   function playAudioCaptcha() {
@@ -525,6 +563,36 @@ export default function LoginPage() {
 
               <div className="tabcontent">
                 
+                {/* Demo Credentials & Clear Storage Banner */}
+                <div className="bg-purple-50 border border-purple-200 rounded-xl p-3 mb-4 text-xs">
+                  <div className="flex justify-between items-center mb-1.5">
+                    <span className="font-bold text-purple-900 flex items-center gap-1.5 text-xs">
+                      <Sparkles size={14} className="text-purple-600" /> Demo Credentials
+                    </span>
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        type="button"
+                        onClick={clearAllStorage}
+                        className="bg-red-100 text-red-700 font-bold px-2 py-1 rounded-md text-[11px] hover:bg-red-200 transition-colors"
+                        title="Clear localStorage & sessionStorage"
+                      >
+                        Clear Storage
+                      </button>
+                      <button
+                        type="button"
+                        onClick={fillDemoCredentials}
+                        className="bg-purple-700 text-white font-bold px-2.5 py-1 rounded-md text-[11px] hover:bg-purple-800 transition-colors shadow-sm"
+                      >
+                        Auto-Fill
+                      </button>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 text-slate-700 font-mono text-[11px]">
+                    <div>Username: <span className="font-bold text-purple-900">dumpala</span></div>
+                    <div>Password: <span className="font-bold text-purple-900">SBI@1234</span></div>
+                  </div>
+                </div>
+
                 <form onSubmit={loginForm.handleSubmit(handleLogin)} className="ng-untouched">
                   
                   {/* Username Field */}
@@ -714,8 +782,15 @@ export default function LoginPage() {
                 number +91 ***** ***33
               </p>
 
-              <div className="mt-2 text-xs font-mono bg-white/20 px-3 py-1.5 rounded-md inline-block text-white font-bold">
-                Demo OTP: {demoOTP}
+              <div className="mt-3 flex items-center justify-between bg-white/20 px-3.5 py-1.5 rounded-lg text-white">
+                <span className="text-xs font-mono font-bold">Demo OTP: {demoOTP}</span>
+                <button
+                  type="button"
+                  onClick={fillDemoOTP}
+                  className="bg-white text-purple-900 font-bold px-2.5 py-1 rounded-md text-[11px] hover:bg-purple-100 transition-colors shadow-sm"
+                >
+                  Auto-Fill OTP
+                </button>
               </div>
 
               {/* Digits Input Row */}
@@ -775,56 +850,72 @@ export default function LoginPage() {
           <div className="qa-container">
             <div onClick={handleDemoLogin} className="qa-item">
               <div className="qa-circle">
-                <FileText size={24} />
+                <div className="anchorLink" tabIndex={-1}>
+                  <img loading="lazy" alt="Complaints" src="/assets/images/registration/Mate IC_Complaints.svg" />
+                </div>
               </div>
               <span className="qa-label">Complaints</span>
             </div>
 
             <a href="https://crh.sbi.bank.in" target="_blank" rel="noopener noreferrer" className="qa-item">
               <div className="qa-circle">
-                <ShieldAlert size={24} />
+                <div className="anchorLink" tabIndex={-1}>
+                  <img loading="lazy" alt="Report Unauthorized transaction" src="/assets/images/registration/Mate IC_Report_unauthorized.svg" />
+                </div>
               </div>
               <span className="qa-label">Report Unauthorized transaction</span>
             </a>
 
             <div onClick={handleDemoLogin} className="qa-item">
               <div className="qa-circle">
-                <Building2 size={24} />
+                <div className="anchorLink" tabIndex={-1}>
+                  <img loading="lazy" alt="Doorstep Banking" src="/assets/images/registration/Mate IC_Doorstep_banking.svg" />
+                </div>
               </div>
               <span className="qa-label">Doorstep Banking</span>
             </div>
 
             <div onClick={handleDemoLogin} className="qa-item">
               <div className="qa-circle">
-                <HelpCircle size={24} />
+                <div className="anchorLink" tabIndex={-1}>
+                  <img loading="lazy" alt="FAQ" src="/assets/images/registration/Mate IC_FAQ.svg" />
+                </div>
               </div>
               <span className="qa-label">FAQ</span>
             </div>
 
             <a href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" className="qa-item">
               <div className="qa-circle">
-                <Shield size={24} />
+                <div className="anchorLink" tabIndex={-1}>
+                  <img loading="lazy" alt="Cyber Fraud" src="/assets/images/registration/Mate IC_Cyber_fraud.svg" />
+                </div>
               </div>
               <span className="qa-label">Cyber Fraud</span>
             </a>
 
             <a href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" className="qa-item">
               <div className="qa-circle">
-                <Keyboard size={24} />
+                <div className="anchorLink" tabIndex={-1}>
+                  <img loading="lazy" alt="Password Management" src="/assets/images/registration/Mate IC_Password_management.svg" />
+                </div>
               </div>
               <span className="qa-label">Password Management</span>
             </a>
 
             <a href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" className="qa-item">
               <div className="qa-circle">
-                <Lock size={24} />
+                <div className="anchorLink" tabIndex={-1}>
+                  <img loading="lazy" alt="Security Tips" src="/assets/images/registration/Mate IC_Security_tips.svg" />
+                </div>
               </div>
               <span className="qa-label">Security Tips</span>
             </a>
 
             <a href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" className="qa-item">
               <div className="qa-circle">
-                <AlertTriangle size={24} />
+                <div className="anchorLink" tabIndex={-1}>
+                  <img loading="lazy" alt="Mate IC_Report  phishing" src="/assets/images/registration/Mate IC_Report  phishing.svg" />
+                </div>
               </div>
               <span className="qa-label">Report Phishing</span>
             </a>
@@ -1149,6 +1240,18 @@ export default function LoginPage() {
           </div>
         </div>
       )}
+
+      {/* ================= FOOTER BAR ================= */}
+      <footer className="footer-copyright-sbi mt-auto">
+        <div className="container-xxl max-w-[1400px] mx-auto flex flex-col lg:flex-row justify-between items-center px-4 py-2 text-white">
+          <div className="copyright-left text-center lg:text-start mb-1 mb-lg-0">
+            <p className="p-0 m-0">© State Bank of India (APM Id:Scrv_Tran_564)</p>
+          </div>
+          <div className="col-12 col-lg-8 text-center text-lg-end">
+            <p className="p-0 m-0">Site best viewed at 1280 × 720 resolution in Microsoft Edge 100+, Mozilla 100+, Google Chrome 111+</p>
+          </div>
+        </div>
+      </footer>
 
     </div>
   );

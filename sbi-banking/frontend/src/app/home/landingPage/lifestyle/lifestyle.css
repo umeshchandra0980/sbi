@@ -39,35 +39,38 @@
 
 .lifestyle-top-left-nav {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-end;
+  height: 100%;
+  gap: 4px;
 }
 
 .lifestyle-top-tab {
   background: transparent;
   border: none;
-  color: rgba(255, 255, 255, 0.85);
+  color: #ffffff;
   font-weight: 600;
-  font-size: 13px;
-  padding: 6px 16px;
-  border-radius: 20px;
+  font-size: 12.5px;
+  padding: 8px 18px 6px;
+  border-radius: 8px 8px 0 0;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
   gap: 6px;
+  height: 32px;
+  text-decoration: none;
 }
 
-.lifestyle-top-tab:hover {
+.lifestyle-top-tab:hover:not(.active) {
   color: #ffffff;
   background: rgba(255, 255, 255, 0.15);
 }
 
 .lifestyle-top-tab.active {
   background: #ffffff;
-  color: var(--sbi-purple-dark);
+  color: #302985;
   font-weight: 700;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .lifestyle-lite-toggle {
@@ -219,6 +222,49 @@
   color: var(--sbi-purple);
 }
 
+.lifestyle-mega-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 6px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
+  border: 1px solid #e2e8f0;
+  padding: 10px;
+  min-width: 240px;
+  z-index: 1000;
+}
+
+.lifestyle-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.lifestyle-dropdown-item:hover {
+  background: #f1edf8;
+  color: #302985;
+}
+
+.lifestyle-dropdown-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: #302985;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .lifestyle-header-right-icons {
   display: flex;
   align-items: center;
@@ -355,25 +401,25 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  padding: 2px;
+  background: linear-gradient(135deg, #d92588 0%, #302985 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease;
 }
 
 .lifestyle-story-item:hover .lifestyle-story-circle {
-  border-color: #673391;
-  box-shadow: 0 4px 12px rgba(103, 51, 145, 0.2);
+  transform: scale(1.08);
 }
 
 .lifestyle-story-circle img {
-  width: 100%;
-  height: 100%;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   object-fit: cover;
+  background: #ffffff;
+  border: 2px solid #ffffff;
 }
 
 .lifestyle-story-label {

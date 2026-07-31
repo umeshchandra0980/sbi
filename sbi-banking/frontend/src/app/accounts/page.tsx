@@ -47,7 +47,11 @@ export default function ViewAllAccountsPage() {
               <button type="button" className="dash-top-tab active">
                 Banking
               </button>
-              <button type="button" className="dash-top-tab">
+              <button 
+                type="button" 
+                className="dash-top-tab"
+                onClick={() => router.push('/home/landingPage/lifestyle')}
+              >
                 Lifestyle
               </button>
               <button type="button" className="dash-top-tab">
@@ -99,7 +103,14 @@ export default function ViewAllAccountsPage() {
                     onClick={() => {
                       setActiveTab(tab);
                       if (tab === 'Overview') router.push('/dashboard');
-                      if (tab === 'Accounts') router.push('/accounts');
+                      else if (tab === 'Accounts') router.push('/home/landingPage/manageRelationship/transactionAccounts');
+                      else if (tab === 'Payments') router.push('/payments');
+                      else if (tab === 'Deposits') router.push('/home/landingPage/manageRelationship/deposits');
+                      else if (tab === 'Loans') router.push('/home/landingPage/manageRelationship/loans/loans');
+                      else if (tab === 'Cards') router.push('/cards');
+                      else if (tab === 'Investments') router.push('/home/landingPage/manageRelationship/investments/mutual-fund');
+                      else if (tab === 'Insurance') router.push('/home/landingPage/manageRelationship/insurance');
+                      else if (tab === 'Services') router.push('/settings');
                     }}
                     className={`dash-nav-link ${activeTab === tab ? 'active' : ''}`}
                   >

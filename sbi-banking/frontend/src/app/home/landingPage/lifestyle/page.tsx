@@ -38,19 +38,21 @@ export default function SbiLifestylePage() {
   const [activeTravelCategory, setActiveTravelCategory] = useState<string | null>(null);
 
   const stories = [
-    { name: "Welcome to Yono", icon: Sparkles, color: "bg-purple-100 text-purple-700" },
-    { name: "Fraud Awareness", icon: ShieldAlert, color: "bg-red-100 text-red-700" },
-    { name: "Tax Related Services", icon: FileText, color: "bg-blue-100 text-blue-700" },
-    { name: "e - Secure Lock", icon: Lock, color: "bg-amber-100 text-amber-700" },
-    { name: "Sustainability", icon: Leaf, color: "bg-emerald-100 text-emerald-700" },
-    { name: "SIP", icon: Coffee, color: "bg-orange-100 text-orange-700" },
-    { name: "Credit Card", icon: CreditCard, color: "bg-pink-100 text-pink-700" },
-    { name: "Invest Now", icon: TrendingUp, color: "bg-indigo-100 text-indigo-700" }
+    { name: "Welcome to Yono", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/welcome_64x64" },
+    { name: "Fraud Awareness", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/fraudawareness2_thumbnail_64x6" },
+    { name: "Tax Related Services", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/welcome_64x64" },
+    { name: "e - Secure Lock", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/yp_secure_lock_banner_sbi_thumbnail_64x64_23_11zon" },
+    { name: "Sustainability", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/sustainibility_thumbnail_64x64" },
+    { name: "SIP", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/sip_thumbnail_product_creative_64x64" },
+    { name: "Credit Card", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/welcome_64x64" },
+    { name: "Invest Now", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/sip_thumbnail_product_creative_64x64" }
   ];
 
   const handleServiceClick = (title: string) => {
     toast.success(`Opening ${title}...`);
   };
+
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   return (
     <div className="lifestyle-wrapper">
@@ -128,21 +130,105 @@ export default function SbiLifestylePage() {
           </Link>
 
           <div className="lifestyle-nav-links">
-            <div className="lifestyle-nav-dropdown">
-              <span className="lifestyle-nav-item active" onClick={() => handleServiceClick('Travel Services')}>
+            
+            {/* Travel Dropdown */}
+            <div 
+              className="lifestyle-nav-dropdown"
+              onMouseEnter={() => setOpenDropdown('travel')}
+              onMouseLeave={() => setOpenDropdown(null)}
+            >
+              <span 
+                className={`lifestyle-nav-item ${openDropdown === 'travel' ? 'active' : ''}`}
+                onClick={() => setOpenDropdown(openDropdown === 'travel' ? null : 'travel')}
+              >
                 Travel <ChevronDown size={14} />
               </span>
+              {openDropdown === 'travel' && (
+                <div className="lifestyle-mega-dropdown">
+                  <div className="lifestyle-dropdown-item" onClick={() => handleServiceClick('Flight Booking')}>
+                    <div className="lifestyle-dropdown-icon"><Plane size={16} /></div>
+                    <span>Flight</span>
+                  </div>
+                  <div className="lifestyle-dropdown-item" onClick={() => handleServiceClick('Train Booking')}>
+                    <div className="lifestyle-dropdown-icon"><Train size={16} /></div>
+                    <span>Train</span>
+                  </div>
+                  <div className="lifestyle-dropdown-item" onClick={() => handleServiceClick('Bus Booking')}>
+                    <div className="lifestyle-dropdown-icon"><Bus size={16} /></div>
+                    <span>Bus</span>
+                  </div>
+                  <div className="lifestyle-dropdown-item" onClick={() => handleServiceClick('Hotel Booking')}>
+                    <div className="lifestyle-dropdown-icon"><Bed size={16} /></div>
+                    <span>Hotel</span>
+                  </div>
+                  <div className="lifestyle-dropdown-item" onClick={() => handleServiceClick('Events & Experiences')}>
+                    <div className="lifestyle-dropdown-icon"><Ticket size={16} /></div>
+                    <span>Events &amp; Experiences</span>
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="lifestyle-nav-dropdown">
-              <span className="lifestyle-nav-item" onClick={() => handleServiceClick('Offer and Services')}>
+
+            {/* Offer and Services Dropdown */}
+            <div 
+              className="lifestyle-nav-dropdown"
+              onMouseEnter={() => setOpenDropdown('offers')}
+              onMouseLeave={() => setOpenDropdown(null)}
+            >
+              <span 
+                className={`lifestyle-nav-item ${openDropdown === 'offers' ? 'active' : ''}`}
+                onClick={() => setOpenDropdown(openDropdown === 'offers' ? null : 'offers')}
+              >
                 Offer and Services <ChevronDown size={14} />
               </span>
+              {openDropdown === 'offers' && (
+                <div className="lifestyle-mega-dropdown">
+                  <div className="lifestyle-dropdown-item" onClick={() => handleServiceClick('Gift Cards')}>
+                    <div className="lifestyle-dropdown-icon"><Gift size={16} /></div>
+                    <span>Gift cards / vouchers</span>
+                  </div>
+                  <div className="lifestyle-dropdown-item" onClick={() => handleServiceClick('Stores')}>
+                    <div className="lifestyle-dropdown-icon"><Store size={16} /></div>
+                    <span>Stores</span>
+                  </div>
+                  <div className="lifestyle-dropdown-item" onClick={() => handleServiceClick('Health & Wellness')}>
+                    <div className="lifestyle-dropdown-icon"><Heart size={16} /></div>
+                    <span>Health &amp; Wellness</span>
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="lifestyle-nav-dropdown">
-              <span className="lifestyle-nav-item" onClick={() => handleServiceClick('Other Services')}>
+
+            {/* Other Services Dropdown */}
+            <div 
+              className="lifestyle-nav-dropdown"
+              onMouseEnter={() => setOpenDropdown('other')}
+              onMouseLeave={() => setOpenDropdown(null)}
+            >
+              <span 
+                className={`lifestyle-nav-item ${openDropdown === 'other' ? 'active' : ''}`}
+                onClick={() => setOpenDropdown(openDropdown === 'other' ? null : 'other')}
+              >
                 Other Services <ChevronDown size={14} />
               </span>
+              {openDropdown === 'other' && (
+                <div className="lifestyle-mega-dropdown">
+                  <div className="lifestyle-dropdown-item" onClick={() => handleServiceClick('ClearTax')}>
+                    <div className="lifestyle-dropdown-icon"><FileText size={16} /></div>
+                    <span>ClearTax</span>
+                  </div>
+                  <div className="lifestyle-dropdown-item" onClick={() => handleServiceClick('YONO Motorz')}>
+                    <div className="lifestyle-dropdown-icon"><Car size={16} /></div>
+                    <span>YONO Motorz</span>
+                  </div>
+                  <div className="lifestyle-dropdown-item" onClick={() => handleServiceClick('Property')}>
+                    <div className="lifestyle-dropdown-icon"><Building2 size={16} /></div>
+                    <span>Property</span>
+                  </div>
+                </div>
+              )}
             </div>
+
           </div>
 
           <div className="lifestyle-header-right-icons">
@@ -175,21 +261,18 @@ export default function SbiLifestylePage() {
               </h1>
 
               <div className="lifestyle-stories-row">
-                {stories.map((story, idx) => {
-                  const IconComp = story.icon;
-                  return (
-                    <div 
-                      key={idx} 
-                      className="lifestyle-story-item"
-                      onClick={() => handleServiceClick(story.name)}
-                    >
-                      <div className={`lifestyle-story-circle ${story.color}`}>
-                        <IconComp size={24} />
-                      </div>
-                      <span className="lifestyle-story-label">{story.name}</span>
+                {stories.map((story, idx) => (
+                  <div 
+                    key={idx} 
+                    className="lifestyle-story-item"
+                    onClick={() => handleServiceClick(story.name)}
+                  >
+                    <div className="lifestyle-story-circle">
+                      <img src={story.img} alt={story.name} />
                     </div>
-                  );
-                })}
+                    <span className="lifestyle-story-label">{story.name}</span>
+                  </div>
+                ))}
 
                 <button 
                   type="button" 

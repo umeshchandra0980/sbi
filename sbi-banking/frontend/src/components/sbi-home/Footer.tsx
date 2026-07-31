@@ -52,12 +52,12 @@ export default function Footer() {
 
       {/* Bottom copyright bar */}
       <div className="footer-bottom">
-        <p className="copyright">
-          © Copyright State Bank of India <span>(APM Id : Webs_Info_875)</span>
-        </p>
-        <p className="best-view">
-          Site best viewed at 1420 x 768 resolution in Edge, Mozilla 40 +, Google Chrome 45 +
-        </p>
+        <div className="copyright-left">
+          <p className="p-0 m-0">© State Bank of India (APM Id:Scrv_Tran_564)</p>
+        </div>
+        <div className="col-12 col-lg-8 text-center text-lg-end">
+          <p className="p-0 m-0">Site best viewed at 1280 × 720 resolution in Microsoft Edge 100+, Mozilla 100+, Google Chrome 111+</p>
+        </div>
       </div>
 
       {/* Floating language toggle (Bhashini) */}
