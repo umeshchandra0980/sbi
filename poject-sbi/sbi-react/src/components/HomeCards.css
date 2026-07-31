@@ -138,6 +138,10 @@
 
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 992px) {
+  .home-cards {
+    padding: 20px 15px;
+  }
+
   .hc-grid {
     grid-template-columns: 1fr;
     gap: 18px;

@@ -108,3 +108,23 @@
 .os-arrow:hover {
   opacity: .65;
 }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+  .other-services {
+    padding: 0 15px;
+  }
+  .os-track {
+    flex-direction: column;
+  }
+  .os-item {
+    border-right: none;
+    border-bottom: 1px solid #e4eaf0;
+    min-height: auto;
+    padding: 16px 14px 20px;
+  }
+  .os-item:last-child {
+    border-bottom: none;
+  }
+}
+

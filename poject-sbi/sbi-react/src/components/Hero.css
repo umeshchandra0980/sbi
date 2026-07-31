@@ -167,4 +167,8 @@
   .hero-dots button { width: 16px; height: 3px; }
   /* on small screens drop the overlay below the carousel */
   .rate-panel { display: none; }
+  
+  /* Reduce hero height so it doesn't take up the whole screen on mobile */
+  .hero-slide { height: 60vh; }
+  .hero-img { height: 60vh; }
 }

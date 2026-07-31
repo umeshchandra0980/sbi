@@ -35,19 +35,18 @@ function TopBar() {
               <path d="M27 7c-1.2.3-6.8 1.9-10.8 1.9S6.6 7.4 5 7c-1.2-.3-2 .9-2 2s1 1.6 2 2l6 1.9c.6.2.8.5.8.7.3.7.1 2-.0 2.4l-2.4 12.9c-.1 1 .6 2 2 2 1.2 0 1.8-.8 2-2L15 21c.9 0 2.7 9.8 2.7 9.8.2 1.2.8 2 2 2 1.4 0 2.1-1 2-2L19.6 18c-.3-1.6-.1-2.2 0-2.3.1-.1.4-.4 1.1-.7l5.6-1.9c1-.4 2-.9 2-2S28.2 6.7 27 7z" />
             </svg>
           </button>
-
-          <nav className="topbar-right" aria-label="Secondary navigation">
-            {topRightLinks.map((l) => (
-              <a key={l.label} href={l.href} lang={l.lang} target="_blank" rel="noopener noreferrer">
-                {l.label}
-              </a>
-            ))}
-            <a href="https://www.onlinesbi.sbi" className="netbanking" target="_blank" rel="noopener noreferrer">
-              Net Banking
-            </a>
-          </nav>
         </nav>
-       
+
+        <nav className="topbar-right" aria-label="Secondary navigation">
+          {topRightLinks.map((l) => (
+            <a key={l.label} href={l.href} lang={l.lang} target="_blank" rel="noopener noreferrer">
+              {l.label}
+            </a>
+          ))}
+          <a href="https://www.onlinesbi.sbi" className="netbanking" target="_blank" rel="noopener noreferrer">
+            Net Banking
+          </a>
+        </nav>
       </div>
     </div>
   );
