@@ -54,7 +54,8 @@ export default function SbiGlobalBrandHeader({
       col1Items: [
         { label: 'Dashboard Summary', href: '/dashboard', icon: '📊' },
         { label: 'Relationship Overview', href: '/home/landingPage/manageRelationship/transactionAccounts', icon: '🏦' },
-        { label: 'Recent Activity', href: '/dashboard', icon: '⏱' },
+        { label: 'Travel & Flights', href: '/home/landingPage/lifestyle', icon: '✈️' },
+        { label: 'YONO Rewards & Offers', href: '/home/landingPage/others/rewards-end-point/rewards-endState', icon: '🎁' },
       ],
       col2Title: 'Quick Links',
       col2Items: [
@@ -199,10 +200,12 @@ export default function SbiGlobalBrandHeader({
         { label: 'Cheque Book Request', href: '/settings', icon: '📝' },
         { label: 'Lock / Unlock User Access', href: '/settings', icon: '🛡' },
       ],
-      col2Title: 'Quick Links',
+      col2Title: 'Lifestyle & Utilities',
       col2Items: [
+        { label: 'Flight, Train & Bus Bookings', href: '/home/landingPage/lifestyle', icon: '✈️' },
+        { label: 'Gift Vouchers & Vouchers', href: '/home/landingPage/lifestyle', icon: '🎁' },
+        { label: 'ClearTax & YONO Motorz', href: '/home/landingPage/lifestyle', icon: '🚗' },
         { label: 'Customer Care Support', href: '/settings', icon: '📞' },
-        { label: 'Download Tax Certificates', href: '/settings', icon: '📑' },
       ]
     }
   ];
@@ -364,8 +367,10 @@ export default function SbiGlobalBrandHeader({
             </button>
             <button 
               type="button" 
-              onClick={() => toast.success('YONO Rewards portal active')}
-              className="text-white/80 hover:text-white px-3 py-1 text-xs flex items-center gap-1"
+              onClick={() => router.push('/home/landingPage/others/rewards-end-point/rewards-endState')}
+              className={`px-3.5 py-1 text-xs font-bold rounded-t-md transition-colors flex items-center gap-1 ${
+                activeTopTab === 'Rewards' ? 'bg-white text-[#302985]' : 'text-white/80 hover:text-white'
+              }`}
             >
               <Gift size={13} />
               <span>Rewards</span>
