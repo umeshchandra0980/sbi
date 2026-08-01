@@ -66,7 +66,7 @@ export default function SbiGlobalBrandHeader({
     {
       id: 'Accounts',
       label: 'Accounts',
-      href: '/home/landingPage/manageRelationship/transactionAccounts',
+      href: '/accounts',
       col1Title: 'Accounts Summary',
       col1Items: [
         { label: 'Savings Bank Account', href: '/home/landingPage/manageRelationship/transactionAccounts', icon: '🏦' },
@@ -528,7 +528,12 @@ export default function SbiGlobalBrandHeader({
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      setOpenNavTab(isOpen ? null : tab.id);
+                      if (tab.id === 'Accounts') {
+                        router.push('/accounts');
+                        setOpenNavTab(null);
+                      } else {
+                        setOpenNavTab(isOpen ? null : tab.id);
+                      }
                     }}
                     className={`relative block px-4 py-2 text-xs font-bold transition-all rounded-t-xl cursor-pointer ${
                       isActive 

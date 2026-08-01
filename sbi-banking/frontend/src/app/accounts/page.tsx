@@ -104,7 +104,7 @@ export default function ViewAllAccountsPage() {
                     onClick={() => {
                       setActiveTab(tab);
                       if (tab === 'Overview') router.push('/dashboard');
-                      else if (tab === 'Accounts') router.push('/home/landingPage/manageRelationship/transactionAccounts');
+                      else if (tab === 'Accounts') router.push('/accounts');
                       else if (tab === 'Payments') router.push('/payments');
                       else if (tab === 'Deposits') router.push('/home/landingPage/manageRelationship/deposits');
                       else if (tab === 'Loans') router.push('/home/landingPage/manageRelationship/loans/loans');
