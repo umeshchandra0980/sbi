@@ -170,14 +170,14 @@ export default function EtbPersonalLoanDescriptionPage() {
               <button
                 type="button"
                 onClick={() => toast.success("Processing loan application...")}
-                className="w-full max-w-[350px] bg-[#5b2e80] hover:bg-[#4b1774] text-white font-bold py-4 px-6 rounded-full shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 text-[14.5px] mb-4.5"
+                className="w-full max-w-[350px] bg-[#5b2e80] hover:bg-[#4b1774] text-white font-bold py-4 px-6 rounded-full shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 text-[14.5px] mb-5"
               >
                 <span>Resume or Start New Application</span>
                 <ArrowRight size={19} />
               </button>
 
               {/* Info Note Box */}
-              <div className="w-full max-w-[350px] bg-[#f4edf9] border border-purple-200/80 rounded-xl p-3.5 flex items-center gap-3 text-left text-[12.5px] text-[#5b2e80] font-medium">
+              <div className="w-full max-w-[350px] mt-4 bg-[#f4edf9] border border-purple-200/80 rounded-xl p-3.5 flex items-center gap-3 text-left text-[12.5px] text-[#5b2e80] font-medium shadow-xs">
                 <Info size={19} className="flex-shrink-0 text-[#5b2e80]" />
                 <span>This loan is available only for salaried customers</span>
               </div>
