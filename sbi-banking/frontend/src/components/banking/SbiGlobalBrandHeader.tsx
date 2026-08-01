@@ -547,7 +547,7 @@ export default function SbiGlobalBrandHeader({
                     tab.id === 'Payments' ? (
                       <div 
                         onClick={(e) => e.stopPropagation()}
-                        className="absolute top-full left-[-175px] mt-2 w-[500px] bg-[#f2eff4] rounded-2xl p-7 shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-purple-200/40 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                        className="absolute top-full left-[-92px] mt-2 w-[420px] bg-[#f2eff4] rounded-2xl p-7 shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-purple-200/40 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
                       >
                         <div className="grid grid-cols-[1.1fr_0.9fr] gap-x-8">
                           
