@@ -418,30 +418,31 @@ export default function SbiGlobalBrandHeader({
       </div>
 
       {/* 2. MAIN WHITE BRAND NAVBAR WITH INTERACTIVE MEGA DROPDOWN CLICK MENU */}
-      <header className="bg-white border-b border-slate-200/80 px-6 py-2 shadow-xs relative">
-        <div className="max-w-[1400px] mx-auto flex justify-between items-center">
+      <header className="bg-white border-b border-slate-200/80 px-4 md:px-6 py-3.5 shadow-xs relative">
+        <div className="max-w-[1280px] mx-auto flex items-center justify-between gap-4">
           
-          {/* Logo */}
-          <Link href="/dashboard" className="flex items-center gap-2">
-            <img 
-              src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/new-horz-logo_net-banking_svg" 
-              onError={(e) => { (e.target as HTMLImageElement).src = '/assets/images/yono_logo.svg'; }}
-              alt="YONO SBI NET-BANKING" 
-              className="h-9 w-auto object-contain"
-            />
-          </Link>
+          {/* Left Group: Logo + Nav Items */}
+          <div className="flex items-center gap-16 md:gap-24">
+            <Link href="/dashboard" className="flex items-center gap-2 flex-shrink-0">
+              <img 
+                src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/new-horz-logo_net-banking_svg" 
+                onError={(e) => { (e.target as HTMLImageElement).src = '/assets/images/yono_logo.svg'; }}
+                alt="YONO SBI NET-BANKING" 
+                className="h-9.5 w-auto object-contain"
+              />
+            </Link>
 
-          {/* Nav Items Row */}
-          <nav ref={navRef} className="relative flex items-center gap-1">
-            {navTabs.map((tab) => {
-              const isOpen = openNavTab === tab.id;
-              const isActive = openNavTab === null ? activeNav === tab.id : openNavTab === tab.id;
+            {/* Nav Items Row */}
+            <nav ref={navRef} className="relative flex items-center gap-0.5">
+              {navTabs.map((tab) => {
+                const isOpen = openNavTab === tab.id;
+                const isActive = openNavTab === null ? activeNav === tab.id : openNavTab === tab.id;
 
-              return (
-                <div 
-                  key={tab.id}
-                  className="relative"
-                >
+                return (
+                  <div 
+                    key={tab.id}
+                    className="relative"
+                  >
                   <button
                     type="button"
                     onClick={(e) => {
@@ -449,11 +450,12 @@ export default function SbiGlobalBrandHeader({
                       e.stopPropagation();
                       setOpenNavTab(isOpen ? null : tab.id);
                     }}
-                    className={`relative block px-4 py-2 text-xs font-bold transition-all rounded-t-xl cursor-pointer ${
+                    className={`relative block px-3.5 py-2 font-sans font-semibold text-[14px] transition-all rounded-t-xl cursor-pointer ${
                       isActive 
                         ? 'bg-[#f4edf9] text-[#673391]' 
                         : 'text-slate-600 hover:text-[#673391] hover:bg-slate-50'
                     }`}
+                    style={{ fontFamily: "'Open Sans', sans-serif", fontWeight: 600 }}
                   >
                     <span>{tab.label}</span>
                     {isActive && (
@@ -465,13 +467,13 @@ export default function SbiGlobalBrandHeader({
                   {isOpen && (
                     <div 
                       onClick={(e) => e.stopPropagation()}
-                      className="absolute top-full left-0 mt-1 w-[480px] bg-[#f8f6fb] rounded-2xl p-5 shadow-2xl border border-purple-200/80 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                      className="absolute top-full left-0 mt-1 w-[440px] max-w-[90vw] bg-[#f8f6fb] rounded-2xl p-4 md:p-5 shadow-2xl border border-purple-200/80 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
                     >
                       <div className="grid grid-cols-2 gap-6">
                         
                         {/* Column 1: Main Category Items */}
                         <div>
-                          <h4 className="text-xs font-extrabold text-slate-800 mb-3 pb-1 border-b border-purple-200/60">
+                          <h4 className="text-xs font-extrabold text-[#673391] uppercase tracking-wider mb-3 pb-1 border-b border-purple-200/60">
                             {tab.col1Title}
                           </h4>
                           <div className="space-y-1">
@@ -487,7 +489,10 @@ export default function SbiGlobalBrandHeader({
                                 <div className="w-8 h-8 rounded-lg bg-white border border-purple-200/70 text-[#673391] flex items-center justify-center text-sm shadow-2xs group-hover:scale-105 transition-transform flex-shrink-0">
                                   {renderNavIcon(item.label)}
                                 </div>
-                                <span className="text-[12px] font-bold text-slate-800 group-hover:text-[#673391]">
+                                <span 
+                                  className="text-[13.5px] font-sans font-semibold text-slate-800 group-hover:text-[#673391] leading-tight tracking-normal"
+                                  style={{ fontFamily: "'Open Sans', sans-serif", fontWeight: 600 }}
+                                >
                                   {item.label}
                                 </span>
                               </Link>
@@ -497,7 +502,7 @@ export default function SbiGlobalBrandHeader({
 
                         {/* Column 2: Quick Links */}
                         <div>
-                          <h4 className="text-xs font-extrabold text-slate-800 mb-3 pb-1 border-b border-purple-200/60">
+                          <h4 className="text-xs font-extrabold text-[#673391] uppercase tracking-wider mb-3 pb-1 border-b border-purple-200/60">
                             {tab.col2Title}
                           </h4>
                           <div className="space-y-1">
@@ -513,7 +518,10 @@ export default function SbiGlobalBrandHeader({
                                 <div className="w-6 h-6 rounded-md bg-white border border-purple-200/70 text-[#673391] flex items-center justify-center text-xs shadow-xs group-hover:scale-105 transition-transform flex-shrink-0">
                                   {renderNavIcon(item.label)}
                                 </div>
-                                <span className="text-[11.5px] font-bold text-slate-700 group-hover:text-[#673391]">
+                                <span 
+                                  className="text-[13.5px] font-sans font-semibold text-slate-700 group-hover:text-[#673391] leading-tight tracking-normal"
+                                  style={{ fontFamily: "'Open Sans', sans-serif", fontWeight: 600 }}
+                                >
                                   {item.label}
                                 </span>
                               </Link>
@@ -529,11 +537,12 @@ export default function SbiGlobalBrandHeader({
               );
             })}
           </nav>
+        </div>
 
           {/* Profile Circle Pill */}
           <div 
             onClick={() => router.push('/profile')}
-            className="flex items-center gap-2 bg-[#673391] text-white py-1 px-3 rounded-full text-xs font-bold shadow-xs cursor-pointer hover:bg-[#561578] transition-colors"
+            className="flex items-center gap-2 bg-[#673391] text-white py-1 px-3 rounded-full text-xs font-bold shadow-xs cursor-pointer hover:bg-[#561578] transition-colors flex-shrink-0"
           >
             <div className="w-6 h-6 rounded-full bg-amber-200 text-[#673391] flex items-center justify-center text-[10px] font-black">
               DV
