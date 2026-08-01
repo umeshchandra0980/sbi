@@ -7,9 +7,7 @@ import toast from 'react-hot-toast';
 import {
   ChevronDown,
   HelpCircle,
-  Gift,
-  Building2,
-  MessageSquare
+  Gift
 } from 'lucide-react';
 
 export type NavTabId = 'Overview' | 'Accounts' | 'Payments' | 'Deposits' | 'Loans' | 'Cards' | 'Investments' | 'Insurance' | 'Services';
@@ -24,8 +22,20 @@ export default function SbiGlobalBrandHeader({
   activeTopTab = 'Banking'
 }: SbiGlobalBrandHeaderProps) {
   const router = useRouter();
-  const [hoveredNavTab, setHoveredNavTab] = useState<NavTabId | null>(null);
+  const [openNavTab, setOpenNavTab] = useState<NavTabId | null>(null);
   const [liteMode, setLiteMode] = useState(false);
+
+  const navRef = React.useRef<HTMLElement>(null);
+
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setOpenNavTab(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const navTabs: {
     id: NavTabId;
@@ -108,35 +118,40 @@ export default function SbiGlobalBrandHeader({
     {
       id: 'Loans',
       label: 'Loans',
-      href: '/home/landingPage/manageRelationship/loans/loans',
-      col1Title: 'Loan Products',
+      href: '/home/landingPage/etbPersonalLoan/description',
+      col1Title: 'Products',
       col1Items: [
-        { label: 'Home Loan', href: '/home/landingPage/manageRelationship/loans/loans', icon: '🏠' },
-        { label: 'Personal Loan', href: '/home/landingPage/manageRelationship/loans/loans', icon: '👤' },
-        { label: 'Gold Loan', href: '/home/landingPage/manageRelationship/loans/loans', icon: '🥇' },
-        { label: 'Business Loan', href: '/home/landingPage/manageRelationship/loans/loans', icon: '💼' },
+        { label: 'Personal Loan', href: '/home/landingPage/etbPersonalLoan/description', icon: '👤' },
+        { label: 'Loan Against Mutual Fund', href: '/home/landingPage/lending/etb-lamfu/description', icon: '💼' },
+        { label: 'Home Loan', href: '/home/landingPage/lending/etb-home-loan/home-loan-steps', icon: '🏠' },
+        { label: 'Overdraft against Deposit', href: '/home/landingPage/etbPersonalLoan/description', icon: '🔒' },
+        { label: 'Education Loan', href: '/home/landingPage/etbPersonalLoan/description', icon: '🎓' },
+        { label: 'Gold Loan', href: '/home/landingPage/etbPersonalLoan/description', icon: '🥇' },
       ],
       col2Title: 'Quick Links',
       col2Items: [
-        { label: 'Loan Eligibility Calculator', href: '/home/landingPage/manageRelationship/loans/loans', icon: '🧮' },
-        { label: 'Loan Account Statement', href: '/home/landingPage/manageRelationship/loans/loans', icon: '📄' },
+        { label: 'View Existing Loans', href: '/home/landingPage/etbPersonalLoan/description', icon: '🏦' },
+        { label: 'Manage Loans', href: '/home/landingPage/etbPersonalLoan/description', icon: '🏦' },
+        { label: 'Check your Credit Score', href: '/home/landingPage/etbPersonalLoan/description', icon: '⏱' },
+        { label: 'Calculate Loan EMI', href: '/home/landingPage/etbPersonalLoan/description', icon: '🧮' },
       ]
     },
     {
       id: 'Cards',
       label: 'Cards',
-      href: '/cards',
-      col1Title: 'Card Services',
+      href: '/home/landingPage/creditCards/cc-landing',
+      col1Title: 'Products',
       col1Items: [
-        { label: 'SBI Credit Cards', href: '/cards', icon: '💳' },
-        { label: 'Debit Card Management', href: '/cards', icon: '🎴' },
-        { label: 'Block / Unblock Card', href: '/cards', icon: '🔒' },
-        { label: 'Generate PIN', href: '/cards', icon: '🔑' },
+        { label: 'Credit Cards', href: '/home/landingPage/creditCards/cc-landing', icon: '💳' },
+        { label: 'Debit Cards', href: '/home/landingPage/accounts/debit-cards/debit-card-landing', icon: '💳' },
+        { label: 'Forex Cards', href: '/home/landingPage/jointVentures/superapps/forex/forex-landing', icon: '💳' },
+        { label: 'Prepaid Cards', href: 'https://prepaid.sbi.bank.in/', icon: '💳' },
       ],
       col2Title: 'Quick Links',
       col2Items: [
-        { label: 'Card Rewards Points', href: '/cards', icon: '🎁' },
-        { label: 'Manage Card Limits', href: '/cards', icon: '📊' },
+        { label: 'Manage Credit Card', href: '/home/landingPage/creditCards/cc-landing', icon: '💳' },
+        { label: 'Manage Debit Card', href: '/home/landingPage/accounts/debit-cards/debit-card-landing', icon: '💳' },
+        { label: 'Manage Forex Card', href: '/home/landingPage/jointVentures/superapps/forex/forex-landing', icon: '💳' },
       ]
     },
     {
@@ -191,6 +206,134 @@ export default function SbiGlobalBrandHeader({
       ]
     }
   ];
+
+  const renderNavIcon = (label: string) => {
+    switch (label) {
+      // Loans
+      case 'Personal Loan':
+        return (
+          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+            <text x="13" y="10" fontSize="8" fontWeight="bold" fill="#5b2e80" stroke="none">%</text>
+          </svg>
+        );
+      case 'Loan Against Mutual Fund':
+        return (
+          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17" />
+            <path d="M7 18h11a2 2 0 0 0 2-2v-5" />
+            <circle cx="12" cy="6" r="3" />
+          </svg>
+        );
+      case 'Home Loan':
+        return (
+          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <text x="10" y="18" fontSize="8" fontWeight="bold" fill="#5b2e80" stroke="none">%</text>
+          </svg>
+        );
+      case 'Overdraft against Deposit':
+        return (
+          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            <rect x="9" y="10" width="6" height="6" rx="1" />
+          </svg>
+        );
+      case 'Education Loan':
+        return (
+          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+            <path d="M6 12v5c3 3 9 3 12 0v-5" />
+            <text x="10" y="8" fontSize="8" fontWeight="bold" fill="#5b2e80" stroke="none">%</text>
+          </svg>
+        );
+      case 'Gold Loan':
+        return (
+          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path d="M2 17h20v4H2zM4 11h16v4H4zM7 5h10v4H7z" />
+            <text x="10" y="14" fontSize="8" fontWeight="bold" fill="#5b2e80" stroke="none">%</text>
+          </svg>
+        );
+      case 'View Existing Loans':
+      case 'Manage Loans':
+        return (
+          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 3L2 10h20L12 3z" />
+          </svg>
+        );
+      case 'Check your Credit Score':
+        return (
+          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path d="M12 14l3-3" />
+            <path d="M3.34 19a10 10 0 1 1 17.32 0" />
+          </svg>
+        );
+      case 'Calculate Loan EMI':
+        return (
+          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <rect x="4" y="2" width="16" height="20" rx="2" />
+            <line x1="8" y1="6" x2="16" y2="6" />
+            <path d="M8 12h8M8 16h8" />
+          </svg>
+        );
+
+      // Cards & Accounts & Others
+      case 'Credit Cards':
+      case 'Debit Cards':
+      case 'Forex Cards':
+      case 'Prepaid Cards':
+      case 'Manage Credit Card':
+      case 'Manage Debit Card':
+      case 'Manage Forex Card':
+      case 'SBI Credit Cards':
+      case 'Debit Card Management':
+      case 'Credit Card':
+      case 'Prepaid Card':
+        return (
+          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <rect x="2" y="5" width="20" height="14" rx="2" />
+            <line x1="2" y1="10" x2="22" y2="10" />
+            <line x1="6" y1="15" x2="10" y2="15" />
+          </svg>
+        );
+      case 'Block / Unblock Card':
+        return (
+          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <rect x="3" y="11" width="18" height="11" rx="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+        );
+      case 'Generate PIN':
+        return (
+          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <circle cx="7.5" cy="15.5" r="5.5" />
+            <path d="M11.5 11.5L21 2M18 5l3 3M15 8l3 3" />
+          </svg>
+        );
+      case 'Card Rewards Points':
+        return (
+          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+          </svg>
+        );
+      case 'Manage Card Limits':
+        return (
+          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <line x1="18" y1="20" x2="18" y2="10" />
+            <line x1="12" y1="20" x2="12" y2="4" />
+            <line x1="6" y1="20" x2="6" y2="14" />
+          </svg>
+        );
+
+      default:
+        return (
+          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 3L2 10h20L12 3z" />
+          </svg>
+        );
+    }
+  };
 
   return (
     <div className="w-full bg-white font-sans z-50">
@@ -269,7 +412,7 @@ export default function SbiGlobalBrandHeader({
         </div>
       </div>
 
-      {/* 2. MAIN WHITE BRAND NAVBAR WITH INTERACTIVE MEGA DROPDOWN HOVER MENU */}
+      {/* 2. MAIN WHITE BRAND NAVBAR WITH INTERACTIVE MEGA DROPDOWN CLICK MENU */}
       <header className="bg-white border-b border-slate-200/80 px-6 py-2 shadow-xs relative">
         <div className="max-w-[1400px] mx-auto flex justify-between items-center">
           
@@ -284,41 +427,46 @@ export default function SbiGlobalBrandHeader({
           </Link>
 
           {/* Nav Items Row */}
-          <nav className="relative flex items-center gap-1">
+          <nav ref={navRef} className="relative flex items-center gap-1">
             {navTabs.map((tab) => {
-              const isHovered = hoveredNavTab === tab.id;
-              const isActive = activeNav === tab.id;
+              const isOpen = openNavTab === tab.id;
+              const isActive = openNavTab === null ? activeNav === tab.id : openNavTab === tab.id;
 
               return (
                 <div 
                   key={tab.id}
                   className="relative"
-                  onMouseEnter={() => setHoveredNavTab(tab.id)}
-                  onMouseLeave={() => setHoveredNavTab(null)}
                 >
                   <button
                     type="button"
-                    onClick={() => router.push(tab.href)}
-                    className={`relative px-4 py-2 text-xs font-bold transition-all rounded-t-xl cursor-pointer ${
-                      isHovered || isActive 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setOpenNavTab(isOpen ? null : tab.id);
+                    }}
+                    className={`relative block px-4 py-2 text-xs font-bold transition-all rounded-t-xl cursor-pointer ${
+                      isActive 
                         ? 'bg-[#f4edf9] text-[#673391]' 
                         : 'text-slate-600 hover:text-[#673391] hover:bg-slate-50'
                     }`}
                   >
                     <span>{tab.label}</span>
-                    {(isHovered || isActive) && (
+                    {isActive && (
                       <div className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#673391] rounded-full" />
                     )}
                   </button>
 
-                  {/* Mega Dropdown Hover Card (Exact Match to User Reference Screenshot) */}
-                  {isHovered && (
-                    <div className="absolute top-full left-0 mt-1 w-[460px] bg-white rounded-2xl p-5 shadow-2xl border border-purple-100/80 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                      <div className="grid grid-cols-2 gap-5">
+                  {/* Mega Dropdown Click Card */}
+                  {isOpen && (
+                    <div 
+                      onClick={(e) => e.stopPropagation()}
+                      className="absolute top-full left-0 mt-1 w-[480px] bg-[#f8f6fb] rounded-2xl p-5 shadow-2xl border border-purple-200/80 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                    >
+                      <div className="grid grid-cols-2 gap-6">
                         
                         {/* Column 1: Main Category Items */}
                         <div>
-                          <h4 className="text-xs font-extrabold text-[#30135d] mb-2.5 pb-1.5 border-b border-purple-100">
+                          <h4 className="text-xs font-extrabold text-slate-800 mb-3 pb-1 border-b border-purple-200/60">
                             {tab.col1Title}
                           </h4>
                           <div className="space-y-1">
@@ -326,12 +474,15 @@ export default function SbiGlobalBrandHeader({
                               <Link
                                 key={item.label}
                                 href={item.href}
-                                className="flex items-center gap-2.5 py-1.5 px-2 rounded-xl hover:bg-[#f4edf9]/60 transition-all group border-b border-slate-50"
+                                target={item.href.startsWith('http') ? '_blank' : undefined}
+                                rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                                onClick={() => setTimeout(() => setOpenNavTab(null), 100)}
+                                className="flex items-center gap-3 py-2 px-2 rounded-xl hover:bg-white transition-all group border-b border-purple-100/40"
                               >
-                                <div className="w-7 h-7 rounded-full border border-purple-200 bg-white text-[#673391] flex items-center justify-center text-xs shadow-xs group-hover:scale-110 transition-transform">
-                                  {item.icon}
+                                <div className="w-8 h-8 rounded-lg bg-white border border-purple-200/70 text-[#673391] flex items-center justify-center text-sm shadow-2xs group-hover:scale-105 transition-transform flex-shrink-0">
+                                  {renderNavIcon(item.label)}
                                 </div>
-                                <span className="text-[11px] font-bold text-slate-800 group-hover:text-[#673391]">
+                                <span className="text-[12px] font-bold text-slate-800 group-hover:text-[#673391]">
                                   {item.label}
                                 </span>
                               </Link>
@@ -341,7 +492,7 @@ export default function SbiGlobalBrandHeader({
 
                         {/* Column 2: Quick Links */}
                         <div>
-                          <h4 className="text-xs font-extrabold text-[#30135d] mb-2.5 pb-1.5 border-b border-purple-100">
+                          <h4 className="text-xs font-extrabold text-slate-800 mb-3 pb-1 border-b border-purple-200/60">
                             {tab.col2Title}
                           </h4>
                           <div className="space-y-1">
@@ -349,12 +500,15 @@ export default function SbiGlobalBrandHeader({
                               <Link
                                 key={item.label}
                                 href={item.href}
-                                className="flex items-center gap-2.5 py-1.5 px-2 rounded-xl hover:bg-[#f4edf9]/60 transition-all group border-b border-slate-50"
+                                target={item.href.startsWith('http') ? '_blank' : undefined}
+                                rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                                onClick={() => setTimeout(() => setOpenNavTab(null), 100)}
+                                className="flex items-center gap-3 py-1.5 px-2 rounded-xl hover:bg-white transition-all group"
                               >
-                                <div className="w-7 h-7 rounded-full border border-purple-200 bg-white text-[#673391] flex items-center justify-center text-xs shadow-xs group-hover:scale-110 transition-transform">
-                                  {item.icon}
+                                <div className="w-6 h-6 rounded-md bg-white border border-purple-200/70 text-[#673391] flex items-center justify-center text-xs shadow-xs group-hover:scale-105 transition-transform flex-shrink-0">
+                                  {renderNavIcon(item.label)}
                                 </div>
-                                <span className="text-[11px] font-bold text-slate-800 group-hover:text-[#673391]">
+                                <span className="text-[11.5px] font-bold text-slate-700 group-hover:text-[#673391]">
                                   {item.label}
                                 </span>
                               </Link>

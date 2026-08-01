@@ -40,16 +40,19 @@ export default function LoginPage() {
   const [showNoticesModal, setShowNoticesModal] = useState(false);
   const [showSecurityModal, setShowSecurityModal] = useState(false);
   const [hoveredSubItem, setHoveredSubItem] = useState<'savings' | 'current' | 'term' | 'kyc'>('savings');
+  const [hoveredLoanItem, setHoveredLoanItem] = useState<'personal' | 'od_fd' | 'home' | 'gold' | 'mutual_fund' | 'education'>('personal');
+  const [hoveredCardItem, setHoveredCardItem] = useState<'credit' | 'prepaid'>('credit');
+  const [hoveredInvestItem, setHoveredInvestItem] = useState<'ppf' | 'demat' | 'three_in_one'>('ppf');
 
   useEffect(() => {
     const handleDocumentClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (!target.closest('.navbar-sbi')) {
+      if (!target.closest('.custom-navbar2') && !target.closest('.drawer-dropdown') && !target.closest('.drawer-dropdown-two-column')) {
         setActiveDropdown(null);
       }
     };
-    document.addEventListener('click', handleDocumentClick);
-    return () => document.removeEventListener('click', handleDocumentClick);
+    document.addEventListener('mousedown', handleDocumentClick);
+    return () => document.removeEventListener('mousedown', handleDocumentClick);
   }, []);
 
   // OTP Modal State (Matching Screenshot 1)
@@ -385,40 +388,119 @@ export default function LoginPage() {
                       <div className={`drawer-dropdown-two-column text-left ${activeDropdown === 'accounts' ? 'open' : ''}`}>
                         <div className="drawer-dropdown-two-column-inner">
                           <div className="drawer-left-col">
-                            <div className={`drawer-left-item ${hoveredSubItem === 'savings' ? 'active' : ''}`} onMouseEnter={() => setHoveredSubItem('savings')}>
+                            <div 
+                              className={`drawer-left-item ${hoveredSubItem === 'savings' ? 'active' : ''}`} 
+                              onClick={(e) => { e.stopPropagation(); setHoveredSubItem('savings'); }}
+                            >
                               <div className="item-icon-text">
-                                <svg className="menu-icon" viewBox="0 0 24 24" width="18" height="18"><rect x="3" y="10" width="18" height="10" rx="1" fill="none" stroke="currentColor" strokeWidth="2"/><path d="M12 5 L3 10 L21 10 Z" fill="none" stroke="currentColor" strokeWidth="2"/><circle cx="12" cy="15" r="2" fill="none" stroke="currentColor" strokeWidth="2"/></svg>
+                                <svg className="menu-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 3L2 10h20L12 3z" />
+                                </svg>
                                 <span>Savings Account</span>
                               </div>
                               <ChevronRight size={14} className="chevron-arrow" />
                             </div>
-                            <div className={`drawer-left-item ${hoveredSubItem === 'current' ? 'active' : ''}`} onMouseEnter={() => setHoveredSubItem('current')}>
+
+                            <div 
+                              className={`drawer-left-item ${hoveredSubItem === 'current' ? 'active' : ''}`} 
+                              onClick={(e) => { e.stopPropagation(); setHoveredSubItem('current'); }}
+                            >
                               <div className="item-icon-text">
-                                <svg className="menu-icon" viewBox="0 0 24 24" width="18" height="18"><path d="M3 10 h18 v2 h-18 z" fill="none" stroke="currentColor" strokeWidth="2"/><path d="M12 4 L3 10 L21 10 Z" fill="none" stroke="currentColor" strokeWidth="2"/><path d="M5 12 v8 h14 v-8" fill="none" stroke="currentColor" strokeWidth="2"/></svg>
+                                <svg className="menu-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <path d="M2 17l10 5 10-5M2 12l10 5 10-5M12 2L2 7l10 5 10-5 10 5z" />
+                                </svg>
                                 <span>Current Account</span>
                               </div>
                               <ChevronRight size={14} className="chevron-arrow" />
                             </div>
-                            <div className={`drawer-left-item ${hoveredSubItem === 'term' ? 'active' : ''}`} onMouseEnter={() => setHoveredSubItem('term')}>
+
+                            <div 
+                              className={`drawer-left-item ${hoveredSubItem === 'term' ? 'active' : ''}`} 
+                              onClick={(e) => { e.stopPropagation(); setHoveredSubItem('term'); }}
+                            >
                               <div className="item-icon-text">
-                                <svg className="menu-icon" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2"/><path d="M12 7 v10 M9 10 h6 M9 14 h6" stroke="currentColor" strokeWidth="2"/></svg>
+                                <svg className="menu-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
+                                </svg>
                                 <span>Term Deposits</span>
                               </div>
                               <ChevronRight size={14} className="chevron-arrow" />
                             </div>
-                            <div className={`drawer-left-item ${hoveredSubItem === 'kyc' ? 'active' : ''}`} onMouseEnter={() => setHoveredSubItem('kyc')}>
+
+                            <div 
+                              className={`drawer-left-item ${hoveredSubItem === 'kyc' ? 'active' : ''}`} 
+                              onClick={(e) => { e.stopPropagation(); setHoveredSubItem('kyc'); }}
+                            >
                               <div className="item-icon-text">
-                                <svg className="menu-icon" viewBox="0 0 24 24" width="18" height="18"><rect x="5" y="2" width="14" height="20" rx="2" fill="none" stroke="currentColor" strokeWidth="2"/><circle cx="12" cy="18" r="1.5" fill="currentColor"/><path d="M9 5 h6" stroke="currentColor" strokeWidth="2"/></svg>
+                                <svg className="menu-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <rect x="5" y="2" width="14" height="20" rx="2" />
+                                  <line x1="12" y1="18" x2="12.01" y2="18" strokeWidth="3" />
+                                </svg>
                                 <span>Update KYC</span>
                               </div>
                               <ChevronRight size={14} className="chevron-arrow" />
                             </div>
                           </div>
+
                           <div className="drawer-right-col text-left">
-                            {hoveredSubItem === 'savings' && (<div className="drawer-details-content"><div className="details-header"><span>Digital Savings Account</span><ChevronRight size={14} /></div><ul className="details-bullets"><li>Effortless, Paperless Account Opening with No Branch Visit Needed.</li><li>Conveniently access and manage your account through YONO.</li></ul><div className="details-header mt-4"><span>3-in-1 Account</span><ChevronRight size={14} /></div><ul className="details-bullets"><li>Simplify your financial journey with 3-in-1 account opening.</li></ul></div>)}
-                            {hoveredSubItem === 'current' && (<div className="drawer-details-content"><div className="details-header"><span>Open Now</span><ChevronRight size={14} /></div><ul className="details-bullets"><li>Effortless, Paperless Account Opening with No Branch Visit Needed.</li><li>Conveniently access and manage your account through YONO.</li></ul></div>)}
-                            {hoveredSubItem === 'term' && (<div className="drawer-details-content"><div className="details-header"><span>Fixed Deposits</span><ChevronRight size={14} /></div><ul className="details-bullets"><li>Earn assured returns. Invest in Deposits with us.</li><li>Save and earn more with guaranteed returns on FD.</li></ul></div>)}
-                            {hoveredSubItem === 'kyc' && (<div className="drawer-details-content"><div className="details-header"><span>KYC</span><ChevronRight size={14} /></div><ul className="details-bullets"><li>Keep your KYC details updated to enjoy uninterrupted banking services.</li></ul></div>)}
+                            {hoveredSubItem === 'savings' && (
+                              <div className="drawer-details-content">
+                                <div className="details-header">
+                                  <span>Digital Savings Account</span>
+                                  <ChevronRight size={16} />
+                                </div>
+                                <ul className="details-bullets">
+                                  <li>Instant Digital Account Opening with Video KYC.</li>
+                                  <li>Zero balance facility &amp; attractive interest rates.</li>
+                                </ul>
+                                <div className="details-header mt-4">
+                                  <span>3-in-1 Account</span>
+                                  <ChevronRight size={16} />
+                                </div>
+                                <ul className="details-bullets">
+                                  <li>Simplify your financial journey with 3-in-1 account opening.</li>
+                                </ul>
+                              </div>
+                            )}
+
+                            {hoveredSubItem === 'current' && (
+                              <div className="drawer-details-content">
+                                <div className="details-header">
+                                  <span>Open Now</span>
+                                  <ChevronRight size={16} />
+                                </div>
+                                <ul className="details-bullets">
+                                  <li>Effortless, Paperless Account Opening with No Branch Visit Needed.</li>
+                                  <li>Conveniently access and manage your account through YONO.</li>
+                                </ul>
+                              </div>
+                            )}
+
+                            {hoveredSubItem === 'term' && (
+                              <div className="drawer-details-content">
+                                <div className="details-header">
+                                  <span>Fixed &amp; Recurring Deposits</span>
+                                  <ChevronRight size={16} />
+                                </div>
+                                <ul className="details-bullets">
+                                  <li>High-yield interest rates for short &amp; long term tenures.</li>
+                                  <li>Instant tax saver FDs &amp; flexible renewal options.</li>
+                                </ul>
+                              </div>
+                            )}
+
+                            {hoveredSubItem === 'kyc' && (
+                              <div className="drawer-details-content">
+                                <div className="details-header">
+                                  <span>Re-KYC Online</span>
+                                  <ChevronRight size={16} />
+                                </div>
+                                <ul className="details-bullets">
+                                  <li>Update your KYC details seamlessly online without visiting a branch.</li>
+                                  <li>Fast &amp; secure verification to keep services active.</li>
+                                </ul>
+                              </div>
+                            )}
                           </div>
                         </div>
                         <div className="drawer-dropdown-footer">Please register / login to explore more.</div>
@@ -448,20 +530,175 @@ export default function LoginPage() {
                           <path d="M1.5 2H19.5" strokeWidth="2.5" strokeLinecap="round" className="base-line-svg"></path>
                         </svg>
                       </div>
-                      <div className={`drawer-dropdown ${activeDropdown === 'loans' ? 'open' : ''}`}>
-                        <div className="outerDiv col-12">
-                          <div className="sublinks-header pt-0">
-                            <div className="sublinks-header_list">
-                              <div className="optionsWithImage"><span className="menu-text-item">Personal Loan</span><ChevronRight size={14} className="menu-arrow-icon" /></div>
-                              <div className="optionsWithImage"><span className="menu-text-item">OD against FD</span><ChevronRight size={14} className="menu-arrow-icon" /></div>
-                              <div className="optionsWithImage"><span className="menu-text-item">Home Loan</span><ChevronRight size={14} className="menu-arrow-icon" /></div>
-                              <div className="optionsWithImage"><span className="menu-text-item">Gold Loan</span><ChevronRight size={14} className="menu-arrow-icon" /></div>
-                              <div className="optionsWithImage"><span className="menu-text-item">Loan Against Mutual Fund</span><ChevronRight size={14} className="menu-arrow-icon" /></div>
-                              <div className="optionsWithImage"><span className="menu-text-item">Education Loan</span><ChevronRight size={14} className="menu-arrow-icon" /></div>
+
+                      {/* Loans Dropdown - Opened on Click */}
+                      <div className={`drawer-dropdown-two-column text-left ${activeDropdown === 'loans' ? 'open' : ''}`}>
+                        <div className="drawer-dropdown-two-column-inner">
+                          <div className="drawer-left-col-divided">
+                            <div 
+                              className={`drawer-left-item ${hoveredLoanItem === 'personal' ? 'active' : ''}`} 
+                              onClick={(e) => { e.stopPropagation(); setHoveredLoanItem('personal'); }}
+                            >
+                              <div className="item-icon-text">
+                                <svg className="menu-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <circle cx="12" cy="7" r="4" />
+                                  <path d="M5.5 21a8.5 8.5 0 0113 0" />
+                                </svg>
+                                <span>Personal Loan</span>
+                              </div>
+                              <ChevronRight size={14} className="chevron-arrow" />
+                            </div>
+
+                            <div 
+                              className={`drawer-left-item ${hoveredLoanItem === 'od_fd' ? 'active' : ''}`} 
+                              onClick={(e) => { e.stopPropagation(); setHoveredLoanItem('od_fd'); }}
+                            >
+                              <div className="item-icon-text">
+                                <svg className="menu-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                </svg>
+                                <span>OD against FD</span>
+                              </div>
+                              <ChevronRight size={14} className="chevron-arrow" />
+                            </div>
+
+                            <div 
+                              className={`drawer-left-item ${hoveredLoanItem === 'home' ? 'active' : ''}`} 
+                              onClick={(e) => { e.stopPropagation(); setHoveredLoanItem('home'); }}
+                            >
+                              <div className="item-icon-text">
+                                <svg className="menu-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                                  <polyline points="9 22 9 12 15 12 15 22" />
+                                </svg>
+                                <span>Home Loan</span>
+                              </div>
+                              <ChevronRight size={14} className="chevron-arrow" />
+                            </div>
+
+                            <div 
+                              className={`drawer-left-item ${hoveredLoanItem === 'gold' ? 'active' : ''}`} 
+                              onClick={(e) => { e.stopPropagation(); setHoveredLoanItem('gold'); }}
+                            >
+                              <div className="item-icon-text">
+                                <svg className="menu-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <rect x="2" y="7" width="20" height="14" rx="2" />
+                                  <path d="M12 12a3 3 0 100 6 3 3 0 000-6z" />
+                                </svg>
+                                <span>Gold Loan</span>
+                              </div>
+                              <ChevronRight size={14} className="chevron-arrow" />
+                            </div>
+
+                            <div 
+                              className={`drawer-left-item ${hoveredLoanItem === 'mutual_fund' ? 'active' : ''}`} 
+                              onClick={(e) => { e.stopPropagation(); setHoveredLoanItem('mutual_fund'); }}
+                            >
+                              <div className="item-icon-text">
+                                <svg className="menu-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
+                                </svg>
+                                <span>Loan Against Mutual Fund</span>
+                              </div>
+                              <ChevronRight size={14} className="chevron-arrow" />
+                            </div>
+
+                            <div 
+                              className={`drawer-left-item ${hoveredLoanItem === 'education' ? 'active' : ''}`} 
+                              onClick={(e) => { e.stopPropagation(); setHoveredLoanItem('education'); }}
+                            >
+                              <div className="item-icon-text">
+                                <svg className="menu-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                                  <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                                </svg>
+                                <span>Education Loan</span>
+                              </div>
+                              <ChevronRight size={14} className="chevron-arrow" />
                             </div>
                           </div>
+
+                          <div className="drawer-right-col text-left">
+                            {hoveredLoanItem === 'personal' && (
+                              <div className="drawer-details-content">
+                                <div className="details-header">
+                                  <span>Explore More</span>
+                                  <ChevronRight size={16} />
+                                </div>
+                                <ul className="details-bullets">
+                                  <li>Available for customers having Salary Account with us.</li>
+                                  <li>Instant credit to your account.</li>
+                                </ul>
+                              </div>
+                            )}
+
+                            {hoveredLoanItem === 'od_fd' && (
+                              <div className="drawer-details-content">
+                                <div className="details-header">
+                                  <span>Open Now</span>
+                                  <ChevronRight size={16} />
+                                </div>
+                                <ul className="details-bullets">
+                                  <li>Instant loan against your Fixed Deposits with SBI.</li>
+                                  <li>Flexibility of utilizing the fund by way of overdraft facility.</li>
+                                </ul>
+                              </div>
+                            )}
+
+                            {hoveredLoanItem === 'home' && (
+                              <div className="drawer-details-content">
+                                <div className="details-header">
+                                  <span>Explore More</span>
+                                  <ChevronRight size={16} />
+                                </div>
+                                <ul className="details-bullets">
+                                  <li>Make your dream home a reality.</li>
+                                  <li>Assurance of largest bank of India for all your worries for your dream home.</li>
+                                </ul>
+                              </div>
+                            )}
+
+                            {hoveredLoanItem === 'gold' && (
+                              <div className="drawer-details-content">
+                                <div className="details-header">
+                                  <span>Explore More</span>
+                                  <ChevronRight size={16} />
+                                </div>
+                                <ul className="details-bullets">
+                                  <li>Convenient and speedy processing.</li>
+                                  <li>Competitive Interest Rate.</li>
+                                </ul>
+                              </div>
+                            )}
+
+                            {hoveredLoanItem === 'mutual_fund' && (
+                              <div className="drawer-details-content">
+                                <div className="details-header">
+                                  <span>Open Now</span>
+                                  <ChevronRight size={16} />
+                                </div>
+                                <ul className="details-bullets">
+                                  <li>Availability of fund with continuation of returns on investment.</li>
+                                  <li>Instant credit of fund.</li>
+                                </ul>
+                              </div>
+                            )}
+
+                            {hoveredLoanItem === 'education' && (
+                              <div className="drawer-details-content">
+                                <div className="details-header">
+                                  <span>Explore More</span>
+                                  <ChevronRight size={16} />
+                                </div>
+                                <ul className="details-bullets">
+                                  <li>Avail hassle free education loan through SBI at competitive rates.</li>
+                                  <li>Power your path to top-tier education with SBI Education loan through Vidyalakshmi portal.</li>
+                                </ul>
+                              </div>
+                            )}
+                          </div>
                         </div>
-                        <div className="dropdown-footer">Please register / login to explore more.</div>
+                        <div className="drawer-dropdown-footer">Please register / login to explore more.</div>
                       </div>
                     </li>
                   </div>
@@ -488,16 +725,67 @@ export default function LoginPage() {
                           <path d="M1.5 2H19.5" strokeWidth="2.5" strokeLinecap="round" className="base-line-svg"></path>
                         </svg>
                       </div>
-                      <div className={`drawer-dropdown ${activeDropdown === 'cards' ? 'open' : ''}`}>
-                        <div className="outerDiv col-12">
-                          <div className="sublinks-header pt-0">
-                            <div className="sublinks-header_list">
-                              <div className="optionsWithImage"><span className="menu-text-item">Credit Card</span><ChevronRight size={14} className="menu-arrow-icon" /></div>
-                              <div className="optionsWithImage"><span className="menu-text-item">Prepaid Card</span><ChevronRight size={14} className="menu-arrow-icon" /></div>
+
+                      {/* Cards Dropdown - Opened on Click */}
+                      <div className={`drawer-dropdown-two-column text-left ${activeDropdown === 'cards' ? 'open' : ''}`}>
+                        <div className="drawer-dropdown-two-column-inner">
+                          <div className="drawer-left-col-divided">
+                            <div 
+                              className={`drawer-left-item ${hoveredCardItem === 'credit' ? 'active' : ''}`} 
+                              onClick={(e) => { e.stopPropagation(); setHoveredCardItem('credit'); }}
+                            >
+                              <div className="item-icon-text">
+                                <svg className="menu-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <rect x="2" y="5" width="20" height="14" rx="2" />
+                                  <line x1="2" y1="10" x2="22" y2="10" />
+                                </svg>
+                                <span>Credit Card</span>
+                              </div>
+                              <ChevronRight size={14} className="chevron-arrow" />
+                            </div>
+
+                            <div 
+                              className={`drawer-left-item ${hoveredCardItem === 'prepaid' ? 'active' : ''}`} 
+                              onClick={(e) => { e.stopPropagation(); setHoveredCardItem('prepaid'); }}
+                            >
+                              <div className="item-icon-text">
+                                <svg className="menu-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <rect x="2" y="5" width="20" height="14" rx="2" />
+                                  <line x1="2" y1="10" x2="22" y2="10" />
+                                </svg>
+                                <span>Prepaid Card</span>
+                              </div>
+                              <ChevronRight size={14} className="chevron-arrow" />
                             </div>
                           </div>
+
+                          <div className="drawer-right-col text-left">
+                            {hoveredCardItem === 'credit' && (
+                              <div className="drawer-details-content">
+                                <div className="details-header">
+                                  <span>Apply Now</span>
+                                  <ChevronRight size={16} />
+                                </div>
+                                <ul className="details-bullets">
+                                  <li>A seamless, digital-first credit card journey enabling customers to discover, apply, and get approved instantly with minimal effort. End to end credit card issuance and activation in few clicks. All your credit card services, streamlined into one seamless experience.</li>
+                                </ul>
+                              </div>
+                            )}
+
+                            {hoveredCardItem === 'prepaid' && (
+                              <div className="drawer-details-content">
+                                <div className="details-header">
+                                  <span>Apply Now</span>
+                                  <ChevronRight size={16} />
+                                </div>
+                                <ul className="details-bullets">
+                                  <li>Get started instantly and apply for a prepaid card. Issue and manage your card in just a few clicks. Access related services in one place.</li>
+                                </ul>
+                              </div>
+                            )}
+                          </div>
                         </div>
-                        <div className="dropdown-footer">Please register / login to explore more.</div>
+                        <div className="drawer-dropdown-footer">Please register / login to explore more.</div>
                       </div>
                     </li>
                   </div>
@@ -524,17 +812,94 @@ export default function LoginPage() {
                           <path d="M1.5 2H19.5" strokeWidth="2.5" strokeLinecap="round" className="base-line-svg"></path>
                         </svg>
                       </div>
-                      <div className={`drawer-dropdown ${activeDropdown === 'investments' ? 'open' : ''}`}>
-                        <div className="outerDiv col-12">
-                          <div className="sublinks-header pt-0">
-                            <div className="sublinks-header_list">
-                              <div className="optionsWithImage"><span className="menu-text-item">PPF Account</span><ChevronRight size={14} className="menu-arrow-icon" /></div>
-                              <div className="optionsWithImage"><span className="menu-text-item">Demat &amp; Securities</span><ChevronRight size={14} className="menu-arrow-icon" /></div>
-                              <div className="optionsWithImage"><span className="menu-text-item">3-in-1 Account</span><ChevronRight size={14} className="menu-arrow-icon" /></div>
+
+                      {/* Investments Dropdown - Opened on Click */}
+                      <div className={`drawer-dropdown-two-column text-left ${activeDropdown === 'investments' ? 'open' : ''}`}>
+                        <div className="drawer-dropdown-two-column-inner">
+                          <div className="drawer-left-col-divided">
+                            <div 
+                              className={`drawer-left-item ${hoveredInvestItem === 'ppf' ? 'active' : ''}`} 
+                              onClick={(e) => { e.stopPropagation(); setHoveredInvestItem('ppf'); }}
+                            >
+                              <div className="item-icon-text">
+                                <svg className="menu-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.778-7.778zM15.5 15.5L22 9" />
+                                </svg>
+                                <span>PPF Account</span>
+                              </div>
+                              <ChevronRight size={14} className="chevron-arrow" />
+                            </div>
+
+                            <div 
+                              className={`drawer-left-item ${hoveredInvestItem === 'demat' ? 'active' : ''}`} 
+                              onClick={(e) => { e.stopPropagation(); setHoveredInvestItem('demat'); }}
+                            >
+                              <div className="item-icon-text">
+                                <svg className="menu-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <rect x="2" y="7" width="20" height="14" rx="2" />
+                                </svg>
+                                <span>Demat &amp; Securities</span>
+                              </div>
+                              <ChevronRight size={14} className="chevron-arrow" />
+                            </div>
+
+                            <div 
+                              className={`drawer-left-item ${hoveredInvestItem === 'three_in_one' ? 'active' : ''}`} 
+                              onClick={(e) => { e.stopPropagation(); setHoveredInvestItem('three_in_one'); }}
+                            >
+                              <div className="item-icon-text">
+                                <svg className="menu-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <rect x="2" y="7" width="20" height="14" rx="2" />
+                                  <circle cx="12" cy="14" r="3" />
+                                </svg>
+                                <span>3-in-1 Account</span>
+                              </div>
+                              <ChevronRight size={14} className="chevron-arrow" />
                             </div>
                           </div>
+
+                          <div className="drawer-right-col text-left">
+                            {hoveredInvestItem === 'ppf' && (
+                              <div className="drawer-details-content">
+                                <div className="details-header">
+                                  <span>Open Now</span>
+                                  <ChevronRight size={16} />
+                                </div>
+                                <ul className="details-bullets">
+                                  <li>Flexible deposit options between ₹500 to ₹1.5 lakh in a financial year. Government-backed long term investment.</li>
+                                  <li>15 year investment with easy extension of 5 years option.</li>
+                                </ul>
+                              </div>
+                            )}
+
+                            {hoveredInvestItem === 'demat' && (
+                              <div className="drawer-details-content">
+                                <div className="details-header">
+                                  <span>Open Now</span>
+                                  <ChevronRight size={16} />
+                                </div>
+                                <ul className="details-bullets">
+                                  <li>Start your seamless digital journey with easy Demat account opening.</li>
+                                  <li>Experience a smooth digital journey with hassle-free Demat account opening.</li>
+                                </ul>
+                              </div>
+                            )}
+
+                            {hoveredInvestItem === 'three_in_one' && (
+                              <div className="drawer-details-content">
+                                <div className="details-header">
+                                  <span>Open Now</span>
+                                  <ChevronRight size={16} />
+                                </div>
+                                <ul className="details-bullets">
+                                  <li>Simplify your financial journey with 3-in-1 account opening.</li>
+                                  <li>All in one product that provide savings, demat and trading account.</li>
+                                </ul>
+                              </div>
+                            )}
+                          </div>
                         </div>
-                        <div className="dropdown-footer">Please register / login to explore more.</div>
+                        <div className="drawer-dropdown-footer">Please register / login to explore more.</div>
                       </div>
                     </li>
                   </div>
@@ -1096,38 +1461,40 @@ export default function LoginPage() {
           <aside aria-label="Important Notes & Security Best Practices">
             <div id="ImpNotice" className="pt-4 ImpNotice">
               <div id="impnoticescontainer" className="imp-notices-container mb-4">
-                <div className="row">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
                   
                   {/* Left Column: Important Notices */}
-                  <div className="col-12 col-sm-12 col-md-6 borderCont">
-                    <div className="d-flex align-items-baseline mb-3">
-                      <div className="col-8">
-                        <p className="headTxt">Important Notices</p>
-                      </div>
-                      <div className="col-md-4 d-flex justify-content-end tabText">
-                        <a href="javascript:void(0);" onClick={(e) => { e.preventDefault(); setShowNoticesModal(true); }} aria-label="View All Important Notices">
-                          View All
-                        </a>
-                      </div>
+                  <div className="borderCont">
+                    <div className="flex justify-between items-center mb-4">
+                      <p className="headTxt m-0">Important Notices</p>
+                      <a href="javascript:void(0);" onClick={(e) => { e.preventDefault(); setShowNoticesModal(true); }} className="tabTextLink" aria-label="View All Important Notices">
+                        View All
+                      </a>
                     </div>
 
                     <div className="container-card">
-                      <ul>
-                        <li className="mt-4 flex items-start gap-3">
-                          <img loading="lazy" alt="arrow" className="bullet-arrow" src="/assets/images/registration/bulletArrow.svg" />
-                          <p className="imp-notice-txt m-0 pe-4">
+                      <ul className="space-y-4 p-0 m-0 list-none">
+                        <li className="flex items-start gap-3">
+                          <div className="bullet-arrow-circle">
+                            <ArrowRight size={14} />
+                          </div>
+                          <p className="imp-notice-txt m-0 pe-2">
                             Customers can now deposit Income Tax/Corporate Taxes using all Bank Debit Cards and Credit Cards under State Bank Payment Gateway.
                           </p>
                         </li>
-                        <li className="mt-4 flex items-start gap-3">
-                          <img loading="lazy" alt="arrow" className="bullet-arrow" src="/assets/images/registration/bulletArrow.svg" />
-                          <p className="imp-notice-txt m-0 pe-4">
+                        <li className="flex items-start gap-3">
+                          <div className="bullet-arrow-circle">
+                            <ArrowRight size={14} />
+                          </div>
+                          <p className="imp-notice-txt m-0 pe-2">
                             Call us toll free on 1800 1234 and 1800 2100 and get a wide range of services through SBI Contact Centre.&nbsp;
                           </p>
                         </li>
-                        <li className="mt-4 flex items-start gap-3">
-                          <img loading="lazy" alt="arrow" className="bullet-arrow" src="/assets/images/registration/bulletArrow.svg" />
-                          <p className="imp-notice-txt m-0 pe-4">
+                        <li className="flex items-start gap-3">
+                          <div className="bullet-arrow-circle">
+                            <ArrowRight size={14} />
+                          </div>
+                          <p className="imp-notice-txt m-0 pe-2">
                             SBI never asks for your Card/PIN/OTP/CVV details on phone, message or email. Please do not click on links received on your email or mobile asking your Bank/Card details.
                           </p>
                         </li>
@@ -1135,59 +1502,49 @@ export default function LoginPage() {
                     </div>
                   </div>
 
-                  {/* Right Column: Security Best Practices Carousel */}
-                  <div className="col-12 col-sm-12 col-md-6 borderContBox">
-                    <div className="d-flex align-items-baseline mb-3">
-                      <div className="col-8">
-                        <p className="headSecurityTxt">Security Best Practices</p>
-                      </div>
-                      <div className="col-md-4 d-flex justify-content-end tabText">
-                        <a href="javascript:void(0);" onClick={(e) => { e.preventDefault(); setShowSecurityModal(true); }} aria-label="View All Security Best Practices">
-                          View All
-                        </a>
-                      </div>
+                  {/* Right Column: Security Best Practices (3 Cards Side-by-Side) */}
+                  <div className="borderContBox">
+                    <div className="flex justify-between items-center mb-4">
+                      <p className="headSecurityTxt m-0">Security Best Practices</p>
+                      <a href="javascript:void(0);" onClick={(e) => { e.preventDefault(); setShowSecurityModal(true); }} className="tabTextLink" aria-label="View All Security Best Practices">
+                        View All
+                      </a>
                     </div>
 
-                    <div className="row">
-                      <div className="carousel-container ms-1">
-                        <img 
-                          loading="lazy" 
-                          alt="carousel-arrow" 
-                          className="nav-arrow arrow-space cursor-pointer" 
-                          src="/assets/images/login/BackwordArrow.svg" 
-                          tabIndex={0}
-                          onClick={() => setSecuritySlide(prev => (prev - 1 + securityCards.length) % securityCards.length)}
-                        />
-                        <div className="carousel">
-                          <div className="card-box">
-                            <div className="card-content">
-                              <div className="row mb-2 imageBox">
-                                <img 
-                                  loading="lazy" 
-                                  alt="carousel-img" 
-                                  src={securityCards[securitySlide].img} 
-                                />
-                              </div>
-                              <div className="row pt-2">
-                                <p className="headingText mt-2">{securityCards[securitySlide].title}</p>
-                                <div className="carousel-card-desc row">
-                                  <p className="textWrap" title={securityCards[securitySlide].desc}>
-                                    {securityCards[securitySlide].desc}
-                                  </p>
-                                </div>
-                              </div>
+                    <div className="flex items-center gap-2 mt-3">
+                      <button 
+                        type="button" 
+                        className="nav-arrow-btn"
+                        onClick={() => setSecuritySlide(prev => (prev - 1 + securityCards.length) % securityCards.length)}
+                        title="Previous"
+                      >
+                        <ChevronLeft size={16} />
+                      </button>
+
+                      <div className="grid grid-cols-3 gap-2 flex-1">
+                        {securityCards.map((card, idx) => (
+                          <div 
+                            key={idx} 
+                            onClick={() => setShowSecurityModal(true)} 
+                            className="security-mini-card cursor-pointer"
+                          >
+                            <div className="sec-img-box">
+                              <img loading="lazy" alt={card.title} src={card.img} />
                             </div>
+                            <h4 className="sec-card-title">{card.title}</h4>
+                            <p className="sec-card-desc" title={card.desc}>{card.desc}</p>
                           </div>
-                        </div>
-                        <img 
-                          loading="lazy" 
-                          alt="ForwardArrow" 
-                          className="nav-arrow cursor-pointer" 
-                          src="/assets/images/login/forwardArrow.svg" 
-                          tabIndex={0}
-                          onClick={() => setSecuritySlide(prev => (prev + 1) % securityCards.length)}
-                        />
+                        ))}
                       </div>
+
+                      <button 
+                        type="button" 
+                        className="nav-arrow-btn"
+                        onClick={() => setSecuritySlide(prev => (prev + 1) % securityCards.length)}
+                        title="Next"
+                      >
+                        <ChevronRight size={16} />
+                      </button>
                     </div>
                   </div>
 
@@ -1196,83 +1553,63 @@ export default function LoginPage() {
             </div>
           </aside>
 
-          {/* Do's & Don'ts Section */}
+          {/* Do's & Don'ts Section (Matching Image 2) */}
           <aside aria-label="Do's &amp; Don'ts">
             <div>
               <h1 className="headTxt py-3 ms-1">Do&apos;s &amp; Don&apos;ts</h1>
             </div>
             <div className="dos-donts-container px-2">
-              <div className="row cardContainerTab">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 
-                <div className="col-6 col-md-3 px-2 ps-2 do-card-margin">
-                  <div className="do-card d-flex">
-                    <div className="container">
-                      <div className="row card-boxx">
-                        <div className="col-3 d-flex align-item-center do-card-left p-1 p-md-2">
-                          <img loading="lazy" alt="img-alt" className="img-fluid" src="/assets/images/login/dosymbol.svg" />
-                        </div>
-                        <div className="col-9 p-3 px-2 cardBox">
-                          <div className="do-card-right p-2">
-                            <div className="dos-card-header">Always </div>
-                            <span className="dos-card-content">keep your computer free of malware</span>
-                          </div>
-                        </div>
-                      </div>
+                {/* Do 1 */}
+                <div className="do-card">
+                  <div className="do-card-left">
+                    <div className="do-badge-circle">
+                      <Check size={20} strokeWidth={3} />
                     </div>
+                  </div>
+                  <div className="do-card-right">
+                    <div className="dos-card-header">Always</div>
+                    <span className="dos-card-content">keep your computer free of malware</span>
                   </div>
                 </div>
 
-                <div className="col-6 col-md-3 px-2 do-card-margin">
-                  <div className="do-card d-flex">
-                    <div className="container">
-                      <div className="row card-boxx">
-                        <div className="col-3 d-flex align-item-center do-card-left p-1 p-md-2">
-                          <img loading="lazy" alt="img-alt" className="img-fluid" src="/assets/images/login/dosymbol.svg" />
-                        </div>
-                        <div className="col-9 p-3 px-2 cardBox">
-                          <div className="do-card-right p-2">
-                            <div className="dos-card-header">Always </div>
-                            <span className="dos-card-content">change your passwords periodically</span>
-                          </div>
-                        </div>
-                      </div>
+                {/* Do 2 */}
+                <div className="do-card">
+                  <div className="do-card-left">
+                    <div className="do-badge-circle">
+                      <Check size={20} strokeWidth={3} />
                     </div>
+                  </div>
+                  <div className="do-card-right">
+                    <div className="dos-card-header">Always</div>
+                    <span className="dos-card-content">change your passwords periodically</span>
                   </div>
                 </div>
 
-                <div className="col-6 col-md-3 px-2 do-card-margin">
-                  <div className="dont-card d-flex">
-                    <div className="container">
-                      <div className="row">
-                        <div className="col-3 d-flex align-item-center dont-card-left p-1 p-md-2">
-                          <img loading="lazy" alt="img-alt" className="img-fluid" src="/assets/images/login/dontsymbol.svg" />
-                        </div>
-                        <div className="col-9 p-3 px-2 cardBox">
-                          <div className="do-card-right p-2">
-                            <div className="donts-card-header pt-1">Never </div>
-                            <span className="donts-card-content">respond to communication seeking your passwords</span>
-                          </div>
-                        </div>
-                      </div>
+                {/* Don't 1 */}
+                <div className="dont-card">
+                  <div className="dont-card-left">
+                    <div className="dont-badge-circle">
+                      <X size={20} strokeWidth={3} />
                     </div>
+                  </div>
+                  <div className="do-card-right">
+                    <div className="donts-card-header">Never</div>
+                    <span className="donts-card-content">respond to communication seeking your passwords</span>
                   </div>
                 </div>
 
-                <div className="col-6 col-md-3 px-2 pe-2 do-card-margin">
-                  <div className="dont-card d-flex">
-                    <div className="container">
-                      <div className="row">
-                        <div className="col-3 d-flex align-item-center dont-card-left p-1 p-md-2">
-                          <img loading="lazy" alt="img-alt" className="img-fluid" src="/assets/images/login/dontsymbol.svg" />
-                        </div>
-                        <div className="col-9 p-3 px-2 cardBox">
-                          <div className="do-card-right p-2">
-                            <div className="donts-card-header pt-1">Never </div>
-                            <span className="donts-card-content">reveal your passwords or card details to anyone</span>
-                          </div>
-                        </div>
-                      </div>
+                {/* Don't 2 */}
+                <div className="dont-card">
+                  <div className="dont-card-left">
+                    <div className="dont-badge-circle">
+                      <X size={20} strokeWidth={3} />
                     </div>
+                  </div>
+                  <div className="do-card-right">
+                    <div className="donts-card-header">Never</div>
+                    <span className="donts-card-content">reveal your passwords or card details to anyone</span>
                   </div>
                 </div>
 

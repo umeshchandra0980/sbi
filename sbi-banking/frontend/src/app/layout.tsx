@@ -1,7 +1,22 @@
 import type { Metadata } from 'next'
+import { Open_Sans, Roboto } from 'next/font/google'
 import './globals.css'
 import { Toaster } from 'react-hot-toast'
 import QueryProvider from '@/components/layout/QueryProvider'
+
+const openSans = Open_Sans({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-open-sans',
+  display: 'swap',
+})
+
+const roboto = Roboto({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '700', '900'],
+  variable: '--font-roboto',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: 'SBI Online Banking',
@@ -11,8 +26,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="font-sans bg-gray-100 text-sm text-gray-800">
+    <html lang="en" className={`${openSans.variable} ${roboto.variable}`}>
+      <body className={`${openSans.className} antialiased bg-gray-100 text-sm text-gray-800`}>
         <QueryProvider>
           {children}
           <Toaster
