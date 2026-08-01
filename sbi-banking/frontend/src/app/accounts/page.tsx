@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { MOCK_USER, MOCK_ACCOUNTS } from '@/lib/mockData';
 import '../dashboard/dashboard.css';
+import SbiGlobalBrandHeader from '@/components/banking/SbiGlobalBrandHeader';
 
 export default function ViewAllAccountsPage() {
   const router = useRouter();
@@ -37,111 +38,8 @@ export default function ViewAllAccountsPage() {
   return (
     <div className="dashboard-wrapper min-h-screen flex flex-col bg-[#f3f4f9]">
       
-      {/* ================= HEADER (Multi-Tier Header) ================= */}
-      <header className="dash-header">
-        
-        {/* Dark Purple Top Bar */}
-        <div className="dash-top-bar">
-          <div className="dash-top-bar-inner">
-            <div className="dash-top-left-tabs">
-              <button type="button" className="dash-top-tab active">
-                Banking
-              </button>
-              <button 
-                type="button" 
-                className="dash-top-tab"
-                onClick={() => router.push('/home/landingPage/lifestyle')}
-              >
-                Lifestyle
-              </button>
-              <button type="button" className="dash-top-tab">
-                Rewards
-              </button>
-
-              <div className="dash-lite-switch">
-                <span>YONO Net Banking Lite</span>
-                <span className="switch-badge bg-gray-400 text-white">OFF</span>
-              </div>
-            </div>
-
-            <div className="dash-top-right-info">
-              <a href="https://crh.sbi.bank.in" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-white text-xs hover:underline">
-                <HelpCircle size={13} />
-                Get Help
-              </a>
-              <span className="helpline-text">
-                <b>022-20744646</b> (8AM-8PM) | ynbsupport@sbi.co.in | <b>1800-11-1101</b> (24x7)
-              </span>
-              <span className="text-xs">English ▾</span>
-              <span className="text-xs font-bold cursor-pointer">- A +</span>
-              <button type="button" onClick={handleLogout} className="logout-btn-dash">
-                Logout
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Main White Navbar */}
-        <nav className="dash-main-navbar" aria-label="Main Navigation">
-          <div className="dash-main-navbar-inner flex items-center justify-between px-6 py-2 bg-white">
-            <Link href="/dashboard" className="flex items-center gap-2">
-              <img 
-                src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/new-horz-logo_net-banking_svg" 
-                onError={(e) => { (e.target as HTMLImageElement).src = '/assets/images/yono_logo.svg'; }}
-                alt="YONO SBI NET-BANKING" 
-                className="h-9 w-auto object-contain"
-              />
-            </Link>
-
-            <ul className="dash-nav-links">
-              {[
-                'Overview', 'Accounts', 'Payments', 'Deposits', 
-                'Loans', 'Cards', 'Investments', 'Insurance', 'Services'
-              ].map((tab) => (
-                <li key={tab} className="dash-nav-item">
-                  <button 
-                    type="button" 
-                    onClick={() => {
-                      setActiveTab(tab);
-                      if (tab === 'Overview') router.push('/dashboard');
-                      else if (tab === 'Accounts') router.push('/accounts');
-                      else if (tab === 'Payments') router.push('/payments');
-                      else if (tab === 'Deposits') router.push('/home/landingPage/manageRelationship/deposits');
-                      else if (tab === 'Loans') router.push('/home/landingPage/manageRelationship/loans/loans');
-                      else if (tab === 'Cards') router.push('/cards');
-                      else if (tab === 'Investments') router.push('/home/landingPage/manageRelationship/investments/mutual-fund');
-                      else if (tab === 'Insurance') router.push('/home/landingPage/manageRelationship/insurance');
-                      else if (tab === 'Services') router.push('/settings');
-                    }}
-                    className={`dash-nav-link ${activeTab === tab ? 'active' : ''}`}
-                  >
-                    <span>{tab}</span>
-                    {activeTab === tab && <div className="nav-active-line" />}
-                  </button>
-                </li>
-              ))}
-            </ul>
-
-            <div className="flex items-center gap-4">
-              <button type="button" className="text-[#702082] hover:opacity-80 transition-opacity" title="Search">
-                <Search size={18} className="stroke-[2px]" />
-              </button>
-              <button type="button" className="text-[#702082] hover:opacity-80 relative transition-opacity" title="Notifications">
-                <Bell size={18} className="stroke-[2px]" />
-                <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[8px] w-3.5 h-3.5 rounded-full flex items-center justify-center font-bold">
-                  2
-                </span>
-              </button>
-              <Link href="/settings" className="bg-[#702082] text-white py-0.5 pl-0.5 pr-3.5 rounded-full flex items-center gap-2 text-xs font-semibold hover:bg-[#5c1a6b] transition-all duration-150 shadow-2xs">
-                <div className="w-7 h-7 rounded-full bg-[#fcfaff] text-[#702082] border-2 border-amber-400 flex items-center justify-center font-bold text-[11px] shrink-0">
-                  {initials}
-                </div>
-                <span className="text-white font-medium text-[11px]">My Profile</span>
-              </Link>
-            </div>
-          </div>
-        </nav>
-      </header>
+      {/* ================= GLOBAL BRAND HEADER ================= */}
+      <SbiGlobalBrandHeader activeNav="Accounts" />
 
       {/* ================= MAIN CONTENT AREA ================= */}
       <main className="flex-1 max-w-[1320px] w-full mx-auto px-4 py-6">
