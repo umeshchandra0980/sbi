@@ -328,11 +328,12 @@
 .sbi-tab-indicator {
   position: absolute;
   bottom: 0;
-  left: 18px;
-  right: 18px;
-  height: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 4.5px;
   background-color: #702082;
-  border-radius: 2px;
+  border-radius: 9999px;
 }
 
 .sbi-view-all-btn {
