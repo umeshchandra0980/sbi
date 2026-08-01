@@ -85,7 +85,7 @@ export const MOCK_ACCOUNTS: BankAccount[] = [
     masked_account_number: 'XXXXXXX7054',
     account_type: 'Savings Account',
     holder_name: 'DUMPALA VISHNU VARDHAN',
-    balance: 145280.50,
+    balance: 0.09,
     currency: 'INR',
     bank_name: 'SBI',
     branch: 'PEDDAPALLI',
