@@ -211,131 +211,109 @@ export default function SbiGlobalBrandHeader({
   ];
 
   const renderNavIcon = (label: string) => {
+    let iconPath = '';
+
     switch (label) {
+      // Investments
+      case 'Mutual Funds':
+        iconPath = '/images/category-icons/ic_mutual_funds.svg';
+        break;
+      case 'Demat & Securities':
+        iconPath = '/images/category-icons/ic_demat_account.svg';
+        break;
+      case 'National Pension System (NPS)':
+        iconPath = '/images/category-icons/ic_nps.svg';
+        break;
+      case 'Public Provident Fund (PPF)':
+        iconPath = '/images/category-icons/ic_ppf.svg';
+        break;
+
       // Loans
       case 'Personal Loan':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-            <circle cx="12" cy="7" r="4" />
-            <text x="13" y="10" fontSize="8" fontWeight="bold" fill="#5b2e80" stroke="none">%</text>
-          </svg>
-        );
+        iconPath = '/images/category-icons/ic_personal_loan.svg';
+        break;
       case 'Loan Against Mutual Fund':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17" />
-            <path d="M7 18h11a2 2 0 0 0 2-2v-5" />
-            <circle cx="12" cy="6" r="3" />
-          </svg>
-        );
+        iconPath = '/images/category-icons/ic_loan_against_mutual_fund.svg';
+        break;
       case 'Home Loan':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-            <text x="10" y="18" fontSize="8" fontWeight="bold" fill="#5b2e80" stroke="none">%</text>
-          </svg>
-        );
-      case 'Overdraft against Deposit':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-            <rect x="9" y="10" width="6" height="6" rx="1" />
-          </svg>
-        );
-      case 'Education Loan':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-            <path d="M6 12v5c3 3 9 3 12 0v-5" />
-            <text x="10" y="8" fontSize="8" fontWeight="bold" fill="#5b2e80" stroke="none">%</text>
-          </svg>
-        );
+        iconPath = '/images/category-icons/ic_home_loan.svg';
+        break;
       case 'Gold Loan':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M2 17h20v4H2zM4 11h16v4H4zM7 5h10v4H7z" />
-            <text x="10" y="14" fontSize="8" fontWeight="bold" fill="#5b2e80" stroke="none">%</text>
-          </svg>
-        );
-      case 'View Existing Loans':
-      case 'Manage Loans':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 3L2 10h20L12 3z" />
-          </svg>
-        );
-      case 'Check your Credit Score':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M12 14l3-3" />
-            <path d="M3.34 19a10 10 0 1 1 17.32 0" />
-          </svg>
-        );
-      case 'Calculate Loan EMI':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <rect x="4" y="2" width="16" height="20" rx="2" />
-            <line x1="8" y1="6" x2="16" y2="6" />
-            <path d="M8 12h8M8 16h8" />
-          </svg>
-        );
+        iconPath = '/images/category-icons/ic_gold_loan.svg';
+        break;
 
-      // Cards & Accounts & Others
+      // Deposits
+      case 'Fixed Deposit (FD)':
+        iconPath = '/images/category-icons/ic_fixed_deposit.svg';
+        break;
+      case 'Recurring Deposit (RD)':
+        iconPath = '/images/category-icons/ic_recurring_deposit.svg';
+        break;
+      case 'Deposit Interest Certificate':
+        iconPath = '/images/category-icons/ic_annuity_deposit.svg';
+        break;
+      case 'Open Fixed Deposit':
+        iconPath = '/images/category-icons/ic_auto_sweep.svg';
+        break;
+
+      // Insurance
+      case 'SBI Life Insurance':
+        iconPath = '/images/category-icons/ic_life_insurance.svg';
+        break;
+      case 'Health Insurance':
+        iconPath = '/images/category-icons/ic_health_insurance.svg';
+        break;
+      case 'Link Existing Policy':
+        iconPath = '/images/category-icons/ic_accident_insurance.svg';
+        break;
+      case 'Motor Insurance':
+        iconPath = '/images/category-icons/ic_car_insurance.svg';
+        break;
+
+      // Cards
       case 'Credit Cards':
-      case 'Debit Cards':
-      case 'Forex Cards':
-      case 'Prepaid Cards':
       case 'Manage Credit Card':
+        iconPath = '/images/category-icons/ic_credit_card.svg';
+        break;
+      case 'Debit Cards':
       case 'Manage Debit Card':
+        iconPath = '/images/category-icons/ic_debit_card.svg';
+        break;
+      case 'Forex Cards':
       case 'Manage Forex Card':
-      case 'SBI Credit Cards':
-      case 'Debit Card Management':
-      case 'Credit Card':
-      case 'Prepaid Card':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <rect x="2" y="5" width="20" height="14" rx="2" />
-            <line x1="2" y1="10" x2="22" y2="10" />
-            <line x1="6" y1="15" x2="10" y2="15" />
-          </svg>
-        );
-      case 'Block / Unblock Card':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <rect x="3" y="11" width="18" height="11" rx="2" />
-            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-          </svg>
-        );
-      case 'Generate PIN':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <circle cx="7.5" cy="15.5" r="5.5" />
-            <path d="M11.5 11.5L21 2M18 5l3 3M15 8l3 3" />
-          </svg>
-        );
-      case 'Card Rewards Points':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
-          </svg>
-        );
-      case 'Manage Card Limits':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <line x1="18" y1="20" x2="18" y2="10" />
-            <line x1="12" y1="20" x2="12" y2="4" />
-            <line x1="6" y1="20" x2="6" y2="14" />
-          </svg>
-        );
+        iconPath = '/images/category-icons/ic_forex_card.svg';
+        break;
+      case 'Prepaid Cards':
+        iconPath = '/images/category-icons/ic_ncmc_card.svg';
+        break;
+
+      // Services
+      case 'Update Profile Details':
+        iconPath = '/images/category-icons/ic_profile_details.svg';
+        break;
+      case 'ATM / Branch Locator':
+        iconPath = '/images/category-icons/ic_tax_related.svg';
+        break;
+      case 'Cheque Book Request':
+        iconPath = '/images/category-icons/ic_cheque_services.svg';
+        break;
+      case 'Lock / Unlock User Access':
+        iconPath = '/images/category-icons/ic_esecure_lock.svg';
+        break;
 
       default:
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 3L2 10h20L12 3z" />
-          </svg>
-        );
+        break;
     }
+
+    if (iconPath) {
+      return <img src={iconPath} alt={label} className="w-5 h-5 object-contain" />;
+    }
+
+    return (
+      <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 3L2 10h20L12 3z" />
+      </svg>
+    );
   };
 
   return (
