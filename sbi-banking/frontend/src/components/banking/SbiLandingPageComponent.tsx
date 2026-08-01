@@ -251,7 +251,7 @@ export default function SbiLandingPageComponent({
     <div className="sbi-portal-wrapper">
       
       {/* ================= GLOBAL BRAND HEADER ================= */}
-      <SbiGlobalBrandHeader activeNav="Accounts" />
+      <SbiGlobalBrandHeader activeNav={activeTab === 'Transaction' ? 'Accounts' : activeTab} />
 
       {/* 3. BREADCRUMB & MAIN BODY CONTENT */}
       <main className="sbi-main-body">
