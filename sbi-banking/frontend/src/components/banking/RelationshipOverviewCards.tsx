@@ -143,8 +143,8 @@ export const RelationshipOverviewCards: React.FC<RelationshipOverviewCardsProps>
           <div className="rel-card rel-card-soft-purple">
             <div className="rel-card-bg-circles">
               <svg viewBox="0 0 160 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="130" cy="90" r="75" fill="#6b21a8" fillOpacity="0.08" />
-                <circle cx="165" cy="90" r="115" fill="#6b21a8" fillOpacity="0.05" />
+                <circle cx="130" cy="90" r="75" fill="#702082" fillOpacity="0.08" />
+                <circle cx="165" cy="90" r="115" fill="#702082" fillOpacity="0.05" />
               </svg>
             </div>
 
@@ -168,8 +168,8 @@ export const RelationshipOverviewCards: React.FC<RelationshipOverviewCardsProps>
           <div className="rel-card rel-card-soft-purple">
             <div className="rel-card-bg-circles">
               <svg viewBox="0 0 160 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="130" cy="90" r="75" fill="#6b21a8" fillOpacity="0.08" />
-                <circle cx="165" cy="90" r="115" fill="#6b21a8" fillOpacity="0.05" />
+                <circle cx="130" cy="90" r="75" fill="#702082" fillOpacity="0.08" />
+                <circle cx="165" cy="90" r="115" fill="#702082" fillOpacity="0.05" />
               </svg>
             </div>
 
@@ -193,8 +193,8 @@ export const RelationshipOverviewCards: React.FC<RelationshipOverviewCardsProps>
           <div className="rel-card rel-card-soft-purple">
             <div className="rel-card-bg-circles">
               <svg viewBox="0 0 160 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="130" cy="90" r="75" fill="#6b21a8" fillOpacity="0.08" />
-                <circle cx="165" cy="90" r="115" fill="#6b21a8" fillOpacity="0.05" />
+                <circle cx="130" cy="90" r="75" fill="#702082" fillOpacity="0.08" />
+                <circle cx="165" cy="90" r="115" fill="#702082" fillOpacity="0.05" />
               </svg>
             </div>
 
@@ -312,8 +312,8 @@ export const RelationshipOverviewCards: React.FC<RelationshipOverviewCardsProps>
           <div className="rel-card rel-card-soft-purple">
             <div className="rel-card-bg-circles">
               <svg viewBox="0 0 160 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="130" cy="90" r="75" fill="#6b21a8" fillOpacity="0.08" />
-                <circle cx="165" cy="90" r="115" fill="#6b21a8" fillOpacity="0.05" />
+                <circle cx="130" cy="90" r="75" fill="#702082" fillOpacity="0.08" />
+                <circle cx="165" cy="90" r="115" fill="#702082" fillOpacity="0.05" />
               </svg>
             </div>
 
