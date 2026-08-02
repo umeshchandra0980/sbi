@@ -19,8 +19,8 @@
 /* Individual Banner Pill Card */
 .quick-banner-card {
   position: relative;
-  background: linear-gradient(90deg, #701a75 0%, #86198f 55%, #931b6e 100%);
-  border-radius: 20px;
+  background: #702082;
+  border-radius: 16px;
   height: 82px;
   display: flex;
   align-items: center;
@@ -68,9 +68,9 @@ small.check {
 
 .banner-heading {
   font-size: 17px;
-  font-weight: 800;
+  font-weight: 600;
   color: #ffffff;
-  letter-spacing: -0.2px;
+  letter-spacing: -0.1px;
 }
 
 .pfm-heading {

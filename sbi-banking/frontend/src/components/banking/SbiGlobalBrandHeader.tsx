@@ -67,7 +67,7 @@ export default function SbiGlobalBrandHeader({
     {
       id: 'Accounts',
       label: 'Accounts',
-      href: '/home/landingPage/manageRelationship/transactionAccounts',
+      href: '/accounts',
       col1Title: 'Accounts Summary',
       col1Items: [
         { label: 'Savings Bank Account', href: '/home/landingPage/manageRelationship/transactionAccounts', icon: '🏦' },
@@ -90,14 +90,14 @@ export default function SbiGlobalBrandHeader({
         { label: 'Quick Transfer', href: '/home/landingPage/fund-transfer/quick-transfer/bank-selection', icon: '🔄' },
         { label: 'Send Money', href: '/home/landingPage/fund-transfer/send-money/select-payee', icon: '📲' },
         { label: 'Manage Payee', href: '/home/landingPage/fund-transfer/send-money/select-payee', icon: '👤' },
-        { label: 'Schedule Payments', href: '/home/landingPage/fund-transfer/quick-transfer/bank-selection', icon: '📅' },
-        { label: 'Send Money Abroad', href: '/home/landingPage/fund-transfer/quick-transfer/bank-selection', icon: '🔀' },
-        { label: 'Bill Payments', href: '/dashboard', icon: '🧾' },
+        { label: 'Schedule Payments', href: '/home/landingPage/fund-transfer/scheduled-transactions', icon: '📅' },
+        { label: 'Send Money Abroad', href: '/home/landingPage/fund-transfer/send-money-abroad', icon: '🔀' },
+        { label: 'Bill Payments', href: '/home/landingPage/fund-transfer/bill-payments', icon: '🧾' },
       ],
       col2Title: 'Quick Links',
       col2Items: [
         { label: 'Transaction History', href: '/home/landingPage/manageRelationship/transactionAccounts', icon: '⇄' },
-        { label: 'Manage Limits', href: '/settings', icon: '⏲' },
+        { label: 'Manage Limits', href: '/settings?tab=Settings', icon: '⏲' },
       ]
     },
     {
@@ -317,8 +317,89 @@ export default function SbiGlobalBrandHeader({
     );
   };
 
+  const renderPaymentsIcon = (label: string) => {
+    switch (label) {
+      case 'Quick Transfer':
+        return (
+          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21.5 2v6h-6" />
+            <path d="M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+          </svg>
+        );
+      case 'Send Money':
+        return (
+          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="5" y="2" width="14" height="20" rx="2" />
+            <path d="M12 18h.01" />
+            <path d="M2 10h12m-3-3l3 3-3 3" />
+          </svg>
+        );
+      case 'Manage Payee':
+        return (
+          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+        );
+      case 'Schedule Payments':
+        return (
+          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+        );
+      case 'Send Money Abroad':
+        return (
+          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M20 10H4M4 10l4-4M4 10l4 4M4 14h16M20 14l-4-4M20 14l-4 4" />
+          </svg>
+        );
+      case 'Bill Payments':
+        return (
+          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="4" y="2" width="16" height="20" rx="2" />
+            <line x1="8" y1="6" x2="16" y2="6" />
+            <line x1="8" y1="10" x2="16" y2="10" />
+            <line x1="8" y1="14" x2="16" y2="14" />
+            <line x1="8" y1="18" x2="12" y2="18" />
+          </svg>
+        );
+      case 'Transaction History':
+        return (
+          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M20 10H4M4 10l4-4M4 10l4 4" />
+            <path d="M4 14h16M20 14l-4-4M20 14l-4 4" />
+          </svg>
+        );
+      case 'Manage Limits':
+        return (
+          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M20.24 12.24a8 8 0 0 0-16.48 0" />
+            <path d="M12 17v-4" />
+            <circle cx="12" cy="17" r="1" />
+            <path d="m16 13-4-4" />
+          </svg>
+        );
+      default:
+        return (
+          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <circle cx="12" cy="12" r="10" />
+          </svg>
+        );
+    }
+  };
+
   return (
-    <div className="w-full bg-white font-sans z-50">
+    <div className="w-full bg-white font-sans z-50 sticky top-0 shadow-sm">
+      {/* Backdrop overlay for dimming the page content when dropdown menu is open */}
+      {openNavTab && (
+        <div 
+          className="fixed inset-0 bg-black/45 backdrop-blur-[1px] z-40 transition-opacity duration-200 cursor-pointer"
+          onClick={() => setOpenNavTab(null)}
+        />
+      )}
       
       {/* 1. TOP PURPLE UTILITY HEADER BAR */}
       <div className="bg-[#502b85] text-white text-xs pt-1.5 px-4 md:px-6">
@@ -428,7 +509,12 @@ export default function SbiGlobalBrandHeader({
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      setOpenNavTab(isOpen ? null : tab.id);
+                      if (tab.id === 'Accounts') {
+                        router.push('/accounts');
+                        setOpenNavTab(null);
+                      } else {
+                        setOpenNavTab(isOpen ? null : tab.id);
+                      }
                     }}
                     className={`relative block px-3.5 py-2 font-sans font-semibold text-[14px] transition-all rounded-t-xl cursor-pointer ${
                       isActive 
@@ -445,72 +531,135 @@ export default function SbiGlobalBrandHeader({
 
                   {/* Mega Dropdown Click Card */}
                   {isOpen && (
-                    <div 
-                      onClick={(e) => e.stopPropagation()}
-                      className="absolute top-full left-0 mt-1 w-[440px] max-w-[90vw] bg-[#f8f6fb] rounded-2xl p-4 md:p-5 shadow-2xl border border-purple-200/80 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
-                    >
-                      <div className="grid grid-cols-2 gap-6">
-                        
-                        {/* Column 1: Main Category Items */}
-                        <div>
-                          <h4 className="text-xs font-extrabold text-[#673391] uppercase tracking-wider mb-3 pb-1 border-b border-purple-200/60">
-                            {tab.col1Title}
-                          </h4>
-                          <div className="space-y-1">
-                            {tab.col1Items.map((item) => (
-                              <Link
-                                key={item.label}
-                                href={item.href}
-                                target={item.href.startsWith('http') ? '_blank' : undefined}
-                                rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                                onClick={() => setTimeout(() => setOpenNavTab(null), 100)}
-                                className="flex items-center gap-3 py-2 px-2 rounded-xl hover:bg-white transition-all group border-b border-purple-100/40"
-                              >
-                                <div className="w-8 h-8 rounded-lg bg-white border border-purple-200/70 text-[#673391] flex items-center justify-center text-sm shadow-2xs group-hover:scale-105 transition-transform flex-shrink-0">
-                                  {renderNavIcon(item.label)}
-                                </div>
-                                <span 
-                                  className="text-[13.5px] font-sans font-semibold text-slate-800 group-hover:text-[#673391] leading-tight tracking-normal"
-                                  style={{ fontFamily: "'Open Sans', sans-serif", fontWeight: 600 }}
+                    tab.id === 'Payments' ? (
+                      <div 
+                        onClick={(e) => e.stopPropagation()}
+                        className="absolute top-full left-[-92px] mt-2 w-[420px] bg-[#f2eff4] rounded-2xl p-7 shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-purple-200/40 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                      >
+                        <div className="grid grid-cols-[1.1fr_0.9fr] gap-x-8">
+                          
+                          {/* Column 1: Fund Transfer */}
+                          <div>
+                            <h4 className="text-[14px] font-bold text-[#1f2937] mb-4 tracking-tight">
+                              {tab.col1Title}
+                            </h4>
+                            <div className="flex flex-col">
+                              {tab.col1Items.map((item) => (
+                                <Link
+                                  key={item.label}
+                                  href={item.href}
+                                  target={item.href.startsWith('http') ? '_blank' : undefined}
+                                  rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                                  onClick={() => setTimeout(() => setOpenNavTab(null), 100)}
+                                  className="flex items-center gap-4 py-3.5 border-b border-slate-200 last:border-0 hover:opacity-80 transition-all group"
                                 >
-                                  {item.label}
-                                </span>
-                              </Link>
-                            ))}
+                                  <div className="flex-shrink-0">
+                                    {renderPaymentsIcon(item.label)}
+                                  </div>
+                                  <span className="text-[14px] font-semibold text-[#1f2937] group-hover:text-[#702082] transition-colors">
+                                    {item.label}
+                                  </span>
+                                </Link>
+                              ))}
+                            </div>
                           </div>
-                        </div>
 
-                        {/* Column 2: Quick Links */}
-                        <div>
-                          <h4 className="text-xs font-extrabold text-[#673391] uppercase tracking-wider mb-3 pb-1 border-b border-purple-200/60">
-                            {tab.col2Title}
-                          </h4>
-                          <div className="space-y-1">
-                            {tab.col2Items.map((item) => (
-                              <Link
-                                key={item.label}
-                                href={item.href}
-                                target={item.href.startsWith('http') ? '_blank' : undefined}
-                                rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                                onClick={() => setTimeout(() => setOpenNavTab(null), 100)}
-                                className="flex items-center gap-3 py-1.5 px-2 rounded-xl hover:bg-white transition-all group"
-                              >
-                                <div className="w-6 h-6 rounded-md bg-white border border-purple-200/70 text-[#673391] flex items-center justify-center text-xs shadow-xs group-hover:scale-105 transition-transform flex-shrink-0">
-                                  {renderNavIcon(item.label)}
-                                </div>
-                                <span 
-                                  className="text-[13.5px] font-sans font-semibold text-slate-700 group-hover:text-[#673391] leading-tight tracking-normal"
-                                  style={{ fontFamily: "'Open Sans', sans-serif", fontWeight: 600 }}
+                          {/* Column 2: Quick Links */}
+                          <div>
+                            <h4 className="text-[14px] font-bold text-[#1f2937] mb-4 tracking-tight">
+                              {tab.col2Title}
+                            </h4>
+                            <div className="flex flex-col">
+                              {tab.col2Items.map((item) => (
+                                <Link
+                                  key={item.label}
+                                  href={item.href}
+                                  target={item.href.startsWith('http') ? '_blank' : undefined}
+                                  rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                                  onClick={() => setTimeout(() => setOpenNavTab(null), 100)}
+                                  className="flex items-center gap-4 py-3.5 border-b border-slate-200 last:border-0 hover:opacity-80 transition-all group"
                                 >
-                                  {item.label}
-                                </span>
-                              </Link>
-                            ))}
+                                  <div className="flex-shrink-0">
+                                    {renderPaymentsIcon(item.label)}
+                                  </div>
+                                  <span className="text-[14px] font-semibold text-[#1f2937] group-hover:text-[#702082] transition-colors">
+                                    {item.label}
+                                  </span>
+                                </Link>
+                              ))}
+                            </div>
                           </div>
-                        </div>
 
+                        </div>
                       </div>
-                    </div>
+                    ) : (
+                      <div 
+                        onClick={(e) => e.stopPropagation()}
+                        className="absolute top-full left-0 mt-1 w-[440px] max-w-[90vw] bg-[#f8f6fb] rounded-2xl p-4 md:p-5 shadow-2xl border border-purple-200/80 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                      >
+                        <div className="grid grid-cols-2 gap-6">
+                          
+                          {/* Column 1: Main Category Items */}
+                          <div>
+                            <h4 className="text-xs font-extrabold text-[#673391] uppercase tracking-wider mb-3 pb-1 border-b border-purple-200/60">
+                              {tab.col1Title}
+                            </h4>
+                            <div className="space-y-1">
+                              {tab.col1Items.map((item) => (
+                                <Link
+                                  key={item.label}
+                                  href={item.href}
+                                  target={item.href.startsWith('http') ? '_blank' : undefined}
+                                  rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                                  onClick={() => setTimeout(() => setOpenNavTab(null), 100)}
+                                  className="flex items-center gap-3 py-2 px-2 rounded-xl hover:bg-white transition-all group border-b border-purple-100/40"
+                                >
+                                  <div className="w-8 h-8 rounded-lg bg-white border border-purple-200/70 text-[#673391] flex items-center justify-center text-sm shadow-2xs group-hover:scale-105 transition-transform flex-shrink-0">
+                                    {renderNavIcon(item.label)}
+                                  </div>
+                                  <span 
+                                    className="text-[13.5px] font-sans font-semibold text-slate-800 group-hover:text-[#673391] leading-tight tracking-normal"
+                                    style={{ fontFamily: "'Open Sans', sans-serif", fontWeight: 600 }}
+                                  >
+                                    {item.label}
+                                  </span>
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Column 2: Quick Links */}
+                          <div>
+                            <h4 className="text-xs font-extrabold text-[#673391] uppercase tracking-wider mb-3 pb-1 border-b border-purple-200/60">
+                              {tab.col2Title}
+                            </h4>
+                            <div className="space-y-1">
+                              {tab.col2Items.map((item) => (
+                                <Link
+                                  key={item.label}
+                                  href={item.href}
+                                  target={item.href.startsWith('http') ? '_blank' : undefined}
+                                  rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                                  onClick={() => setTimeout(() => setOpenNavTab(null), 100)}
+                                  className="flex items-center gap-3 py-1.5 px-2 rounded-xl hover:bg-white transition-all group"
+                                >
+                                  <div className="w-6 h-6 rounded-md bg-white border border-purple-200/70 text-[#673391] flex items-center justify-center text-xs shadow-xs group-hover:scale-105 transition-transform flex-shrink-0">
+                                    {renderNavIcon(item.label)}
+                                  </div>
+                                  <span 
+                                    className="text-[13.5px] font-sans font-semibold text-slate-700 group-hover:text-[#673391] leading-tight tracking-normal"
+                                    style={{ fontFamily: "'Open Sans', sans-serif", fontWeight: 600 }}
+                                  >
+                                    {item.label}
+                                  </span>
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    )
                   )}
 
                 </div>

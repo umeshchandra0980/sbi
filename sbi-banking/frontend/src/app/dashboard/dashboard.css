@@ -650,21 +650,6 @@
   color: #ffffff;
 }
 
-.pay-bills-btn {
-  background: #302985;
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 700;
-  border-radius: 20px;
-  padding: 6px 20px;
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.pay-bills-btn:hover {
-  background: #1e1866;
-}
 
 /* Promo Banner Carousel (873x203) */
 .banner-page-carousel {
