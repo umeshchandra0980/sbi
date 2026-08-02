@@ -1771,10 +1771,10 @@ export default function SbiLandingPageComponent({
                       )}
 
                       {investmentSubTab === 'Mutual Fund' && (
-                        <div className="p-6 flex-1 flex flex-col bg-[#f8fafc] text-left font-sans">
+                        <div className="p-6 flex-1 flex flex-col bg-[#f8fafc] text-left font-sans w-full">
                           
                           {/* 1. Mutual Funds Page Tab Navigation */}
-                          <div className="flex border-b border-slate-200 mb-6 bg-white rounded-t-xl select-none">
+                          <div className="flex border-b border-slate-200 mb-6 bg-white rounded-t-xl select-none w-full">
                             {(['Home', 'Invest', 'Portfolio', 'Ideas', 'More'] as const).map((tab) => {
                               const isActive = mfSubTab === tab;
                               return (
@@ -1796,177 +1796,47 @@ export default function SbiLandingPageComponent({
                           </div>
 
                           {mfSubTab === 'Home' ? (
-                            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start w-full">
                               
                               {/* Left Column: Carousel & SIP Returns Calculator (lg:col-span-4) */}
-                              <div className="lg:col-span-4 space-y-6">
+                              <div className="lg:col-span-4 space-y-6 flex flex-col items-stretch justify-start w-full">
                                 
                                 {/* Carousel Card */}
-                                <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col justify-between min-h-[340px]">
+                                <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col justify-between min-h-[340px] w-full self-stretch">
                                   {/* Title */}
                                   <div className="p-4 pb-0 text-[13px] font-bold text-slate-700 font-sans">
                                     Build wealth with ease with SBI Mutual Funds
                                   </div>
 
                                   {/* Carousel Contents */}
-                                  <div className="flex-1 flex flex-col justify-between relative">
+                                  <div className="flex-1 flex flex-col justify-between relative select-none">
                                     
-                                    {mfCarouselIndex === 0 && (
-                                      /* Slide 0: Did you start an SIP? */
-                                      <div className="bg-[#092c74] text-white p-5 flex flex-col justify-between min-h-[250px] relative">
-                                        <div className="space-y-2 max-w-[60%]">
-                                          <div className="text-[10px] text-sky-300 font-bold tracking-wider uppercase">
-                                            SBI MUTUAL FUND
-                                          </div>
-                                          <h3 className="text-[18px] font-black leading-tight text-white font-sans">
-                                            DID YOU START AN SIP?
-                                          </h3>
-                                          <p className="text-[10px] text-sky-100 leading-normal">
-                                            Start investing at an early stage of life to fulfill your financial goals.
-                                          </p>
-                                        </div>
-
-                                        <button 
-                                          type="button"
-                                          onClick={() => toast.success("Opening SIP Setup Form...")}
-                                          className="self-start border border-sky-300 text-sky-300 hover:bg-sky-300 hover:text-slate-900 transition-colors font-bold text-[10px] px-4 py-1.5 rounded-md mt-4 select-none cursor-pointer"
-                                        >
-                                          Invest Now
-                                        </button>
-
-                                        {/* Floating sitting cartoon guy SVG illustration on the right */}
-                                        <div className="absolute right-3 bottom-4 w-[110px] h-[130px] select-none">
-                                          <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                                            {/* Circular shadow */}
-                                            <ellipse cx="50" cy="112" rx="35" ry="5" fill="#000000" opacity="0.4" />
-                                            {/* Laptop screen */}
-                                            <rect x="42" y="85" width="22" height="15" rx="1.5" fill="#0369a1" />
-                                            <rect x="44" y="87" width="18" height="11" fill="#38bdf8" />
-                                            {/* Laptop keyboard base */}
-                                            <path d="M38 100 L68 100 L72 105 L34 105 Z" fill="#cbd5e1" />
-                                            {/* Stylized sitting person */}
-                                            {/* Legs (crossed) */}
-                                            <path d="M22 108 C25 98 42 98 45 106 C48 98 68 98 72 108" stroke="#38bdf8" strokeWidth="4" strokeLinecap="round" />
-                                            {/* Body */}
-                                            <path d="M48 105 L48 80 L54 80 L54 105 Z" fill="#38bdf8" />
-                                            {/* Shirt collar */}
-                                            <path d="M46 79 L56 79 L51 84 Z" fill="#ffffff" />
-                                            {/* Head */}
-                                            <circle cx="51" cy="71" r="9" fill="#fbcfe8" />
-                                            {/* Hair */}
-                                            <path d="M42 70 C42 63 50 60 56 65 C58 68 59 73 57 73 C55 73 54 71 51 71 C47 71 45 74 42 70 Z" fill="#475569" />
-                                            {/* Arm typing on laptop */}
-                                            <path d="M48 83 C42 85 36 94 44 96" stroke="#fbcfe8" strokeWidth="3.5" strokeLinecap="round" />
-                                            <path d="M54 83 C60 85 66 94 58 96" stroke="#fbcfe8" strokeWidth="3.5" strokeLinecap="round" />
-                                            {/* Floating bubble of thoughts */}
-                                            <circle cx="70" cy="55" r="4" fill="#38bdf8" opacity="0.6" />
-                                            <circle cx="78" cy="45" r="7" fill="#38bdf8" opacity="0.8" />
-                                            <text x="78" y="49" fontSize="11" fontWeight="bold" fill="#ffffff" textAnchor="middle">₹</text>
-                                          </svg>
-                                        </div>
-                                      </div>
-                                    )}
-
-                                    {mfCarouselIndex === 1 && (
-                                      /* Slide 1: Make salary day your SIP day */
-                                      <div className="bg-gradient-to-r from-[#e0f2fe] to-[#bae6fd] text-slate-800 p-5 flex flex-col justify-between min-h-[250px] relative">
-                                        <div className="space-y-2 max-w-[60%]">
-                                          <div className="text-[10px] text-[#0369a1] font-bold tracking-wider uppercase">
-                                            SBI MUTUAL FUND
-                                          </div>
-                                          <h3 className="text-[18px] font-black leading-tight text-[#0f172a] font-sans">
-                                            MAKE SALARY DAY YOUR SIP DAY
-                                          </h3>
-                                          <p className="text-[10px] text-slate-600 leading-normal">
-                                            Make your money work while you sleep. EARN. SAVE. INVEST. REPEAT.
-                                          </p>
-                                        </div>
-
-                                        <button 
-                                          type="button"
-                                          onClick={() => toast.success("Opening Salary Day SIP Form...")}
-                                          className="self-start bg-[#702082] text-white hover:bg-[#5c1a6b] transition-colors font-bold text-[10px] px-4 py-1.5 rounded-md mt-4 select-none cursor-pointer shadow-2xs"
-                                        >
-                                          Invest Now
-                                        </button>
-
-                                        {/* Professional guy SVG on the right */}
-                                        <div className="absolute right-4 bottom-4 w-[110px] h-[130px] select-none">
-                                          <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                                            <ellipse cx="50" cy="112" rx="30" ry="4" fill="#000000" opacity="0.15" />
-                                            {/* Person Body (White Shirt & Purple Tie) */}
-                                            <path d="M35 115 L65 115 L60 85 L40 85 Z" fill="#ffffff" stroke="#cbd5e1" strokeWidth="1" />
-                                            <path d="M47 85 L53 85 L51 98 Z" fill="#702082" />
-                                            {/* Suit collar */}
-                                            <path d="M40 85 L48 93 L48 85 Z" fill="#f1f5f9" />
-                                            <path d="M60 85 L52 93 L52 85 Z" fill="#f1f5f9" />
-                                            {/* Laptop in hand */}
-                                            <rect x="25" y="98" width="36" height="15" rx="1.5" fill="#475569" />
-                                            <rect x="27" y="100" width="32" height="11" fill="#e2e8f0" />
-                                            {/* Head */}
-                                            <circle cx="50" cy="72" r="9.5" fill="#fed7aa" />
-                                            <path d="M41 72 C41 64 50 61 57 66 C59 69 58 74 57 74 C55 74 54 72 50 72 C46 72 44 75 41 72 Z" fill="#1e293b" />
-                                            {/* Smile */}
-                                            <path d="M48 76 Q50 78 52 76" stroke="#0f172a" strokeWidth="1" strokeLinecap="round" />
-                                            {/* Floating salary calendar icon */}
-                                            <rect x="68" y="42" width="22" height="22" rx="3" fill="#ffffff" stroke="#702082" strokeWidth="2" />
-                                            <rect x="68" y="42" width="22" height="6" fill="#702082" />
-                                            <text x="79" y="58" fontSize="10" fontWeight="black" fill="#702082" textAnchor="middle">1st</text>
-                                          </svg>
-                                        </div>
-                                      </div>
-                                    )}
-
-                                    {mfCarouselIndex === 2 && (
-                                      /* Slide 2: Jan Nivesh SIP */
-                                      <div className="bg-gradient-to-r from-[#ecfdf5] to-[#ccfbf1] text-teal-900 p-5 flex flex-col justify-between min-h-[250px] relative">
-                                        <div className="space-y-2 max-w-[60%]">
-                                          <div className="text-[10px] text-teal-700 font-bold tracking-wider uppercase">
-                                            JAN NIVESH SIP
-                                          </div>
-                                          <h3 className="text-[18px] font-black leading-tight text-[#065f46] font-sans">
-                                            Viksit Bharat Hoga Desh, Jab Har Koi Kare Nivesh
-                                          </h3>
-                                          <p className="text-[10px] text-teal-800/80 leading-normal">
-                                            Join millions of smart investors building a stronger India.
-                                          </p>
-                                        </div>
-
-                                        <button 
-                                          type="button"
-                                          onClick={() => toast.success("Opening Jan Nivesh Info...")}
-                                          className="self-start bg-[#059669] text-white hover:bg-[#047857] transition-colors font-bold text-[10px] px-4 py-1.5 rounded-md mt-4 select-none cursor-pointer shadow-2xs"
-                                        >
-                                          Invest Now
-                                        </button>
-
-                                        {/* Two people and chart SVG on the right */}
-                                        <div className="absolute right-2 bottom-4 w-[120px] h-[130px] select-none">
-                                          <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                                            <ellipse cx="50" cy="112" rx="35" ry="4" fill="#000000" opacity="0.1" />
-                                            {/* Rising chart line */}
-                                            <path d="M10 95 L35 75 L60 82 L90 50" stroke="#059669" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            <polygon points="90,50 82,50 90,58" fill="#059669" />
-                                            {/* Character 1 (Pointing) */}
-                                            <circle cx="28" cy="78" r="8" fill="#fca5a5" />
-                                            <path d="M20 110 L36 110 L34 86 L22 86 Z" fill="#3b82f6" />
-                                            <path d="M28 88 L45 76" stroke="#fca5a5" strokeWidth="2.5" strokeLinecap="round" />
-                                            {/* Character 2 (Girl sitting) */}
-                                            <circle cx="68" cy="85" r="7.5" fill="#fcd34d" />
-                                            <path d="M60 110 L76 110 L74 92 L62 92 Z" fill="#ec4899" />
-                                            {/* Indian Flag Tricolor floating circle */}
-                                            <circle cx="78" cy="40" r="10" fill="#ffffff" stroke="#e2e8f0" strokeWidth="1" />
-                                            <path d="M68 37 H88" stroke="#ff9933" strokeWidth="3" />
-                                            <path d="M68 40 H88" stroke="#ffffff" strokeWidth="3" />
-                                            <path d="M68 43 H88" stroke="#128807" strokeWidth="3" />
-                                            <circle cx="78" cy="40" r="1.5" fill="#000088" />
-                                          </svg>
-                                        </div>
-                                      </div>
-                                    )}
+                                    <div className="w-full flex-1 relative min-h-[250px] bg-slate-50 flex items-center justify-center overflow-hidden">
+                                      {mfCarouselIndex === 0 && (
+                                        <img 
+                                          src="/images/landing/WhatsApp Image 2026-08-01 at 9.07.17 PM (1).jpeg" 
+                                          alt="Did you start an SIP?" 
+                                          className="w-full h-full object-cover"
+                                        />
+                                      )}
+                                      {mfCarouselIndex === 1 && (
+                                        <img 
+                                          src="/images/landing/WhatsApp Image 2026-08-01 at 9.07.33 PM.jpeg" 
+                                          alt="Make Salary Day Your SIP Day" 
+                                          className="w-full h-full object-cover"
+                                        />
+                                      )}
+                                      {mfCarouselIndex === 2 && (
+                                        <img 
+                                          src="/images/landing/WhatsApp Image 2026-08-01 at 9.07.32 PM.jpeg" 
+                                          alt="Jan Nivesh SIP" 
+                                          className="w-full h-full object-cover"
+                                        />
+                                      )}
+                                    </div>
 
                                     {/* Indicators (Dots) */}
-                                    <div className="py-3 flex justify-center gap-1.5 bg-white border-t border-slate-100 select-none">
+                                    <div className="py-3 flex justify-center gap-1.5 bg-white border-t border-slate-100 select-none w-full">
                                       {[0, 1, 2].map((idx) => (
                                         <button
                                           key={idx}
@@ -1982,10 +1852,19 @@ export default function SbiLandingPageComponent({
                                   </div>
                                 </div>
 
+                                {/* Jan Nivesh SIP Static Banner (Exact match to reference screenshots) */}
+                                <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col w-full self-stretch select-none">
+                                  <img 
+                                    src="/images/landing/WhatsApp Image 2026-08-01 at 9.07.32 PM.jpeg" 
+                                    alt="Jan Nivesh SIP Banner" 
+                                    className="w-full h-auto object-cover"
+                                  />
+                                </div>
+
                                 {/* Returns on Mutual Fund SIP Card (EXACT MATCH TO SCREENSHOT 2/3) */}
-                                <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 space-y-4 text-left">
+                                <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 space-y-4 text-left flex flex-col items-start justify-start w-full self-stretch">
                                   {/* Badge label */}
-                                  <div className="select-none">
+                                  <div className="select-none self-start">
                                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#f0fdf4] text-green-700 text-xs font-bold font-sans">
                                       <Star size={11} className="fill-green-600 text-green-600" />
                                       Returns on Mutual Fund SIP
@@ -1993,21 +1872,24 @@ export default function SbiLandingPageComponent({
                                   </div>
 
                                   {/* Calculator text */}
-                                  <div className="text-slate-700 text-sm font-semibold leading-relaxed font-sans">
+                                  <div className="text-slate-700 text-sm font-semibold leading-relaxed font-sans self-start text-left">
                                     SIP of <span className="font-bold text-[#1e293b]">₹10,000/month</span> for <span className="font-bold text-[#1e293b]">20 years</span> at <span className="font-bold text-[#1e293b]">12% per annum</span>
                                   </div>
 
                                   {/* Highlighted Flag Badge */}
-                                  <div className="flex items-center">
-                                    <div className="relative bg-[#16a34a] text-white text-[13px] font-bold px-4 py-1.5 rounded-l select-none font-sans">
-                                      Returns ₹1 Crore
-                                      {/* Triangle Flag tip shape on right side */}
-                                      <div className="absolute left-full top-0 w-0 h-0 border-y-[14px] border-y-transparent border-l-[10px] border-l-[#16a34a]"></div>
+                                  <div className="flex justify-start items-center w-full self-start select-none">
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-slate-700 text-[13px] font-bold font-sans">Returns</span>
+                                      <div className="relative bg-[#16a34a] text-white text-[13px] font-bold px-4 py-1.5 rounded-l font-sans">
+                                        ₹1 Crore
+                                        {/* Triangle Flag tip shape on right side */}
+                                        <div className="absolute left-full top-0 w-0 h-0 border-y-[14px] border-y-transparent border-l-[10px] border-l-[#16a34a]"></div>
+                                      </div>
                                     </div>
                                   </div>
 
                                   {/* Area chart representation */}
-                                  <div className="pt-2">
+                                  <div className="pt-2 w-full self-stretch">
                                     <div className="relative h-28 w-full">
                                       <svg viewBox="0 0 200 100" preserveAspectRatio="none" className="w-full h-full">
                                         <defs>
@@ -2041,7 +1923,7 @@ export default function SbiLandingPageComponent({
                                     </div>
 
                                     {/* X Axis Timeline Labels */}
-                                    <div className="flex justify-between items-center text-[10px] text-slate-400 font-medium pt-1 font-sans select-none">
+                                    <div className="flex justify-between items-center text-[10px] text-slate-400 font-medium pt-1 font-sans select-none w-full">
                                       <span>Today</span>
                                       <span>5Y</span>
                                       <span>10Y</span>
@@ -2051,8 +1933,8 @@ export default function SbiLandingPageComponent({
                                   </div>
 
                                   {/* Start Investing Sub-card banner */}
-                                  <div className="bg-[#f0fdf4] border border-[#dcfce7] rounded-xl p-3.5 flex items-center justify-between">
-                                    <div className="text-[11.5px] font-medium text-green-800 font-sans leading-normal">
+                                  <div className="bg-[#f0fdf4] border border-[#dcfce7] rounded-xl p-3.5 flex items-center justify-between w-full self-stretch">
+                                    <div className="text-[11.5px] font-medium text-green-800 font-sans leading-normal text-left">
                                       Start investing and achieve your goals faster!
                                     </div>
                                     <button 
@@ -2069,10 +1951,10 @@ export default function SbiLandingPageComponent({
                               </div>
 
                               {/* Right Column: Trending Funds list (lg:col-span-8) */}
-                              <div className="lg:col-span-8 space-y-6">
+                              <div className="lg:col-span-8 space-y-6 w-full">
                                 
                                 {/* Section Title */}
-                                <div className="flex items-center justify-between">
+                                <div className="flex items-center justify-between select-none">
                                   <h2 className="text-[18px] font-extrabold text-[#302985] font-sans">
                                     Trending Funds
                                   </h2>
@@ -2082,168 +1964,174 @@ export default function SbiLandingPageComponent({
                                 </div>
 
                                 {/* Trending Funds Cards Grid */}
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full">
                                   
                                   {/* Fund 1: SBI Contra Fund */}
-                                  <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 space-y-4 text-left">
-                                    <div className="flex items-start justify-between">
-                                      <div className="flex items-center gap-3">
-                                        <div className="w-9 h-9 rounded-full bg-[#f3effa] text-[#702082] flex items-center justify-center shrink-0">
-                                          <Star size={16} className="fill-[#702082] text-[#702082]" />
+                                  <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 space-y-4 text-left flex flex-col justify-between w-full">
+                                    <div className="space-y-4 w-full">
+                                      <div className="flex items-start justify-between w-full">
+                                        <div className="flex items-center gap-3">
+                                          <div className="w-9 h-9 rounded-full bg-[#f3effa] text-[#702082] flex items-center justify-center shrink-0">
+                                            <Star size={16} className="fill-[#702082] text-[#702082]" />
+                                          </div>
+                                          <div>
+                                            <h3 className="font-bold text-[14px] text-slate-800 font-sans">
+                                              SBI Contra Fund
+                                            </h3>
+                                            <span className="text-[10px] text-slate-500 font-semibold font-sans uppercase">
+                                              Equity
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <button 
+                                          type="button"
+                                          onClick={() => toast.success("Navigating to SBI Contra Fund...")}
+                                          className="text-[12px] font-extrabold text-[#702082] hover:underline font-sans cursor-pointer"
+                                        >
+                                          Invest Now
+                                        </button>
+                                      </div>
+
+                                      {/* Info box */}
+                                      <div className="bg-[#f8fafc] border border-slate-100 rounded-xl p-4 grid grid-cols-2 gap-4 w-full">
+                                        <div>
+                                          <div className="text-[9px] text-slate-500 font-bold uppercase font-sans tracking-wider">
+                                            Min. Investment
+                                          </div>
+                                          <div className="text-[15px] font-extrabold text-slate-800 mt-1 font-sans">
+                                            ₹5,000
+                                          </div>
                                         </div>
                                         <div>
-                                          <h3 className="font-bold text-[14px] text-slate-800 font-sans">
-                                            SBI Contra Fund
-                                          </h3>
-                                          <span className="text-[10px] text-slate-500 font-semibold font-sans uppercase">
-                                            Equity
-                                          </span>
-                                        </div>
-                                      </div>
-                                      <button 
-                                        type="button"
-                                        onClick={() => toast.success("Navigating to SBI Contra Fund...")}
-                                        className="text-[12px] font-extrabold text-[#702082] hover:underline font-sans cursor-pointer"
-                                      >
-                                        Invest Now
-                                      </button>
-                                    </div>
-
-                                    {/* Info box */}
-                                    <div className="bg-[#f8fafc] border border-slate-100 rounded-xl p-4 grid grid-cols-2 gap-4">
-                                      <div>
-                                        <div className="text-[9px] text-slate-500 font-bold uppercase font-sans tracking-wider">
-                                          Min. Investment
-                                        </div>
-                                        <div className="text-[15px] font-extrabold text-slate-800 mt-1 font-sans">
-                                          ₹5,000
-                                        </div>
-                                      </div>
-                                      <div>
-                                        <div className="text-[9px] text-slate-500 font-bold uppercase font-sans tracking-wider">
-                                          Returns ★
-                                        </div>
-                                        <div className="text-[15px] font-extrabold text-green-600 mt-1 font-sans">
-                                          18.33%
+                                          <div className="text-[9px] text-slate-500 font-bold uppercase font-sans tracking-wider">
+                                            Returns ★
+                                          </div>
+                                          <div className="text-[15px] font-extrabold text-green-600 mt-1 font-sans">
+                                            18.33%
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
 
                                     {/* Footer */}
-                                    <div className="text-[10px] text-slate-500 font-semibold flex items-center gap-1.5 pl-1 font-sans select-none">
+                                    <div className="text-[10px] text-slate-500 font-semibold flex items-center gap-1.5 pl-1 font-sans select-none mt-3">
                                       <span>📈</span>
                                       <span>100k+ invested in last 3 months</span>
                                     </div>
                                   </div>
 
                                   {/* Fund 2: SBI Equity Hybrid Fund */}
-                                  <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 space-y-4 text-left">
-                                    <div className="flex items-start justify-between">
-                                      <div className="flex items-center gap-3">
-                                        <div className="w-9 h-9 rounded-full bg-[#f3effa] text-[#702082] flex items-center justify-center shrink-0">
-                                          <Star size={16} className="fill-[#702082] text-[#702082]" />
+                                  <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 space-y-4 text-left flex flex-col justify-between w-full">
+                                    <div className="space-y-4 w-full">
+                                      <div className="flex items-start justify-between w-full">
+                                        <div className="flex items-center gap-3">
+                                          <div className="w-9 h-9 rounded-full bg-[#f3effa] text-[#702082] flex items-center justify-center shrink-0">
+                                            <Star size={16} className="fill-[#702082] text-[#702082]" />
+                                          </div>
+                                          <div>
+                                            <h3 className="font-bold text-[14px] text-slate-800 font-sans">
+                                              SBI Equity Hybrid Fund
+                                            </h3>
+                                            <span className="text-[10px] text-slate-500 font-semibold font-sans uppercase">
+                                              Hybrid
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <button 
+                                          type="button"
+                                          onClick={() => toast.success("Navigating to SBI Equity Hybrid Fund...")}
+                                          className="text-[12px] font-extrabold text-[#702082] hover:underline font-sans cursor-pointer"
+                                        >
+                                          Invest Now
+                                        </button>
+                                      </div>
+
+                                      {/* Info box */}
+                                      <div className="bg-[#f8fafc] border border-slate-100 rounded-xl p-4 grid grid-cols-2 gap-4 w-full">
+                                        <div>
+                                          <div className="text-[9px] text-slate-500 font-bold uppercase font-sans tracking-wider">
+                                            Min. Investment
+                                          </div>
+                                          <div className="text-[15px] font-extrabold text-slate-800 mt-1 font-sans">
+                                            ₹1,000
+                                          </div>
                                         </div>
                                         <div>
-                                          <h3 className="font-bold text-[14px] text-slate-800 font-sans">
-                                            SBI Equity Hybrid Fund
-                                          </h3>
-                                          <span className="text-[10px] text-slate-500 font-semibold font-sans uppercase">
-                                            Hybrid
-                                          </span>
-                                        </div>
-                                      </div>
-                                      <button 
-                                        type="button"
-                                        onClick={() => toast.success("Navigating to SBI Equity Hybrid Fund...")}
-                                        className="text-[12px] font-extrabold text-[#702082] hover:underline font-sans cursor-pointer"
-                                      >
-                                        Invest Now
-                                      </button>
-                                    </div>
-
-                                    {/* Info box */}
-                                    <div className="bg-[#f8fafc] border border-slate-100 rounded-xl p-4 grid grid-cols-2 gap-4">
-                                      <div>
-                                        <div className="text-[9px] text-slate-500 font-bold uppercase font-sans tracking-wider">
-                                          Min. Investment
-                                        </div>
-                                        <div className="text-[15px] font-extrabold text-slate-800 mt-1 font-sans">
-                                          ₹1,000
-                                        </div>
-                                      </div>
-                                      <div>
-                                        <div className="text-[9px] text-slate-500 font-bold uppercase font-sans tracking-wider">
-                                          Returns ★
-                                        </div>
-                                        <div className="text-[15px] font-extrabold text-green-600 mt-1 font-sans">
-                                          14.90%
+                                          <div className="text-[9px] text-slate-500 font-bold uppercase font-sans tracking-wider">
+                                            Returns ★
+                                          </div>
+                                          <div className="text-[15px] font-extrabold text-green-600 mt-1 font-sans">
+                                            14.90%
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
 
                                     {/* Footer */}
-                                    <div className="text-[10px] text-slate-500 font-semibold flex items-center gap-1.5 pl-1 font-sans select-none">
+                                    <div className="text-[10px] text-slate-500 font-semibold flex items-center gap-1.5 pl-1 font-sans select-none mt-3">
                                       <span>📈</span>
                                       <span>100k+ invested in last 3 months</span>
                                     </div>
                                   </div>
 
                                   {/* Fund 3: SBI Gold Fund */}
-                                  <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 space-y-4 text-left">
-                                    <div className="flex items-start justify-between">
-                                      <div className="flex items-center gap-3">
-                                        <div className="w-9 h-9 rounded-full bg-[#f3effa] text-[#702082] flex items-center justify-center shrink-0">
-                                          <Star size={16} className="fill-[#702082] text-[#702082]" />
+                                  <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 space-y-4 text-left flex flex-col justify-between w-full">
+                                    <div className="space-y-4 w-full">
+                                      <div className="flex items-start justify-between w-full">
+                                        <div className="flex items-center gap-3">
+                                          <div className="w-9 h-9 rounded-full bg-[#f3effa] text-[#702082] flex items-center justify-center shrink-0">
+                                            <Star size={16} className="fill-[#702082] text-[#702082]" />
+                                          </div>
+                                          <div>
+                                            <h3 className="font-bold text-[14px] text-slate-800 font-sans">
+                                              SBI Gold Fund
+                                            </h3>
+                                            <span className="text-[10px] text-slate-500 font-semibold font-sans uppercase">
+                                              Other schemes
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <button 
+                                          type="button"
+                                          onClick={() => toast.success("Navigating to SBI Gold Fund...")}
+                                          className="text-[12px] font-extrabold text-[#702082] hover:underline font-sans cursor-pointer"
+                                        >
+                                          Invest Now
+                                        </button>
+                                      </div>
+
+                                      {/* Info box */}
+                                      <div className="bg-[#f8fafc] border border-slate-100 rounded-xl p-4 grid grid-cols-2 gap-4 w-full">
+                                        <div>
+                                          <div className="text-[9px] text-slate-500 font-bold uppercase font-sans tracking-wider">
+                                            Min. Investment
+                                          </div>
+                                          <div className="text-[15px] font-extrabold text-slate-800 mt-1 font-sans">
+                                            ₹5,000
+                                          </div>
                                         </div>
                                         <div>
-                                          <h3 className="font-bold text-[14px] text-slate-800 font-sans">
-                                            SBI Gold Fund
-                                          </h3>
-                                          <span className="text-[10px] text-slate-500 font-semibold font-sans uppercase">
-                                            Other schemes
-                                          </span>
-                                        </div>
-                                      </div>
-                                      <button 
-                                        type="button"
-                                        onClick={() => toast.success("Navigating to SBI Gold Fund...")}
-                                        className="text-[12px] font-extrabold text-[#702082] hover:underline font-sans cursor-pointer"
-                                      >
-                                        Invest Now
-                                      </button>
-                                    </div>
-
-                                    {/* Info box */}
-                                    <div className="bg-[#f8fafc] border border-slate-100 rounded-xl p-4 grid grid-cols-2 gap-4">
-                                      <div>
-                                        <div className="text-[9px] text-slate-500 font-bold uppercase font-sans tracking-wider">
-                                          Min. Investment
-                                        </div>
-                                        <div className="text-[15px] font-extrabold text-slate-800 mt-1 font-sans">
-                                          ₹5,000
-                                        </div>
-                                      </div>
-                                      <div>
-                                        <div className="text-[9px] text-slate-500 font-bold uppercase font-sans tracking-wider">
-                                          Returns ★
-                                        </div>
-                                        <div className="text-[15px] font-extrabold text-green-600 mt-1 font-sans">
-                                          9.97%
+                                          <div className="text-[9px] text-slate-500 font-bold uppercase font-sans tracking-wider">
+                                            Returns ★
+                                          </div>
+                                          <div className="text-[15px] font-extrabold text-green-600 mt-1 font-sans">
+                                            9.97%
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
 
                                     {/* Footer */}
-                                    <div className="text-[10px] text-slate-500 font-semibold flex items-center gap-1.5 pl-1 font-sans select-none">
+                                    <div className="text-[10px] text-slate-500 font-semibold flex items-center gap-1.5 pl-1 font-sans select-none mt-3">
                                       <span>📈</span>
                                       <span>100k+ invested in last 3 months</span>
                                     </div>
                                   </div>
 
                                   {/* Investment Assistance Card (matching reference images) */}
-                                  <div className="bg-[#edf2f7] border border-slate-200 rounded-2xl shadow-sm p-5 space-y-3.5 text-left flex flex-col justify-between">
-                                    <div className="space-y-2">
-                                      <div className="flex items-center gap-2.5">
+                                  <div className="bg-[#edf2f7] border border-slate-200 rounded-2xl shadow-sm p-5 space-y-3.5 text-left flex flex-col justify-between w-full">
+                                    <div className="space-y-2 w-full">
+                                      <div className="flex items-center gap-2.5 w-full">
                                         <div className="w-8 h-8 rounded-lg bg-[#e2e8f0] text-slate-600 flex items-center justify-center shrink-0">
                                           {/* Custom Shield Profile Chart icon */}
                                           <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -2272,162 +2160,138 @@ export default function SbiLandingPageComponent({
 
                                 </div>
 
+                                {/* 3. Learn More Video Section (EXACT MATCH TO REFERENCE IMAGES) */}
+                                <div className="border-t border-slate-200/60 pt-6 mt-8 w-full">
+                                  <div className="flex items-center justify-between mb-4 select-none w-full">
+                                    <h3 className="text-[15.5px] font-bold text-slate-800 font-sans">
+                                      Learn more about Mutual Funds
+                                    </h3>
+                                    <button 
+                                      type="button"
+                                      onClick={() => toast.success("Navigating to all Mutual Fund videos...")}
+                                      className="text-[12px] font-bold text-[#702082] hover:underline font-sans cursor-pointer"
+                                    >
+                                      View All
+                                    </button>
+                                  </div>
+
+                                  {/* 4 Video cards */}
+                                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full">
+                                    
+                                    {/* Video Card 1: What is Mutual Fund */}
+                                    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs hover:shadow-xs transition-shadow flex flex-col text-left cursor-pointer group" onClick={() => toast("Opening Video: What is Mutual Fund...")}>
+                                      {/* Video Thumbnail */}
+                                      <div className="h-32 relative flex items-center justify-center select-none overflow-hidden">
+                                        <img 
+                                          src="/images/landing/WhatsApp Image 2026-08-01 at 9.07.17 PM.jpeg" 
+                                          alt="What is Mutual Fund" 
+                                          className="absolute inset-0 w-full h-full object-cover"
+                                        />
+                                        {/* Play Icon Overlay */}
+                                        <div className="w-10 h-10 rounded-full bg-slate-900/60 text-white flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform z-10">
+                                          <svg className="w-4 h-4 fill-white ml-0.5" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z" />
+                                          </svg>
+                                        </div>
+                                      </div>
+                                      {/* Video metadata text */}
+                                      <div className="p-3 space-y-1">
+                                        <h4 className="font-bold text-[12px] text-slate-800 leading-snug group-hover:text-[#702082] transition-colors font-sans truncate">
+                                          What is Mutual Fund
+                                        </h4>
+                                        <p className="text-[10px] text-slate-500 leading-relaxed font-sans line-clamp-2">
+                                          What is Mutual Fund _ Mutual Fund Basics _ Learn About Mutual Funds _ SBI Mutual Fund
+                                        </p>
+                                      </div>
+                                    </div>
+
+                                    {/* Video Card 2: Benefits of Mutual Funds */}
+                                    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs hover:shadow-xs transition-shadow flex flex-col text-left cursor-pointer group" onClick={() => toast("Opening Video: Benefits of Mutual Funds...")}>
+                                      {/* Video Thumbnail */}
+                                      <div className="h-32 relative flex items-center justify-center select-none overflow-hidden">
+                                        <img 
+                                          src="/images/landing/WhatsApp Image 2026-08-01 at 9.07.17 PM.jpeg" 
+                                          alt="Benefits of Mutual Funds" 
+                                          className="absolute inset-0 w-full h-full object-cover"
+                                        />
+                                        <div className="w-10 h-10 rounded-full bg-slate-900/60 text-white flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform z-10">
+                                          <svg className="w-4 h-4 fill-white ml-0.5" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z" />
+                                          </svg>
+                                        </div>
+                                      </div>
+                                      <div className="p-3 space-y-1">
+                                        <h4 className="font-bold text-[12px] text-slate-800 leading-snug group-hover:text-[#702082] transition-colors font-sans truncate">
+                                          Benefits of Mutual Funds
+                                        </h4>
+                                        <p className="text-[10px] text-slate-500 leading-relaxed font-sans line-clamp-2">
+                                          Benefits of Mutual Funds _ Advantages of Mutual Funds _ SBI Mutual Fund
+                                        </p>
+                                      </div>
+                                    </div>
+
+                                    {/* Video Card 3: Type of Mutual Funds */}
+                                    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs hover:shadow-xs transition-shadow flex flex-col text-left cursor-pointer group" onClick={() => toast("Opening Video: Type of Mutual Funds...")}>
+                                      {/* Video Thumbnail */}
+                                      <div className="h-32 relative flex items-center justify-center select-none overflow-hidden">
+                                        <img 
+                                          src="/images/landing/WhatsApp Image 2026-08-01 at 9.07.19 PM (1).jpeg" 
+                                          alt="Type of Mutual Funds" 
+                                          className="absolute inset-0 w-full h-full object-cover"
+                                        />
+                                        <div className="w-10 h-10 rounded-full bg-slate-900/60 text-white flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform z-10">
+                                          <svg className="w-4 h-4 fill-white ml-0.5" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z" />
+                                          </svg>
+                                        </div>
+                                      </div>
+                                      <div className="p-3 space-y-1">
+                                        <h4 className="font-bold text-[12px] text-slate-800 leading-snug group-hover:text-[#702082] transition-colors font-sans truncate">
+                                          Type of Mutual Funds
+                                        </h4>
+                                        <p className="text-[10px] text-slate-500 leading-relaxed font-sans line-clamp-2">
+                                          Type of Mutual Funds _ Choosing the Right Mutual Fund _ SBI Mutual Fund
+                                        </p>
+                                      </div>
+                                    </div>
+
+                                    {/* Video Card 4: What is SIP */}
+                                    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs hover:shadow-xs transition-shadow flex flex-col text-left cursor-pointer group" onClick={() => toast("Opening Video: What is SIP...")}>
+                                      {/* Video Thumbnail */}
+                                      <div className="h-32 relative flex items-center justify-center select-none overflow-hidden">
+                                        <img 
+                                          src="/images/landing/WhatsApp Image 2026-08-01 at 9.07.18 PM.jpeg" 
+                                          alt="What is SIP" 
+                                          className="absolute inset-0 w-full h-full object-cover"
+                                        />
+                                        <div className="w-10 h-10 rounded-full bg-slate-900/60 text-white flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform z-10">
+                                          <svg className="w-4 h-4 fill-white ml-0.5" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z" />
+                                          </svg>
+                                        </div>
+                                      </div>
+                                      <div className="p-3 space-y-1">
+                                        <h4 className="font-bold text-[12px] text-slate-800 leading-snug group-hover:text-[#702082] transition-colors font-sans truncate">
+                                          What is SIP
+                                        </h4>
+                                        <p className="text-[10px] text-slate-500 leading-relaxed font-sans line-clamp-2">
+                                          What is SIP (Systematic Investment Plan) _ Advantages of SIP _ SIP Mutual Fund
+                                        </p>
+                                      </div>
+                                    </div>
+
+                                  </div>
+                                </div>
+
                               </div>
 
                             </div>
                           ) : (
                             /* Other Sub-tabs: placeholder */
-                            <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center text-slate-500 font-medium">
+                            <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center text-slate-500 font-medium w-full">
                               Explore details for <span className="font-bold text-[#702082]">{mfSubTab}</span> under SBI Mutual Funds will be available shortly.
                             </div>
                           )}
-
-                          {/* 3. Learn More Video Section (EXACT MATCH TO REFERENCE IMAGES) */}
-                          <div className="border-t border-slate-200/60 pt-6 mt-8">
-                            <div className="flex items-center justify-between mb-4 select-none">
-                              <h3 className="text-[15.5px] font-bold text-slate-800 font-sans">
-                                Learn more about Mutual Funds
-                              </h3>
-                              <button 
-                                type="button"
-                                onClick={() => toast.success("Navigating to all Mutual Fund videos...")}
-                                className="text-[12px] font-bold text-[#702082] hover:underline font-sans cursor-pointer"
-                              >
-                                View All
-                              </button>
-                            </div>
-
-                            {/* 4 Video cards */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                              
-                              {/* Video Card 1: What is Mutual Fund */}
-                              <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs hover:shadow-xs transition-shadow flex flex-col text-left cursor-pointer group" onClick={() => toast("Opening Video: What is Mutual Fund...")}>
-                                {/* Video Thumbnail */}
-                                <div className="bg-[#cbd5e1] h-32 relative flex items-center justify-center select-none overflow-hidden">
-                                  {/* Woman near blue car SVG illustration representation */}
-                                  <svg className="absolute inset-0 w-full h-full object-cover" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="160" height="120" fill="#a5f3fc" />
-                                    {/* Ground */}
-                                    <rect y="100" width="160" height="20" fill="#e2e8f0" />
-                                    {/* Stylized blue car */}
-                                    <rect x="70" y="70" width="65" height="20" rx="4" fill="#0284c7" />
-                                    <circle cx="85" cy="92" r="7" fill="#1e293b" />
-                                    <circle cx="120" cy="92" r="7" fill="#1e293b" />
-                                    {/* Stylized woman standing */}
-                                    <circle cx="45" cy="55" r="7.5" fill="#fbcfe8" />
-                                    <path d="M40 98 L50 98 L48 65 L42 65 Z" fill="#ec4899" />
-                                  </svg>
-                                  {/* Play Icon Overlay */}
-                                  <div className="w-10 h-10 rounded-full bg-slate-900/60 text-white flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform">
-                                    <svg className="w-4 h-4 fill-white ml-0.5" viewBox="0 0 24 24">
-                                      <path d="M8 5v14l11-7z" />
-                                    </svg>
-                                  </div>
-                                </div>
-                                {/* Video metadata text */}
-                                <div className="p-3 space-y-1">
-                                  <h4 className="font-bold text-[12px] text-slate-800 leading-snug group-hover:text-[#702082] transition-colors font-sans truncate">
-                                    What is Mutual Fund
-                                  </h4>
-                                  <p className="text-[10px] text-slate-500 leading-relaxed font-sans line-clamp-2">
-                                    What is Mutual Fund _ Mutual Fund Basics _ Learn About Mutual Funds _ SBI Mutual Fund
-                                  </p>
-                                </div>
-                              </div>
-
-                              {/* Video Card 2: Benefits of Mutual Funds */}
-                              <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs hover:shadow-xs transition-shadow flex flex-col text-left cursor-pointer group" onClick={() => toast("Opening Video: Benefits of Mutual Funds...")}>
-                                {/* Video Thumbnail */}
-                                <div className="bg-[#cbd5e1] h-32 relative flex items-center justify-center select-none overflow-hidden">
-                                  <svg className="absolute inset-0 w-full h-full object-cover" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="160" height="120" fill="#a5f3fc" />
-                                    <rect y="100" width="160" height="20" fill="#e2e8f0" />
-                                    <rect x="70" y="70" width="65" height="20" rx="4" fill="#0284c7" />
-                                    <circle cx="85" cy="92" r="7" fill="#1e293b" />
-                                    <circle cx="120" cy="92" r="7" fill="#1e293b" />
-                                    <circle cx="45" cy="55" r="7.5" fill="#fbcfe8" />
-                                    <path d="M40 98 L50 98 L48 65 L42 65 Z" fill="#ec4899" />
-                                  </svg>
-                                  <div className="w-10 h-10 rounded-full bg-slate-900/60 text-white flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform">
-                                    <svg className="w-4 h-4 fill-white ml-0.5" viewBox="0 0 24 24">
-                                      <path d="M8 5v14l11-7z" />
-                                    </svg>
-                                  </div>
-                                </div>
-                                <div className="p-3 space-y-1">
-                                  <h4 className="font-bold text-[12px] text-slate-800 leading-snug group-hover:text-[#702082] transition-colors font-sans truncate">
-                                    Benefits of Mutual Funds
-                                  </h4>
-                                  <p className="text-[10px] text-slate-500 leading-relaxed font-sans line-clamp-2">
-                                    Benefits of Mutual Funds _ Advantages of Mutual Funds _ SBI Mutual Fund
-                                  </p>
-                                </div>
-                              </div>
-
-                              {/* Video Card 3: Type of Mutual Funds */}
-                              <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs hover:shadow-xs transition-shadow flex flex-col text-left cursor-pointer group" onClick={() => toast("Opening Video: Type of Mutual Funds...")}>
-                                {/* Video Thumbnail */}
-                                <div className="bg-[#cbd5e1] h-32 relative flex items-center justify-center select-none overflow-hidden">
-                                  {/* Chalkboard DID YOU KNOW representation */}
-                                  <svg className="absolute inset-0 w-full h-full object-cover" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="160" height="120" fill="#1e293b" />
-                                    {/* Chalkboard frame */}
-                                    <rect x="10" y="10" width="140" height="100" rx="2" stroke="#b45309" strokeWidth="4" />
-                                    <text x="80" y="65" fontSize="12" fontWeight="black" fill="#ffffff" textAnchor="middle" fontFamily="sans-serif">DID YOU</text>
-                                    <text x="80" y="80" fontSize="12" fontWeight="black" fill="#38bdf8" textAnchor="middle" fontFamily="sans-serif">KNOW?</text>
-                                  </svg>
-                                  <div className="w-10 h-10 rounded-full bg-slate-900/60 text-white flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform">
-                                    <svg className="w-4 h-4 fill-white ml-0.5" viewBox="0 0 24 24">
-                                      <path d="M8 5v14l11-7z" />
-                                    </svg>
-                                  </div>
-                                </div>
-                                <div className="p-3 space-y-1">
-                                  <h4 className="font-bold text-[12px] text-slate-800 leading-snug group-hover:text-[#702082] transition-colors font-sans truncate">
-                                    Type of Mutual Funds
-                                  </h4>
-                                  <p className="text-[10px] text-slate-500 leading-relaxed font-sans line-clamp-2">
-                                    Type of Mutual Funds _ Choosing the Right Mutual Fund _ SBI Mutual Fund
-                                  </p>
-                                </div>
-                              </div>
-
-                              {/* Video Card 4: What is SIP */}
-                              <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs hover:shadow-xs transition-shadow flex flex-col text-left cursor-pointer group" onClick={() => toast("Opening Video: What is SIP...")}>
-                                {/* Video Thumbnail */}
-                                <div className="bg-[#cbd5e1] h-32 relative flex items-center justify-center select-none overflow-hidden">
-                                  {/* Woman with two kids SVG representation */}
-                                  <svg className="absolute inset-0 w-full h-full object-cover" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="160" height="120" fill="#fef3c7" />
-                                    <rect y="100" width="160" height="20" fill="#e2e8f0" />
-                                    {/* Mother */}
-                                    <circle cx="50" cy="55" r="7.5" fill="#fbcfe8" />
-                                    <path d="M42 98 L58 98 L56 65 L44 65 Z" fill="#ec4899" />
-                                    {/* Kid 1 */}
-                                    <circle cx="75" cy="65" r="6" fill="#fde047" />
-                                    <path d="M70 100 L80 100 L78 72 L72 72 Z" fill="#3b82f6" />
-                                    {/* Kid 2 */}
-                                    <circle cx="95" cy="70" r="5" fill="#fed7aa" />
-                                    <path d="M91 100 L99 100 L98 78 L92 78 Z" fill="#10b981" />
-                                  </svg>
-                                  <div className="w-10 h-10 rounded-full bg-slate-900/60 text-white flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform">
-                                    <svg className="w-4 h-4 fill-white ml-0.5" viewBox="0 0 24 24">
-                                      <path d="M8 5v14l11-7z" />
-                                    </svg>
-                                  </div>
-                                </div>
-                                <div className="p-3 space-y-1">
-                                  <h4 className="font-bold text-[12px] text-slate-800 leading-snug group-hover:text-[#702082] transition-colors font-sans truncate">
-                                    What is SIP
-                                  </h4>
-                                  <p className="text-[10px] text-slate-500 leading-relaxed font-sans line-clamp-2">
-                                    What is SIP (Systematic Investment Plan) _ Advantages of SIP _ SIP Mutual Fund
-                                  </p>
-                                </div>
-                              </div>
-
-                            </div>
-                          </div>
 
                         </div>
                       )}
