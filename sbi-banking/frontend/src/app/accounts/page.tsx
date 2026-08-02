@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useAuthStore } from '@/store/authStore';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
@@ -13,7 +13,7 @@ import { MOCK_USER, MOCK_ACCOUNTS } from '@/lib/mockData';
 import '../dashboard/dashboard.css';
 import SbiGlobalBrandHeader from '@/components/banking/SbiGlobalBrandHeader';
 
-export default function ViewAllAccountsPage() {
+function ViewAllAccountsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { logout, user } = useAuthStore();
@@ -592,5 +592,13 @@ export default function ViewAllAccountsPage() {
       </footer>
 
     </div>
+  );
+}
+
+export default function ViewAllAccountsPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-[#f3f4f9] text-sm text-slate-500">Loading...</div>}>
+      <ViewAllAccountsContent />
+    </Suspense>
   );
 }
