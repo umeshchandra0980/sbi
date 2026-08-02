@@ -72,19 +72,19 @@ export default function EtbPersonalLoanDescriptionPage() {
             
             {/* Left Steps Column (7 Cols) */}
             <div className="lg:col-span-7">
-              <h2 className="text-[19.5px] md:text-[22.5px] font-extrabold text-[#5b2e80] mb-8">
+              <h2 className="text-[19.5px] md:text-[22.5px] font-extrabold text-[#5b2e80] mb-10">
                 Avail a Personal loan in a few easy steps!
               </h2>
 
-              <div className="space-y-7">
+              <div className="space-y-10">
                 
                 {/* Step 1 */}
-                <div className="flex items-start gap-4.5">
+                <div className="flex items-start gap-10">
                   <div className="w-11 h-11 rounded-full border border-purple-200 bg-[#f4edf9] text-[#5b2e80] flex items-center justify-center flex-shrink-0 shadow-xs">
                     <User size={19} />
                   </div>
                   <div>
-                    <h3 className="text-[14.5px] font-extrabold text-slate-900 mb-1">
+                    <h3 className="text-[14.5px] font-extrabold text-slate-900 mb-2">
                       Confirm your details
                     </h3>
                     <p className="text-[12.5px] text-slate-600 leading-relaxed">
@@ -94,12 +94,12 @@ export default function EtbPersonalLoanDescriptionPage() {
                 </div>
 
                 {/* Step 2 */}
-                <div className="flex items-start gap-4.5">
+                <div className="flex items-start gap-10">
                   <div className="w-11 h-11 rounded-full border border-purple-200 bg-[#f4edf9] text-[#5b2e80] flex items-center justify-center flex-shrink-0 shadow-xs">
                     <CreditCard size={19} />
                   </div>
                   <div>
-                    <h3 className="text-[14.5px] font-extrabold text-slate-900 mb-1">
+                    <h3 className="text-[14.5px] font-extrabold text-slate-900 mb-2">
                       Check loan eligibility
                     </h3>
                     <p className="text-[12.5px] text-slate-600 leading-relaxed">
@@ -109,12 +109,12 @@ export default function EtbPersonalLoanDescriptionPage() {
                 </div>
 
                 {/* Step 3 */}
-                <div className="flex items-start gap-4.5">
+                <div className="flex items-start gap-10">
                   <div className="w-11 h-11 rounded-full border border-purple-200 bg-[#f4edf9] text-[#5b2e80] flex items-center justify-center flex-shrink-0 shadow-xs">
                     <FileText size={19} />
                   </div>
                   <div>
-                    <h3 className="text-[14.5px] font-extrabold text-slate-900 mb-1">
+                    <h3 className="text-[14.5px] font-extrabold text-slate-900 mb-2">
                       Get sanction details
                     </h3>
                     <p className="text-[12.5px] text-slate-600 leading-relaxed">
@@ -124,12 +124,12 @@ export default function EtbPersonalLoanDescriptionPage() {
                 </div>
 
                 {/* Step 4 */}
-                <div className="flex items-start gap-4.5">
+                <div className="flex items-start gap-10">
                   <div className="w-11 h-11 rounded-full border border-purple-200 bg-[#f4edf9] text-[#5b2e80] flex items-center justify-center flex-shrink-0 shadow-xs">
                     <CheckCircle2 size={19} />
                   </div>
                   <div>
-                    <h3 className="text-[14.5px] font-extrabold text-slate-900 mb-1">
+                    <h3 className="text-[14.5px] font-extrabold text-slate-900 mb-2">
                       Get your loan disbursed
                     </h3>
                     <p className="text-[12.5px] text-slate-600 leading-relaxed">

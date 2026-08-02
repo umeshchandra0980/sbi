@@ -132,6 +132,15 @@ export default function SbiLandingPageComponent({
   const [npsCheck, setNpsCheck] = useState(false);
   const [npsTab, setNpsTab] = useState<'Features' | 'Eligibility' | 'Calculator'>('Features');
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('showRequestsModal') === 'true') {
+        setShowNoRequestsModal(true);
+      }
+    }
+  }, []);
+
   // Pagination and interactive transaction fake data state
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -2876,6 +2885,69 @@ export default function SbiLandingPageComponent({
                 className="bg-[#702082] hover:bg-[#5c1a6b] text-white px-8 py-2 rounded-full text-xs font-bold transition-all cursor-pointer shadow-sm"
               >
                 Proceed
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* No Pending Requests Warning Modal (Exact Match to User Screenshot 4) */}
+      {showNoRequestsModal && (
+        <div 
+          className="fixed inset-0 bg-black/40 backdrop-blur-xs flex items-center justify-center z-50 p-4 animate-in fade-in duration-200"
+          onClick={() => setShowNoRequestsModal(false)}
+        >
+          <div 
+            className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl relative border border-slate-100 animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button Top Right */}
+            <button 
+              type="button" 
+              onClick={() => setShowNoRequestsModal(false)}
+              className="absolute right-4 top-4 text-slate-400 hover:text-slate-600 transition-colors"
+            >
+              <X size={20} />
+            </button>
+
+            {/* Modal Title */}
+            <h3 className="text-lg font-bold text-[#673391] mb-6">No pending requests</h3>
+
+            {/* Modal Body with Purple Warning Triangle & Text */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center mb-8">
+              <div className="md:col-span-5 flex justify-center">
+                <svg viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-40 h-28">
+                  {/* Triangle Warning */}
+                  <path d="M70 20 L115 90 L25 90 Z" fill="none" stroke="#9d227b" strokeWidth="4" strokeLinejoin="round" />
+                  <path d="M70 42 L70 65" stroke="#9d227b" strokeWidth="4" strokeLinecap="round" />
+                  <circle cx="70" cy="76" r="2.5" fill="#9d227b" />
+
+                  {/* Ground/Desert details */}
+                  <path d="M10 105 Q50 95 90 105 T160 105" stroke="#e2d8ee" strokeWidth="2" strokeDasharray="3 3" fill="none" />
+                  <g transform="translate(15, 80)">
+                    <path d="M5 25 L5 10 M5 15 L0 12 M5 18 L10 15" stroke="#c0a5d4" strokeWidth="2" strokeLinecap="round" />
+                  </g>
+                </svg>
+              </div>
+
+              <div className="md:col-span-7">
+                <p className="text-xs font-semibold text-slate-700 leading-relaxed">
+                  There are no pending requests that requires your approval (BSTDC038)
+                </p>
+              </div>
+            </div>
+
+            {/* Modal Footer: Okay Button */}
+            <div className="flex justify-end pt-4 border-t border-slate-100">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowNoRequestsModal(false);
+                  router.push('/home/landingPage/manageRelationship/deposits');
+                }}
+                className="border border-[#673391] text-[#673391] hover:bg-[#673391] hover:text-white px-8 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer shadow-xs"
+              >
+                Okay
               </button>
             </div>
           </div>
