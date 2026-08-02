@@ -1245,49 +1245,53 @@ export default function SbiLandingPageComponent({
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
                   
                   {/* Left Sub-Menu Column (3/12 width) */}
-                  <div className="md:col-span-3 space-y-3">
-                    {/* Search Input */}
-                    <div className="sbi-search-card">
-                      <Search size={16} className="text-gray-400" />
-                      <input
-                        type="text"
-                        placeholder="Search here..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="sbi-search-input"
-                      />
+                  {investmentSubTab !== 'Mutual Fund' && (
+                    <div className="md:col-span-3 space-y-3">
+                      {/* Search Input */}
+                      <div className="sbi-search-card">
+                        <Search size={16} className="text-gray-400" />
+                        <input
+                          type="text"
+                          placeholder="Search here..."
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          className="sbi-search-input"
+                        />
+                      </div>
+
+                      {/* Vertical Menu Buttons */}
+                      {(['Mutual Fund', 'Demat & Securities', 'PPF', 'NPS', 'IPO'] as const).map((subItem) => {
+                        const isSelected = investmentSubTab === subItem;
+                        return (
+                          <button
+                            key={subItem}
+                            type="button"
+                            onClick={() => setInvestmentSubTab(subItem)}
+                            className={`sbi-inv-menu-btn select-none ${isSelected ? 'selected' : ''}`}
+                          >
+                            {subItem}
+                          </button>
+                        );
+                      })}
                     </div>
+                  )}
 
-                    {/* Vertical Menu Buttons */}
-                    {(['Mutual Fund', 'Demat & Securities', 'PPF', 'NPS', 'IPO'] as const).map((subItem) => {
-                      const isSelected = investmentSubTab === subItem;
-                      return (
-                        <button
-                          key={subItem}
-                          type="button"
-                          onClick={() => setInvestmentSubTab(subItem)}
-                          className={`sbi-inv-menu-btn select-none ${isSelected ? 'selected' : ''}`}
-                        >
-                          {subItem}
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  {/* Right Main Content Column (9/12 width) */}
-                  <div className="md:col-span-9">
+                  {/* Right Main Content Column */}
+                  <div className={investmentSubTab === 'Mutual Fund' ? 'col-span-12' : 'md:col-span-9'}>
                     <div className="sbi-content-card min-h-[460px] p-0 overflow-hidden relative flex flex-col">
                       
                       {/* Top Purple Tab Badge Header */}
-                      <div className="sbi-inv-header-tag select-none">
-                        {investmentSubTab === 'Demat & Securities' 
-                          ? 'Manage Demat & Securities' 
-                          : investmentSubTab === 'PPF' 
-                            ? 'Public Provident Fund (PPF)' 
-                            : investmentSubTab === 'NPS'
-                              ? 'National Pension System (NPS)'
-                              : investmentSubTab}
-                      </div>
+                      {investmentSubTab !== 'Mutual Fund' && (
+                        <div className="sbi-inv-header-tag select-none">
+                          {investmentSubTab === 'Demat & Securities' 
+                            ? 'Manage Demat & Securities' 
+                            : investmentSubTab === 'PPF' 
+                              ? 'Public Provident Fund (PPF)' 
+                              : investmentSubTab === 'NPS'
+                                ? 'National Pension System (NPS)'
+                                : investmentSubTab}
+                        </div>
+                      )}
 
                       {/* Content Selection check */}
                       {investmentSubTab === 'Demat & Securities' && (
