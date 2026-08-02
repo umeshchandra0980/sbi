@@ -68,14 +68,14 @@ export default function DashboardPage() {
 
                 <div className="scroll-container">
                   {[
-                    { label: 'Welcome to Yono', img: '/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/welcome_64x64' },
-                    { label: 'Fraud Awareness', img: '/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/fraudawareness2_thumbnail_64x6' },
-                    { label: 'Tax Related Services', img: '/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/welcome_64x64' },
-                    { label: 'e - Secure Lock', img: '/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/yp_secure_lock_banner_sbi_thumbnail_64x64_23_11zon' },
-                    { label: 'Sustainability', img: '/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/sustainibility_thumbnail_64x64' },
-                    { label: 'SIP', img: '/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/sip_thumbnail_product_creative_64x64' },
-                    { label: 'Credit Card', img: '/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/welcome_64x64' },
-                    { label: 'Invest Now', img: '/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/sip_thumbnail_product_creative_64x64' },
+                    { label: 'Welcome to Yono', img: '/images/dashboard-assets/welcome_64x64.png' },
+                    { label: 'Fraud Awareness', img: '/images/dashboard-assets/fraudawareness2_thumbnail.png' },
+                    { label: 'Tax Related Services', img: '/images/dashboard-assets/dam_left_banner.png' },
+                    { label: 'e - Secure Lock', img: '/images/dashboard-assets/yp_secure_lock_banner.png' },
+                    { label: 'Sustainability', img: '/images/dashboard-assets/sustainability_thumbnail.png' },
+                    { label: 'SIP', img: '/images/dashboard-assets/sip_thumbnail.png' },
+                    { label: 'Credit Card', img: '/images/dashboard-assets/credit_card_web_873x203.png' },
+                    { label: 'Invest Now', img: '/images/dashboard-assets/pacl_fbtrc_thumbnail.png' },
                   ].map((story, sIdx) => (
                     <div key={sIdx} className="circle-container" onClick={() => toast.success(`Opening ${story.label}`)}>
                       <div className="circle">
@@ -276,206 +276,101 @@ export default function DashboardPage() {
             </div>
 
             {/* RIGHT SIDEBAR COLUMN (4 Columns = 33.33%) */}
-            <div className="dash-col-4">
+            <div className="dash-col-4 space-y-4">
               
+              {/* Pre-Approved offers for you Panel */}
+              <div className="rightside-content-box shadow-xs">
+                <div className="rightside-header-row mb-4">
+                  <h1 className="rightside-title text-slate-800 text-[14.5px] font-bold font-sans">
+                    Pre-Approved offers for you
+                  </h1>
+                </div>
+                <div 
+                  onClick={() => toast.success("Checking Business Loan Eligibility...")}
+                  className="bg-white border border-slate-200/80 rounded-2xl p-4 flex flex-col items-center select-none cursor-pointer hover:bg-slate-50 transition-all"
+                >
+                  <div className="w-full bg-[#fdf5f7] rounded-xl py-6 flex items-center justify-center mb-3">
+                    <svg className="w-16 h-16 text-[#e06287]" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="16" y="8" width="32" height="44" rx="4" fill="#fde8ee" stroke="#e06287" strokeWidth="2" />
+                      <line x1="24" y1="20" x2="40" y2="20" stroke="#e06287" strokeWidth="2" strokeLinecap="round" />
+                      <line x1="24" y1="28" x2="40" y2="28" stroke="#e06287" strokeWidth="2" strokeLinecap="round" />
+                      <circle cx="32" cy="40" r="6" fill="#e06287" />
+                      <text x="32" y="43" fontSize="8" fontWeight="bold" textAnchor="middle" fill="#ffffff" fontFamily="sans-serif">%</text>
+                    </svg>
+                  </div>
+                  <div className="text-[14px] font-bold text-slate-800 text-center font-sans">
+                    Business Loan
+                  </div>
+                  <div className="text-[11px] text-[#681d82] text-center font-medium font-sans mt-2">
+                    Click here to check your eligibility.
+                  </div>
+                </div>
+              </div>
+
               {/* Investments Panel */}
-              <div className="rightside-content-box">
+              <div className="rightside-content-box shadow-xs">
                 <div className="rightside-header-row">
-                  <h1 className="rightside-title">Investments</h1>
-                  <span className="viewAll-side">View All</span>
+                  <h1 className="rightside-title text-slate-800 text-[14.5px] font-bold font-sans">Investments</h1>
+                  <span className="viewAll-side text-[#681d82] hover:underline font-bold font-sans" onClick={() => toast.success("Viewing all investments")}>View All</span>
                 </div>
                 <div className="rightside-grid">
                   <div className="rightside-item" onClick={() => toast.success("Mutual Funds")}>
                     <div className="rightside-icon-box">
                       <img src="/images/category-icons/ic_mutual_funds.svg" alt="Mutual Funds" className="w-5 h-5 object-contain" />
                     </div>
-                    <span className="rightside-item-name">Mutual Funds</span>
+                    <span className="rightside-item-name font-sans">Mutual Funds</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("Demat & Securities")}>
                     <div className="rightside-icon-box">
                       <img src="/images/category-icons/ic_demat_account.svg" alt="Demat Account" className="w-5 h-5 object-contain" />
                     </div>
-                    <span className="rightside-item-name">Demat &amp; Securities</span>
+                    <span className="rightside-item-name font-sans font-semibold">Demat &amp;<br />Securities</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("NPS")}>
                     <div className="rightside-icon-box">
                       <img src="/images/category-icons/ic_nps.svg" alt="NPS" className="w-5 h-5 object-contain" />
                     </div>
-                    <span className="rightside-item-name">NPS</span>
+                    <span className="rightside-item-name font-sans">NPS</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("PPF")}>
                     <div className="rightside-icon-box">
                       <img src="/images/category-icons/ic_ppf.svg" alt="PPF" className="w-5 h-5 object-contain" />
                     </div>
-                    <span className="rightside-item-name">PPF</span>
+                    <span className="rightside-item-name font-sans">PPF</span>
                   </div>
                 </div>
               </div>
 
               {/* Loans Panel */}
-              <div className="rightside-content-box">
+              <div className="rightside-content-box shadow-xs">
                 <div className="rightside-header-row">
-                  <h1 className="rightside-title">Loans</h1>
-                  <span className="viewAll-side">View All</span>
+                  <h1 className="rightside-title text-slate-800 text-[14.5px] font-bold font-sans">Loans</h1>
+                  <span className="viewAll-side text-[#681d82] hover:underline font-bold font-sans" onClick={() => toast.success("Viewing all loans")}>View All</span>
                 </div>
                 <div className="rightside-grid">
                   <div className="rightside-item" onClick={() => toast.success("Personal Loan")}>
                     <div className="rightside-icon-box">
                       <img src="/images/category-icons/ic_personal_loan.svg" alt="Personal Loan" className="w-5 h-5 object-contain" />
                     </div>
-                    <span className="rightside-item-name">Personal Loan</span>
+                    <span className="rightside-item-name font-sans">Personal Loan</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("Loan Against Mutual Fund")}>
                     <div className="rightside-icon-box">
                       <img src="/images/category-icons/ic_loan_against_mutual_fund.svg" alt="Loan Against Mutual Fund" className="w-5 h-5 object-contain" />
                     </div>
-                    <span className="rightside-item-name">Loan Against Mutual Fund</span>
+                    <span className="rightside-item-name font-sans font-semibold">Loan Against<br />Mutual Fund</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("Home Loan")}>
                     <div className="rightside-icon-box">
                       <img src="/images/category-icons/ic_home_loan.svg" alt="Home Loan" className="w-5 h-5 object-contain" />
                     </div>
-                    <span className="rightside-item-name">Home Loan</span>
+                    <span className="rightside-item-name font-sans">Home Loan</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("Gold Loan")}>
                     <div className="rightside-icon-box">
                       <img src="/images/category-icons/ic_gold_loan.svg" alt="Gold Loan" className="w-5 h-5 object-contain" />
                     </div>
-                    <span className="rightside-item-name">Gold Loan</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Deposits Panel */}
-              <div className="rightside-content-box">
-                <div className="rightside-header-row">
-                  <h1 className="rightside-title">Deposits</h1>
-                </div>
-                <div className="rightside-grid">
-                  <div className="rightside-item" onClick={() => toast.success("Fixed Deposit")}>
-                    <div className="rightside-icon-box">
-                      <img src="/images/category-icons/ic_fixed_deposit.svg" alt="Fixed Deposit" className="w-5 h-5 object-contain" />
-                    </div>
-                    <span className="rightside-item-name">Fixed Deposit</span>
-                  </div>
-                  <div className="rightside-item" onClick={() => toast.success("Recurring Deposit")}>
-                    <div className="rightside-icon-box">
-                      <img src="/images/category-icons/ic_recurring_deposit.svg" alt="Recurring Deposit" className="w-5 h-5 object-contain" />
-                    </div>
-                    <span className="rightside-item-name">Recurring Deposit</span>
-                  </div>
-                  <div className="rightside-item" onClick={() => toast.success("Annuity Deposit")}>
-                    <div className="rightside-icon-box">
-                      <img src="/images/category-icons/ic_annuity_deposit.svg" alt="Annuity Deposit" className="w-5 h-5 object-contain" />
-                    </div>
-                    <span className="rightside-item-name">Annuity Deposit</span>
-                  </div>
-                  <div className="rightside-item" onClick={() => toast.success("Auto Sweep")}>
-                    <div className="rightside-icon-box">
-                      <img src="/images/category-icons/ic_auto_sweep.svg" alt="Auto Sweep" className="w-5 h-5 object-contain" />
-                    </div>
-                    <span className="rightside-item-name">Auto Sweep</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Insurance Panel */}
-              <div className="rightside-content-box">
-                <div className="rightside-header-row">
-                  <h1 className="rightside-title">Insurance</h1>
-                  <span className="viewAll-side">View All</span>
-                </div>
-                <div className="rightside-grid">
-                  <div className="rightside-item" onClick={() => toast.success("Life Insurance")}>
-                    <div className="rightside-icon-box">
-                      <img src="/images/category-icons/ic_life_insurance.svg" alt="Life Insurance" className="w-5 h-5 object-contain" />
-                    </div>
-                    <span className="rightside-item-name">Life</span>
-                  </div>
-                  <div className="rightside-item" onClick={() => toast.success("Health Insurance")}>
-                    <div className="rightside-icon-box">
-                      <img src="/images/category-icons/ic_health_insurance.svg" alt="Health Insurance" className="w-5 h-5 object-contain" />
-                    </div>
-                    <span className="rightside-item-name">Health</span>
-                  </div>
-                  <div className="rightside-item" onClick={() => toast.success("Accident Insurance")}>
-                    <div className="rightside-icon-box">
-                      <img src="/images/category-icons/ic_accident_insurance.svg" alt="Accident Insurance" className="w-5 h-5 object-contain" />
-                    </div>
-                    <span className="rightside-item-name">Accident</span>
-                  </div>
-                  <div className="rightside-item" onClick={() => toast.success("Motor Insurance")}>
-                    <div className="rightside-icon-box">
-                      <img src="/images/category-icons/ic_car_insurance.svg" alt="Motor Insurance" className="w-5 h-5 object-contain" />
-                    </div>
-                    <span className="rightside-item-name">Motor</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Cards Panel */}
-              <div className="rightside-content-box">
-                <div className="rightside-header-row">
-                  <h1 className="rightside-title">Cards</h1>
-                </div>
-                <div className="rightside-grid">
-                  <div className="rightside-item" onClick={() => router.push('/cards')}>
-                    <div className="rightside-icon-box">
-                      <img src="/images/category-icons/ic_credit_card.svg" alt="Credit Cards" className="w-5 h-5 object-contain" />
-                    </div>
-                    <span className="rightside-item-name">Credit Cards</span>
-                  </div>
-                  <div className="rightside-item" onClick={() => toast.success("Debit Cards")}>
-                    <div className="rightside-icon-box">
-                      <img src="/images/category-icons/ic_debit_card.svg" alt="Debit Cards" className="w-5 h-5 object-contain" />
-                    </div>
-                    <span className="rightside-item-name">Debit Cards</span>
-                  </div>
-                  <div className="rightside-item" onClick={() => toast.success("Forex Cards")}>
-                    <div className="rightside-icon-box">
-                      <img src="/images/category-icons/ic_forex_card.svg" alt="Forex Cards" className="w-5 h-5 object-contain" />
-                    </div>
-                    <span className="rightside-item-name">Forex Cards</span>
-                  </div>
-                  <div className="rightside-item" onClick={() => toast.success("Prepaid Cards")}>
-                    <div className="rightside-icon-box">
-                      <img src="/images/category-icons/ic_ncmc_card.svg" alt="Prepaid Cards" className="w-5 h-5 object-contain" />
-                    </div>
-                    <span className="rightside-item-name">Prepaid Cards</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Services Panel */}
-              <div className="rightside-content-box">
-                <div className="rightside-header-row">
-                  <h1 className="rightside-title">Services</h1>
-                  <span className="viewAll-side">View All</span>
-                </div>
-                <div className="rightside-grid">
-                  <div className="rightside-item" onClick={() => toast.success("Account Related Services")}>
-                    <div className="rightside-icon-box">
-                      <img src="/images/category-icons/ic_profile_details.svg" alt="Account Related" className="w-5 h-5 object-contain" />
-                    </div>
-                    <span className="rightside-item-name">Account Related</span>
-                  </div>
-                  <div className="rightside-item" onClick={() => toast.success("Tax Related Services")}>
-                    <div className="rightside-icon-box">
-                      <img src="/images/category-icons/ic_tax_related.svg" alt="Tax Related" className="w-5 h-5 object-contain" />
-                    </div>
-                    <span className="rightside-item-name">Tax Related</span>
-                  </div>
-                  <div className="rightside-item" onClick={() => toast.success("Cheque Services")}>
-                    <div className="rightside-icon-box">
-                      <img src="/images/category-icons/ic_cheque_services.svg" alt="Cheque Services" className="w-5 h-5 object-contain" />
-                    </div>
-                    <span className="rightside-item-name">Cheque Services</span>
-                  </div>
-                  <div className="rightside-item" onClick={() => toast.success("e-Secure Lock")}>
-                    <div className="rightside-icon-box">
-                      <img src="/images/category-icons/ic_esecure_lock.svg" alt="e-Secure Lock" className="w-5 h-5 object-contain" />
-                    </div>
-                    <span className="rightside-item-name">e-Secure Lock</span>
+                    <span className="rightside-item-name font-sans">Gold Loan</span>
                   </div>
                 </div>
               </div>

@@ -25,26 +25,23 @@
 
 .rel-view-all-btn {
   background: #ffffff;
-  border: 1px solid #7c3aed;
-  color: #5b21b6;
+  border: 1.5px solid #681d82;
+  color: #681d82;
   border-radius: 9999px;
-  padding: 6px 18px;
+  padding: 6px 20px;
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 1px 3px rgba(124, 58, 237, 0.08);
+  transition: all 0.2s ease;
 }
 
 .rel-view-all-btn:hover {
-  background: #f5f3ff;
-  border-color: #6d28d9;
-  color: #4c1d95;
-  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.15);
-  transform: translateY(-1px);
+  background: #fdfafc;
+  border-color: #57166f;
+  color: #57166f;
 }
 
 /* Carousel Wrapper */
@@ -136,7 +133,7 @@
 }
 
 .rel-title-dark {
-  color: #4c1d95;
+  color: #681d82;
 }
 
 /* Eye Icon Button */
@@ -233,7 +230,7 @@
 }
 
 .rel-link-dark {
-  color: #4c1d95;
+  color: #681d82;
 }
 
 /* Card Color Variants */
