@@ -104,8 +104,9 @@ export const RelationshipOverviewCards: React.FC<RelationshipOverviewCardsProps>
           <div className="rel-card rel-card-transaction">
             <div className="rel-card-bg-circles">
               <svg viewBox="0 0 160 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="130" cy="90" r="75" fill="#ffffff" fillOpacity="0.12" />
-                <circle cx="165" cy="90" r="115" fill="#ffffff" fillOpacity="0.08" />
+                <circle cx="-10" cy="170" r="100" fill="#580045" fillOpacity="0.45" />
+                <circle cx="135" cy="85" r="75" fill="#e85fd2" fillOpacity="0.35" />
+                <circle cx="165" cy="85" r="110" fill="#e85fd2" fillOpacity="0.18" />
               </svg>
             </div>
             
