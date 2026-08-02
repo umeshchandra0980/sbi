@@ -1343,7 +1343,7 @@ export default function LoginPage() {
               <div className="manageImageCenter">
                 <div className="qa-circle">
                   <div className="anchorLink" tabIndex={-1}>
-                    <img loading="lazy" alt="Complaints" className="qa-options" src="/assets/images/registration/Mate IC_Complaints.svg" />
+                    <img loading="lazy" alt="Complaints" className="qa-options" src="/images/quick-actions/ic_complaints.png" />
                   </div>
                 </div>
               </div>
@@ -1357,7 +1357,7 @@ export default function LoginPage() {
               <div className="manageImageCenter">
                 <div className="qa-circle">
                   <div className="anchorLink" tabIndex={-1}>
-                    <img loading="lazy" alt="Report Unauthorized transaction" className="qa-options" src="/assets/images/registration/Mate IC_Report_unauthorized.svg" />
+                    <img loading="lazy" alt="Report Unauthorized transaction" className="qa-options" src="/images/quick-actions/ic_report_unauthorized.svg" />
                   </div>
                 </div>
               </div>
@@ -1371,7 +1371,7 @@ export default function LoginPage() {
               <div className="manageImageCenter">
                 <div className="qa-circle">
                   <div className="anchorLink" tabIndex={-1}>
-                    <img loading="lazy" alt="Doorstep Banking" className="qa-options" src="/assets/images/registration/Mate IC_Doorstep_banking.svg" />
+                    <img loading="lazy" alt="Doorstep Banking" className="qa-options" src="/images/quick-actions/ic_doorstep_banking.svg" />
                   </div>
                 </div>
               </div>
@@ -1385,7 +1385,7 @@ export default function LoginPage() {
               <div className="manageImageCenter">
                 <div className="qa-circle">
                   <div className="anchorLink card-link-purple" tabIndex={-1}>
-                    <img loading="lazy" alt="FAQ" className="qa-options" src="/assets/images/registration/Mate IC_FAQ.svg" />
+                    <img loading="lazy" alt="FAQ" className="qa-options" src="/images/quick-actions/ic_faqs.svg" />
                   </div>
                 </div>
               </div>
@@ -1399,7 +1399,7 @@ export default function LoginPage() {
               <div className="manageImageCenter">
                 <div className="qa-circle">
                   <div className="anchorLink" tabIndex={-1}>
-                    <img loading="lazy" alt="Cyber Fraud" className="qa-options" src="/assets/images/registration/Mate IC_Cyber_fraud.svg" />
+                    <img loading="lazy" alt="Cyber Fraud" className="qa-options" src="/images/quick-actions/ic_cyber_fraud.svg" />
                   </div>
                 </div>
               </div>
@@ -1413,7 +1413,7 @@ export default function LoginPage() {
               <div className="manageImageCenter">
                 <div className="qa-circle">
                   <div className="anchorLink" tabIndex={-1}>
-                    <img loading="lazy" alt="Password Management" className="qa-options" src="/assets/images/registration/Mate IC_Password_management.svg" />
+                    <img loading="lazy" alt="Password Management" className="qa-options" src="/images/quick-actions/ic_password_management.svg" />
                   </div>
                 </div>
               </div>
@@ -1427,7 +1427,7 @@ export default function LoginPage() {
               <div className="manageImageCenter">
                 <div className="qa-circle">
                   <div className="anchorLink" tabIndex={-1}>
-                    <img loading="lazy" alt="Security Tips" className="qa-options" src="/assets/images/registration/Mate IC_Security_tips.svg" />
+                    <img loading="lazy" alt="Security Tips" className="qa-options" src="/images/quick-actions/ic_security_tips.svg" />
                   </div>
                 </div>
               </div>
@@ -1441,7 +1441,7 @@ export default function LoginPage() {
               <div className="manageImageCenter">
                 <div className="qa-circle">
                   <div className="anchorLink" tabIndex={-1}>
-                    <img loading="lazy" alt="Report Phishing" className="qa-options" src="/assets/images/registration/Mate IC_Report  phishing.svg" />
+                    <img loading="lazy" alt="Report Phishing" className="qa-options" src="/images/quick-actions/ic_report_phishing.svg" />
                   </div>
                 </div>
               </div>
@@ -1455,46 +1455,40 @@ export default function LoginPage() {
       </div>
 
       {/* ================= IMPORTANT NOTICES & SECURITY BEST PRACTICES & DO'S AND DON'TS ================= */}
-      <div className="containerBox">
-        <div className="custom-container container-xxl pt-4">
+      <div className="containerBox" style={{ backgroundColor: '#E5E5F2', padding: '80px 0' }}>
+        <div className="max-w-[1400px] mx-auto px-4 md:px-6">
           
           <aside aria-label="Important Notes & Security Best Practices">
-            <div id="ImpNotice" className="pt-4 ImpNotice">
-              <div id="impnoticescontainer" className="imp-notices-container mb-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+            <div id="ImpNotice" className="ImpNotice">
+              <div id="impnoticescontainer" className="imp-notices-container mb-[48px]" style={{ background: '#FFFFFF', borderRadius: '16px', padding: '32px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-[24px] items-stretch">
                   
                   {/* Left Column: Important Notices */}
-                  <div className="borderCont">
-                    <div className="flex justify-between items-center mb-4">
-                      <p className="headTxt m-0">Important Notices</p>
-                      <a href="javascript:void(0);" onClick={(e) => { e.preventDefault(); setShowNoticesModal(true); }} className="tabTextLink" aria-label="View All Important Notices">
+                  <div className="borderCont lg:pr-[24px]">
+                    <div className="flex justify-between items-center mb-[24px]">
+                      <h2 style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 600, fontSize: '1.5em', lineHeight: '32px', color: '#673391', margin: 0 }}>Important Notices</h2>
+                      <a href="javascript:void(0);" onClick={(e) => { e.preventDefault(); setShowNoticesModal(true); }} style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 500, fontSize: '16px', color: '#673391', textDecoration: 'none' }} className="hover:underline" aria-label="View All Important Notices">
                         View All
                       </a>
                     </div>
 
                     <div className="container-card">
-                      <ul className="space-y-4 p-0 m-0 list-none">
-                        <li className="flex items-start gap-3">
-                          <div className="bullet-arrow-circle">
-                            <ArrowRight size={14} />
-                          </div>
-                          <p className="imp-notice-txt m-0 pe-2">
+                      <ul className="m-0 p-0 list-none space-y-[24px]">
+                        <li className="flex items-center gap-[16px]">
+                          <img src="/images/notices-security/bullet_arrow.svg" alt="" className="w-[20px] h-[20px] flex-shrink-0" />
+                          <p style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#646464', margin: 0 }}>
                             Customers can now deposit Income Tax/Corporate Taxes using all Bank Debit Cards and Credit Cards under State Bank Payment Gateway.
                           </p>
                         </li>
-                        <li className="flex items-start gap-3">
-                          <div className="bullet-arrow-circle">
-                            <ArrowRight size={14} />
-                          </div>
-                          <p className="imp-notice-txt m-0 pe-2">
-                            Call us toll free on 1800 1234 and 1800 2100 and get a wide range of services through SBI Contact Centre.&nbsp;
+                        <li className="flex items-center gap-[16px]">
+                          <img src="/images/notices-security/bullet_arrow.svg" alt="" className="w-[20px] h-[20px] flex-shrink-0" />
+                          <p style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#646464', margin: 0 }}>
+                            Call us toll free on 1800 1234 and 1800 2100 and get a wide range of services through SBI Contact Centre.
                           </p>
                         </li>
-                        <li className="flex items-start gap-3">
-                          <div className="bullet-arrow-circle">
-                            <ArrowRight size={14} />
-                          </div>
-                          <p className="imp-notice-txt m-0 pe-2">
+                        <li className="flex items-center gap-[16px]">
+                          <img src="/images/notices-security/bullet_arrow.svg" alt="" className="w-[20px] h-[20px] flex-shrink-0" />
+                          <p style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#646464', margin: 0 }}>
                             SBI never asks for your Card/PIN/OTP/CVV details on phone, message or email. Please do not click on links received on your email or mobile asking your Bank/Card details.
                           </p>
                         </li>
@@ -1502,48 +1496,65 @@ export default function LoginPage() {
                     </div>
                   </div>
 
-                  {/* Right Column: Security Best Practices (3 Cards Side-by-Side) */}
-                  <div className="borderContBox">
-                    <div className="flex justify-between items-center mb-4">
-                      <p className="headSecurityTxt m-0">Security Best Practices</p>
-                      <a href="javascript:void(0);" onClick={(e) => { e.preventDefault(); setShowSecurityModal(true); }} className="tabTextLink" aria-label="View All Security Best Practices">
+                  {/* Right Column: Security Best Practices (Carousel with Snapping) */}
+                  <div className="borderContBox lg:pl-[24px]">
+                    <div className="flex justify-between items-center mb-[24px]">
+                      <h2 style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 600, fontSize: '1.5em', lineHeight: '32px', color: '#673391', margin: 0 }}>Security Best Practices</h2>
+                      <a href="javascript:void(0);" onClick={(e) => { e.preventDefault(); setShowSecurityModal(true); }} style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 500, fontSize: '16px', color: '#673391', textDecoration: 'none' }} className="hover:underline" aria-label="View All Security Best Practices">
                         View All
                       </a>
                     </div>
 
-                    <div className="flex items-center gap-2 mt-3">
+                    <div className="flex items-center gap-[12px]">
                       <button 
                         type="button" 
-                        className="nav-arrow-btn"
-                        onClick={() => setSecuritySlide(prev => (prev - 1 + securityCards.length) % securityCards.length)}
+                        className="cursor-pointer transition-transform hover:scale-110 flex-shrink-0 border-none bg-transparent p-0"
+                        onClick={() => {
+                          const container = document.getElementById('sec-carousel-container');
+                          if (container) container.scrollBy({ left: -280, behavior: 'smooth' });
+                        }}
                         title="Previous"
                       >
-                        <ChevronLeft size={16} />
+                        <img src="/images/notices-security/backward_arrow.svg" alt="Previous" className="w-[32px] h-[32px]" />
                       </button>
 
-                      <div className="grid grid-cols-3 gap-2 flex-1">
-                        {securityCards.map((card, idx) => (
-                          <div 
-                            key={idx} 
-                            onClick={() => setShowSecurityModal(true)} 
-                            className="security-mini-card cursor-pointer"
-                          >
-                            <div className="sec-img-box">
-                              <img loading="lazy" alt={card.title} src={card.img} />
-                            </div>
-                            <h4 className="sec-card-title">{card.title}</h4>
-                            <p className="sec-card-desc" title={card.desc}>{card.desc}</p>
+                      {/* Horizontal Carousel with Smooth Snap Scrolling */}
+                      <div id="sec-carousel-container" className="flex gap-[20px] overflow-x-auto scroll-smooth snap-x snap-mandatory py-2 scrollbar-none flex-1">
+                        <div onClick={() => setShowSecurityModal(true)} className="w-[260px] flex-shrink-0 snap-start bg-white rounded-[16px] p-[20px] cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)] border border-slate-100 flex flex-col justify-between">
+                          <div className="w-full h-[120px] mb-[20px] flex items-center justify-center overflow-hidden rounded-[12px] bg-slate-50">
+                            <img src="/images/notices-security/best_practices_be_vigilent_be_safe.svg" alt="Be Vigilant. Be Safe." className="h-full w-auto object-contain" />
                           </div>
-                        ))}
+                          <h3 style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, fontSize: '16px', color: '#313131', marginBottom: '8px' }}>Be Vigilant. Be Safe.</h3>
+                          <p style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#646464', margin: 0 }}>While the bank will make every effort to ensure your safety...</p>
+                        </div>
+
+                        <div onClick={() => setShowSecurityModal(true)} className="w-[260px] flex-shrink-0 snap-start bg-white rounded-[16px] p-[20px] cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)] border border-slate-100 flex flex-col justify-between">
+                          <div className="w-full h-[120px] mb-[20px] flex items-center justify-center overflow-hidden rounded-[12px] bg-slate-50">
+                            <img src="/images/notices-security/best_practices_confedentiality.svg" alt="Confidentiality" className="h-full w-auto object-contain" />
+                          </div>
+                          <h3 style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, fontSize: '16px', color: '#313131', marginBottom: '8px' }}>Confidentiality</h3>
+                          <p style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#646464', margin: 0 }}>SBI never asks for confidential information such as PIN or OTP...</p>
+                        </div>
+
+                        <div onClick={() => setShowSecurityModal(true)} className="w-[260px] flex-shrink-0 snap-start bg-white rounded-[16px] p-[20px] cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)] border border-slate-100 flex flex-col justify-between">
+                          <div className="w-full h-[120px] mb-[20px] flex items-center justify-center overflow-hidden rounded-[12px] bg-slate-50">
+                            <img src="/images/notices-security/best_practices_beware_of_phishing.svg" alt="Beware of Phishing" className="h-full w-auto object-contain" />
+                          </div>
+                          <h3 style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, fontSize: '16px', color: '#313131', marginBottom: '8px' }}>Beware of Phishing</h3>
+                          <p style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#646464', margin: 0 }}>Phishing is a fraudulent attempt made usually through email...</p>
+                        </div>
                       </div>
 
                       <button 
                         type="button" 
-                        className="nav-arrow-btn"
-                        onClick={() => setSecuritySlide(prev => (prev + 1) % securityCards.length)}
+                        className="cursor-pointer transition-transform hover:scale-110 flex-shrink-0 border-none bg-transparent p-0"
+                        onClick={() => {
+                          const container = document.getElementById('sec-carousel-container');
+                          if (container) container.scrollBy({ left: 280, behavior: 'smooth' });
+                        }}
                         title="Next"
                       >
-                        <ChevronRight size={16} />
+                        <img src="/images/notices-security/forward_arrow.svg" alt="Next" className="w-[32px] h-[32px]" />
                       </button>
                     </div>
                   </div>
@@ -1553,63 +1564,73 @@ export default function LoginPage() {
             </div>
           </aside>
 
-          {/* Do's & Don'ts Section (Matching Image 2) */}
+          {/* Section 2: Do's & Don'ts (Bootstrap Grid col-6 col-md-3 Pixel-Perfect Clone) */}
           <aside aria-label="Do's &amp; Don'ts">
             <div>
-              <h1 className="headTxt py-3 ms-1">Do&apos;s &amp; Don&apos;ts</h1>
+              <h1 style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 600, fontSize: '1.5em', lineHeight: '32px', color: '#673391', marginBottom: '24px' }}>
+                Do&apos;s &amp; Don&apos;ts
+              </h1>
             </div>
-            <div className="dos-donts-container px-2">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="dos-donts-container">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-[16px]">
                 
-                {/* Do 1 */}
-                <div className="do-card">
-                  <div className="do-card-left">
-                    <div className="do-badge-circle">
-                      <Check size={20} strokeWidth={3} />
+                {/* Do Card 1 */}
+                <div className="h-full w-full overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)]" style={{ backgroundColor: '#FFFFFF', borderRadius: '16px', padding: '20px', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}>
+                  <div className="flex items-center h-full">
+                    <div className="w-[25%] flex justify-center items-center flex-shrink-0">
+                      <div className="w-[52px] h-[52px] rounded-full flex items-center justify-center" style={{ backgroundColor: '#EAF7E7' }}>
+                        <img src="https://yonoretail.sbi.bank.in/assets/images/login/dosymbol.svg" alt="Do" className="w-[42px] h-[42px] object-contain" />
+                      </div>
                     </div>
-                  </div>
-                  <div className="do-card-right">
-                    <div className="dos-card-header">Always</div>
-                    <span className="dos-card-content">keep your computer free of malware</span>
+                    <div className="w-[75%] pl-[14px]">
+                      <div style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, fontSize: '18px', color: '#51A037', marginBottom: '2px' }}>Always</div>
+                      <p style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 400, fontSize: '15px', lineHeight: '22px', color: '#313131', margin: 0 }}>keep your computer free of malware</p>
+                    </div>
                   </div>
                 </div>
 
-                {/* Do 2 */}
-                <div className="do-card">
-                  <div className="do-card-left">
-                    <div className="do-badge-circle">
-                      <Check size={20} strokeWidth={3} />
+                {/* Do Card 2 */}
+                <div className="h-full w-full overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)]" style={{ backgroundColor: '#FFFFFF', borderRadius: '16px', padding: '20px', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}>
+                  <div className="flex items-center h-full">
+                    <div className="w-[25%] flex justify-center items-center flex-shrink-0">
+                      <div className="w-[52px] h-[52px] rounded-full flex items-center justify-center" style={{ backgroundColor: '#EAF7E7' }}>
+                        <img src="https://yonoretail.sbi.bank.in/assets/images/login/dosymbol.svg" alt="Do" className="w-[42px] h-[42px] object-contain" />
+                      </div>
                     </div>
-                  </div>
-                  <div className="do-card-right">
-                    <div className="dos-card-header">Always</div>
-                    <span className="dos-card-content">change your passwords periodically</span>
+                    <div className="w-[75%] pl-[14px]">
+                      <div style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, fontSize: '18px', color: '#51A037', marginBottom: '2px' }}>Always</div>
+                      <p style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 400, fontSize: '15px', lineHeight: '22px', color: '#313131', margin: 0 }}>change your passwords periodically</p>
+                    </div>
                   </div>
                 </div>
 
-                {/* Don't 1 */}
-                <div className="dont-card">
-                  <div className="dont-card-left">
-                    <div className="dont-badge-circle">
-                      <X size={20} strokeWidth={3} />
+                {/* Don't Card 1 */}
+                <div className="h-full w-full overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)]" style={{ backgroundColor: '#FFFFFF', borderRadius: '16px', padding: '20px', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}>
+                  <div className="flex items-center h-full">
+                    <div className="w-[25%] flex justify-center items-center flex-shrink-0">
+                      <div className="w-[52px] h-[52px] rounded-full flex items-center justify-center" style={{ backgroundColor: '#FDE8E9' }}>
+                        <img src="https://yonoretail.sbi.bank.in/assets/images/login/dontsymbol.svg" alt="Don't" className="w-[42px] h-[42px] object-contain" />
+                      </div>
                     </div>
-                  </div>
-                  <div className="do-card-right">
-                    <div className="donts-card-header">Never</div>
-                    <span className="donts-card-content">respond to communication seeking your passwords</span>
+                    <div className="w-[75%] pl-[14px]">
+                      <div style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, fontSize: '18px', color: '#ED1C24', marginBottom: '2px' }}>Never</div>
+                      <p style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 400, fontSize: '15px', lineHeight: '22px', color: '#313131', margin: 0 }}>respond to communication seeking passwords</p>
+                    </div>
                   </div>
                 </div>
 
-                {/* Don't 2 */}
-                <div className="dont-card">
-                  <div className="dont-card-left">
-                    <div className="dont-badge-circle">
-                      <X size={20} strokeWidth={3} />
+                {/* Don't Card 2 */}
+                <div className="h-full w-full overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)]" style={{ backgroundColor: '#FFFFFF', borderRadius: '16px', padding: '20px', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}>
+                  <div className="flex items-center h-full">
+                    <div className="w-[25%] flex justify-center items-center flex-shrink-0">
+                      <div className="w-[52px] h-[52px] rounded-full flex items-center justify-center" style={{ backgroundColor: '#FDE8E9' }}>
+                        <img src="https://yonoretail.sbi.bank.in/assets/images/login/dontsymbol.svg" alt="Don't" className="w-[42px] h-[42px] object-contain" />
+                      </div>
                     </div>
-                  </div>
-                  <div className="do-card-right">
-                    <div className="donts-card-header">Never</div>
-                    <span className="donts-card-content">reveal your passwords or card details to anyone</span>
+                    <div className="w-[75%] pl-[14px]">
+                      <div style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, fontSize: '18px', color: '#ED1C24', marginBottom: '2px' }}>Never</div>
+                      <p style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 400, fontSize: '15px', lineHeight: '22px', color: '#313131', margin: 0 }}>reveal passwords or card details to anyone</p>
+                    </div>
                   </div>
                 </div>
 
@@ -1742,13 +1763,42 @@ export default function LoginPage() {
         </div>
       )}
 
-      {/* ================= FOOTER BAR ================= */}
-      <footer className="footer-copyright-sbi mt-auto">
-        <div className="container-xxl max-w-[1400px] mx-auto flex flex-col lg:flex-row justify-between items-center px-4 py-2 text-white">
-          <div className="copyright-left text-center lg:text-start mb-1 mb-lg-0">
+      {/* ================= FOOTER BAR WITH CSS SPRITE SOCIAL ICONS ================= */}
+      <footer className="footer-copyright-sbi mt-auto py-3">
+        <div className="container-xxl max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between items-center px-4 gap-4">
+          <div className="copyright-left text-center md:text-start">
             <p className="p-0 m-0">© State Bank of India (APM Id:Scrv_Tran_564)</p>
           </div>
-          <div className="col-12 col-lg-8 text-center text-lg-end">
+          
+          {/* Social Icons using CSS Sprite */}
+          <div className="flex items-center gap-3">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook">
+              <span className="social-icon facebook" />
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="Twitter / X" aria-label="Twitter">
+              <span className="social-icon twitter" />
+            </a>
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube">
+              <span className="social-icon youtube" />
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn">
+              <span className="social-icon linkedin" />
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram">
+              <span className="social-icon instagram" />
+            </a>
+            <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" title="Pinterest" aria-label="Pinterest">
+              <span className="social-icon pinterest" />
+            </a>
+            <a href="https://crh.sbi.bank.in" target="_blank" rel="noopener noreferrer" title="Contact Us" aria-label="Contact Us">
+              <span className="social-icon contact" />
+            </a>
+            <a href="https://api.whatsapp.com" target="_blank" rel="noopener noreferrer" title="WhatsApp" aria-label="WhatsApp">
+              <span className="social-icon whatsapp" />
+            </a>
+          </div>
+
+          <div className="text-center md:text-end">
             <p className="p-0 m-0">Site best viewed at 1280 × 720 resolution in Microsoft Edge 100+, Mozilla 100+, Google Chrome 111+</p>
           </div>
         </div>
