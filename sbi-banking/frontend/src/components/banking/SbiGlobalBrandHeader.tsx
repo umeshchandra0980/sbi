@@ -89,14 +89,14 @@ export default function SbiGlobalBrandHeader({
         { label: 'Quick Transfer', href: '/home/landingPage/fund-transfer/quick-transfer/bank-selection', icon: '🔄' },
         { label: 'Send Money', href: '/home/landingPage/fund-transfer/send-money/select-payee', icon: '📲' },
         { label: 'Manage Payee', href: '/home/landingPage/fund-transfer/send-money/select-payee', icon: '👤' },
-        { label: 'Schedule Payments', href: '/home/landingPage/fund-transfer/quick-transfer/bank-selection', icon: '📅' },
-        { label: 'Send Money Abroad', href: '/home/landingPage/fund-transfer/quick-transfer/bank-selection', icon: '🔀' },
-        { label: 'Bill Payments', href: '/dashboard', icon: '🧾' },
+        { label: 'Schedule Payments', href: '/home/landingPage/fund-transfer/scheduled-transactions', icon: '📅' },
+        { label: 'Send Money Abroad', href: '/home/landingPage/fund-transfer/send-money-abroad', icon: '🔀' },
+        { label: 'Bill Payments', href: '/home/landingPage/fund-transfer/bill-payments', icon: '🧾' },
       ],
       col2Title: 'Quick Links',
       col2Items: [
         { label: 'Transaction History', href: '/home/landingPage/manageRelationship/transactionAccounts', icon: '⇄' },
-        { label: 'Manage Limits', href: '/settings', icon: '⏲' },
+        { label: 'Manage Limits', href: '/settings?tab=Settings', icon: '⏲' },
       ]
     },
     {
@@ -211,131 +211,109 @@ export default function SbiGlobalBrandHeader({
   ];
 
   const renderNavIcon = (label: string) => {
+    let iconPath = '';
+
     switch (label) {
+      // Investments
+      case 'Mutual Funds':
+        iconPath = '/images/category-icons/ic_mutual_funds.svg';
+        break;
+      case 'Demat & Securities':
+        iconPath = '/images/category-icons/ic_demat_account.svg';
+        break;
+      case 'National Pension System (NPS)':
+        iconPath = '/images/category-icons/ic_nps.svg';
+        break;
+      case 'Public Provident Fund (PPF)':
+        iconPath = '/images/category-icons/ic_ppf.svg';
+        break;
+
       // Loans
       case 'Personal Loan':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-            <circle cx="12" cy="7" r="4" />
-            <text x="13" y="10" fontSize="8" fontWeight="bold" fill="#5b2e80" stroke="none">%</text>
-          </svg>
-        );
+        iconPath = '/images/category-icons/ic_personal_loan.svg';
+        break;
       case 'Loan Against Mutual Fund':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17" />
-            <path d="M7 18h11a2 2 0 0 0 2-2v-5" />
-            <circle cx="12" cy="6" r="3" />
-          </svg>
-        );
+        iconPath = '/images/category-icons/ic_loan_against_mutual_fund.svg';
+        break;
       case 'Home Loan':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-            <text x="10" y="18" fontSize="8" fontWeight="bold" fill="#5b2e80" stroke="none">%</text>
-          </svg>
-        );
-      case 'Overdraft against Deposit':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-            <rect x="9" y="10" width="6" height="6" rx="1" />
-          </svg>
-        );
-      case 'Education Loan':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-            <path d="M6 12v5c3 3 9 3 12 0v-5" />
-            <text x="10" y="8" fontSize="8" fontWeight="bold" fill="#5b2e80" stroke="none">%</text>
-          </svg>
-        );
+        iconPath = '/images/category-icons/ic_home_loan.svg';
+        break;
       case 'Gold Loan':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M2 17h20v4H2zM4 11h16v4H4zM7 5h10v4H7z" />
-            <text x="10" y="14" fontSize="8" fontWeight="bold" fill="#5b2e80" stroke="none">%</text>
-          </svg>
-        );
-      case 'View Existing Loans':
-      case 'Manage Loans':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 3L2 10h20L12 3z" />
-          </svg>
-        );
-      case 'Check your Credit Score':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M12 14l3-3" />
-            <path d="M3.34 19a10 10 0 1 1 17.32 0" />
-          </svg>
-        );
-      case 'Calculate Loan EMI':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <rect x="4" y="2" width="16" height="20" rx="2" />
-            <line x1="8" y1="6" x2="16" y2="6" />
-            <path d="M8 12h8M8 16h8" />
-          </svg>
-        );
+        iconPath = '/images/category-icons/ic_gold_loan.svg';
+        break;
 
-      // Cards & Accounts & Others
+      // Deposits
+      case 'Fixed Deposit (FD)':
+        iconPath = '/images/category-icons/ic_fixed_deposit.svg';
+        break;
+      case 'Recurring Deposit (RD)':
+        iconPath = '/images/category-icons/ic_recurring_deposit.svg';
+        break;
+      case 'Deposit Interest Certificate':
+        iconPath = '/images/category-icons/ic_annuity_deposit.svg';
+        break;
+      case 'Open Fixed Deposit':
+        iconPath = '/images/category-icons/ic_auto_sweep.svg';
+        break;
+
+      // Insurance
+      case 'SBI Life Insurance':
+        iconPath = '/images/category-icons/ic_life_insurance.svg';
+        break;
+      case 'Health Insurance':
+        iconPath = '/images/category-icons/ic_health_insurance.svg';
+        break;
+      case 'Link Existing Policy':
+        iconPath = '/images/category-icons/ic_accident_insurance.svg';
+        break;
+      case 'Motor Insurance':
+        iconPath = '/images/category-icons/ic_car_insurance.svg';
+        break;
+
+      // Cards
       case 'Credit Cards':
-      case 'Debit Cards':
-      case 'Forex Cards':
-      case 'Prepaid Cards':
       case 'Manage Credit Card':
+        iconPath = '/images/category-icons/ic_credit_card.svg';
+        break;
+      case 'Debit Cards':
       case 'Manage Debit Card':
+        iconPath = '/images/category-icons/ic_debit_card.svg';
+        break;
+      case 'Forex Cards':
       case 'Manage Forex Card':
-      case 'SBI Credit Cards':
-      case 'Debit Card Management':
-      case 'Credit Card':
-      case 'Prepaid Card':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <rect x="2" y="5" width="20" height="14" rx="2" />
-            <line x1="2" y1="10" x2="22" y2="10" />
-            <line x1="6" y1="15" x2="10" y2="15" />
-          </svg>
-        );
-      case 'Block / Unblock Card':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <rect x="3" y="11" width="18" height="11" rx="2" />
-            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-          </svg>
-        );
-      case 'Generate PIN':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <circle cx="7.5" cy="15.5" r="5.5" />
-            <path d="M11.5 11.5L21 2M18 5l3 3M15 8l3 3" />
-          </svg>
-        );
-      case 'Card Rewards Points':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
-          </svg>
-        );
-      case 'Manage Card Limits':
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <line x1="18" y1="20" x2="18" y2="10" />
-            <line x1="12" y1="20" x2="12" y2="4" />
-            <line x1="6" y1="20" x2="6" y2="14" />
-          </svg>
-        );
+        iconPath = '/images/category-icons/ic_forex_card.svg';
+        break;
+      case 'Prepaid Cards':
+        iconPath = '/images/category-icons/ic_ncmc_card.svg';
+        break;
+
+      // Services
+      case 'Update Profile Details':
+        iconPath = '/images/category-icons/ic_profile_details.svg';
+        break;
+      case 'ATM / Branch Locator':
+        iconPath = '/images/category-icons/ic_tax_related.svg';
+        break;
+      case 'Cheque Book Request':
+        iconPath = '/images/category-icons/ic_cheque_services.svg';
+        break;
+      case 'Lock / Unlock User Access':
+        iconPath = '/images/category-icons/ic_esecure_lock.svg';
+        break;
 
       default:
-        return (
-          <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 3L2 10h20L12 3z" />
-          </svg>
-        );
+        break;
     }
+
+    if (iconPath) {
+      return <img src={iconPath} alt={label} className="w-5 h-5 object-contain" />;
+    }
+
+    return (
+      <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 3L2 10h20L12 3z" />
+      </svg>
+    );
   };
 
   const renderPaymentsIcon = (label: string) => {
@@ -413,7 +391,7 @@ export default function SbiGlobalBrandHeader({
   };
 
   return (
-    <div className="w-full bg-white font-sans z-50">
+    <div className="w-full bg-white font-sans z-50 sticky top-0 shadow-sm">
       {/* Backdrop overlay for dimming the page content when dropdown menu is open */}
       {openNavTab && (
         <div 
@@ -499,30 +477,31 @@ export default function SbiGlobalBrandHeader({
       </div>
 
       {/* 2. MAIN WHITE BRAND NAVBAR WITH INTERACTIVE MEGA DROPDOWN CLICK MENU */}
-      <header className="bg-white border-b border-slate-200/80 px-6 py-2 shadow-xs relative">
-        <div className="max-w-[1400px] mx-auto flex justify-between items-center">
+      <header className="bg-white border-b border-slate-200/80 px-4 md:px-6 py-3.5 shadow-xs relative">
+        <div className="max-w-[1280px] mx-auto flex items-center justify-between gap-4">
           
-          {/* Logo */}
-          <Link href="/dashboard" className="flex items-center gap-2">
-            <img 
-              src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/new-horz-logo_net-banking_svg" 
-              onError={(e) => { (e.target as HTMLImageElement).src = '/assets/images/yono_logo.svg'; }}
-              alt="YONO SBI NET-BANKING" 
-              className="h-9 w-auto object-contain"
-            />
-          </Link>
+          {/* Left Group: Logo + Nav Items */}
+          <div className="flex items-center gap-16 md:gap-24">
+            <Link href="/dashboard" className="flex items-center gap-2 flex-shrink-0">
+              <img 
+                src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/new-horz-logo_net-banking_svg" 
+                onError={(e) => { (e.target as HTMLImageElement).src = '/assets/images/yono_logo.svg'; }}
+                alt="YONO SBI NET-BANKING" 
+                className="h-9.5 w-auto object-contain"
+              />
+            </Link>
 
-          {/* Nav Items Row */}
-          <nav ref={navRef} className="relative flex items-center gap-1">
-            {navTabs.map((tab) => {
-              const isOpen = openNavTab === tab.id;
-              const isActive = openNavTab === null ? activeNav === tab.id : openNavTab === tab.id;
+            {/* Nav Items Row */}
+            <nav ref={navRef} className="relative flex items-center gap-0.5">
+              {navTabs.map((tab) => {
+                const isOpen = openNavTab === tab.id;
+                const isActive = openNavTab === null ? activeNav === tab.id : openNavTab === tab.id;
 
-              return (
-                <div 
-                  key={tab.id}
-                  className="relative"
-                >
+                return (
+                  <div 
+                    key={tab.id}
+                    className="relative"
+                  >
                   <button
                     type="button"
                     onClick={(e) => {
@@ -535,11 +514,12 @@ export default function SbiGlobalBrandHeader({
                         setOpenNavTab(isOpen ? null : tab.id);
                       }
                     }}
-                    className={`relative block px-4 py-2 text-xs font-bold transition-all rounded-t-xl cursor-pointer ${
+                    className={`relative block px-3.5 py-2 font-sans font-semibold text-[14px] transition-all rounded-t-xl cursor-pointer ${
                       isActive 
                         ? 'bg-[#f4edf9] text-[#673391]' 
                         : 'text-slate-600 hover:text-[#673391] hover:bg-slate-50'
                     }`}
+                    style={{ fontFamily: "'Open Sans', sans-serif", fontWeight: 600 }}
                   >
                     <span>{tab.label}</span>
                     {isActive && (
@@ -613,13 +593,13 @@ export default function SbiGlobalBrandHeader({
                     ) : (
                       <div 
                         onClick={(e) => e.stopPropagation()}
-                        className="absolute top-full left-0 mt-1 w-[480px] bg-[#f8f6fb] rounded-2xl p-5 shadow-2xl border border-purple-200/80 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                        className="absolute top-full left-0 mt-1 w-[440px] max-w-[90vw] bg-[#f8f6fb] rounded-2xl p-4 md:p-5 shadow-2xl border border-purple-200/80 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
                       >
                         <div className="grid grid-cols-2 gap-6">
                           
                           {/* Column 1: Main Category Items */}
                           <div>
-                            <h4 className="text-xs font-extrabold text-slate-800 mb-3 pb-1 border-b border-purple-200/60">
+                            <h4 className="text-xs font-extrabold text-[#673391] uppercase tracking-wider mb-3 pb-1 border-b border-purple-200/60">
                               {tab.col1Title}
                             </h4>
                             <div className="space-y-1">
@@ -635,7 +615,10 @@ export default function SbiGlobalBrandHeader({
                                   <div className="w-8 h-8 rounded-lg bg-white border border-purple-200/70 text-[#673391] flex items-center justify-center text-sm shadow-2xs group-hover:scale-105 transition-transform flex-shrink-0">
                                     {renderNavIcon(item.label)}
                                   </div>
-                                  <span className="text-[12px] font-bold text-slate-800 group-hover:text-[#673391]">
+                                  <span 
+                                    className="text-[13.5px] font-sans font-semibold text-slate-800 group-hover:text-[#673391] leading-tight tracking-normal"
+                                    style={{ fontFamily: "'Open Sans', sans-serif", fontWeight: 600 }}
+                                  >
                                     {item.label}
                                   </span>
                                 </Link>
@@ -645,7 +628,7 @@ export default function SbiGlobalBrandHeader({
 
                           {/* Column 2: Quick Links */}
                           <div>
-                            <h4 className="text-xs font-extrabold text-slate-800 mb-3 pb-1 border-b border-purple-200/60">
+                            <h4 className="text-xs font-extrabold text-[#673391] uppercase tracking-wider mb-3 pb-1 border-b border-purple-200/60">
                               {tab.col2Title}
                             </h4>
                             <div className="space-y-1">
@@ -661,7 +644,10 @@ export default function SbiGlobalBrandHeader({
                                   <div className="w-6 h-6 rounded-md bg-white border border-purple-200/70 text-[#673391] flex items-center justify-center text-xs shadow-xs group-hover:scale-105 transition-transform flex-shrink-0">
                                     {renderNavIcon(item.label)}
                                   </div>
-                                  <span className="text-[11.5px] font-bold text-slate-700 group-hover:text-[#673391]">
+                                  <span 
+                                    className="text-[13.5px] font-sans font-semibold text-slate-700 group-hover:text-[#673391] leading-tight tracking-normal"
+                                    style={{ fontFamily: "'Open Sans', sans-serif", fontWeight: 600 }}
+                                  >
                                     {item.label}
                                   </span>
                                 </Link>
@@ -678,11 +664,12 @@ export default function SbiGlobalBrandHeader({
               );
             })}
           </nav>
+        </div>
 
           {/* Profile Circle Pill */}
           <div 
             onClick={() => router.push('/profile')}
-            className="flex items-center gap-2 bg-[#673391] text-white py-1 px-3 rounded-full text-xs font-bold shadow-xs cursor-pointer hover:bg-[#561578] transition-colors"
+            className="flex items-center gap-2 bg-[#673391] text-white py-1 px-3 rounded-full text-xs font-bold shadow-xs cursor-pointer hover:bg-[#561578] transition-colors flex-shrink-0"
           >
             <div className="w-6 h-6 rounded-full bg-amber-200 text-[#673391] flex items-center justify-center text-[10px] font-black">
               DV

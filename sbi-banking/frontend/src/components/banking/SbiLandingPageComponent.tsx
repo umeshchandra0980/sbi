@@ -923,21 +923,27 @@ export default function SbiLandingPageComponent({
                         <div className="p-8 flex-1 flex flex-col justify-between items-stretch text-left bg-white w-full h-full space-y-6">
                           
                           {/* Title and Contribution Option Box */}
-                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-100 pb-4">
-                            <h2 className="text-[20px] font-bold text-[#702082] tracking-tight pl-2">
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200 pb-6 mb-2">
+                            <h2 className="text-[28px] font-bold text-[#681d82] tracking-tight pl-2">
                               NPS Account
                             </h2>
                             <button
                               type="button"
                               onClick={() => toast.success("Opening NPS Contribution Page...")}
-                              className="border border-[#702082]/10 hover:border-[#702082]/40 bg-[#fcfaff] rounded-xl p-3 flex items-center gap-3 transition-colors text-left max-w-md cursor-pointer group shadow-2xs"
+                              className="flex items-center justify-between gap-4 border border-[#dbcdf0] bg-[#f3effa] hover:bg-[#eae3f5] rounded-xl py-3 px-5 transition-all text-left max-w-xl cursor-pointer group shadow-xs select-none"
                             >
-                              <div className="w-8 h-8 rounded-full bg-[#702082]/10 flex items-center justify-center text-[#702082] shrink-0 group-hover:scale-105 transition-transform">
-                                <TrendingUp size={16} />
+                              <div className="flex items-center gap-3">
+                                {/* Custom banknote icon with Rupee sign inside */}
+                                <svg className="w-6 h-5 text-[#681d82] shrink-0" viewBox="0 0 24 20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                  <rect x="2" y="4" width="20" height="12" rx="2" />
+                                  <circle cx="12" cy="10" r="2.5" strokeWidth="1.5" />
+                                  <text x="12" y="12" fontSize="6.5" fontWeight="900" fill="currentColor" textAnchor="middle" stroke="none">₹</text>
+                                </svg>
+                                <span className="text-[13.5px] font-bold text-[#681d82] leading-tight">
+                                  Make one time contribution to self/other NPS Accounts
+                                </span>
                               </div>
-                              <span className="text-[11px] font-semibold text-slate-700 leading-tight">
-                                Make one time contribution to self/other NPS Accounts &gt;
-                              </span>
+                              <ChevronRight size={16} className="text-[#681d82] stroke-[2.5px] shrink-0 ml-1" />
                             </button>
                           </div>
 
@@ -1076,8 +1082,211 @@ export default function SbiLandingPageComponent({
                         </div>
                       )}
 
-                      {investmentSubTab !== 'Demat & Securities' && investmentSubTab !== 'PPF' && investmentSubTab !== 'NPS' && (
-                        /* Standard Coming Soon page for Mutual Fund and IPO tabs */
+                      {investmentSubTab === 'IPO' && (
+                        <div className="fixed inset-0 z-50 bg-[#f4f3f6] flex flex-col overflow-y-auto">
+                          
+                          {/* 1. Header Bar */}
+                          <header className="bg-white border-b border-slate-200 flex items-stretch h-[75px] w-full shrink-0">
+                            {/* SBI Logo */}
+                            <div className="flex items-center px-8 bg-white border-r border-slate-100">
+                              <div className="flex items-center gap-2.5">
+                                <div className="w-9 h-9 rounded-full bg-[#00b0f0] flex items-center justify-center relative">
+                                  <div className="w-3.5 h-3.5 rounded-full bg-white" />
+                                  <div className="absolute bottom-0 left-[16.5px] w-1.5 h-3.5 bg-white" />
+                                </div>
+                                <span className="text-[30px] font-black text-[#1f70b8] tracking-tight font-sans">SBI</span>
+                              </div>
+                            </div>
+
+                            {/* Purple Info Bar */}
+                            <div className="flex-1 bg-[#1e144f] text-white flex items-center justify-between px-6 py-2 select-none">
+                              <div>
+                                <h1 className="text-[17px] font-bold tracking-wide font-sans">
+                                  SBI IPO & Rights Issue Application Portal
+                                </h1>
+                              </div>
+                              <div className="flex items-center gap-6">
+                                <div className="text-right font-sans">
+                                  <div className="text-[11px] text-[#ffd200] font-semibold">Welcome Mr. DUMPALA VISHNU VARDHAN</div>
+                                  <div className="text-[10px] text-white/80 mt-0.5">Last Login: 31 Jul 2026 11:42:17</div>
+                                </div>
+                                
+                                {/* Logout Button */}
+                                <button 
+                                  type="button" 
+                                  onClick={() => {
+                                    toast.success('Logged out from IPO Portal');
+                                    setInvestmentSubTab('Mutual Fund');
+                                  }}
+                                  className="bg-[#ffd200] hover:bg-[#ebd01e] text-slate-900 font-bold px-5 h-[75px] flex items-center gap-2 -mr-6 transition-colors font-sans text-xs uppercase cursor-pointer"
+                                >
+                                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
+                                  </svg>
+                                  <span>Logout</span>
+                                </button>
+                              </div>
+                            </div>
+                          </header>
+
+                          {/* 2. Menu Bar */}
+                          <div className="bg-[#fcfbfd] border-b border-slate-200 py-3 px-8 flex items-center gap-6 text-[13.5px] font-semibold text-slate-700 shadow-xs select-none">
+                            <button type="button" onClick={() => toast('Loading IPO applications...')} className="text-[#1e144f] hover:underline font-bold cursor-pointer">Apply IPO</button>
+                            <span className="text-slate-300">|</span>
+                            <button type="button" onClick={() => toast('Opening applications log...')} className="hover:text-[#1e144f] hover:underline cursor-pointer">View/Delete Applications</button>
+                            <span className="text-slate-300">|</span>
+                            <button type="button" onClick={() => toast('Opening FAQs...')} className="hover:text-[#1e144f] hover:underline cursor-pointer">FAQ's</button>
+                            <span className="text-slate-300">|</span>
+                            <button type="button" onClick={() => toast('Loading applicant details...')} className="hover:text-[#1e144f] hover:underline cursor-pointer">Manage IPO Applicant</button>
+                            <span className="text-slate-300">|</span>
+                            <button type="button" onClick={() => toast('Connecting to Support...')} className="hover:text-[#1e144f] hover:underline cursor-pointer">Customer Support</button>
+                          </div>
+
+                          {/* 3. Hero Banner Background */}
+                          <div className="relative w-full h-[220px] bg-gradient-to-r from-[#442b78] via-[#351e60] to-[#1f0e3d] flex items-center justify-center overflow-hidden">
+                            {/* Abstract coin-stack graphics overlay */}
+                            <div className="absolute inset-0 pointer-events-none opacity-25 select-none z-0">
+                              <svg className="w-full h-full" viewBox="0 0 1000 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                                {/* Coin Stacks & Blocks representation */}
+                                <ellipse cx="380" cy="180" rx="35" ry="8" fill="#a78bfa" />
+                                <ellipse cx="380" cy="172" rx="35" ry="8" fill="#c084fc" />
+                                <ellipse cx="380" cy="164" rx="35" ry="8" fill="#d8b4fe" />
+
+                                <ellipse cx="500" cy="190" rx="35" ry="8" fill="#a78bfa" />
+                                <ellipse cx="500" cy="182" rx="35" ry="8" fill="#c084fc" />
+
+                                <ellipse cx="620" cy="175" rx="35" ry="8" fill="#a78bfa" />
+                                <ellipse cx="620" cy="167" rx="35" ry="8" fill="#c084fc" />
+                                <ellipse cx="620" cy="159" rx="35" ry="8" fill="#d8b4fe" />
+                                <ellipse cx="620" cy="151" rx="35" ry="8" fill="#f3e8ff" />
+
+                                {/* Cube block outline */}
+                                <rect x="345" y="100" width="70" height="40" rx="4" fill="#6d28d9" opacity="0.3" stroke="#d8b4fe" strokeWidth="1" />
+                                <rect x="465" y="110" width="70" height="40" rx="4" fill="#6d28d9" opacity="0.3" stroke="#d8b4fe" strokeWidth="1" />
+                                <rect x="585" y="95" width="70" height="40" rx="4" fill="#6d28d9" opacity="0.3" stroke="#d8b4fe" strokeWidth="1" />
+                                
+                                <text x="380" y="130" fontSize="24" fontWeight="black" fill="#ffffff" opacity="0.4" textAnchor="middle">I</text>
+                                <text x="500" y="140" fontSize="24" fontWeight="black" fill="#ffffff" opacity="0.4" textAnchor="middle">P</text>
+                                <text x="620" y="125" fontSize="24" fontWeight="black" fill="#ffffff" opacity="0.4" textAnchor="middle">O</text>
+                              </svg>
+                            </div>
+                          </div>
+
+                          {/* 4. Three Cards Grid Overlay */}
+                          <div className="max-w-[1200px] w-full mx-auto px-6 -mt-[80px] pb-16 relative z-20 flex-1">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                              {/* Card 1: IPO (Equity) */}
+                              <div className="bg-white rounded-2xl border border-slate-200/80 shadow-md p-8 text-center flex flex-col justify-between items-center min-h-[300px]">
+                                <div className="space-y-4">
+                                  {/* Custom growth chart + rupee coin icon */}
+                                  <svg className="w-16 h-16 text-[#1e144f] mx-auto mb-2" viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                    {/* Banknotes outline */}
+                                    <rect x="12" y="32" width="22" height="13" rx="1.5" />
+                                    <circle cx="23" cy="38.5" r="2.5" />
+                                    {/* Growth graph */}
+                                    <path d="M44 14 H54 V24 M54 14 L34 34 L22 28 L10 38" strokeWidth="2.2" />
+                                    {/* Rupee coin stacks at base */}
+                                    <line x1="16" y1="45" x2="16" y2="50" />
+                                    <line x1="30" y1="45" x2="30" y2="50" />
+                                    <line x1="10" y1="50" x2="32" y2="50" />
+                                  </svg>
+                                  <h3 className="text-[17px] font-bold text-slate-800 tracking-wide font-sans">
+                                    IPO (Equity)
+                                  </h3>
+                                </div>
+                                <div className="w-full border-t border-slate-100 pt-6">
+                                  <button 
+                                    type="button" 
+                                    onClick={() => toast.success("Loading Equity IPO Live Issues...")}
+                                    className="text-[#0088cc] hover:text-[#006699] font-bold text-[14px] underline select-none cursor-pointer"
+                                  >
+                                    6 Live Issues
+                                  </button>
+                                </div>
+                              </div>
+
+                              {/* Card 2: IPO (Debt) */}
+                              <div className="bg-white rounded-2xl border border-slate-200/80 shadow-md p-8 text-center flex flex-col justify-between items-center min-h-[300px]">
+                                <div className="space-y-4">
+                                  {/* Custom document with calculator & coins icon */}
+                                  <svg className="w-16 h-16 text-[#1e144f] mx-auto mb-2" viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                    {/* Document */}
+                                    <path d="M14 6 H38 L48 16 V54 H14 Z" />
+                                    <line x1="38" y1="6" x2="38" y2="16" />
+                                    <line x1="38" y1="16" x2="48" y2="16" />
+                                    {/* Calculator outline */}
+                                    <rect x="32" y="28" width="10" height="18" rx="1.5" />
+                                    <circle cx="35" cy="32" r="1" fill="currentColor" stroke="none" />
+                                    <circle cx="39" cy="32" r="1" fill="currentColor" stroke="none" />
+                                    <line x1="34" y1="36" x2="40" y2="36" strokeWidth="1.5" />
+                                    {/* Stack of coins */}
+                                    <ellipse cx="22" cy="36" rx="4" ry="1.5" />
+                                    <ellipse cx="22" cy="40" rx="4" ry="1.5" />
+                                    <ellipse cx="22" cy="44" rx="4" ry="1.5" />
+                                  </svg>
+                                  <h3 className="text-[17px] font-bold text-slate-800 tracking-wide font-sans">
+                                    IPO (Debt)
+                                  </h3>
+                                </div>
+                                <div className="w-full border-t border-slate-100 pt-6">
+                                  <p className="text-slate-500 font-semibold text-[13.5px] leading-tight select-none">
+                                    Currently, no issue available for listing
+                                  </p>
+                                </div>
+                              </div>
+
+                              {/* Card 3: Rights Issue */}
+                              <div className="bg-white rounded-2xl border border-slate-200/80 shadow-md p-8 text-center flex flex-col justify-between items-center min-h-[300px]">
+                                <div className="space-y-4">
+                                  {/* Custom document with chevrons and shield icon */}
+                                  <svg className="w-16 h-16 text-[#1e144f] mx-auto mb-2" viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                    {/* Document */}
+                                    <path d="M14 6 H38 L48 16 V54 H14 Z" />
+                                    {/* Chevrons */}
+                                    <path d="M26 22 L30 25 L34 22 M26 28 L30 31 L34 28" strokeWidth="2.2" />
+                                    {/* Shield with Rupee */}
+                                    <path d="M24 38 C24 38 30 36 30 36 C30 36 36 38 36 38 C36 43 36 47 30 51 C24 47 24 43 24 38 Z" fill="#f5f3ff" />
+                                    <text x="30" y="45" fontSize="7" fontWeight="bold" fill="currentColor" textAnchor="middle" stroke="none">₹</text>
+                                  </svg>
+                                  <h3 className="text-[17px] font-bold text-slate-800 tracking-wide font-sans">
+                                    Rights Issue
+                                  </h3>
+                                </div>
+                                <div className="w-full border-t border-slate-100 pt-6">
+                                  <button 
+                                    type="button" 
+                                    onClick={() => toast.success("Loading Rights Issue Live Issues...")}
+                                    className="text-[#0088cc] hover:text-[#006699] font-bold text-[14px] underline select-none cursor-pointer"
+                                  >
+                                    4 Live Issues
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* 5. Footer */}
+                          <footer className="w-full bg-[#1e144f] text-white/90 text-xs py-3.5 px-8 flex justify-between items-center mt-auto shrink-0 select-none font-sans">
+                            <span>© State Bank of India</span>
+                            <a href="https://onlinesbi.sbi.bank.in" target="_blank" rel="noopener noreferrer" className="hover:underline">
+                              Privacy Policy
+                            </a>
+                          </footer>
+
+                          {/* Helper float overlay toggle button to quickly jump back to YONO portal */}
+                          <button
+                            type="button"
+                            onClick={() => setInvestmentSubTab('Mutual Fund')}
+                            className="fixed bottom-6 right-6 bg-[#702082] hover:bg-[#5c1a6b] text-white font-bold text-xs py-2.5 px-5 rounded-full shadow-lg z-50 flex items-center gap-1.5 transition-all select-none border border-white/20 cursor-pointer"
+                          >
+                            <span>← Back to YONO</span>
+                          </button>
+                          
+                        </div>
+                      )}
+
+                      {investmentSubTab === 'Mutual Fund' && (
+                        /* Standard Coming Soon page for Mutual Fund tab */
                         <div className="p-8 flex-1 flex flex-col items-center justify-center text-center">
                           {/* Hourglass/Phone vector */}
                           <div className="w-56 h-48 relative mb-4 flex items-center justify-center">
