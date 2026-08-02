@@ -801,3 +801,208 @@
 .dash-footer-link:hover {
   opacity: 0.85;
 }
+
+/* ==========================================================================
+   INSTAGRAM-STYLE STORY VIEWER MODAL
+   ========================================================================== */
+
+/* ==========================================================================
+   AUTHENTIC SBI YONO STORY VIEWER MODAL
+   ========================================================================== */
+
+.insta-story-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.insta-story-card {
+  position: relative;
+  width: 380px;
+  height: 640px;
+  background: #000000;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top Progress Bars Header */
+.insta-story-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  padding: 10px 14px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Single White Indicator Line for Active Story */
+.insta-story-single-line-container {
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.insta-story-single-line-fill {
+  height: 100%;
+  background: #ffffff;
+  border-radius: 2px;
+  transition: width 0.05s linear;
+}
+
+/* Header User Profile Row */
+.insta-story-user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.insta-story-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid #ffffff;
+  object-fit: cover;
+  background: #ffffff;
+}
+
+.insta-story-title {
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  line-height: 1.2;
+}
+
+.insta-story-subtitle {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 10.5px;
+  font-weight: 500;
+}
+
+/* Close Button at Top-Right inside story header */
+.insta-story-topright-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: #ffffff;
+  border: none;
+  color: #333333;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 50;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.insta-story-topright-close:hover {
+  transform: scale(1.1);
+  background: #f1f5f9;
+}
+
+/* Main Image Content */
+.insta-story-image-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000000;
+  position: relative;
+}
+
+.insta-story-img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+/* Navigation Touch/Click Zones */
+.insta-story-nav-prev,
+.insta-story-nav-next {
+  position: absolute;
+  top: 50px;
+  bottom: 0;
+  width: 35%;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.insta-story-nav-prev {
+  left: 0;
+}
+
+.insta-story-nav-next {
+  right: 0;
+}
+
+/* Desktop External Arrow Controls (Matching Right Side Arrow Button in Screenshot) */
+.insta-story-ext-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 40;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #302985;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s ease;
+}
+
+.insta-story-ext-nav:hover {
+  background: #f8fafc;
+  transform: translateY(-50%) scale(1.08);
+}
+
+.insta-story-ext-prev {
+  left: calc(50% - 250px);
+}
+
+.insta-story-ext-next {
+  right: calc(50% - 250px);
+}
+
+@media (max-width: 640px) {
+  .insta-story-ext-nav {
+    display: none;
+  }
+  .insta-story-card {
+    width: 100%;
+    max-width: 360px;
+    height: 85vh;
+  }
+}
+

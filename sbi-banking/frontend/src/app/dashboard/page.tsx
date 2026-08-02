@@ -7,7 +7,7 @@ import Link from 'next/link';
 import toast from 'react-hot-toast';
 import { 
   Eye, EyeOff, Search, Bell, HelpCircle, ChevronRight, ChevronLeft,
-  Phone, Smartphone, Zap, Car
+  Phone, Smartphone, Zap, Car, X
 } from 'lucide-react';
 import { MOCK_USER, MOCK_ACCOUNTS } from '@/lib/mockData';
 import { RelationshipOverviewCards } from '@/components/banking/RelationshipOverviewCards';
@@ -25,6 +25,108 @@ export default function DashboardPage() {
   
   // Banner Carousel State
   const [bannerSlide, setBannerSlide] = useState(0);
+
+  // Instagram Story Modal State
+  const [activeStoryIndex, setActiveStoryIndex] = useState<number | null>(null);
+  const [storyProgress, setStoryProgress] = useState(0);
+
+  const storiesList = [
+    { 
+      id: 1, 
+      label: 'Welcome to Yono', 
+      logo: '/stories/story1.jpg',
+      fullImage: '/stories/story1.jpg',
+      subtitle: 'Official Announcement'
+    },
+    { 
+      id: 2, 
+      label: 'Fraud Awareness', 
+      logo: '/stories/story2.jpg',
+      fullImage: '/stories/story2.jpg',
+      subtitle: 'Security Tip'
+    },
+    { 
+      id: 3, 
+      label: 'Tax Related Services', 
+      logo: '/stories/story3.jpg',
+      fullImage: '/stories/story3.jpg',
+      subtitle: 'Go to Services > Tax Related'
+    },
+    { 
+      id: 4, 
+      label: 'e - Secure Lock', 
+      logo: '/stories/story4.png',
+      fullImage: '/stories/story4.png',
+      subtitle: 'Instant Lock / Unlock'
+    },
+    { 
+      id: 5, 
+      label: 'Sustainability', 
+      logo: '/stories/story5.jpg',
+      fullImage: '/stories/story5.jpg',
+      subtitle: 'Track Carbon Footprint'
+    },
+    { 
+      id: 6, 
+      label: 'SIP', 
+      logo: '/stories/story1.jpg',
+      fullImage: '/stories/story1.jpg',
+      subtitle: 'Smart Investments'
+    },
+    { 
+      id: 7, 
+      label: 'Credit Card', 
+      logo: '/stories/story2.jpg',
+      fullImage: '/stories/story2.jpg',
+      subtitle: 'Exclusive SBI Rewards'
+    },
+    { 
+      id: 8, 
+      label: 'Invest Now', 
+      logo: '/stories/story3.jpg',
+      fullImage: '/stories/story3.jpg',
+      subtitle: 'Wealth Management'
+    },
+  ];
+
+  // Animated Progress Loader Timer (5 Seconds Per Story)
+  React.useEffect(() => {
+    if (activeStoryIndex === null) return;
+    setStoryProgress(0);
+
+    const progressInterval = setInterval(() => {
+      setStoryProgress((prev) => {
+        if (prev >= 100) {
+          if (activeStoryIndex < storiesList.length - 1) {
+            setActiveStoryIndex(activeStoryIndex + 1);
+            return 0;
+          } else {
+            setActiveStoryIndex(null);
+            return 0;
+          }
+        }
+        return prev + 2; // 50 * 2 = 100% over 5 seconds (5000ms)
+      });
+    }, 100);
+
+    return () => clearInterval(progressInterval);
+  }, [activeStoryIndex, storiesList.length]);
+
+  const handleNextStory = () => {
+    if (activeStoryIndex !== null && activeStoryIndex < storiesList.length - 1) {
+      setActiveStoryIndex(activeStoryIndex + 1);
+      setStoryProgress(0);
+    } else {
+      setActiveStoryIndex(null);
+    }
+  };
+
+  const handlePrevStory = () => {
+    if (activeStoryIndex !== null && activeStoryIndex > 0) {
+      setActiveStoryIndex(activeStoryIndex - 1);
+      setStoryProgress(0);
+    }
+  };
 
   const bannerImages = [
     "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/welcome_64x64",
@@ -67,19 +169,10 @@ export default function DashboardPage() {
                 </div>
 
                 <div className="scroll-container">
-                  {[
-                    { label: 'Welcome to Yono', img: '/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/welcome_64x64' },
-                    { label: 'Fraud Awareness', img: '/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/fraudawareness2_thumbnail_64x6' },
-                    { label: 'Tax Related Services', img: '/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/welcome_64x64' },
-                    { label: 'e - Secure Lock', img: '/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/yp_secure_lock_banner_sbi_thumbnail_64x64_23_11zon' },
-                    { label: 'Sustainability', img: '/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/sustainibility_thumbnail_64x64' },
-                    { label: 'SIP', img: '/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/sip_thumbnail_product_creative_64x64' },
-                    { label: 'Credit Card', img: '/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/welcome_64x64' },
-                    { label: 'Invest Now', img: '/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/sip_thumbnail_product_creative_64x64' },
-                  ].map((story, sIdx) => (
-                    <div key={sIdx} className="circle-container" onClick={() => toast.success(`Opening ${story.label}`)}>
+                  {storiesList.map((story, sIdx) => (
+                    <div key={sIdx} className="circle-container" onClick={() => setActiveStoryIndex(sIdx)}>
                       <div className="circle">
-                        <img src={story.img} alt={story.label} />
+                        <img src={story.logo} alt={story.label} />
                       </div>
                       <p className="storyname">{story.label}</p>
                     </div>
@@ -352,25 +445,25 @@ export default function DashboardPage() {
                   <h1 className="rightside-title">Deposits</h1>
                 </div>
                 <div className="rightside-grid">
-                  <div className="rightside-item" onClick={() => toast.success("Fixed Deposit")}>
+                  <div className="rightside-item" onClick={() => router.push('/home/landingPage/accounts/deposits/create-fd?fdtype=FD=true')}>
                     <div className="rightside-icon-box">
                       <img src="/images/category-icons/ic_fixed_deposit.svg" alt="Fixed Deposit" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Fixed Deposit</span>
                   </div>
-                  <div className="rightside-item" onClick={() => toast.success("Recurring Deposit")}>
+                  <div className="rightside-item" onClick={() => router.push('/home/landingPage/accounts/deposits/create-fd/recurring-deposit')}>
                     <div className="rightside-icon-box">
                       <img src="/images/category-icons/ic_recurring_deposit.svg" alt="Recurring Deposit" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Recurring Deposit</span>
                   </div>
-                  <div className="rightside-item" onClick={() => toast.success("Annuity Deposit")}>
+                  <div className="rightside-item" onClick={() => router.push('/home/landingPage/accounts/deposits/create-fd?fdtype=FD=true')}>
                     <div className="rightside-icon-box">
                       <img src="/images/category-icons/ic_annuity_deposit.svg" alt="Annuity Deposit" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Annuity Deposit</span>
                   </div>
-                  <div className="rightside-item" onClick={() => toast.success("Auto Sweep")}>
+                  <div className="rightside-item" onClick={() => router.push('/home/landingPage/accounts/deposits/create-fd?fdtype=FD=true')}>
                     <div className="rightside-icon-box">
                       <img src="/images/category-icons/ic_auto_sweep.svg" alt="Auto Sweep" className="w-5 h-5 object-contain" />
                     </div>
@@ -496,6 +589,90 @@ export default function DashboardPage() {
           <a href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" className="dash-footer-link">Privacy Policy</a>
         </div>
       </footer>
+
+      {/* ================= INSTAGRAM-STYLE STORY VIEWER MODAL ================= */}
+      {activeStoryIndex !== null && (
+        <div className="insta-story-overlay" onClick={() => setActiveStoryIndex(null)}>
+          
+          {/* External Left Navigation Arrow (Desktop) */}
+          {activeStoryIndex > 0 && (
+            <button 
+              type="button" 
+              className="insta-story-ext-nav insta-story-ext-prev" 
+              onClick={(e) => { e.stopPropagation(); handlePrevStory(); }}
+              aria-label="Previous Story"
+            >
+              <ChevronLeft size={24} />
+            </button>
+          )}
+
+          {/* External Right Navigation Arrow (Desktop) */}
+          {activeStoryIndex < storiesList.length - 1 && (
+            <button 
+              type="button" 
+              className="insta-story-ext-nav insta-story-ext-next" 
+              onClick={(e) => { e.stopPropagation(); handleNextStory(); }}
+              aria-label="Next Story"
+            >
+              <ChevronRight size={24} />
+            </button>
+          )}
+
+          {/* Main Story Card (380px x 640px, rounded-2xl) */}
+          <div className="insta-story-card" onClick={(e) => e.stopPropagation()}>
+            
+            {/* White Circular Close Button at Top-Right of Card (Matching Screenshot) */}
+            <button 
+              type="button" 
+              onClick={() => setActiveStoryIndex(null)} 
+              className="insta-story-topright-close"
+              aria-label="Close Story"
+            >
+              <X size={20} />
+            </button>
+
+            {/* Top Header Row with Single White Line Indicator & Profile */}
+            <div className="insta-story-header">
+              
+              {/* Single White Animated Progress Loader Line for Current Active Story */}
+              <div className="insta-story-single-line-container">
+                <div 
+                  className="insta-story-single-line-fill" 
+                  style={{ width: `${storyProgress}%` }}
+                />
+              </div>
+
+              {/* User Avatar & Title */}
+              <div className="insta-story-user-info">
+                <img 
+                  src={storiesList[activeStoryIndex].logo} 
+                  alt={storiesList[activeStoryIndex].label} 
+                  className="insta-story-avatar" 
+                />
+                <div>
+                  <div className="insta-story-title">
+                    {storiesList[activeStoryIndex].label}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Click/Touch Navigation Zones */}
+            <div className="insta-story-nav-prev" onClick={handlePrevStory} />
+            <div className="insta-story-nav-next" onClick={handleNextStory} />
+
+            {/* Story Full Screen Image */}
+            <div className="insta-story-image-container">
+              <img 
+                src={storiesList[activeStoryIndex].fullImage} 
+                alt={storiesList[activeStoryIndex].label} 
+                className="insta-story-img"
+              />
+            </div>
+
+          </div>
+        </div>
+      )}
 
     </div>
   );

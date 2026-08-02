@@ -102,18 +102,20 @@ export default function SbiGlobalBrandHeader({
     {
       id: 'Deposits',
       label: 'Deposits',
-      href: '/home/landingPage/manageRelationship/deposits',
-      col1Title: 'Term & Fixed Deposits',
+      href: '/home/landingPage/accounts/deposits/create-fd?fdtype=FD=true',
+      col1Title: 'Products',
       col1Items: [
-        { label: 'Fixed Deposit (FD)', href: '/home/landingPage/manageRelationship/deposits', icon: '📈' },
-        { label: 'Recurring Deposit (RD)', href: '/home/landingPage/manageRelationship/deposits', icon: '🔁' },
-        { label: 'Open Fixed Deposit', href: '/home/landingPage/manageRelationship/deposits', icon: '✨' },
-        { label: 'Deposit Interest Certificate', href: '/home/landingPage/manageRelationship/deposits', icon: '📜' },
+        { label: 'Fixed Deposit', href: '/home/landingPage/accounts/deposits/create-fd?fdtype=FD=true', icon: '📈' },
+        { label: 'Recurring Deposit', href: '/home/landingPage/accounts/deposits/create-fd/recurring-deposit', icon: '🔁' },
+        { label: 'Annuity Deposit', href: '/home/landingPage/accounts/deposits/create-fd/annuity-deposit', icon: '📜' },
+        { label: 'Auto Sweep', href: '/home/landingPage/accounts/deposits/create-fd?fdtype=FD=true#autosweep', icon: '🔄' },
       ],
       col2Title: 'Quick Links',
       col2Items: [
-        { label: 'Sukanya Samriddhi Scheme', href: '/home/landingPage/manageRelationship/deposits', icon: '💡' },
-        { label: 'Tax Saving Deposits', href: '/home/landingPage/manageRelationship/deposits', icon: '📋' },
+        { label: 'Manage Deposits', href: '/home/landingPage/manageRelationship/deposits', icon: '💼' },
+        { label: 'View Interest Rate', href: '/home/landingPage/accounts/deposits/create-fd?fdtype=FD=true#interest-rates', icon: '🏷' },
+        { label: 'Manage PPF Accounts', href: '/home/landingPage/manageRelationship/deposits', icon: '🐷' },
+        { label: 'Requests', href: '/home/landingPage/manageRelationship/deposits?showRequestsModal=true', icon: '📄' },
       ]
     },
     {
@@ -175,18 +177,24 @@ export default function SbiGlobalBrandHeader({
     {
       id: 'Insurance',
       label: 'Insurance',
-      href: '/home/landingPage/manageRelationship/insurance/insurance',
-      col1Title: 'Insurance Plans',
+      href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=Life%20Insurance&insuranceCategory=1&isNativeValue=false',
+      col1Title: 'Life Insurance',
       col1Items: [
-        { label: 'SBI Life Insurance', href: '/home/landingPage/manageRelationship/insurance/insurance', icon: '🛡' },
-        { label: 'Health Insurance', href: '/home/landingPage/manageRelationship/insurance/insurance', icon: '🏥' },
-        { label: 'Motor Insurance', href: '/home/landingPage/manageRelationship/insurance/insurance', icon: '🚗' },
-        { label: 'Link Existing Policy', href: '/home/landingPage/manageRelationship/insurance/insurance', icon: '🔗' },
+        { label: 'Protection Plans', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=Life%20Insurance&insuranceCategory=1&isNativeValue=false', icon: '☂️' },
+        { label: 'Child Plans', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=Life%20Insurance&insuranceCategory=2&isNativeValue=false', icon: '👶' },
+        { label: 'Retirement Plans', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=Life%20Insurance&insuranceCategory=3&isNativeValue=false', icon: '🧑‍🦯' },
+        { label: 'Wealth Creation', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=Life%20Insurance&insuranceCategory=4&isNativeValue=false', icon: '🌱' },
+        { label: 'Savings Plans', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=Life%20Insurance&insuranceCategory=5&isNativeValue=false', icon: '👛' },
+        { label: 'Group Plans', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=Life%20Insurance&insuranceCategory=6&isNativeValue=false', icon: '👥' },
       ],
-      col2Title: 'Quick Links',
+      col2Title: 'General Insurance & Quick Links',
       col2Items: [
-        { label: 'Buy New Policy', href: '/home/landingPage/manageRelationship/insurance/insurance', icon: '🛒' },
-        { label: 'Manage Policies', href: '/home/landingPage/manageRelationship/insurance/insurance', icon: '📑' },
+        { label: 'Health Plans', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=General%20Insurance', icon: '🏥' },
+        { label: 'Motor Insurance', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=General%20Insurance', icon: '🚗' },
+        { label: 'Travel Insurance', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=General%20Insurance', icon: '🧳' },
+        { label: 'Manage Policies', href: '/home/landingPage/manageRelationship/insurance', icon: '📑' },
+        { label: 'Resume Application', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard', icon: '▶️' },
+        { label: 'Tools & Calculators', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard', icon: '🧮' },
       ]
     },
     {
@@ -243,17 +251,25 @@ export default function SbiGlobalBrandHeader({
         break;
 
       // Deposits
-      case 'Fixed Deposit (FD)':
+      case 'Fixed Deposit':
+      case 'Manage Deposits':
         iconPath = '/images/category-icons/ic_fixed_deposit.svg';
         break;
-      case 'Recurring Deposit (RD)':
+      case 'Recurring Deposit':
+      case 'View Interest Rate':
         iconPath = '/images/category-icons/ic_recurring_deposit.svg';
         break;
-      case 'Deposit Interest Certificate':
+      case 'Annuity Deposit':
         iconPath = '/images/category-icons/ic_annuity_deposit.svg';
         break;
-      case 'Open Fixed Deposit':
+      case 'Auto Sweep':
         iconPath = '/images/category-icons/ic_auto_sweep.svg';
+        break;
+      case 'Manage PPF Accounts':
+        iconPath = '/images/category-icons/ic_ppf.svg';
+        break;
+      case 'Requests':
+        iconPath = '/images/category-icons/ic_cheque_services.svg';
         break;
 
       // Insurance
@@ -456,13 +472,20 @@ export default function SbiGlobalBrandHeader({
                           </h4>
                           <div className="space-y-1">
                             {tab.col1Items.map((item) => (
-                              <Link
+                              <button
                                 key={item.label}
-                                href={item.href}
-                                target={item.href.startsWith('http') ? '_blank' : undefined}
-                                rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                                onClick={() => setTimeout(() => setOpenNavTab(null), 100)}
-                                className="flex items-center gap-3 py-2 px-2 rounded-xl hover:bg-white transition-all group border-b border-purple-100/40"
+                                type="button"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  setOpenNavTab(null);
+                                  if (item.href.startsWith('http')) {
+                                    window.open(item.href, '_blank', 'noopener,noreferrer');
+                                  } else {
+                                    router.push(item.href);
+                                  }
+                                }}
+                                className="w-full text-left flex items-center gap-3 py-2 px-2 rounded-xl hover:bg-white transition-all group border-b border-purple-100/40 cursor-pointer"
                               >
                                 <div className="w-8 h-8 rounded-lg bg-white border border-purple-200/70 text-[#673391] flex items-center justify-center text-sm shadow-2xs group-hover:scale-105 transition-transform flex-shrink-0">
                                   {renderNavIcon(item.label)}
@@ -473,7 +496,7 @@ export default function SbiGlobalBrandHeader({
                                 >
                                   {item.label}
                                 </span>
-                              </Link>
+                              </button>
                             ))}
                           </div>
                         </div>
@@ -485,13 +508,20 @@ export default function SbiGlobalBrandHeader({
                           </h4>
                           <div className="space-y-1">
                             {tab.col2Items.map((item) => (
-                              <Link
+                              <button
                                 key={item.label}
-                                href={item.href}
-                                target={item.href.startsWith('http') ? '_blank' : undefined}
-                                rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                                onClick={() => setTimeout(() => setOpenNavTab(null), 100)}
-                                className="flex items-center gap-3 py-1.5 px-2 rounded-xl hover:bg-white transition-all group"
+                                type="button"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  setOpenNavTab(null);
+                                  if (item.href.startsWith('http')) {
+                                    window.open(item.href, '_blank', 'noopener,noreferrer');
+                                  } else {
+                                    router.push(item.href);
+                                  }
+                                }}
+                                className="w-full text-left flex items-center gap-3 py-1.5 px-2 rounded-xl hover:bg-white transition-all group cursor-pointer"
                               >
                                 <div className="w-6 h-6 rounded-md bg-white border border-purple-200/70 text-[#673391] flex items-center justify-center text-xs shadow-xs group-hover:scale-105 transition-transform flex-shrink-0">
                                   {renderNavIcon(item.label)}
@@ -502,7 +532,7 @@ export default function SbiGlobalBrandHeader({
                                 >
                                   {item.label}
                                 </span>
-                              </Link>
+                              </button>
                             ))}
                           </div>
                         </div>
