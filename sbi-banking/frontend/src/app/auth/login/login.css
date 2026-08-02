@@ -1957,3 +1957,57 @@ body, html {
   opacity: 0.95;
   font-size: 11.5px;
 }
+
+/* ==========================================================================
+   SBI REUSABLE CSS SPRITE SYSTEM (Using /images/sprite.png)
+   ========================================================================== */
+.social-icon {
+  background-image: url('/images/sprite.png');
+  background-repeat: no-repeat;
+  width: 34px;
+  height: 34px;
+  display: inline-block;
+  vertical-align: middle;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  cursor: pointer;
+}
+
+.social-icon:hover {
+  transform: scale(1.1);
+  opacity: 0.9;
+}
+
+/* Background Positions for Individual Social & Contact Icons */
+.social-icon.facebook {
+  background-position: -5px -5px;
+}
+
+.social-icon.twitter,
+.social-icon.x {
+  background-position: -44px -5px;
+}
+
+.social-icon.youtube {
+  background-position: -83px -5px;
+}
+
+.social-icon.linkedin {
+  background-position: -122px -5px;
+}
+
+.social-icon.instagram {
+  background-position: -161px -5px;
+}
+
+.social-icon.pinterest {
+  background-position: -200px -5px;
+}
+
+.social-icon.contact {
+  background-position: -239px -5px;
+}
+
+.social-icon.whatsapp {
+  background-position: -278px -5px;
+}
+

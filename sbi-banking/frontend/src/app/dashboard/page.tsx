@@ -287,25 +287,25 @@ export default function DashboardPage() {
                 <div className="rightside-grid">
                   <div className="rightside-item" onClick={() => toast.success("Mutual Funds")}>
                     <div className="rightside-icon-box">
-                      <img src="/assets/images/landing_page/ic__20newmutualfunds.svg" alt="Mutual Funds" className="w-5 h-5" />
+                      <img src="/images/category-icons/ic_mutual_funds.svg" alt="Mutual Funds" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Mutual Funds</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("Demat & Securities")}>
                     <div className="rightside-icon-box">
-                      <img src="/assets/images/landing_page/cate_20ic_demat_20acc.svg" alt="Demat Account" className="w-5 h-5" />
+                      <img src="/images/category-icons/ic_demat_account.svg" alt="Demat Account" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Demat &amp; Securities</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("NPS")}>
                     <div className="rightside-icon-box">
-                      <img src="/assets/images/landing_page/ic__20newnps.svg" alt="NPS" className="w-5 h-5" />
+                      <img src="/images/category-icons/ic_nps.svg" alt="NPS" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">NPS</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("PPF")}>
                     <div className="rightside-icon-box">
-                      <img src="/assets/images/landing_page/ic__20newppf.svg" alt="PPF" className="w-5 h-5" />
+                      <img src="/images/category-icons/ic_ppf.svg" alt="PPF" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">PPF</span>
                   </div>
@@ -321,25 +321,25 @@ export default function DashboardPage() {
                 <div className="rightside-grid">
                   <div className="rightside-item" onClick={() => toast.success("Personal Loan")}>
                     <div className="rightside-icon-box">
-                      <img src="/assets/images/landing_page/ic_newpersonalloan.svg" alt="Personal Loan" className="w-5 h-5" />
+                      <img src="/images/category-icons/ic_personal_loan.svg" alt="Personal Loan" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Personal Loan</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("Loan Against Mutual Fund")}>
                     <div className="rightside-icon-box">
-                      <img src="/assets/images/landing_page/ic_newpersonalloan.svg" alt="Loan Against Mutual Fund" className="w-5 h-5" />
+                      <img src="/images/category-icons/ic_loan_against_mutual_fund.svg" alt="Loan Against Mutual Fund" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Loan Against Mutual Fund</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("Home Loan")}>
                     <div className="rightside-icon-box">
-                      <img src="/assets/images/landing_page/ic_newhomeloan.svg" alt="Home Loan" className="w-5 h-5" />
+                      <img src="/images/category-icons/ic_home_loan.svg" alt="Home Loan" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Home Loan</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("Gold Loan")}>
                     <div className="rightside-icon-box">
-                      <img src="/assets/images/landing_page/ic_newgoldloan.svg" alt="Gold Loan" className="w-5 h-5" />
+                      <img src="/images/category-icons/ic_gold_loan.svg" alt="Gold Loan" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Gold Loan</span>
                   </div>
@@ -354,25 +354,25 @@ export default function DashboardPage() {
                 <div className="rightside-grid">
                   <div className="rightside-item" onClick={() => toast.success("Fixed Deposit")}>
                     <div className="rightside-icon-box">
-                      <img src="/assets/images/landing_page/ic_fixeddeposit.svg" alt="Fixed Deposit" className="w-5 h-5" />
+                      <img src="/images/category-icons/ic_fixed_deposit.svg" alt="Fixed Deposit" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Fixed Deposit</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("Recurring Deposit")}>
                     <div className="rightside-icon-box">
-                      <img src="/assets/images/landing_page/ic__20newrecurringdeposit.svg" alt="Recurring Deposit" className="w-5 h-5" />
+                      <img src="/images/category-icons/ic_recurring_deposit.svg" alt="Recurring Deposit" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Recurring Deposit</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("Annuity Deposit")}>
                     <div className="rightside-icon-box">
-                      <img src="/assets/images/landing_page/cate_20ic_annuity_20deposit.svg" alt="Annuity Deposit" className="w-5 h-5" />
+                      <img src="/images/category-icons/ic_annuity_deposit.svg" alt="Annuity Deposit" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Annuity Deposit</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("Auto Sweep")}>
                     <div className="rightside-icon-box">
-                      <img src="/assets/images/landing_page/cate_20ic_autosweep.svg" alt="Auto Sweep" className="w-5 h-5" />
+                      <img src="/images/category-icons/ic_auto_sweep.svg" alt="Auto Sweep" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Auto Sweep</span>
                   </div>
@@ -388,25 +388,25 @@ export default function DashboardPage() {
                 <div className="rightside-grid">
                   <div className="rightside-item" onClick={() => toast.success("Life Insurance")}>
                     <div className="rightside-icon-box">
-                      <img src="/assets/images/landing_page/ic_newlifeinsurance.svg" alt="Life Insurance" className="w-5 h-5" />
+                      <img src="/images/category-icons/ic_life_insurance.svg" alt="Life Insurance" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Life</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("Health Insurance")}>
                     <div className="rightside-icon-box">
-                      <img src="/assets/images/landing_page/ic_newhealthinsurance.svg" alt="Health Insurance" className="w-5 h-5" />
+                      <img src="/images/category-icons/ic_health_insurance.svg" alt="Health Insurance" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Health</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("Accident Insurance")}>
                     <div className="rightside-icon-box">
-                      <img src="/assets/images/landing_page/ic_newaccidentinsurance.svg" alt="Accident Insurance" className="w-5 h-5" />
+                      <img src="/images/category-icons/ic_accident_insurance.svg" alt="Accident Insurance" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Accident</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("Motor Insurance")}>
                     <div className="rightside-icon-box">
-                      <img src="/assets/images/landing_page/ic_newcarinsurance.svg" alt="Motor Insurance" className="w-5 h-5" />
+                      <img src="/images/category-icons/ic_car_insurance.svg" alt="Motor Insurance" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Motor</span>
                   </div>
@@ -421,25 +421,25 @@ export default function DashboardPage() {
                 <div className="rightside-grid">
                   <div className="rightside-item" onClick={() => router.push('/cards')}>
                     <div className="rightside-icon-box">
-                      <img src="/assets/images/landing_page/ic_newcreditcard.svg" alt="Credit Cards" className="w-5 h-5" />
+                      <img src="/images/category-icons/ic_credit_card.svg" alt="Credit Cards" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Credit Cards</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("Debit Cards")}>
                     <div className="rightside-icon-box">
-                      <img src="/assets/images/landing_page/ic_newdebitcard.svg" alt="Debit Cards" className="w-5 h-5" />
+                      <img src="/images/category-icons/ic_debit_card.svg" alt="Debit Cards" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Debit Cards</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("Forex Cards")}>
                     <div className="rightside-icon-box">
-                      <img src="/assets/images/landing_page/ic_newforexcard.svg" alt="Forex Cards" className="w-5 h-5" />
+                      <img src="/images/category-icons/ic_forex_card.svg" alt="Forex Cards" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Forex Cards</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("Prepaid Cards")}>
                     <div className="rightside-icon-box">
-                      <img src="/assets/images/landing_page/ncmc_card.svg" alt="Prepaid Cards" className="w-5 h-5" />
+                      <img src="/images/category-icons/ic_ncmc_card.svg" alt="Prepaid Cards" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Prepaid Cards</span>
                   </div>
@@ -455,25 +455,25 @@ export default function DashboardPage() {
                 <div className="rightside-grid">
                   <div className="rightside-item" onClick={() => toast.success("Account Related Services")}>
                     <div className="rightside-icon-box">
-                      <img src="/assets/images/landing_page/cate_20ic_app_20experience.svg" alt="Account Related" className="w-5 h-5" />
+                      <img src="/images/category-icons/ic_profile_details.svg" alt="Account Related" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Account Related</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("Tax Related Services")}>
                     <div className="rightside-icon-box">
-                      <img src="/assets/images/landing_page/ic_taxrelated.svg" alt="Tax Related" className="w-5 h-5" />
+                      <img src="/images/category-icons/ic_tax_related.svg" alt="Tax Related" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Tax Related</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("Cheque Services")}>
                     <div className="rightside-icon-box">
-                      <img src="/assets/images/landing_page/cheque_services_icon_n.svg" alt="Cheque Services" className="w-5 h-5" />
+                      <img src="/images/category-icons/ic_cheque_services.svg" alt="Cheque Services" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Cheque Services</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("e-Secure Lock")}>
                     <div className="rightside-icon-box">
-                      <img src="/assets/images/landing_page/cate_20ic_esecure_20lock.svg" alt="e-Secure Lock" className="w-5 h-5" />
+                      <img src="/images/category-icons/ic_esecure_lock.svg" alt="e-Secure Lock" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">e-Secure Lock</span>
                   </div>

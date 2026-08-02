@@ -424,7 +424,7 @@ export default function LandingPage() {
               </h1>
 
               <div className="text-center">
-                <Link href="/auth/security" className="banking-box-login-btn">
+                <Link href="/auth/login" className="banking-box-login-btn">
                   LOGIN <span className="login-arrows">&gt;&gt;</span>
                 </Link>
               </div>
