@@ -24,35 +24,47 @@ export const QuickFeatureBanners: React.FC<QuickFeatureBannersProps> = ({
         aria-label="Check your Credit Score"
       >
         <div className="banner-content-left">
-          <p className="banner-text-wrapper">
-            <span>
-              <small className="check">Check your</small>
-              <br />
-              <strong className="banner-heading">Credit Score</strong>
-              <ChevronRight size={20} className="banner-chevron-icon" />
-            </span>
+          <p className="banner-text-wrapper flex flex-col items-start justify-center">
+            <small className="check text-white/95">Check your</small>
+            <strong className="banner-heading leading-tight flex items-center gap-1.5 mt-0.5">
+              <span>Credit Score</span>
+              <svg className="w-3.5 h-3.5 text-white shrink-0 mt-[2px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </strong>
           </p>
         </div>
 
         <div className="banner-illustration-area">
           <svg className="banner-cutout-svg" viewBox="0 0 200 100" preserveAspectRatio="none">
-            <path d="M 50 0 C 20 0 0 100 0 100 L 200 100 L 200 0 Z" fill="#ffffff" />
+            <path d="M 125 0 C 110 30 100 70 100 100 L 200 100 L 200 0 Z" fill="#ebeef5" />
           </svg>
 
           <div className="banner-graphic-container">
             <svg viewBox="0 0 140 100" fill="none" className="credit-gauge-svg">
-              <path d="M 15 75 Q 10 60 25 58 Q 30 45 45 52 Q 55 48 60 60 Z" fill="#e9d5ff" opacity="0.6" />
-              <path d="M 100 80 Q 95 68 110 65 Q 115 55 128 62 Q 135 60 138 72 Z" fill="#e9d5ff" opacity="0.5" />
-              <path d="M 42 28 C 38 22 45 18 47 24 C 49 18 56 22 52 28 C 48 30 46 26 42 28 Z" fill="#a855f7" opacity="0.8" />
-              <path d="M 20 80 A 50 50 0 0 1 120 80" fill="none" stroke="#f3e8ff" strokeWidth="14" strokeLinecap="round" />
-              <path d="M 20 80 A 50 50 0 0 1 40 40" fill="none" stroke="#ec4899" strokeWidth="14" strokeLinecap="round" />
-              <path d="M 40 40 A 50 50 0 0 1 70 30" fill="none" stroke="#c084fc" strokeWidth="14" />
-              <path d="M 70 30 A 50 50 0 0 1 100 40" fill="none" stroke="#818cf8" strokeWidth="14" />
-              <path d="M 100 40 A 50 50 0 0 1 120 80" fill="none" stroke="#6366f1" strokeWidth="14" strokeLinecap="round" />
-              <circle cx="70" cy="80" r="8" fill="#be185d" />
-              <circle cx="70" cy="80" r="4" fill="#ffffff" />
-              <polygon points="70,80 67,78 102,46 73,82" fill="#be185d" />
-              <line x1="70" y1="80" x2="102" y2="46" stroke="#9d174d" strokeWidth="3" strokeLinecap="round" />
+              {/* Soft background cloud */}
+              <path d="M20,80 Q10,70 20,60 Q30,50 45,55 Q55,45 75,55 Q85,50 95,65 Q105,70 100,80 Z" fill="#e8edf7" opacity="0.8" />
+              
+              {/* Butterfly silhouette */}
+              <path d="M35,42 C33,39 31,41 33,44 C34,46 36,44 38,42 C37,41 35,40 35,42 Z" fill="#86198f" opacity="0.6" />
+              <path d="M38,42 C40,40 42,42 40,45 C39,47 37,45 35,42 Z" fill="#86198f" opacity="0.6" />
+              
+              {/* Speedometer Arc segments */}
+              <path d="M 37 90 A 48 48 0 0 1 45 50" fill="none" stroke="#e06287" strokeWidth="9" strokeLinecap="round" />
+              <path d="M 45 50 A 48 48 0 0 1 70 30" fill="none" stroke="#be89c7" strokeWidth="9" />
+              <path d="M 70 30 A 48 48 0 0 1 100 30" fill="none" stroke="#9069b2" strokeWidth="9" />
+              <path d="M 100 30 A 48 48 0 0 1 133 90" fill="none" stroke="#665ca8" strokeWidth="9" strokeLinecap="round" />
+
+              {/* Inner track */}
+              <path d="M 43 90 A 40 40 0 0 1 127 90" fill="none" stroke="#ffffff" strokeWidth="2.5" opacity="0.8" />
+
+              {/* Needle hub */}
+              <circle cx="85" cy="90" r="10" fill="#ffffff" />
+              <circle cx="85" cy="90" r="7" fill="#b92c7a" />
+              
+              {/* Needle pointing top-right */}
+              <path d="M 83 87 L 118 52 L 87 83 Z" fill="#b92c7a" />
+              <circle cx="85" cy="90" r="3" fill="#ffffff" />
             </svg>
           </div>
         </div>
@@ -67,55 +79,79 @@ export const QuickFeatureBanners: React.FC<QuickFeatureBannersProps> = ({
       >
         <div className="banner-content-left">
           <p className="banner-text-wrapper">
-            <span>
-              <strong className="banner-heading pfm-heading">
-                Personal Finance <br />
-                Manager
-              </strong>
-              <ChevronRight size={20} className="banner-chevron-icon inline-icon" />
-            </span>
+            <strong className="banner-heading pfm-heading leading-tight flex flex-col items-start">
+              <span>Personal Finance</span>
+              <span className="flex items-center gap-1.5 mt-0.5">
+                <span>Manager</span>
+                <svg className="w-3.5 h-3.5 text-white shrink-0 mt-[2px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
+              </span>
+            </strong>
           </p>
         </div>
 
         <div className="banner-illustration-area">
           <svg className="banner-cutout-svg" viewBox="0 0 200 100" preserveAspectRatio="none">
-            <path d="M 50 0 C 20 0 0 100 0 100 L 200 100 L 200 0 Z" fill="#ffffff" />
+            <path d="M 125 0 C 110 30 100 70 100 100 L 200 100 L 200 0 Z" fill="#ebeef5" />
           </svg>
 
           <div className="banner-graphic-container">
             <svg viewBox="0 0 140 100" fill="none" className="pfm-illustration-svg">
-              <rect x="18" y="45" width="22" height="38" rx="3" fill="#fbcfe8" opacity="0.7" />
-              <rect x="22" y="50" width="14" height="8" rx="1" fill="#ffffff" />
-              <circle cx="24" cy="64" r="1.5" fill="#be185d" />
-              <circle cx="29" cy="64" r="1.5" fill="#be185d" />
-              <circle cx="34" cy="64" r="1.5" fill="#be185d" />
-              <circle cx="24" cy="71" r="1.5" fill="#be185d" />
-              <circle cx="29" cy="71" r="1.5" fill="#be185d" />
-              <circle cx="34" cy="71" r="1.5" fill="#be185d" />
+              {/* Pink Calculator in background left */}
+              <rect x="25" y="42" width="26" height="40" rx="3" fill="#fbcfe8" stroke="#f472b6" strokeWidth="1" opacity="0.9" />
+              <rect x="29" y="46" width="18" height="8" rx="1" fill="#ffffff" />
+              <circle cx="31" cy="60" r="1.5" fill="#f472b6" /><circle cx="37" cy="60" r="1.5" fill="#f472b6" /><circle cx="43" cy="60" r="1.5" fill="#f472b6" />
+              <circle cx="31" cy="67" r="1.5" fill="#f472b6" /><circle cx="37" cy="67" r="1.5" fill="#f472b6" /><circle cx="43" cy="67" r="1.5" fill="#f472b6" />
+              <circle cx="31" cy="74" r="1.5" fill="#f472b6" /><circle cx="37" cy="74" r="1.5" fill="#f472b6" /><circle cx="43" cy="74" r="1.5" fill="#f472b6" />
 
-              <rect x="85" y="40" width="40" height="42" rx="6" fill="#6366f1" />
-              <rect x="90" y="32" width="28" height="15" rx="2" fill="#a7f3d0" />
-              <rect x="93" y="28" width="24" height="12" rx="2" fill="#34d399" />
-              <circle cx="115" cy="60" r="3" fill="#fbbf24" />
+              {/* Calendar sheet in front of calculator */}
+              <rect x="42" y="55" width="22" height="26" rx="2" fill="#ffffff" stroke="#94a3b8" strokeWidth="1" />
+              <path d="M42,60 H64" stroke="#94a3b8" strokeWidth="1.5" />
+              <circle cx="47" cy="57.5" r="1" fill="#be185d" /><circle cx="59" cy="57.5" r="1" fill="#be185d" />
+              <rect x="46" y="64" width="3" height="3" rx="0.5" fill="#94a3b8" />
+              <rect x="51" y="64" width="3" height="3" rx="0.5" fill="#94a3b8" />
+              <rect x="56" y="64" width="3" height="3" rx="0.5" fill="#e06287" />
+              <rect x="46" y="70" width="3" height="3" rx="0.5" fill="#94a3b8" />
+              <rect x="51" y="70" width="3" height="3" rx="0.5" fill="#94a3b8" />
+              <rect x="56" y="70" width="3" height="3" rx="0.5" fill="#94a3b8" />
 
-              <rect x="42" y="16" width="44" height="66" rx="4" fill="#ffffff" stroke="#312e81" strokeWidth="2.5" />
-              <rect x="54" y="12" width="20" height="7" rx="2" fill="#be185d" />
-              <circle cx="64" cy="18" r="2" fill="#ffffff" />
+              {/* Blue Wallet with Cash on the right */}
+              <path d="M102,48 L114,35 L124,38 L112,52 Z" fill="#d1fae5" stroke="#10b981" strokeWidth="0.8" />
+              <path d="M110,48 L122,35 L132,38 L120,52 Z" fill="#a7f3d0" stroke="#10b981" strokeWidth="0.8" />
+              <rect x="94" y="48" width="38" height="32" rx="4" fill="#525c99" stroke="#312e81" strokeWidth="1" />
+              <path d="M94,54 H132" stroke="#312e81" strokeWidth="1" />
+              <path d="M116,56 H132 V68 H116 Z" fill="#434c85" stroke="#312e81" strokeWidth="1" />
+              <circle cx="120" cy="62" r="2" fill="#fbbf24" />
 
-              <path d="M 48 28 L 52 24 L 56 28 V 32 H 48 Z" fill="#6366f1" />
-              <line x1="60" y1="28" x2="80" y2="28" stroke="#cbd5e1" strokeWidth="2" strokeLinecap="round" />
+              {/* Clipboard List in foreground */}
+              <rect x="62" y="16" width="54" height="68" rx="4" fill="#ffffff" stroke="#525c99" strokeWidth="2" />
+              <path d="M80,16 C80,12 98,12 98,16" stroke="#525c99" strokeWidth="2" fill="none" strokeLinecap="round" />
+              <rect x="84" y="14" width="10" height="5" rx="1" fill="#94a3b8" />
 
-              <circle cx="50" cy="40" r="2.5" stroke="#ec4899" strokeWidth="1.5" fill="none" />
-              <line x1="60" y1="40" x2="76" y2="40" stroke="#cbd5e1" strokeWidth="2" strokeLinecap="round" />
+              {/* Rupee Circle on Clipboard */}
+              <circle cx="104" cy="27" r="6" fill="#b81d6c" />
+              <text x="104" y="30" fontSize="8" fontWeight="bold" textAnchor="middle" fill="#ffffff" fontFamily="sans-serif">₹</text>
 
-              <line x1="49" y1="50" x2="49" y2="55" stroke="#8b5cf6" strokeWidth="1.5" />
-              <line x1="53" y1="50" x2="53" y2="55" stroke="#8b5cf6" strokeWidth="1.5" />
-              <line x1="60" y1="52" x2="78" y2="52" stroke="#cbd5e1" strokeWidth="2" strokeLinecap="round" />
+              {/* List Items */}
+              <path d="M68,30 L72,26 L76,30 V34 H68 Z" fill="none" stroke="#e06287" strokeWidth="1" />
+              <line x1="80" y1="31" x2="102" y2="31" stroke="#94a3b8" strokeWidth="1.5" strokeLinecap="round" />
 
-              <line x1="60" y1="64" x2="74" y2="64" stroke="#cbd5e1" strokeWidth="2" strokeLinecap="round" />
+              <path d="M67,39 H69 L71,44 H75 L77,41" fill="none" stroke="#e06287" strokeWidth="1" />
+              <circle cx="72" cy="46" r="1" fill="#e06287" /><circle cx="75" cy="46" r="1" fill="#e06287" />
+              <line x1="80" y1="43" x2="102" y2="43" stroke="#94a3b8" strokeWidth="1.5" strokeLinecap="round" />
 
-              <rect x="36" y="30" width="4" height="40" rx="1" fill="#f59e0b" transform="rotate(-15 36 30)" />
-              <polygon points="30,68 33,76 38,70" fill="#78350f" />
+              <line x1="69" y1="51" x2="69" y2="56" stroke="#e06287" strokeWidth="1" />
+              <path d="M68,51 C68,49 70,49 70,51" stroke="#e06287" strokeWidth="1" fill="none" />
+              <line x1="73" y1="51" x2="73" y2="56" stroke="#e06287" strokeWidth="1" />
+              <circle cx="73" cy="51" r="1.5" fill="#e06287" />
+              <line x1="80" y1="54" x2="102" y2="54" stroke="#94a3b8" strokeWidth="1.5" strokeLinecap="round" />
+
+              <path d="M68,64 L74,64 L72,61 L73,61 L76,64 L78,64 L76,66 L71,66 Z" fill="#e06287" />
+              <line x1="80" y1="65" x2="102" y2="65" stroke="#94a3b8" strokeWidth="1.5" strokeLinecap="round" />
+
+              <path d="M69,72 C69,72 72,71 73,72 C74,71 77,72 77,72 C77,75 75,77 73,78 C71,77 69,75 69,72 Z" fill="none" stroke="#e06287" strokeWidth="1" />
+              <line x1="80" y1="75" x2="102" y2="75" stroke="#94a3b8" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
           </div>
         </div>

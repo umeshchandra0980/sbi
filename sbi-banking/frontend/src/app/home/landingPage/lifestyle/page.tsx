@@ -8,6 +8,7 @@ import {
   Search,
   Bell,
   ChevronRight,
+  ChevronLeft,
   ChevronDown,
   Plane,
   Train,
@@ -38,15 +39,42 @@ export default function SbiLifestylePage() {
   const [liteMode, setLiteMode] = useState(false);
   const [activeTravelCategory, setActiveTravelCategory] = useState<string | null>(null);
 
+  const storiesRef = React.useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const checkStoriesScroll = () => {
+    if (storiesRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = storiesRef.current;
+      setCanScrollLeft(scrollLeft > 10);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  };
+
+  React.useEffect(() => {
+    checkStoriesScroll();
+    const ref = storiesRef.current;
+    if (ref) {
+      ref.addEventListener('scroll', checkStoriesScroll);
+      window.addEventListener('resize', checkStoriesScroll);
+    }
+    return () => {
+      if (ref) ref.removeEventListener('scroll', checkStoriesScroll);
+      window.removeEventListener('resize', checkStoriesScroll);
+    };
+  }, []);
+
   const stories = [
-    { name: "Welcome to Yono", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/welcome_64x64" },
-    { name: "Fraud Awareness", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/fraudawareness2_thumbnail_64x6" },
-    { name: "Tax Related Services", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/welcome_64x64" },
-    { name: "e - Secure Lock", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/yp_secure_lock_banner_sbi_thumbnail_64x64_23_11zon" },
-    { name: "Sustainability", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/sustainibility_thumbnail_64x64" },
-    { name: "SIP", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/sip_thumbnail_product_creative_64x64" },
-    { name: "Credit Card", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/welcome_64x64" },
-    { name: "Invest Now", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/sip_thumbnail_product_creative_64x64" }
+    { name: "Welcome to Yono", img: "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?q=80&w=150&auto=format&fit=crop" },
+    { name: "Fraud Awareness", img: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=150&auto=format&fit=crop" },
+    { name: "Tax Related Services", img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=150&auto=format&fit=crop" },
+    { name: "e - Secure Lock", img: "https://images.unsplash.com/photo-1567427017947-545c5f89c60a?q=80&w=150&auto=format&fit=crop" },
+    { name: "Sustainability", img: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=150&auto=format&fit=crop" },
+    { name: "SIP", img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=150&auto=format&fit=crop" },
+    { name: "Credit Card", img: "https://images.unsplash.com/photo-1580894732444-8fecef2601da?q=80&w=150&auto=format&fit=crop" },
+    { name: "Invest Now", img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=150&auto=format&fit=crop" },
+    { name: "Secure your future", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=150&auto=format&fit=crop" },
+    { name: "Dream your Home", img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=150&auto=format&fit=crop" }
   ];
 
   const handleServiceClick = (title: string) => {
@@ -75,28 +103,55 @@ export default function SbiLifestylePage() {
                 Hello <span className="lifestyle-user-highlight">Dumpala</span>, Let&apos;s get started!
               </h1>
 
-              <div className="lifestyle-stories-row">
-                {stories.map((story, idx) => (
-                  <div 
-                    key={idx} 
-                    className="lifestyle-story-item"
-                    onClick={() => handleServiceClick(story.name)}
+              <div className="lifestyle-stories-carousel-container">
+                {canScrollLeft && (
+                  <button 
+                    type="button" 
+                    className="lifestyle-scroll-arrow lifestyle-scroll-arrow-left"
+                    onClick={() => {
+                      if (storiesRef.current) {
+                        storiesRef.current.scrollBy({ left: -240, behavior: 'smooth' });
+                      }
+                    }}
+                    aria-label="Previous Services"
                   >
-                    <div className="lifestyle-story-circle">
-                      <img src={story.img} alt={story.name} />
-                    </div>
-                    <span className="lifestyle-story-label">{story.name}</span>
-                  </div>
-                ))}
+                    <ChevronLeft size={18} />
+                  </button>
+                )}
 
-                <button 
-                  type="button" 
-                  className="lifestyle-scroll-arrow ml-auto"
-                  onClick={() => toast('More services loaded')}
-                  aria-label="Next Services"
+                <div 
+                  ref={storiesRef}
+                  onScroll={checkStoriesScroll}
+                  className="lifestyle-stories-row"
                 >
-                  <ChevronRight size={18} />
-                </button>
+                  {stories.map((story, idx) => (
+                    <div 
+                      key={idx} 
+                      className="lifestyle-story-item"
+                      onClick={() => handleServiceClick(story.name)}
+                    >
+                      <div className="lifestyle-story-circle">
+                        <img src={story.img} alt={story.name} />
+                      </div>
+                      <span className="lifestyle-story-label">{story.name}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {canScrollRight && (
+                  <button 
+                    type="button" 
+                    className="lifestyle-scroll-arrow lifestyle-scroll-arrow-right"
+                    onClick={() => {
+                      if (storiesRef.current) {
+                        storiesRef.current.scrollBy({ left: 240, behavior: 'smooth' });
+                      }
+                    }}
+                    aria-label="Next Services"
+                  >
+                    <ChevronRight size={18} />
+                  </button>
+                )}
               </div>
             </div>
 
