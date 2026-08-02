@@ -7,7 +7,8 @@ import toast from 'react-hot-toast';
 import {
   ChevronDown,
   HelpCircle,
-  Gift
+  Gift,
+  Cloud
 } from 'lucide-react';
 
 export type NavTabId = 'Overview' | 'Accounts' | 'Payments' | 'Deposits' | 'Loans' | 'Cards' | 'Investments' | 'Insurance' | 'Services';
@@ -320,16 +321,16 @@ export default function SbiGlobalBrandHeader({
     <div className="w-full bg-white font-sans z-50">
       
       {/* 1. TOP PURPLE UTILITY HEADER BAR */}
-      <div className="bg-[#302985] text-white text-xs py-1.5 px-6 shadow-xs">
-        <div className="max-w-[1400px] mx-auto flex flex-wrap justify-between items-center gap-2">
+      <div className="bg-[#502b85] text-white text-xs pt-1.5 px-4 md:px-6">
+        <div className="max-w-[1280px] mx-auto flex flex-wrap justify-between items-end gap-2">
           
           {/* Left Top Tabs */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-end gap-5">
             <button 
               type="button" 
               onClick={() => router.push('/dashboard')}
-              className={`px-3.5 py-1 text-xs font-bold rounded-t-md transition-colors ${
-                activeTopTab === 'Banking' ? 'bg-white text-[#302985]' : 'text-white/80 hover:text-white'
+              className={`px-5 py-2.5 text-[13px] font-bold rounded-t-2xl transition-colors relative z-10 ${
+                activeTopTab === 'Banking' ? 'bg-white text-[#502b85]' : 'text-white/80 hover:text-white mb-1'
               }`}
             >
               Banking
@@ -337,24 +338,25 @@ export default function SbiGlobalBrandHeader({
             <button 
               type="button" 
               onClick={() => router.push('/home/landingPage/lifestyle')}
-              className={`px-3.5 py-1 text-xs font-bold rounded-t-md transition-colors ${
-                activeTopTab === 'Lifestyle' ? 'bg-white text-[#302985]' : 'text-white/80 hover:text-white'
+              className={`px-2 py-2.5 text-[13px] font-bold rounded-t-2xl transition-colors flex items-center gap-1.5 relative z-10 ${
+                activeTopTab === 'Lifestyle' ? 'bg-white text-[#502b85]' : 'text-white/90 hover:text-white mb-1'
               }`}
             >
-              Lifestyle
+              <Cloud size={16} strokeWidth={2.5} />
+              <span>Lifestyle</span>
             </button>
             <button 
               type="button" 
               onClick={() => router.push('/home/landingPage/others/rewards-end-point/rewards-endState')}
-              className={`px-3.5 py-1 text-xs font-bold rounded-t-md transition-colors flex items-center gap-1 ${
-                activeTopTab === 'Rewards' ? 'bg-white text-[#302985]' : 'text-white/80 hover:text-white'
+              className={`px-2 py-2.5 text-[13px] font-bold rounded-t-2xl transition-colors flex items-center gap-1.5 relative z-10 ${
+                activeTopTab === 'Rewards' ? 'bg-white text-[#502b85]' : 'text-white/90 hover:text-white mb-1'
               }`}
             >
-              <Gift size={13} />
+              <Gift size={16} strokeWidth={2.5} />
               <span>Rewards</span>
             </button>
             
-            <div className="flex items-center gap-2 ml-4 font-semibold text-xs text-white">
+            <div className="flex items-center gap-2 ml-4 mb-2.5 font-semibold text-xs text-white">
               <span>YONO Net Banking Lite</span>
               <button 
                 type="button"
@@ -369,7 +371,7 @@ export default function SbiGlobalBrandHeader({
           </div>
 
           {/* Right Support & Tools */}
-          <div className="flex items-center gap-4 text-xs text-white/90">
+          <div className="flex items-center gap-4 text-xs text-white/90 mb-2.5">
             <a href="https://crh.sbi.bank.in" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:underline">
               <HelpCircle size={13} />
               <span>Get Help</span>
@@ -396,7 +398,7 @@ export default function SbiGlobalBrandHeader({
       </div>
 
       {/* 2. MAIN WHITE BRAND NAVBAR WITH INTERACTIVE MEGA DROPDOWN CLICK MENU */}
-      <header className="bg-white border-b border-slate-200/80 px-4 md:px-6 py-3.5 shadow-xs relative">
+      <header className="bg-white border-b border-slate-200/80 px-4 md:px-6 py-3.5 shadow-xs relative z-0">
         <div className="max-w-[1280px] mx-auto flex items-center justify-between gap-4">
           
           {/* Left Group: Logo + Nav Items */}
