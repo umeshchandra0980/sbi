@@ -63,7 +63,7 @@ export const RelationshipOverviewCards: React.FC<RelationshipOverviewCardsProps>
     if (onViewAllClick) {
       onViewAllClick();
     } else {
-      router.push('/accounts');
+      router.push('/accounts?view=all');
     }
   };
 
@@ -104,8 +104,8 @@ export const RelationshipOverviewCards: React.FC<RelationshipOverviewCardsProps>
           <div className="rel-card rel-card-transaction">
             <div className="rel-card-bg-circles">
               <svg viewBox="0 0 160 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="130" cy="90" r="75" fill="#ffffff" fillOpacity="0.12" />
-                <circle cx="165" cy="90" r="115" fill="#ffffff" fillOpacity="0.08" />
+                <circle cx="145" cy="120" r="95" fill="#4a0438" fillOpacity="0.95" />
+                <circle cx="175" cy="120" r="75" fill="#be218c" fillOpacity="0.95" />
               </svg>
             </div>
             
@@ -130,7 +130,7 @@ export const RelationshipOverviewCards: React.FC<RelationshipOverviewCardsProps>
             </div>
 
             <div className="rel-card-footer">
-              <Link href="/accounts" className="rel-footer-link">
+              <Link href="/accounts?view=all" className="rel-footer-link">
                 View Accounts
               </Link>
               <Link href="/transactions" className="rel-footer-link">
@@ -143,8 +143,8 @@ export const RelationshipOverviewCards: React.FC<RelationshipOverviewCardsProps>
           <div className="rel-card rel-card-soft-purple">
             <div className="rel-card-bg-circles">
               <svg viewBox="0 0 160 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="130" cy="90" r="75" fill="#6b21a8" fillOpacity="0.08" />
-                <circle cx="165" cy="90" r="115" fill="#6b21a8" fillOpacity="0.05" />
+                <circle cx="130" cy="90" r="75" fill="#702082" fillOpacity="0.08" />
+                <circle cx="165" cy="90" r="115" fill="#702082" fillOpacity="0.05" />
               </svg>
             </div>
 
@@ -158,7 +158,7 @@ export const RelationshipOverviewCards: React.FC<RelationshipOverviewCardsProps>
             </div>
 
             <div className="rel-card-footer justify-start">
-              <Link href="/accounts" className="rel-footer-link rel-link-dark">
+              <Link href="/home/landingPage/manageRelationship/deposits?view=all" className="rel-footer-link rel-link-dark">
                 Explore
               </Link>
             </div>
@@ -168,8 +168,8 @@ export const RelationshipOverviewCards: React.FC<RelationshipOverviewCardsProps>
           <div className="rel-card rel-card-soft-purple">
             <div className="rel-card-bg-circles">
               <svg viewBox="0 0 160 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="130" cy="90" r="75" fill="#6b21a8" fillOpacity="0.08" />
-                <circle cx="165" cy="90" r="115" fill="#6b21a8" fillOpacity="0.05" />
+                <circle cx="130" cy="90" r="75" fill="#702082" fillOpacity="0.08" />
+                <circle cx="165" cy="90" r="115" fill="#702082" fillOpacity="0.05" />
               </svg>
             </div>
 
@@ -183,7 +183,7 @@ export const RelationshipOverviewCards: React.FC<RelationshipOverviewCardsProps>
             </div>
 
             <div className="rel-card-footer justify-start">
-              <Link href="/dashboard" className="rel-footer-link rel-link-dark">
+              <Link href="/home/landingPage/manageRelationship/loans?view=all" className="rel-footer-link rel-link-dark">
                 Manage loans
               </Link>
             </div>
@@ -193,8 +193,8 @@ export const RelationshipOverviewCards: React.FC<RelationshipOverviewCardsProps>
           <div className="rel-card rel-card-soft-purple">
             <div className="rel-card-bg-circles">
               <svg viewBox="0 0 160 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="130" cy="90" r="75" fill="#6b21a8" fillOpacity="0.08" />
-                <circle cx="165" cy="90" r="115" fill="#6b21a8" fillOpacity="0.05" />
+                <circle cx="130" cy="90" r="75" fill="#702082" fillOpacity="0.08" />
+                <circle cx="165" cy="90" r="115" fill="#702082" fillOpacity="0.05" />
               </svg>
             </div>
 
@@ -312,8 +312,8 @@ export const RelationshipOverviewCards: React.FC<RelationshipOverviewCardsProps>
           <div className="rel-card rel-card-soft-purple">
             <div className="rel-card-bg-circles">
               <svg viewBox="0 0 160 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="130" cy="90" r="75" fill="#6b21a8" fillOpacity="0.08" />
-                <circle cx="165" cy="90" r="115" fill="#6b21a8" fillOpacity="0.05" />
+                <circle cx="130" cy="90" r="75" fill="#702082" fillOpacity="0.08" />
+                <circle cx="165" cy="90" r="115" fill="#702082" fillOpacity="0.05" />
               </svg>
             </div>
 

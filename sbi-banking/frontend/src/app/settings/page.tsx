@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -9,7 +9,7 @@ import {
   Eye, EyeOff, Edit2, CheckCircle2, ChevronRight, ChevronDown, Home, 
   User, CreditCard, Shield, Lock, Award, HelpCircle, MessageSquare, 
   Search, Bell, Building2, Phone, X, Info, Share2, AlertTriangle, 
-  FileText, Gauge, DollarSign, Ban, Key, Car, Sparkles
+  FileText, Gauge, DollarSign, Ban, Key, Car, Sparkles, Settings as SettingsIcon
 } from 'lucide-react';
 import './profile.css';
 import '../dashboard/dashboard.css';
@@ -24,6 +24,18 @@ export default function SettingsPage() {
   const [profileTab, setProfileTab] = useState<'personal' | 'professional'>('personal');
   const [accountsSubTab, setAccountsSubTab] = useState('Account Details');
   const [settingsSubTab, setSettingsSubTab] = useState('Payments');
+
+  // Handle URL parameters for direct navigation
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const tab = params.get('tab');
+      if (tab === 'Settings') {
+        setActiveSidebarMenu('Settings');
+        setSettingsSubTab('Payments');
+      }
+    }
+  }, []);
 
   // View 1: Personal Details Eye Toggles
   const [showCif, setShowCif] = useState(false);
@@ -66,19 +78,12 @@ export default function SettingsPage() {
       <main className="profile-page-wrapper">
         <div className="profile-main-container">
           
-          {/* Dynamic Breadcrumb */}
-          <div className="profile-breadcrumb">
-            <Link href="/dashboard" className="flex items-center gap-1">
-              <Home size={15} />
+          {/* Dynamic Breadcrumb (Matching Screenshot 4) */}
+          <div className="profile-breadcrumb flex items-center gap-2 select-none text-slate-400 mb-6 text-xs font-medium">
+            <Link href="/dashboard" className="hover:text-purple-800 flex items-center">
+              <Home size={16} className="text-[#681d82]" />
             </Link>
-            <span>›</span>
-            <span>Profile</span>
-            {activeSidebarMenu !== 'Manage My Profile' && (
-              <>
-                <span>›</span>
-                <span>{activeSidebarMenu}</span>
-              </>
-            )}
+            <span>&gt;</span>
           </div>
 
           <div className="profile-grid-layout">
@@ -110,7 +115,7 @@ export default function SettingsPage() {
                 </div>
 
                 <div className="profile-last-login">
-                  Last Login 31/07/26 01:57 pm
+                  Last Login 31/07/26 11:08 pm
                 </div>
               </div>
 
@@ -118,8 +123,8 @@ export default function SettingsPage() {
               <div className="profile-menu-box">
                 {[
                   { label: 'Manage My Profile', icon: User },
-                  { label: 'Manage My Accounts', icon: CreditCard },
-                  { label: 'Access Services', icon: Building2 },
+                  { label: 'Manage My Accounts', icon: Building2 },
+                  { label: 'Access Services', icon: SettingsIcon },
                   { label: 'Settings', icon: Shield },
                   { label: 'Update My Security', icon: Lock },
                   { label: 'Refer & Earn Rewards', icon: Award },
@@ -593,55 +598,190 @@ export default function SettingsPage() {
 
               {/* ================= VIEW 4: SETTINGS (Screenshot 4 Exact) ================= */}
               {activeSidebarMenu === 'Settings' && (
-                <div>
+                <div className="w-full">
                   
                   {/* Settings Tabs Row */}
-                  <div className="settings-tabs-row">
+                  <div className="flex border-b border-slate-200 gap-8 mb-6 select-none w-full">
                     <button 
                       type="button" 
                       onClick={() => setSettingsSubTab('Payments')}
-                      className={`settings-tab-btn ${settingsSubTab === 'Payments' ? 'active' : ''}`}
+                      className={`pb-3 text-sm font-bold flex items-center gap-1.5 focus:outline-none transition-all cursor-pointer bg-transparent ${
+                        settingsSubTab === 'Payments' 
+                          ? 'text-[#681d82] border-b-2 border-[#681d82]' 
+                          : 'text-slate-400 hover:text-slate-600 border-b-2 border-transparent'
+                      }`}
                     >
-                      Payments
+                      <span>Third Party Transaction Limit</span>
+                      <Info size={14} className={settingsSubTab === 'Payments' ? 'text-[#681d82]' : 'text-slate-400'} />
                     </button>
                     <button 
                       type="button" 
                       onClick={() => setSettingsSubTab('Personalise Settings')}
-                      className={`settings-tab-btn ${settingsSubTab === 'Personalise Settings' ? 'active' : ''}`}
+                      className={`pb-3 text-sm font-bold flex items-center gap-1.5 focus:outline-none transition-all bg-transparent border-none cursor-pointer ${
+                        settingsSubTab === 'Personalise Settings' 
+                          ? 'text-[#681d82] border-b-2 border-[#681d82]' 
+                          : 'text-slate-400 hover:text-slate-600 border-b-2 border-transparent'
+                      }`}
                     >
-                      Personalise Settings
+                      <span>Other Transaction Limits</span>
+                      <Info size={14} className={settingsSubTab === 'Personalise Settings' ? 'text-[#681d82]' : 'text-slate-400'} />
                     </button>
                   </div>
 
-                  {/* Payments Tab Content */}
+                  {/* Third Party Transaction Limit (Payments) Content */}
                   {settingsSubTab === 'Payments' && (
-                    <div className="pt-2">
-                      <div 
-                        className="manage-limits-card"
-                        onClick={() => toast.success("Opening Manage Transfer Limits Modal")}
-                      >
-                        <div className="limits-left">
-                          <div className="limits-icon-box">
-                            <Gauge size={20} />
+                    <div>
+                      <h3 className="text-[15px] font-bold text-slate-800 mb-5 font-sans">
+                        Set transaction limit for all Payees
+                      </h3>
+
+                      {/* Limit detail card */}
+                      <div className="profile-limit-card">
+                        <div className="flex justify-between items-start">
+                          <div className="space-y-4">
+                            <div className="profile-limit-card-title">
+                              Third party transactions* <span className="font-semibold text-slate-700 ml-1">(INR) Max Limit 2500000</span>
+                            </div>
+                            
+                            <div className="space-y-1">
+                              <div className="profile-limit-card-label">
+                                Current Limit (per day)
+                              </div>
+                              <div className="profile-limit-card-value">
+                                ₹10,00,000.00
+                              </div>
+                            </div>
                           </div>
-                          <span className="limits-label">Manage Limits</span>
+
+                          {/* Edit Pencil Icon Button */}
+                          <button 
+                            type="button"
+                            onClick={() => {
+                              toast.success("Edit Limit clicked. Enter your profile password to modify.");
+                            }}
+                            className="p-1.5 text-[#681d82] hover:bg-purple-100 rounded-full transition-colors bg-transparent border-none cursor-pointer"
+                          >
+                            <Edit2 size={16} />
+                          </button>
                         </div>
-                        <ChevronRight size={18} className="text-gray-400" />
                       </div>
                     </div>
                   )}
 
-                  {/* Personalise Settings Tab Content */}
+                  {/* Other Transaction Limits (Personalise Settings) Content */}
                   {settingsSubTab === 'Personalise Settings' && (
-                    <div className="pt-4 space-y-4 max-w-md">
-                      <div className="flex items-center justify-between p-3 border rounded-xl bg-slate-50">
-                        <span className="text-sm font-bold text-slate-800">SMS Notifications</span>
-                        <input type="checkbox" defaultChecked className="toggle-checkbox" />
+                    <div className="space-y-4 max-w-[800px]">
+                      
+                      {/* Card 1: Tax Transaction Limit */}
+                      <div className="profile-limit-card">
+                        <div className="flex justify-between items-start">
+                          <div className="space-y-3.5 w-[90%]">
+                            <div className="profile-limit-card-title">
+                              Tax Transaction Limit <span className="font-semibold text-slate-700 ml-1">Max Limit : 20000000</span>
+                            </div>
+                            <div className="profile-limit-card-desc">
+                              Tax Transaction limit is currently applicable only for OLTAS (Direct Tax) and CBEC (Indirect Tax).
+                            </div>
+                            <div className="space-y-1">
+                              <div className="profile-limit-card-label">
+                                Current Limit
+                              </div>
+                              <div className="profile-limit-card-value">
+                                ₹10,00,000.00
+                              </div>
+                            </div>
+                          </div>
+                          <button 
+                            type="button"
+                            onClick={() => toast.success("Edit Tax Limit clicked")}
+                            className="p-1.5 text-[#681d82] hover:bg-purple-100 rounded-full transition-colors bg-transparent border-none cursor-pointer"
+                          >
+                            <Edit2 size={16} />
+                          </button>
+                        </div>
                       </div>
-                      <div className="flex items-center justify-between p-3 border rounded-xl bg-slate-50">
-                        <span className="text-sm font-bold text-slate-800">2-Factor OTP Verification</span>
-                        <input type="checkbox" defaultChecked className="toggle-checkbox" />
+
+                      {/* Card 2: State Bank Collect */}
+                      <div className="profile-limit-card">
+                        <div className="flex justify-between items-start">
+                          <div className="space-y-3.5 w-[90%]">
+                            <div className="profile-limit-card-title">
+                              State Bank Collect <span className="font-semibold text-slate-700 ml-1">Max Limit : 5000000</span>
+                            </div>
+                            <div className="profile-limit-card-desc">
+                              For special category institutions
+                            </div>
+                            <div className="space-y-1">
+                              <div className="profile-limit-card-label">
+                                Current Limit
+                              </div>
+                              <div className="profile-limit-card-value">
+                                ₹10,00,000.00
+                              </div>
+                            </div>
+                          </div>
+                          <button 
+                            type="button"
+                            onClick={() => toast.success("Edit State Bank Collect Limit clicked")}
+                            className="p-1.5 text-[#681d82] hover:bg-purple-100 rounded-full transition-colors bg-transparent border-none cursor-pointer"
+                          >
+                            <Edit2 size={16} />
+                          </button>
+                        </div>
                       </div>
+
+                      {/* Card 3: General Category Merchants */}
+                      <div className="profile-limit-card">
+                        <div className="flex justify-between items-start">
+                          <div className="space-y-3.5 w-[90%]">
+                            <div className="profile-limit-card-title">
+                              General Category Merchants <span className="font-semibold text-slate-700 ml-1">Max Limit : 2500000</span>
+                            </div>
+                            <div className="space-y-1">
+                              <div className="profile-limit-card-label">
+                                Current Limit
+                              </div>
+                              <div className="profile-limit-card-value">
+                                ₹10,00,000.00
+                              </div>
+                            </div>
+                          </div>
+                          <button 
+                            type="button"
+                            onClick={() => toast.success("Edit General Category Limit clicked")}
+                            className="p-1.5 text-[#681d82] hover:bg-purple-100 rounded-full transition-colors bg-transparent border-none cursor-pointer"
+                          >
+                            <Edit2 size={16} />
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Card 4: Special Category Limit */}
+                      <div className="profile-limit-card">
+                        <div className="flex justify-between items-start">
+                          <div className="space-y-3.5 w-[90%]">
+                            <div className="profile-limit-card-title">
+                              Special Category Limit <span className="font-semibold text-slate-700 ml-1">Max Limit : 5000000</span>
+                            </div>
+                            <div className="space-y-1">
+                              <div className="profile-limit-card-label">
+                                Current Limit
+                              </div>
+                              <div className="profile-limit-card-value">
+                                ₹5,00,000.00
+                              </div>
+                            </div>
+                          </div>
+                          <button 
+                            type="button"
+                            onClick={() => toast.success("Edit Special Category Limit clicked")}
+                            className="p-1.5 text-[#681d82] hover:bg-purple-100 rounded-full transition-colors bg-transparent border-none cursor-pointer"
+                          >
+                            <Edit2 size={16} />
+                          </button>
+                        </div>
+                      </div>
+
                     </div>
                   )}
 

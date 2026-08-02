@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
 import {
   Search,
@@ -104,6 +104,7 @@ export default function SbiLandingPageComponent({
 }: SbiLandingPageComponentProps) {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   // Tab State
   const [activeTab, setActiveTab] = useState<'Transaction' | 'Deposits' | 'Loans' | 'Investments' | 'Insurance'>(initialTab);
@@ -111,6 +112,7 @@ export default function SbiLandingPageComponent({
   const [searchQuery, setSearchQuery] = useState('');
   const [othersOpen, setOthersOpen] = useState(true);
   const [liteMode, setLiteMode] = useState(false);
+  const [loansSubTab, setLoansSubTab] = useState<'active' | 'closed'>('closed');
 
   // Transaction sub-tabs & Statements form state (Matching User Reference Images 1, 2, 3, 4)
   const [txSubTab, setTxSubTab] = useState<'Account Summary' | 'Transactions' | 'Statements' | 'Spend Analysis'>('Transactions');
@@ -260,13 +262,13 @@ export default function SbiLandingPageComponent({
     <div className="sbi-portal-wrapper">
       
       {/* ================= GLOBAL BRAND HEADER ================= */}
-      <SbiGlobalBrandHeader activeNav="Accounts" />
+      <SbiGlobalBrandHeader activeNav={activeTab === 'Transaction' ? 'Accounts' : activeTab} />
 
       {/* 3. BREADCRUMB & MAIN BODY CONTENT */}
       <main className="sbi-main-body">
         
         {/* Breadcrumb */}
-        <div className="sbi-breadcrumb select-none">
+        <div className="sbi-breadcrumb select-none font-sans">
           <Link href="/dashboard" className="sbi-bc-home">
             <Home size={15} />
           </Link>
@@ -278,12 +280,39 @@ export default function SbiLandingPageComponent({
               <span className="sbi-bc-current">Demat & Securities</span>
             </>
           ) : (
-            <span className="sbi-bc-current">Relationship Overview</span>
+            <span className="sbi-bc-current">
+              {searchParams?.get('view') === 'all' && (activeTab === 'Deposits' || activeTab === 'Loans') 
+                ? activeTab 
+                : 'Relationship Overview'}
+            </span>
           )}
         </div>
 
+        {/* Page Header Title Row */}
+        {searchParams?.get('view') === 'all' && activeTab === 'Deposits' && (
+          <div className="flex justify-between items-center mb-6 mt-3">
+            <h1 className="text-[28px] font-bold text-[#302985] font-sans">
+              Deposits
+            </h1>
+
+            <div className="border border-slate-200 bg-white rounded-xl p-2.5 px-4 flex items-center gap-3 cursor-pointer shadow-2xs hover:bg-slate-50 transition-colors w-full max-w-[280px]">
+              <div className="w-8 h-8 rounded-full bg-purple-50 flex items-center justify-center text-[#702082] shrink-0">
+                <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <rect x="5" y="11" width="14" height="10" rx="2" />
+                  <path d="M12 2a5 5 0 0 0-5 5v4h10V7a5 5 0 0 0-5-5z" />
+                </svg>
+              </div>
+              <div className="flex-1 min-w-0 text-left">
+                <div className="text-[12px] font-bold text-slate-800 leading-tight">Manage your Deposits (00)</div>
+                <div className="text-[11px] text-slate-500 font-semibold mt-0.5">Combined Value: ₹0.00</div>
+              </div>
+              <ChevronRight size={14} className="text-slate-400" />
+            </div>
+          </div>
+        )}
+
         {/* 4. SUB-NAVIGATION TABS BAR (Transaction Accounts | Deposits | Loans | Investments | Insurance) */}
-        {!showDematDetails && (
+        {!showDematDetails && !(searchParams?.get('view') === 'all' && (activeTab === 'Deposits' || activeTab === 'Loans')) && (
           <div className="sbi-tabs-container">
             <div className="sbi-tabs-row">
               {(['Transaction Accounts', 'Deposits', 'Loans', 'Investments', 'Insurance'] as const).map((tabLabel) => {
@@ -401,227 +430,680 @@ export default function SbiLandingPageComponent({
           {/* TAB 1: DEPOSITS (MATCHING SCREENSHOT 1) */}
           {/* ========================================================================= */}
           {activeTab === 'Deposits' && (
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-              
-              {/* Left Column (3/12 width) */}
-              <div className="md:col-span-3 space-y-4">
+            searchParams?.get('view') === 'all' ? (
+              /* ================= VIEW ALL / FROM OVERVIEW DEPOSITS MODE ================= */
+              <div className="space-y-6">
                 
-                {/* Search Box with Magnifying Glass & 3 Dots */}
-                <div className="sbi-search-card">
-                  <Search size={16} className="text-gray-400" />
-                  <input
-                    type="text"
-                    placeholder="Search here..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="sbi-search-input"
-                  />
-                  <button type="button" className="text-gray-400 hover:text-gray-600">
-                    <MoreVertical size={16} />
-                  </button>
-                </div>
+                {/* Top Card: Open New Deposit options list & illustration */}
+                <div className="bg-[#f0f2f5] rounded-3xl border border-slate-200/50 p-8 shadow-sm flex flex-col lg:flex-row items-stretch gap-8">
+                  {/* Left Column (Open New Deposit form) */}
+                  <div className="flex-1 space-y-4">
+                    <h2 className="text-[18px] font-bold text-[#702082] mb-5 tracking-tight font-sans text-left">
+                      Open New Deposit
+                    </h2>
 
-                {/* Requests Accordion Card (Matching Screenshot 1 & 2) */}
-                <div 
-                  onClick={() => setShowNoRequestsModal(true)}
-                  className="sbi-menu-card flex items-center justify-between cursor-pointer hover:bg-slate-50 transition-colors"
-                >
-                  <span className="text-xs font-semibold text-gray-700">Requests</span>
-                  <ChevronRight size={16} className="text-gray-400" />
-                </div>
-
-                {/* Others (00) Accordion Card */}
-                <div className="sbi-menu-card">
-                  <div
-                    onClick={() => setOthersOpen(!othersOpen)}
-                    className="flex items-center justify-between cursor-pointer pb-1"
-                  >
-                    <span className="text-xs font-bold text-[#30135d]">Others (00)</span>
-                    {othersOpen ? (
-                      <ChevronUp size={16} className="text-[#30135d]" />
-                    ) : (
-                      <ChevronDown size={16} className="text-gray-400" />
-                    )}
-                  </div>
-
-                  {othersOpen && (
-                    <div className="mt-3">
-                      {/* Sukanya Samriddhi / Minor PPF Banner Card (Exact match to screenshot 1) */}
-                      <div
-                        onClick={() => toast('Sukanya Samriddhi / Minor PPF Account Info')}
-                        className="sbi-sukanya-banner"
+                    <div className="space-y-4">
+                      {/* Fixed Deposit */}
+                      <div 
+                        onClick={() => toast.success("Opening Fixed Deposit variant selection...")}
+                        className="bg-white hover:bg-purple-50/20 border border-slate-200/80 rounded-xl p-4.5 flex items-center justify-between cursor-pointer transition-all w-full shadow-2xs"
                       >
-                        <div className="sbi-sukanya-text-col">
-                          <div className="sbi-sukanya-sub flex items-center gap-1">
-                            <span>View your Linked</span>
-                            <ChevronRight size={10} />
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 bg-transparent flex items-center justify-center text-[#702082] rounded-full border border-slate-100 shrink-0">
+                            <svg className="w-6.5 h-6.5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                              <path d="M6 16c0 3 3 5 6 5s6-2 6-5V8H6v8z" strokeLinecap="round" strokeLinejoin="round" />
+                              <path d="M12 2v6" strokeLinecap="round" strokeLinejoin="round" />
+                              <text x="12" y="15.2" fontSize="7.5" fontWeight="bold" textAnchor="middle" fill="#702082" stroke="none" fontFamily="sans-serif">₹</text>
+                            </svg>
                           </div>
-                          <div className="sbi-sukanya-title">
-                            Sukanya Samriddhi/ Minor PPF Account
+                          <div className="text-left">
+                            <div className="text-[14.5px] font-bold text-slate-800 font-sans">Fixed Deposit</div>
+                            <div className="text-xs text-slate-500 font-semibold mt-0.5 font-sans">Explore a host of FD variants to suit your needs</div>
                           </div>
                         </div>
+                        <div className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-[#702082] shrink-0">
+                          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                          </svg>
+                        </div>
+                      </div>
 
-                        {/* Girl with Ball & Shield SVG Illustration */}
-                        <div className="sbi-sukanya-graphic">
-                          <svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                            {/* Shield background */}
-                            <path d="M85 30 C85 30 105 35 105 55 C105 75 85 85 85 85 C85 85 65 75 65 55 C65 35 85 30 85 30 Z" fill="#ffffff" fillOpacity="0.25" />
-                            {/* Kid vector silhouette playing ball */}
-                            <circle cx="45" cy="40" r="10" fill="#fbcfe8" />
-                            <path d="M45 52 L35 75 L42 75 L48 62 L55 75 L62 75 L52 52 Z" fill="#ffffff" />
-                            <circle cx="25" cy="45" r="7" fill="#f472b6" />
+                      {/* Recurring Deposit */}
+                      <div 
+                        onClick={() => toast.success("Opening Recurring Deposit creation...")}
+                        className="bg-white hover:bg-purple-50/20 border border-slate-200/80 rounded-xl p-4.5 flex items-center justify-between cursor-pointer transition-all w-full shadow-2xs"
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 bg-transparent flex items-center justify-center text-[#702082] rounded-full border border-slate-100 shrink-0">
+                            <svg className="w-6.5 h-6.5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                              <path d="M12 2a10 10 0 0 1 8 4M20 6h-4M20 6V2" strokeLinecap="round" strokeLinejoin="round" />
+                              <path d="M12 22a10 10 0 0 1-8-4M4 18h4M4 18v4" strokeLinecap="round" strokeLinejoin="round" />
+                              <text x="12" y="15.8" fontSize="9.5" fontWeight="900" textAnchor="middle" fill="#702082" stroke="none" fontFamily="sans-serif">₹</text>
+                            </svg>
+                          </div>
+                          <div className="text-left">
+                            <div className="text-[14.5px] font-bold text-slate-800 font-sans">Recurring Deposit</div>
+                            <div className="text-xs text-slate-500 font-semibold mt-0.5 font-sans">One-time deposit creation that ensures you save every month</div>
+                          </div>
+                        </div>
+                        <div className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-[#702082] shrink-0">
+                          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                          </svg>
+                        </div>
+                      </div>
+
+                      {/* Annuity Deposit */}
+                      <div 
+                        onClick={() => toast.success("Opening Annuity Deposit setup...")}
+                        className="bg-white hover:bg-purple-50/20 border border-slate-200/80 rounded-xl p-4.5 flex items-center justify-between cursor-pointer transition-all w-full shadow-2xs"
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 bg-transparent flex items-center justify-center text-[#702082] rounded-full border border-slate-100 shrink-0">
+                            <svg className="w-6.5 h-6.5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                              <rect x="4" y="4" width="16" height="16" rx="2" strokeLinecap="round" strokeLinejoin="round" />
+                              <line x1="9" y1="2" x2="9" y2="6" strokeLinecap="round" strokeLinejoin="round" />
+                              <line x1="15" y1="2" x2="15" y2="6" strokeLinecap="round" strokeLinejoin="round" />
+                              <line x1="4" y1="9" x2="20" y2="9" strokeLinecap="round" strokeLinejoin="round" />
+                              <text x="12" y="16.5" fontSize="9.5" fontWeight="900" textAnchor="middle" fill="#702082" stroke="none" fontFamily="sans-serif">₹</text>
+                            </svg>
+                          </div>
+                          <div className="text-left">
+                            <div className="text-[14.5px] font-bold text-slate-800 font-sans">Annuity Deposit</div>
+                            <div className="text-xs text-slate-500 font-semibold mt-0.5 font-sans">Invest once and get returns every month</div>
+                          </div>
+                        </div>
+                        <div className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-[#702082] shrink-0">
+                          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                          </svg>
+                        </div>
+                      </div>
+
+                      {/* Auto Sweep */}
+                      <div 
+                        onClick={() => toast.success("Opening Auto Sweep setup...")}
+                        className="bg-white hover:bg-purple-50/20 border border-slate-200/80 rounded-xl p-4.5 flex items-center justify-between cursor-pointer transition-all w-full shadow-2xs"
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 bg-transparent flex items-center justify-center text-[#702082] rounded-full border border-slate-100 shrink-0">
+                            <svg className="w-6.5 h-6.5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                              <circle cx="12" cy="12" r="10" strokeDasharray="3 3" />
+                              <path d="M12 2a10 10 0 0 1 10 10" strokeLinecap="round" strokeLinejoin="round" />
+                              <text x="12" y="15.5" fontSize="9.5" fontWeight="900" textAnchor="middle" fill="#702082" stroke="none" fontFamily="sans-serif">₹</text>
+                            </svg>
+                          </div>
+                          <div className="text-left">
+                            <div className="text-[14.5px] font-bold text-slate-800 font-sans">Auto Sweep</div>
+                            <div className="text-xs text-slate-500 font-semibold mt-0.5 font-sans">Let idle funds in your savings account earn more for you</div>
+                          </div>
+                        </div>
+                        <div className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-[#702082] shrink-0">
+                          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
                           </svg>
                         </div>
                       </div>
                     </div>
-                  )}
+                  </div>
+
+                  {/* Right Column (Illustration & Caption) */}
+                  <div className="w-full lg:w-[45%] flex flex-col items-center justify-center select-none shrink-0 self-center">
+                    <div className="w-full max-w-[340px]">
+                      <svg viewBox="0 0 320 240" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
+                        <ellipse cx="160" cy="200" rx="120" ry="10" fill="#e2e8f0" opacity="0.6" />
+                        <path d="M125,160 L125,80 L95,80 L140,25 L185,80 L155,80 L155,160 Z" fill="#edd6ea" opacity="0.8" />
+                        <text x="140" y="85" fontSize="24" fontWeight="bold" fill="#ffffff" textAnchor="middle" opacity="0.9">₹</text>
+                        <rect x="55" y="110" width="55" height="60" rx="4" fill="#ffffff" stroke="#525c99" strokeWidth="2.5" />
+                        <path d="M55,125 H110" stroke="#525c99" strokeWidth="2.5" />
+                        <circle cx="65" cy="118" r="2.5" fill="#b81d6c" /><circle cx="100" cy="118" r="2.5" fill="#b81d6c" />
+                        <rect x="65" y="135" width="6" height="6" rx="1" fill="#cbd5e1" />
+                        <rect x="77" y="135" width="6" height="6" rx="1" fill="#cbd5e1" />
+                        <rect x="89" y="135" width="6" height="6" rx="1" fill="#cbd5e1" />
+                        <rect x="65" y="147" width="6" height="6" rx="1" fill="#cbd5e1" />
+                        <rect x="77" y="147" width="6" height="6" rx="1" fill="#be185d" />
+                        <rect x="89" y="147" width="6" height="6" rx="1" fill="#cbd5e1" />
+                        <circle cx="100" cy="165" r="14" fill="#b81d6c" />
+                        <text x="100" y="170" fontSize="13" fontWeight="bold" textAnchor="middle" fill="#ffffff" fontFamily="sans-serif">%</text>
+                        <rect x="110" y="100" width="90" height="75" rx="8" fill="#525c99" stroke="#312e81" strokeWidth="2" />
+                        <path d="M165,100 H200 V130 H165 Z" fill="#434c85" stroke="#312e81" strokeWidth="2" />
+                        <circle cx="178" cy="115" r="3.5" fill="#fbbf24" />
+                        <path d="M130,100 L155,75 L180,82 L150,107 Z" fill="#d1fae5" stroke="#10b981" strokeWidth="1.5" />
+                        <path d="M142,100 L167,75 L192,82 L162,107 Z" fill="#a7f3d0" stroke="#10b981" strokeWidth="1.5" />
+                        <path d="M210,185 C210,135 255,135 255,185 Z" fill="#e2e8f0" stroke="#94a3b8" strokeWidth="2" />
+                        <rect x="222" y="180" width="22" height="15" rx="2" fill="#ffffff" stroke="#94a3b8" strokeWidth="1.5" />
+                        <circle cx="233" cy="160" r="10" fill="#702082" />
+                        <text x="233" y="164" fontSize="10" fontWeight="bold" textAnchor="middle" fill="#ffffff">₹</text>
+                      </svg>
+                      
+                      <div className="text-center font-bold text-slate-700 text-[16px] mt-4 font-sans leading-tight">
+                        Invest today for a<br />
+                        <span className="text-[#3b2e81] font-extrabold text-[17.5px]">better tomorrow!</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom Card: Interest Rates / Calculator / Know More */}
+                <div className="bg-white rounded-3xl border border-slate-200/60 p-8 shadow-sm text-left">
+                  {/* Tab Selector */}
+                  <div className="flex gap-8 border-b border-slate-100 pb-3 mb-6">
+                    <button className="text-[13.5px] font-bold text-[#702082] border-b-2 border-b-[#702082] pb-3 -mb-[14px] font-sans">
+                      Interest Rates
+                    </button>
+                    <button className="text-[13.5px] font-semibold text-slate-500 hover:text-slate-800 pb-3 -mb-[14px] font-sans" onClick={() => toast("Payout Calculator feature coming soon")}>
+                      Payout Calculator
+                    </button>
+                    <button className="text-[13.5px] font-semibold text-slate-500 hover:text-slate-800 pb-3 -mb-[14px] font-sans" onClick={() => toast("Information and guidelines loading")}>
+                      Know more
+                    </button>
+                  </div>
+
+                  {/* Grid Column Wrapper */}
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-6">
+                    
+                    {/* Column 1: Domestic Term Deposit - General */}
+                    <div className="lg:col-span-5 space-y-3">
+                      <h3 className="text-[13px] font-bold text-slate-700 font-sans tracking-wide">
+                        Domestic Term Deposit - General
+                      </h3>
+                      <div className="border border-slate-100 rounded-xl overflow-hidden">
+                        <div className="grid grid-cols-2 bg-slate-50 border-b border-slate-100 p-2.5 px-4 text-[11px] font-bold text-slate-500 font-sans uppercase">
+                          <span>Terms</span>
+                          <span className="text-right">Interest Rate</span>
+                        </div>
+                        {[
+                          { term: '7 Days to 45 Days', rate: '3.05%' },
+                          { term: '46 Days to 180 Days', rate: '4.90%' },
+                          { term: '181 Days to 210 Days', rate: '5.65%' },
+                          { term: '211 Days to less than 1 Year', rate: '5.90%' },
+                          { term: '1 Year to less than 2 Years', rate: '6.25%' },
+                          { term: 'Amrit Vrishiti 444', rate: '6.45%' },
+                          { term: '2 Years to less than 3 Years', rate: '6.40%' },
+                          { term: '3 Years to less than 5 Years', rate: '6.30%' },
+                          { term: '5 Years and upto 10 Years', rate: '6.05%' },
+                        ].map((row, idx) => (
+                          <div key={idx} className="grid grid-cols-2 p-2.5 px-4 text-xs font-semibold text-slate-700 font-sans border-b border-slate-50 last:border-0 hover:bg-slate-50/50 transition-colors">
+                            <span>{row.term}</span>
+                            <span className="text-right text-slate-900 font-bold">{row.rate}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Column 2: Green Rupee TD - General */}
+                    <div className="lg:col-span-4 space-y-3">
+                      <h3 className="text-[13px] font-bold text-slate-700 font-sans tracking-wide">
+                        Green Rupee TD - General
+                      </h3>
+                      <div className="border border-slate-100 rounded-xl overflow-hidden">
+                        <div className="grid grid-cols-2 bg-slate-50 border-b border-slate-100 p-2.5 px-4 text-[11px] font-bold text-slate-500 font-sans uppercase">
+                          <span>Terms</span>
+                          <span className="text-right">Interest Rate</span>
+                        </div>
+                        {[
+                          { term: '1111 Days', rate: '6.30%' },
+                          { term: '1777 Days', rate: '6.30%' },
+                          { term: '2222 Days', rate: '6.05%' },
+                        ].map((row, idx) => (
+                          <div key={idx} className="grid grid-cols-2 p-2.5 px-4 text-xs font-semibold text-slate-700 font-sans border-b border-slate-50 last:border-0 hover:bg-slate-50/50 transition-colors">
+                            <span>{row.term}</span>
+                            <span className="text-right text-slate-900 font-bold">{row.rate}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Column 3: Non-callable Deposit - General */}
+                    <div className="lg:col-span-3 space-y-3">
+                      <h3 className="text-[13px] font-bold text-slate-700 font-sans tracking-wide">
+                        Non-callable Deposit - General
+                      </h3>
+                      <div className="border border-slate-100 rounded-xl overflow-hidden">
+                        <div className="grid grid-cols-2 bg-slate-50 border-b border-slate-100 p-2.5 px-4 text-[11px] font-bold text-slate-500 font-sans uppercase">
+                          <span>Terms</span>
+                          <span className="text-right">Interest Rate</span>
+                        </div>
+                        {[
+                          { term: '1 Year', rate: '6.55%' },
+                          { term: '2 Years', rate: '6.80%' },
+                        ].map((row, idx) => (
+                          <div key={idx} className="grid grid-cols-2 p-2.5 px-4 text-xs font-semibold text-slate-700 font-sans border-b border-slate-50 last:border-0 hover:bg-slate-50/50 transition-colors">
+                            <span>{row.term}</span>
+                            <span className="text-right text-slate-900 font-bold">{row.rate}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                  </div>
                 </div>
 
               </div>
+            ) : (
+              /* ================= ORIGINAL TABBED DEPOSITS VIEW ================= */
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 text-left w-full">
+                {/* Left Column (3/12 width) */}
+                <div className="md:col-span-3 space-y-4">
+                  <div className="sbi-search-card">
+                    <Search size={16} className="text-gray-400" />
+                    <input
+                      type="text"
+                      placeholder="Search here..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="sbi-search-input font-sans"
+                    />
+                    <button type="button" className="text-gray-400 hover:text-gray-600">
+                      <MoreVertical size={16} />
+                    </button>
+                  </div>
 
-              {/* Right Column (9/12 width) */}
-              <div className="md:col-span-9 space-y-6">
-                <div className="sbi-content-card min-h-[380px] p-6 flex flex-col justify-between">
-                  <div>
-                    <div className="flex justify-between items-center pb-4 border-b border-gray-100 mb-6">
-                      <div>
-                        <h2 className="text-lg font-bold text-[#30135d]">Deposits Summary</h2>
-                        <p className="text-xs text-gray-500">View and manage your Term Deposits, Fixed Deposits, and Special Schemes</p>
+                  <div 
+                    onClick={() => setShowNoRequestsModal(true)}
+                    className="sbi-menu-card flex items-center justify-between cursor-pointer hover:bg-slate-50 transition-colors"
+                  >
+                    <span className="text-xs font-semibold text-gray-700 font-sans">Requests</span>
+                    <ChevronRight size={16} className="text-gray-400" />
+                  </div>
+
+                  <div className="sbi-menu-card">
+                    <div
+                      onClick={() => setOthersOpen(!othersOpen)}
+                      className="flex items-center justify-between cursor-pointer pb-1"
+                    >
+                      <span className="text-xs font-bold text-[#30135d] font-sans">Others (00)</span>
+                      {othersOpen ? (
+                        <ChevronUp size={16} className="text-[#30135d]" />
+                      ) : (
+                        <ChevronDown size={16} className="text-gray-400" />
+                      )}
+                    </div>
+
+                    {othersOpen && (
+                      <div className="mt-3">
+                        <div
+                          onClick={() => toast('Sukanya Samriddhi / Minor PPF Account Info')}
+                          className="sbi-sukanya-banner"
+                        >
+                          <div className="sbi-sukanya-text-col">
+                            <div className="sbi-sukanya-sub flex items-center gap-1 font-sans">
+                              <span>View your Linked</span>
+                              <ChevronRight size={10} />
+                            </div>
+                            <div className="sbi-sukanya-title font-sans">
+                              Sukanya Samriddhi/ Minor PPF Account
+                            </div>
+                          </div>
+                          <div className="sbi-sukanya-graphic">
+                            <svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                              <path d="M85 30 C85 30 105 35 105 55 C105 75 85 85 85 85 C85 85 65 75 65 55 C65 35 85 30 85 30 Z" fill="#ffffff" fillOpacity="0.25" />
+                              <circle cx="45" cy="40" r="10" fill="#fbcfe8" />
+                              <path d="M45 52 L35 75 L42 75 L48 62 L55 75 L62 75 L52 52 Z" fill="#ffffff" />
+                              <circle cx="25" cy="45" r="7" fill="#f472b6" />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Right Column (9/12 width) */}
+                <div className="md:col-span-9 space-y-6">
+                  <div className="sbi-content-card min-h-[380px] p-6 flex flex-col justify-between">
+                    <div>
+                      <div className="flex justify-between items-center pb-4 border-b border-gray-100 mb-6">
+                        <div>
+                          <h2 className="text-lg font-bold text-[#30135d] font-sans">Deposits Summary</h2>
+                          <p className="text-xs text-gray-500 font-sans">View and manage your Term Deposits, Fixed Deposits, and Special Schemes</p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => toast.success('Redirecting to Open FD page')}
+                          className="sbi-btn-primary flex items-center gap-1.5 font-sans"
+                        >
+                          <PlusCircle size={15} />
+                          <span>Open Fixed Deposit</span>
+                        </button>
+                      </div>
+
+                      {/* Deposit Cards Grid */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="sbi-deposit-box">
+                          <div className="flex justify-between items-start">
+                            <span className="sbi-deposit-type font-sans">FIXED DEPOSIT (FD)</span>
+                            <span className="sbi-badge-active font-sans">Active</span>
+                          </div>
+                          <div className="text-xs text-gray-500 mt-2 font-sans">A/C: 39812049182</div>
+                          <div className="text-xl font-bold text-gray-900 mt-1 font-sans">₹ 2,50,000.00</div>
+                          <div className="flex justify-between items-center mt-3 pt-3 border-t border-purple-100 text-xs font-sans">
+                            <span className="text-gray-600">Maturity: 15 Oct 2027 (7.10% p.a.)</span>
+                            <button type="button" onClick={() => toast('FD Account Details')} className="text-[#30135d] font-bold hover:underline">
+                              Details →
+                            </button>
+                          </div>
+                        </div>
+
+                        <div className="sbi-deposit-box">
+                          <div className="flex justify-between items-start">
+                            <span className="sbi-deposit-type font-sans">RECURRING DEPOSIT (RD)</span>
+                            <span className="sbi-badge-active font-sans">Active</span>
+                          </div>
+                          <div className="text-xs text-gray-500 mt-2 font-sans">Monthly Installment: ₹5,000</div>
+                          <div className="text-xl font-bold text-gray-900 mt-1 font-sans">₹ 60,000.00</div>
+                          <div className="flex justify-between items-center mt-3 pt-3 border-t border-purple-100 text-xs font-sans">
+                            <span className="text-gray-600">Maturity: 01 Mar 2027 (6.80% p.a.)</span>
+                            <button type="button" onClick={() => toast('RD Account Details')} className="text-[#30135d] font-bold hover:underline">
+                              Details →
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="sbi-info-bar mt-6 font-sans">
+                      <div className="flex items-center gap-2 text-xs font-semibold text-gray-700">
+                        <FileText size={16} className="text-[#30135d]" />
+                        <span>Need deposit interest certificate for IT return filing?</span>
                       </div>
                       <button
                         type="button"
-                        onClick={() => toast.success('Redirecting to Open FD page')}
-                        className="sbi-btn-primary flex items-center gap-1.5"
+                        onClick={() => toast.success('Interest Certificate downloaded successfully')}
+                        className="sbi-btn-outline font-sans"
                       >
-                        <PlusCircle size={15} />
-                        <span>Open Fixed Deposit</span>
+                        Download Certificate
                       </button>
                     </div>
-
-                    {/* Deposit Cards Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      
-                      {/* Card 1: FD */}
-                      <div className="sbi-deposit-box">
-                        <div className="flex justify-between items-start">
-                          <span className="sbi-deposit-type">FIXED DEPOSIT (FD)</span>
-                          <span className="sbi-badge-active">Active</span>
-                        </div>
-                        <div className="text-xs text-gray-500 mt-2">A/C: 39812049182</div>
-                        <div className="text-xl font-bold text-gray-900 mt-1">₹ 2,50,000.00</div>
-                        <div className="flex justify-between items-center mt-3 pt-3 border-t border-purple-100 text-xs">
-                          <span className="text-gray-600">Maturity: 15 Oct 2027 (7.10% p.a.)</span>
-                          <button type="button" onClick={() => toast('FD Account Details')} className="text-[#30135d] font-bold hover:underline">
-                            Details →
-                          </button>
-                        </div>
-                      </div>
-
-                      {/* Card 2: RD */}
-                      <div className="sbi-deposit-box">
-                        <div className="flex justify-between items-start">
-                          <span className="sbi-deposit-type">RECURRING DEPOSIT (RD)</span>
-                          <span className="sbi-badge-active">Active</span>
-                        </div>
-                        <div className="text-xs text-gray-500 mt-2">Monthly Installment: ₹5,000</div>
-                        <div className="text-xl font-bold text-gray-900 mt-1">₹ 60,000.00</div>
-                        <div className="flex justify-between items-center mt-3 pt-3 border-t border-purple-100 text-xs">
-                          <span className="text-gray-600">Maturity: 01 Mar 2027 (6.80% p.a.)</span>
-                          <button type="button" onClick={() => toast('RD Account Details')} className="text-[#30135d] font-bold hover:underline">
-                            Details →
-                          </button>
-                        </div>
-                      </div>
-
-                    </div>
                   </div>
 
-                  {/* Bottom Certificate Download Bar */}
-                  <div className="sbi-info-bar mt-6">
-                    <div className="flex items-center gap-2 text-xs font-semibold text-gray-700">
-                      <FileText size={16} className="text-[#30135d]" />
-                      <span>Need deposit interest certificate for IT return filing?</span>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => toast.success('Interest Certificate downloaded successfully')}
-                      className="sbi-btn-outline"
-                    >
-                      Download Certificate
-                    </button>
-                  </div>
+                  <BusinessLoanBanner />
                 </div>
-
-                {/* Business Loan Banner (Screenshot 5) */}
-                <BusinessLoanBanner />
               </div>
-
-            </div>
+            )
           )}
 
           {/* ========================================================================= */}
           {/* TAB 2: LOANS (EXACT MATCH TO SCREENSHOT 2) */}
           {/* ========================================================================= */}
           {activeTab === 'Loans' && (
-            <div className="space-y-6">
-              <div className="sbi-content-card min-h-[460px] p-8 flex items-center justify-center relative">
+            searchParams?.get('view') === 'all' ? (
+              /* ================= VIEW ALL / FROM OVERVIEW LOANS MODE ================= */
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 text-left items-start w-full">
                 
-                {/* 2 Equal Columns Split by Vertical Dotted Border */}
-                <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-6">
-                  
-                  {/* Left Column: Triangle Warning Pole & Cactus Vector Graphic */}
-                  <div className="flex justify-center items-center">
-                    <div className="w-64 h-64 relative flex items-center justify-center">
-                      <svg viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                        {/* Soft Purple Mountain Hills in Background */}
-                        <path d="M20 200 C60 170 110 185 160 200 Z" fill="#f5edfc" />
-                        <path d="M100 200 C150 160 190 180 230 200 Z" fill="#eee3fa" />
-
-                        {/* Base Ground */}
-                        <line x1="10" y1="200" x2="230" y2="200" stroke="#d8c5f2" strokeWidth="2" strokeDasharray="4 4" />
-
-                        {/* Pole */}
-                        <line x1="110" y1="85" x2="110" y2="200" stroke="#702082" strokeWidth="3" strokeLinecap="round" />
-
-                        {/* Triangle Warning Sign */}
-                        <path 
-                          d="M110 35 L145 90 L75 90 Z" 
-                          fill="#ffffff" 
-                          stroke="#702082" 
-                          strokeWidth="5" 
-                          strokeLinejoin="round" 
-                        />
-                        {/* Exclamation Mark inside Triangle */}
-                        <path d="M110 52 L110 70" stroke="#702082" strokeWidth="4" strokeLinecap="round" />
-                        <circle cx="110" cy="79" r="2.5" fill="#702082" />
-
-                        {/* Cactus Plant Graphic at Bottom Left of Pole */}
-                        <g transform="translate(85, 160)">
-                          <rect x="12" y="10" width="8" height="30" rx="4" fill="#a855f7" fillOpacity="0.4" />
-                          <path d="M6 18 C6 26 12 26 12 26" stroke="#a855f7" strokeWidth="3" strokeLinecap="round" fill="none" />
-                          <path d="M26 22 C26 30 20 30 20 30" stroke="#a855f7" strokeWidth="3" strokeLinecap="round" fill="none" />
-                        </g>
+                {/* Left Column (Approx 65% width / lg:col-span-8) */}
+                <div className="lg:col-span-8 space-y-6">
+                  {/* Business Loan Apply Banner */}
+                  <div className="bg-[#1e3c72] bg-gradient-to-r from-[#202967] via-[#2d3a8c] to-[#3a4db2] rounded-3xl p-8 text-white relative overflow-hidden shadow-xs">
+                    {/* Abstract Wave Shapes in background */}
+                    <div className="absolute right-0 bottom-0 top-0 w-1/2 opacity-15 pointer-events-none select-none">
+                      <svg viewBox="0 0 200 200" fill="none" className="w-full h-full object-cover">
+                        <path d="M0,100 C50,150 150,50 200,100 L200,200 L0,200 Z" fill="#ffffff" />
                       </svg>
+                    </div>
+
+                    <div className="relative z-10 space-y-5">
+                      <h2 className="text-[20px] font-bold tracking-tight font-sans">
+                        Apply for a Business Loan
+                      </h2>
+                      <div>
+                        <button 
+                          onClick={() => toast.success("Checking Business Loan Eligibility...")}
+                          className="bg-white hover:bg-slate-50 text-[#302985] font-bold text-[13px] px-6 py-2.5 rounded-full shadow-xs hover:scale-[1.02] active:scale-[0.98] transition-all font-sans"
+                        >
+                          Click here to check your eligibility
+                        </button>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Vertical Dotted Border Divider (Visible on Desktop) */}
-                  <div className="hidden md:block absolute left-1/2 top-12 bottom-12 border-r border-dashed border-gray-300 transform -translate-x-1/2 pointer-events-none"></div>
+                  {/* View Existing Loans Section */}
+                  <div className="bg-white rounded-3xl border border-slate-200/60 p-8 shadow-sm space-y-6">
+                    <h3 className="text-[17px] font-bold text-slate-800 tracking-tight font-sans">
+                      View Existing Loans
+                    </h3>
 
-                  {/* Right Column: "No records found" Text */}
-                  <div className="flex flex-col items-center justify-center text-center">
-                    <p className="text-sm font-semibold text-gray-500 tracking-wide">
-                      No records found
-                    </p>
+                    {/* Sub Tab Selector (Active Loan(s) / Closed Loan(s)) */}
+                    <div className="flex gap-6 border-b border-slate-100 pb-0">
+                      <button 
+                        onClick={() => setLoansSubTab('active')}
+                        className={`text-[13px] font-bold pb-2.5 transition-all font-sans relative ${
+                          loansSubTab === 'active' ? 'text-[#702082]' : 'text-slate-400 hover:text-slate-600'
+                        }`}
+                      >
+                        Active Loan(s)
+                        {loansSubTab === 'active' && (
+                          <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#702082] rounded-t-sm" />
+                        )}
+                      </button>
+                      <button 
+                        onClick={() => setLoansSubTab('closed')}
+                        className={`text-[13px] font-bold pb-2.5 transition-all font-sans relative ${
+                          loansSubTab === 'closed' ? 'text-[#702082]' : 'text-slate-400 hover:text-slate-600'
+                        }`}
+                      >
+                        Closed Loan(s)
+                        {loansSubTab === 'closed' && (
+                          <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#702082] rounded-t-sm" />
+                        )}
+                      </button>
+                    </div>
+
+                    {/* Sub Tab Content */}
+                    {loansSubTab === 'closed' ? (
+                      <div className="py-8 flex flex-col items-center justify-center text-center space-y-5 select-none">
+                        {/* High Fidelity Clipboard Shield Graphic */}
+                        <div className="w-52 h-52 relative flex items-center justify-center">
+                          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                            {/* Shield background shadow/accent */}
+                            <path d="M100 20 C140 20 170 30 170 70 C170 120 120 165 100 175 C80 165 30 120 30 70 C30 30 60 20 100 20 Z" fill="#fdf2f8" opacity="0.9" />
+                            <path d="M100 25 C135 25 162 34 162 70 C162 115 116 156 100 165 C84 156 38 115 38 70 C38 34 65 25 100 25 Z" stroke="#fbcfe8" strokeWidth="2" strokeDasharray="3 3" />
+                            
+                            {/* Clipboard Card */}
+                            <rect x="65" y="55" width="70" height="90" rx="6" fill="#ffffff" stroke="#a78bfa" strokeWidth="2.5" />
+                            {/* Clipboard Header Clip */}
+                            <rect x="85" y="46" width="30" height="15" rx="3" fill="#8b5cf6" />
+                            
+                            {/* Card text lines */}
+                            <line x1="77" y1="75" x2="123" y2="75" stroke="#cbd5e1" strokeWidth="2.5" strokeLinecap="round" />
+                            <line x1="77" y1="90" x2="123" y2="90" stroke="#cbd5e1" strokeWidth="2.5" strokeLinecap="round" />
+                            <line x1="77" y1="105" x2="110" y2="105" stroke="#cbd5e1" strokeWidth="2.5" strokeLinecap="round" />
+
+                            {/* Checkmark details inside clipboard */}
+                            <path d="M108 128 L114 134 L125 123" stroke="#10b981" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+
+                            {/* Floating Rupees Coin */}
+                            <circle cx="50" cy="140" r="14" fill="#a5f3fc" stroke="#0891b2" strokeWidth="1.5" />
+                            <text x="50" y="145" fontSize="13" fontWeight="bold" textAnchor="middle" fill="#0891b2" fontFamily="sans-serif">₹</text>
+
+                            {/* Floating Percent Coin */}
+                            <circle cx="145" cy="135" r="14" fill="#fbcfe8" stroke="#be185d" strokeWidth="1.5" />
+                            <text x="145" y="139" fontSize="12" fontWeight="bold" textAnchor="middle" fill="#be185d" fontFamily="sans-serif">%</text>
+
+                            {/* Smile Pill shape at bottom center */}
+                            <rect x="85" y="146" width="30" height="8" rx="4" fill="#cbd5e1" />
+                          </svg>
+                        </div>
+                        <p className="text-[14.5px] font-bold text-slate-700 font-sans tracking-wide">
+                          No loans have been closed in the last 24 months.
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="py-14 flex flex-col items-center justify-center text-center space-y-4">
+                        <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center text-slate-400">
+                          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                          </svg>
+                        </div>
+                        <p className="text-xs font-semibold text-slate-400 font-sans">
+                          No active loans found.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Right Column (Approx 35% width / lg:col-span-4) */}
+                <div className="lg:col-span-4 w-full">
+                  <div className="bg-white rounded-3xl border border-slate-200/60 p-6 shadow-sm space-y-5">
+                    <h3 className="text-[15.5px] font-bold text-slate-800 tracking-tight font-sans text-left">
+                      Apply for a new Loan
+                    </h3>
+
+                    {/* 2-Column Grid of Options */}
+                    <div className="grid grid-cols-2 gap-3.5 w-full">
+                      {[
+                        { 
+                          name: 'Loan Against Mutual Fund',
+                          icon: (
+                            <svg className="w-6 h-6 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                              <circle cx="12" cy="8" r="5" strokeLinecap="round" strokeLinejoin="round" />
+                              <path d="M3 21h18M12 13v8M19 18l-3 3-3-3" strokeLinecap="round" strokeLinejoin="round" />
+                              <text x="12" y="11" fontSize="6.5" fontWeight="bold" textAnchor="middle" fill="#702082" stroke="none" fontFamily="sans-serif">₹</text>
+                            </svg>
+                          )
+                        },
+                        { 
+                          name: 'Personal Loan',
+                          icon: (
+                            <svg className="w-6 h-6 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          )
+                        },
+                        { 
+                          name: 'Car Loan',
+                          icon: (
+                            <svg className="w-6 h-6 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                              <rect x="3" y="11" width="18" height="6" rx="2" strokeLinecap="round" strokeLinejoin="round" />
+                              <path d="M5 11l2-5h10l2 5M7 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM17 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          )
+                        },
+                        { 
+                          name: 'Home Loan',
+                          icon: (
+                            <svg className="w-6 h-6 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" strokeLinecap="round" strokeLinejoin="round" />
+                              <polyline points="9 22 9 12 15 12 15 22" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          )
+                        },
+                        { 
+                          name: 'Education Loan',
+                          icon: (
+                            <svg className="w-6 h-6 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                              <path d="M22 10v6M2 10l10-5 10 5-10 5z" strokeLinecap="round" strokeLinejoin="round" />
+                              <path d="M6 12v5c0 2 2.5 3 6 3s6-1 6-3v-5" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          )
+                        },
+                        { 
+                          name: 'Gold Loan',
+                          icon: (
+                            <svg className="w-6 h-6 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                              <path d="M2 20h20M5 17h14M7 14h10M9 11h6M11 8h2" strokeLinecap="round" strokeLinejoin="round" />
+                              <circle cx="12" cy="4" r="2" fill="#702082" />
+                            </svg>
+                          )
+                        },
+                      ].map((opt, idx) => (
+                        <div 
+                          key={idx}
+                          onClick={() => toast.success(`Starting application for ${opt.name}...`)}
+                          className="bg-white hover:bg-purple-50/20 border border-slate-200/80 rounded-xl p-3 flex flex-col items-center justify-center text-center cursor-pointer transition-all hover:scale-[1.03] active:scale-[0.97] shadow-2xs h-28 w-full"
+                        >
+                          <div className="w-10 h-10 bg-transparent flex items-center justify-center rounded-full border border-slate-50 shrink-0 mb-2">
+                            {opt.icon}
+                          </div>
+                          <span className="text-[11.5px] font-bold text-slate-700 leading-tight font-sans">
+                            {opt.name}
+                          </span>
+                        </div>
+                      ))}
+
+                      {/* Overdraft Against Deposit (Takes 2 Columns Span) */}
+                      <div 
+                        onClick={() => toast.success("Starting application for Overdraft Against Deposit...")}
+                        className="col-span-2 bg-white hover:bg-purple-50/20 border border-slate-200/80 rounded-xl p-3 flex flex-col items-center justify-center text-center cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] shadow-2xs h-28 w-full"
+                      >
+                        <div className="w-10 h-10 bg-transparent flex items-center justify-center rounded-full border border-slate-50 shrink-0 mb-2">
+                          <svg className="w-6 h-6 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                            <rect x="3" y="11" width="18" height="10" rx="2" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M12 2a5 5 0 0 0-5 5v4h10V7a5 5 0 0 0-5-5z" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </div>
+                        <span className="text-[11.5px] font-bold text-slate-700 leading-tight font-sans">
+                          Overdraft Against Deposit
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            ) : (
+              /* ================= ORIGINAL TABBED LOANS VIEW ================= */
+              <div className="space-y-6">
+                <div className="sbi-content-card min-h-[460px] p-8 flex items-center justify-center relative">
+                  
+                  {/* 2 Equal Columns Split by Vertical Dotted Border */}
+                  <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-6">
+                    
+                    {/* Left Column: Triangle Warning Pole & Cactus Vector Graphic */}
+                    <div className="flex justify-center items-center">
+                      <div className="w-64 h-64 relative flex items-center justify-center">
+                        <svg viewBox="0 0 24 240" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                          {/* Soft Purple Mountain Hills in Background */}
+                          <path d="M20 200 C60 170 110 185 160 200 Z" fill="#f5edfc" />
+                          <path d="M100 200 C150 160 190 180 230 200 Z" fill="#eee3fa" />
+
+                          {/* Base Ground */}
+                          <line x1="10" y1="200" x2="230" y2="200" stroke="#d8c5f2" strokeWidth="2" strokeDasharray="4 4" />
+
+                          {/* Pole */}
+                          <line x1="110" y1="85" x2="110" y2="200" stroke="#702082" strokeWidth="3" strokeLinecap="round" />
+
+                          {/* Triangle Warning Sign */}
+                          <path 
+                            d="M110 35 L145 90 L75 90 Z" 
+                            fill="#ffffff" 
+                            stroke="#702082" 
+                            strokeWidth="5" 
+                            strokeLinejoin="round" 
+                          />
+                          {/* Exclamation Mark inside Triangle */}
+                          <path d="M110 52 L110 70" stroke="#702082" strokeWidth="4" strokeLinecap="round" />
+                          <circle cx="110" cy="79" r="2.5" fill="#702082" />
+
+                          {/* Cactus Plant Graphic at Bottom Left of Pole */}
+                          <g transform="translate(85, 160)">
+                            <rect x="12" y="10" width="8" height="30" rx="4" fill="#a855f7" fillOpacity="0.4" />
+                            <path d="M6 18 C6 26 12 26 12 26" stroke="#a855f7" strokeWidth="3" strokeLinecap="round" fill="none" />
+                            <path d="M26 22 C26 30 20 30 20 30" stroke="#a855f7" strokeWidth="3" strokeLinecap="round" fill="none" />
+                          </g>
+                        </svg>
+                      </div>
+                    </div>
+
+                    {/* Vertical Dotted Border Divider (Visible on Desktop) */}
+                    <div className="hidden md:block absolute left-1/2 top-12 bottom-12 border-r border-dashed border-gray-300 transform -translate-x-1/2 pointer-events-none"></div>
+
+                    {/* Right Column: "No records found" Text */}
+                    <div className="flex flex-col items-center justify-center text-center">
+                      <p className="text-sm font-semibold text-gray-500 tracking-wide">
+                        No records found
+                      </p>
+                    </div>
+
                   </div>
 
                 </div>
 
+                {/* Business Loan Banner */}
+                <BusinessLoanBanner />
               </div>
-
-              {/* Business Loan Banner */}
-              <BusinessLoanBanner />
-            </div>
+            )
           )}
 
           {/* ========================================================================= */}
@@ -932,21 +1414,27 @@ export default function SbiLandingPageComponent({
                         <div className="p-8 flex-1 flex flex-col justify-between items-stretch text-left bg-white w-full h-full space-y-6">
                           
                           {/* Title and Contribution Option Box */}
-                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-100 pb-4">
-                            <h2 className="text-[20px] font-bold text-[#702082] tracking-tight pl-2">
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200 pb-6 mb-2">
+                            <h2 className="text-[28px] font-bold text-[#681d82] tracking-tight pl-2">
                               NPS Account
                             </h2>
                             <button
                               type="button"
                               onClick={() => toast.success("Opening NPS Contribution Page...")}
-                              className="border border-[#702082]/10 hover:border-[#702082]/40 bg-[#fcfaff] rounded-xl p-3 flex items-center gap-3 transition-colors text-left max-w-md cursor-pointer group shadow-2xs"
+                              className="flex items-center justify-between gap-4 border border-[#dbcdf0] bg-[#f3effa] hover:bg-[#eae3f5] rounded-xl py-3 px-5 transition-all text-left max-w-xl cursor-pointer group shadow-xs select-none"
                             >
-                              <div className="w-8 h-8 rounded-full bg-[#702082]/10 flex items-center justify-center text-[#702082] shrink-0 group-hover:scale-105 transition-transform">
-                                <TrendingUp size={16} />
+                              <div className="flex items-center gap-3">
+                                {/* Custom banknote icon with Rupee sign inside */}
+                                <svg className="w-6 h-5 text-[#681d82] shrink-0" viewBox="0 0 24 20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                  <rect x="2" y="4" width="20" height="12" rx="2" />
+                                  <circle cx="12" cy="10" r="2.5" strokeWidth="1.5" />
+                                  <text x="12" y="12" fontSize="6.5" fontWeight="900" fill="currentColor" textAnchor="middle" stroke="none">₹</text>
+                                </svg>
+                                <span className="text-[13.5px] font-bold text-[#681d82] leading-tight">
+                                  Make one time contribution to self/other NPS Accounts
+                                </span>
                               </div>
-                              <span className="text-[11px] font-semibold text-slate-700 leading-tight">
-                                Make one time contribution to self/other NPS Accounts &gt;
-                              </span>
+                              <ChevronRight size={16} className="text-[#681d82] stroke-[2.5px] shrink-0 ml-1" />
                             </button>
                           </div>
 
@@ -1085,8 +1573,211 @@ export default function SbiLandingPageComponent({
                         </div>
                       )}
 
-                      {investmentSubTab !== 'Demat & Securities' && investmentSubTab !== 'PPF' && investmentSubTab !== 'NPS' && (
-                        /* Standard Coming Soon page for Mutual Fund and IPO tabs */
+                      {investmentSubTab === 'IPO' && (
+                        <div className="fixed inset-0 z-50 bg-[#f4f3f6] flex flex-col overflow-y-auto">
+                          
+                          {/* 1. Header Bar */}
+                          <header className="bg-white border-b border-slate-200 flex items-stretch h-[75px] w-full shrink-0">
+                            {/* SBI Logo */}
+                            <div className="flex items-center px-8 bg-white border-r border-slate-100">
+                              <div className="flex items-center gap-2.5">
+                                <div className="w-9 h-9 rounded-full bg-[#00b0f0] flex items-center justify-center relative">
+                                  <div className="w-3.5 h-3.5 rounded-full bg-white" />
+                                  <div className="absolute bottom-0 left-[16.5px] w-1.5 h-3.5 bg-white" />
+                                </div>
+                                <span className="text-[30px] font-black text-[#1f70b8] tracking-tight font-sans">SBI</span>
+                              </div>
+                            </div>
+
+                            {/* Purple Info Bar */}
+                            <div className="flex-1 bg-[#1e144f] text-white flex items-center justify-between px-6 py-2 select-none">
+                              <div>
+                                <h1 className="text-[17px] font-bold tracking-wide font-sans">
+                                  SBI IPO & Rights Issue Application Portal
+                                </h1>
+                              </div>
+                              <div className="flex items-center gap-6">
+                                <div className="text-right font-sans">
+                                  <div className="text-[11px] text-[#ffd200] font-semibold">Welcome Mr. DUMPALA VISHNU VARDHAN</div>
+                                  <div className="text-[10px] text-white/80 mt-0.5">Last Login: 31 Jul 2026 11:42:17</div>
+                                </div>
+                                
+                                {/* Logout Button */}
+                                <button 
+                                  type="button" 
+                                  onClick={() => {
+                                    toast.success('Logged out from IPO Portal');
+                                    setInvestmentSubTab('Mutual Fund');
+                                  }}
+                                  className="bg-[#ffd200] hover:bg-[#ebd01e] text-slate-900 font-bold px-5 h-[75px] flex items-center gap-2 -mr-6 transition-colors font-sans text-xs uppercase cursor-pointer"
+                                >
+                                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
+                                  </svg>
+                                  <span>Logout</span>
+                                </button>
+                              </div>
+                            </div>
+                          </header>
+
+                          {/* 2. Menu Bar */}
+                          <div className="bg-[#fcfbfd] border-b border-slate-200 py-3 px-8 flex items-center gap-6 text-[13.5px] font-semibold text-slate-700 shadow-xs select-none">
+                            <button type="button" onClick={() => toast('Loading IPO applications...')} className="text-[#1e144f] hover:underline font-bold cursor-pointer">Apply IPO</button>
+                            <span className="text-slate-300">|</span>
+                            <button type="button" onClick={() => toast('Opening applications log...')} className="hover:text-[#1e144f] hover:underline cursor-pointer">View/Delete Applications</button>
+                            <span className="text-slate-300">|</span>
+                            <button type="button" onClick={() => toast('Opening FAQs...')} className="hover:text-[#1e144f] hover:underline cursor-pointer">FAQ's</button>
+                            <span className="text-slate-300">|</span>
+                            <button type="button" onClick={() => toast('Loading applicant details...')} className="hover:text-[#1e144f] hover:underline cursor-pointer">Manage IPO Applicant</button>
+                            <span className="text-slate-300">|</span>
+                            <button type="button" onClick={() => toast('Connecting to Support...')} className="hover:text-[#1e144f] hover:underline cursor-pointer">Customer Support</button>
+                          </div>
+
+                          {/* 3. Hero Banner Background */}
+                          <div className="relative w-full h-[220px] bg-gradient-to-r from-[#442b78] via-[#351e60] to-[#1f0e3d] flex items-center justify-center overflow-hidden">
+                            {/* Abstract coin-stack graphics overlay */}
+                            <div className="absolute inset-0 pointer-events-none opacity-25 select-none z-0">
+                              <svg className="w-full h-full" viewBox="0 0 1000 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                                {/* Coin Stacks & Blocks representation */}
+                                <ellipse cx="380" cy="180" rx="35" ry="8" fill="#a78bfa" />
+                                <ellipse cx="380" cy="172" rx="35" ry="8" fill="#c084fc" />
+                                <ellipse cx="380" cy="164" rx="35" ry="8" fill="#d8b4fe" />
+
+                                <ellipse cx="500" cy="190" rx="35" ry="8" fill="#a78bfa" />
+                                <ellipse cx="500" cy="182" rx="35" ry="8" fill="#c084fc" />
+
+                                <ellipse cx="620" cy="175" rx="35" ry="8" fill="#a78bfa" />
+                                <ellipse cx="620" cy="167" rx="35" ry="8" fill="#c084fc" />
+                                <ellipse cx="620" cy="159" rx="35" ry="8" fill="#d8b4fe" />
+                                <ellipse cx="620" cy="151" rx="35" ry="8" fill="#f3e8ff" />
+
+                                {/* Cube block outline */}
+                                <rect x="345" y="100" width="70" height="40" rx="4" fill="#6d28d9" opacity="0.3" stroke="#d8b4fe" strokeWidth="1" />
+                                <rect x="465" y="110" width="70" height="40" rx="4" fill="#6d28d9" opacity="0.3" stroke="#d8b4fe" strokeWidth="1" />
+                                <rect x="585" y="95" width="70" height="40" rx="4" fill="#6d28d9" opacity="0.3" stroke="#d8b4fe" strokeWidth="1" />
+                                
+                                <text x="380" y="130" fontSize="24" fontWeight="black" fill="#ffffff" opacity="0.4" textAnchor="middle">I</text>
+                                <text x="500" y="140" fontSize="24" fontWeight="black" fill="#ffffff" opacity="0.4" textAnchor="middle">P</text>
+                                <text x="620" y="125" fontSize="24" fontWeight="black" fill="#ffffff" opacity="0.4" textAnchor="middle">O</text>
+                              </svg>
+                            </div>
+                          </div>
+
+                          {/* 4. Three Cards Grid Overlay */}
+                          <div className="max-w-[1200px] w-full mx-auto px-6 -mt-[80px] pb-16 relative z-20 flex-1">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                              {/* Card 1: IPO (Equity) */}
+                              <div className="bg-white rounded-2xl border border-slate-200/80 shadow-md p-8 text-center flex flex-col justify-between items-center min-h-[300px]">
+                                <div className="space-y-4">
+                                  {/* Custom growth chart + rupee coin icon */}
+                                  <svg className="w-16 h-16 text-[#1e144f] mx-auto mb-2" viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                    {/* Banknotes outline */}
+                                    <rect x="12" y="32" width="22" height="13" rx="1.5" />
+                                    <circle cx="23" cy="38.5" r="2.5" />
+                                    {/* Growth graph */}
+                                    <path d="M44 14 H54 V24 M54 14 L34 34 L22 28 L10 38" strokeWidth="2.2" />
+                                    {/* Rupee coin stacks at base */}
+                                    <line x1="16" y1="45" x2="16" y2="50" />
+                                    <line x1="30" y1="45" x2="30" y2="50" />
+                                    <line x1="10" y1="50" x2="32" y2="50" />
+                                  </svg>
+                                  <h3 className="text-[17px] font-bold text-slate-800 tracking-wide font-sans">
+                                    IPO (Equity)
+                                  </h3>
+                                </div>
+                                <div className="w-full border-t border-slate-100 pt-6">
+                                  <button 
+                                    type="button" 
+                                    onClick={() => toast.success("Loading Equity IPO Live Issues...")}
+                                    className="text-[#0088cc] hover:text-[#006699] font-bold text-[14px] underline select-none cursor-pointer"
+                                  >
+                                    6 Live Issues
+                                  </button>
+                                </div>
+                              </div>
+
+                              {/* Card 2: IPO (Debt) */}
+                              <div className="bg-white rounded-2xl border border-slate-200/80 shadow-md p-8 text-center flex flex-col justify-between items-center min-h-[300px]">
+                                <div className="space-y-4">
+                                  {/* Custom document with calculator & coins icon */}
+                                  <svg className="w-16 h-16 text-[#1e144f] mx-auto mb-2" viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                    {/* Document */}
+                                    <path d="M14 6 H38 L48 16 V54 H14 Z" />
+                                    <line x1="38" y1="6" x2="38" y2="16" />
+                                    <line x1="38" y1="16" x2="48" y2="16" />
+                                    {/* Calculator outline */}
+                                    <rect x="32" y="28" width="10" height="18" rx="1.5" />
+                                    <circle cx="35" cy="32" r="1" fill="currentColor" stroke="none" />
+                                    <circle cx="39" cy="32" r="1" fill="currentColor" stroke="none" />
+                                    <line x1="34" y1="36" x2="40" y2="36" strokeWidth="1.5" />
+                                    {/* Stack of coins */}
+                                    <ellipse cx="22" cy="36" rx="4" ry="1.5" />
+                                    <ellipse cx="22" cy="40" rx="4" ry="1.5" />
+                                    <ellipse cx="22" cy="44" rx="4" ry="1.5" />
+                                  </svg>
+                                  <h3 className="text-[17px] font-bold text-slate-800 tracking-wide font-sans">
+                                    IPO (Debt)
+                                  </h3>
+                                </div>
+                                <div className="w-full border-t border-slate-100 pt-6">
+                                  <p className="text-slate-500 font-semibold text-[13.5px] leading-tight select-none">
+                                    Currently, no issue available for listing
+                                  </p>
+                                </div>
+                              </div>
+
+                              {/* Card 3: Rights Issue */}
+                              <div className="bg-white rounded-2xl border border-slate-200/80 shadow-md p-8 text-center flex flex-col justify-between items-center min-h-[300px]">
+                                <div className="space-y-4">
+                                  {/* Custom document with chevrons and shield icon */}
+                                  <svg className="w-16 h-16 text-[#1e144f] mx-auto mb-2" viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                    {/* Document */}
+                                    <path d="M14 6 H38 L48 16 V54 H14 Z" />
+                                    {/* Chevrons */}
+                                    <path d="M26 22 L30 25 L34 22 M26 28 L30 31 L34 28" strokeWidth="2.2" />
+                                    {/* Shield with Rupee */}
+                                    <path d="M24 38 C24 38 30 36 30 36 C30 36 36 38 36 38 C36 43 36 47 30 51 C24 47 24 43 24 38 Z" fill="#f5f3ff" />
+                                    <text x="30" y="45" fontSize="7" fontWeight="bold" fill="currentColor" textAnchor="middle" stroke="none">₹</text>
+                                  </svg>
+                                  <h3 className="text-[17px] font-bold text-slate-800 tracking-wide font-sans">
+                                    Rights Issue
+                                  </h3>
+                                </div>
+                                <div className="w-full border-t border-slate-100 pt-6">
+                                  <button 
+                                    type="button" 
+                                    onClick={() => toast.success("Loading Rights Issue Live Issues...")}
+                                    className="text-[#0088cc] hover:text-[#006699] font-bold text-[14px] underline select-none cursor-pointer"
+                                  >
+                                    4 Live Issues
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* 5. Footer */}
+                          <footer className="w-full bg-[#1e144f] text-white/90 text-xs py-3.5 px-8 flex justify-between items-center mt-auto shrink-0 select-none font-sans">
+                            <span>© State Bank of India</span>
+                            <a href="https://onlinesbi.sbi.bank.in" target="_blank" rel="noopener noreferrer" className="hover:underline">
+                              Privacy Policy
+                            </a>
+                          </footer>
+
+                          {/* Helper float overlay toggle button to quickly jump back to YONO portal */}
+                          <button
+                            type="button"
+                            onClick={() => setInvestmentSubTab('Mutual Fund')}
+                            className="fixed bottom-6 right-6 bg-[#702082] hover:bg-[#5c1a6b] text-white font-bold text-xs py-2.5 px-5 rounded-full shadow-lg z-50 flex items-center gap-1.5 transition-all select-none border border-white/20 cursor-pointer"
+                          >
+                            <span>← Back to YONO</span>
+                          </button>
+                          
+                        </div>
+                      )}
+
+                      {investmentSubTab === 'Mutual Fund' && (
+                        /* Standard Coming Soon page for Mutual Fund tab */
                         <div className="p-8 flex-1 flex flex-col items-center justify-center text-center">
                           {/* Hourglass/Phone vector */}
                           <div className="w-56 h-48 relative mb-4 flex items-center justify-center">

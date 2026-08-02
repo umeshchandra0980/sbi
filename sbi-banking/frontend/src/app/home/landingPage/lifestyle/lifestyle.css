@@ -699,3 +699,43 @@
 .lifestyle-footer-link:hover {
   text-decoration: underline;
 }
+
+/* Stories Carousel */
+.lifestyle-stories-carousel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.lifestyle-scroll-arrow {
+  position: absolute;
+  top: 35%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #673391 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.lifestyle-scroll-arrow:hover {
+  background: #673391 !important;
+  color: #ffffff !important;
+}
+
+.lifestyle-scroll-arrow-left {
+  left: -16px;
+}
+
+.lifestyle-scroll-arrow-right {
+  right: -16px;
+}
