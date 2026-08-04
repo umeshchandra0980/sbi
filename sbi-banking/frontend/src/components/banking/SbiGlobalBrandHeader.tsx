@@ -45,6 +45,8 @@ export default function SbiGlobalBrandHeader({
     col1Items: { label: string; href: string; icon: string }[];
     col2Title: string;
     col2Items: { label: string; href: string; icon: string }[];
+    col3Title?: string;
+    col3Items?: { label: string; href: string; icon: string }[];
   }[] = [
     {
       id: 'Overview',
@@ -127,16 +129,16 @@ export default function SbiGlobalBrandHeader({
         { label: 'Personal Loan', href: '/home/landingPage/etbPersonalLoan/description', icon: '👤' },
         { label: 'Loan Against Mutual Fund', href: '/home/landingPage/lending/etb-lamfu/description', icon: '💼' },
         { label: 'Home Loan', href: '/home/landingPage/lending/etb-home-loan/home-loan-steps', icon: '🏠' },
-        { label: 'Overdraft against Deposit', href: '/home/landingPage/etbPersonalLoan/description', icon: '🔒' },
-        { label: 'Education Loan', href: '/home/landingPage/etbPersonalLoan/description', icon: '🎓' },
+        { label: 'Overdraft against Deposit', href: '/home/landingPage/lending/etb-odad/odad-features', icon: '🔒' },
+        { label: 'Education Loan', href: '/home/landingPage/lending/etb-education-loan', icon: '🎓' },
         { label: 'Gold Loan', href: '/home/landingPage/etbPersonalLoan/description', icon: '🥇' },
       ],
       col2Title: 'Quick Links',
       col2Items: [
-        { label: 'View Existing Loans', href: '/home/landingPage/etbPersonalLoan/description', icon: '🏦' },
-        { label: 'Manage Loans', href: '/home/landingPage/etbPersonalLoan/description', icon: '🏦' },
-        { label: 'Check your Credit Score', href: '/home/landingPage/etbPersonalLoan/description', icon: '⏱' },
-        { label: 'Calculate Loan EMI', href: '/home/landingPage/etbPersonalLoan/description', icon: '🧮' },
+        { label: 'View Existing Loans', href: '/home/landingPage/lending/etb-manage-loan', icon: '🏦' },
+        { label: 'Manage Loans', href: '/home/landingPage/manageRelationship/loans/loans', icon: '🏦' },
+        { label: 'Check your Credit Score', href: '/home/landingPage/others/credit-score-simulator/verify-your-pan', icon: '⏱' },
+        { label: 'Calculate Loan EMI', href: '/home/landingPage/coming-soon', icon: '🧮' },
       ]
     },
     {
@@ -187,14 +189,19 @@ export default function SbiGlobalBrandHeader({
         { label: 'Savings Plans', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=Life%20Insurance&insuranceCategory=5&isNativeValue=false', icon: '👛' },
         { label: 'Group Plans', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=Life%20Insurance&insuranceCategory=6&isNativeValue=false', icon: '👥' },
       ],
-      col2Title: 'General Insurance & Quick Links',
+      col2Title: 'General Insurance',
       col2Items: [
-        { label: 'Health Plans', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=General%20Insurance', icon: '🏥' },
-        { label: 'Motor Insurance', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=General%20Insurance', icon: '🚗' },
-        { label: 'Travel Insurance', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=General%20Insurance', icon: '🧳' },
+        { label: 'Health Plans', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=General%20Insurance&insuranceCategory=4&isNativeValue=false', icon: '🏥' },
+        { label: 'Motor Insurance', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=General%20Insurance&insuranceCategory=2&isNativeValue=false', icon: '🚗' },
+        { label: 'Travel Insurance', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=General%20Insurance&insuranceCategory=3&isNativeValue=false', icon: '🧳' },
+        { label: 'Accident Insurance', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=General%20Insurance&insuranceCategory=1&isNativeValue=false', icon: '🩹' },
+        { label: 'Group Plans', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=General%20Insurance&insuranceCategory=5&isNativeValue=false', icon: '👥' },
+      ],
+      col3Title: 'Quick Links',
+      col3Items: [
         { label: 'Manage Policies', href: '/home/landingPage/manageRelationship/insurance', icon: '📑' },
-        { label: 'Resume Application', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard', icon: '▶️' },
-        { label: 'Tools & Calculators', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard', icon: '🧮' },
+        { label: 'Resume Application', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?showResumeModal=true', icon: '▶️' },
+        { label: 'Tools & Calculators', href: '/home/landingPage/coming-soon?insuranceType=Quick%20Links&insuranceCategory=&isNativeValue=false&subCategoryUIN=&planType=', icon: '🧮' },
       ]
     },
     {
@@ -273,17 +280,44 @@ export default function SbiGlobalBrandHeader({
         break;
 
       // Insurance
-      case 'SBI Life Insurance':
+      case 'Protection Plans':
         iconPath = '/images/category-icons/ic_life_insurance.svg';
         break;
-      case 'Health Insurance':
-        iconPath = '/images/category-icons/ic_health_insurance.svg';
+      case 'Child Plans':
+        iconPath = '/images/category-icons/ic_ppf.svg';
         break;
-      case 'Link Existing Policy':
-        iconPath = '/images/category-icons/ic_accident_insurance.svg';
+      case 'Retirement Plans':
+        iconPath = '/images/category-icons/ic_annuity_deposit.svg';
+        break;
+      case 'Wealth Creation':
+        iconPath = '/images/category-icons/ic_mutual_funds.svg';
+        break;
+      case 'Savings Plans':
+        iconPath = '/images/category-icons/ic_fixed_deposit.svg';
+        break;
+      case 'Group Plans':
+        iconPath = '/images/category-icons/ic_personal_loan.svg';
+        break;
+      case 'Health Plans':
+        iconPath = '/images/category-icons/ic_health_insurance.svg';
         break;
       case 'Motor Insurance':
         iconPath = '/images/category-icons/ic_car_insurance.svg';
+        break;
+      case 'Travel Insurance':
+        iconPath = '/images/category-icons/ic_forex_card.svg';
+        break;
+      case 'Accident Insurance':
+        iconPath = '/images/category-icons/ic_accident_insurance.svg';
+        break;
+      case 'Manage Policies':
+        iconPath = '/images/category-icons/ic_cheque_services.svg';
+        break;
+      case 'Resume Application':
+        iconPath = '/images/category-icons/ic_credit_card.svg';
+        break;
+      case 'Tools & Calculators':
+        iconPath = '/images/category-icons/ic_recurring_deposit.svg';
         break;
 
       // Cards
@@ -461,17 +495,68 @@ export default function SbiGlobalBrandHeader({
                   {isOpen && (
                     <div 
                       onClick={(e) => e.stopPropagation()}
-                      className="absolute top-full left-0 mt-1 w-[440px] max-w-[90vw] bg-[#f8f6fb] rounded-2xl p-4 md:p-5 shadow-2xl border border-purple-200/80 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                      className={`absolute top-full mt-1 bg-[#f8f6fb] rounded-2xl p-4 md:p-5 shadow-2xl border border-purple-200/80 z-50 animate-in fade-in slide-in-from-top-2 duration-150 ${
+                        tab.col3Items ? 'w-[660px] -left-36 max-w-[95vw]' : 'w-[440px] left-0 max-w-[90vw]'
+                      }`}
                     >
-                      <div className="grid grid-cols-2 gap-6">
+                      <div className={`grid gap-6 ${tab.col3Items ? 'grid-cols-3' : 'grid-cols-2'}`}>
                         
-                        {/* Column 1: Main Category Items */}
+                        {/* Column 1 */}
                         <div>
                           <h4 className="text-xs font-extrabold text-[#673391] uppercase tracking-wider mb-3 pb-1 border-b border-purple-200/60">
                             {tab.col1Title}
                           </h4>
                           <div className="space-y-1">
                             {tab.col1Items.map((item) => (
+                              <button
+                                key={item.label}
+                                type="button"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  setOpenNavTab(null);
+                                  if (item.label === 'Gold Loan') {
+                                    toast('Coming Soon', {
+                                      icon: 'ℹ️',
+                                      position: 'bottom-center',
+                                      style: {
+                                        background: '#333333',
+                                        color: '#ffffff',
+                                        fontSize: '13px',
+                                        fontWeight: 'bold',
+                                        borderRadius: '8px',
+                                        padding: '10px 18px',
+                                      },
+                                    });
+                                  } else if (item.href.startsWith('http')) {
+                                    window.open(item.href, '_blank', 'noopener,noreferrer');
+                                  } else {
+                                    router.push(item.href);
+                                  }
+                                }}
+                                className="w-full text-left flex items-center gap-3 py-2 px-2 rounded-xl hover:bg-white transition-all group border-b border-purple-100/40 cursor-pointer"
+                              >
+                                <div className="w-8 h-8 rounded-lg bg-white border border-purple-200/70 text-[#673391] flex items-center justify-center text-sm shadow-2xs group-hover:scale-105 transition-transform flex-shrink-0">
+                                  {renderNavIcon(item.label)}
+                                </div>
+                                <span 
+                                  className="text-[13.5px] font-sans font-semibold text-slate-800 group-hover:text-[#673391] leading-tight tracking-normal"
+                                  style={{ fontFamily: "'Open Sans', sans-serif", fontWeight: 600 }}
+                                >
+                                  {item.label}
+                                </span>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Column 2 */}
+                        <div>
+                          <h4 className="text-xs font-extrabold text-[#673391] uppercase tracking-wider mb-3 pb-1 border-b border-purple-200/60">
+                            {tab.col2Title}
+                          </h4>
+                          <div className="space-y-1">
+                            {tab.col2Items.map((item) => (
                               <button
                                 key={item.label}
                                 type="button"
@@ -501,41 +586,43 @@ export default function SbiGlobalBrandHeader({
                           </div>
                         </div>
 
-                        {/* Column 2: Quick Links */}
-                        <div>
-                          <h4 className="text-xs font-extrabold text-[#673391] uppercase tracking-wider mb-3 pb-1 border-b border-purple-200/60">
-                            {tab.col2Title}
-                          </h4>
-                          <div className="space-y-1">
-                            {tab.col2Items.map((item) => (
-                              <button
-                                key={item.label}
-                                type="button"
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  setOpenNavTab(null);
-                                  if (item.href.startsWith('http')) {
-                                    window.open(item.href, '_blank', 'noopener,noreferrer');
-                                  } else {
-                                    router.push(item.href);
-                                  }
-                                }}
-                                className="w-full text-left flex items-center gap-3 py-1.5 px-2 rounded-xl hover:bg-white transition-all group cursor-pointer"
-                              >
-                                <div className="w-6 h-6 rounded-md bg-white border border-purple-200/70 text-[#673391] flex items-center justify-center text-xs shadow-xs group-hover:scale-105 transition-transform flex-shrink-0">
-                                  {renderNavIcon(item.label)}
-                                </div>
-                                <span 
-                                  className="text-[13.5px] font-sans font-semibold text-slate-700 group-hover:text-[#673391] leading-tight tracking-normal"
-                                  style={{ fontFamily: "'Open Sans', sans-serif", fontWeight: 600 }}
+                        {/* Column 3 (If defined) */}
+                        {tab.col3Items && (
+                          <div>
+                            <h4 className="text-xs font-extrabold text-[#673391] uppercase tracking-wider mb-3 pb-1 border-b border-purple-200/60">
+                              {tab.col3Title}
+                            </h4>
+                            <div className="space-y-1">
+                              {tab.col3Items.map((item) => (
+                                <button
+                                  key={item.label}
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    setOpenNavTab(null);
+                                    if (item.href.startsWith('http')) {
+                                      window.open(item.href, '_blank', 'noopener,noreferrer');
+                                    } else {
+                                      router.push(item.href);
+                                    }
+                                  }}
+                                  className="w-full text-left flex items-center gap-3 py-2 px-2 rounded-xl hover:bg-white transition-all group border-b border-purple-100/40 cursor-pointer"
                                 >
-                                  {item.label}
-                                </span>
-                              </button>
-                            ))}
+                                  <div className="w-8 h-8 rounded-lg bg-white border border-purple-200/70 text-[#673391] flex items-center justify-center text-sm shadow-2xs group-hover:scale-105 transition-transform flex-shrink-0">
+                                    {renderNavIcon(item.label)}
+                                  </div>
+                                  <span 
+                                    className="text-[13.5px] font-sans font-semibold text-slate-800 group-hover:text-[#673391] leading-tight tracking-normal"
+                                    style={{ fontFamily: "'Open Sans', sans-serif", fontWeight: 600 }}
+                                  >
+                                    {item.label}
+                                  </span>
+                                </button>
+                              ))}
+                            </div>
                           </div>
-                        </div>
+                        )}
 
                       </div>
                     </div>

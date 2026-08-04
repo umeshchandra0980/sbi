@@ -430,7 +430,20 @@ export default function DashboardPage() {
                     </div>
                     <span className="rightside-item-name">Home Loan</span>
                   </div>
-                  <div className="rightside-item" onClick={() => toast.success("Gold Loan")}>
+                  <div className="rightside-item cursor-pointer" onClick={() => {
+                    toast('Coming Soon', {
+                      icon: 'ℹ️',
+                      position: 'bottom-center',
+                      style: {
+                        background: '#333333',
+                        color: '#ffffff',
+                        fontSize: '13px',
+                        fontWeight: 'bold',
+                        borderRadius: '8px',
+                        padding: '10px 18px',
+                      },
+                    });
+                  }}>
                     <div className="rightside-icon-box">
                       <img src="/images/category-icons/ic_gold_loan.svg" alt="Gold Loan" className="w-5 h-5 object-contain" />
                     </div>
