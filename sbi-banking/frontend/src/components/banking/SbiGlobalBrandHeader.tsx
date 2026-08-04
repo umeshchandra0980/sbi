@@ -2,12 +2,13 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
 import {
   ChevronDown,
   HelpCircle,
-  Gift
+  Gift,
+  X
 } from 'lucide-react';
 
 export type NavTabId = 'Overview' | 'Accounts' | 'Payments' | 'Deposits' | 'Loans' | 'Cards' | 'Investments' | 'Insurance' | 'Services';
@@ -22,10 +23,46 @@ export default function SbiGlobalBrandHeader({
   activeTopTab = 'Banking'
 }: SbiGlobalBrandHeaderProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [openNavTab, setOpenNavTab] = useState<NavTabId | null>(null);
   const [liteMode, setLiteMode] = useState(false);
+  const [showResumeModal, setShowResumeModal] = useState(false);
 
   const navRef = React.useRef<HTMLElement>(null);
+
+  React.useEffect(() => {
+    if (searchParams.get('showResumeModal') === 'true') {
+      setShowResumeModal(true);
+    }
+  }, [searchParams]);
+
+  const handleNavItemClick = (item: { label: string; href: string; icon?: string }) => {
+    setOpenNavTab(null);
+    if (item.label === 'Resume Application' || item.href.includes('showResumeModal=true')) {
+      setShowResumeModal(true);
+      return;
+    }
+    if (item.label === 'Gold Loan') {
+      toast('Coming Soon', {
+        icon: 'ℹ️',
+        position: 'bottom-center',
+        style: {
+          background: '#333333',
+          color: '#ffffff',
+          fontSize: '13px',
+          fontWeight: 'bold',
+          borderRadius: '8px',
+          padding: '10px 18px',
+        },
+      });
+      return;
+    }
+    if (item.href.startsWith('http')) {
+      window.open(item.href, '_blank', 'noopener,noreferrer');
+    } else {
+      router.push(item.href);
+    }
+  };
 
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -45,6 +82,8 @@ export default function SbiGlobalBrandHeader({
     col1Items: { label: string; href: string; icon: string }[];
     col2Title: string;
     col2Items: { label: string; href: string; icon: string }[];
+    col3Title?: string;
+    col3Items?: { label: string; href: string; icon: string }[];
   }[] = [
     {
       id: 'Overview',
@@ -66,7 +105,7 @@ export default function SbiGlobalBrandHeader({
     {
       id: 'Accounts',
       label: 'Accounts',
-      href: '/accounts',
+      href: '/home/landingPage/manageRelationship/transactionAccounts',
       col1Title: 'Accounts Summary',
       col1Items: [
         { label: 'Savings Bank Account', href: '/home/landingPage/manageRelationship/transactionAccounts', icon: '🏦' },
@@ -89,31 +128,33 @@ export default function SbiGlobalBrandHeader({
         { label: 'Quick Transfer', href: '/home/landingPage/fund-transfer/quick-transfer/bank-selection', icon: '🔄' },
         { label: 'Send Money', href: '/home/landingPage/fund-transfer/send-money/select-payee', icon: '📲' },
         { label: 'Manage Payee', href: '/home/landingPage/fund-transfer/send-money/select-payee', icon: '👤' },
-        { label: 'Schedule Payments', href: '/home/landingPage/fund-transfer/scheduled-transactions', icon: '📅' },
-        { label: 'Send Money Abroad', href: '/home/landingPage/fund-transfer/send-money-abroad', icon: '🔀' },
-        { label: 'Bill Payments', href: '/home/landingPage/fund-transfer/bill-payments', icon: '🧾' },
+        { label: 'Schedule Payments', href: '/home/landingPage/fund-transfer/quick-transfer/bank-selection', icon: '📅' },
+        { label: 'Send Money Abroad', href: '/home/landingPage/fund-transfer/quick-transfer/bank-selection', icon: '🔀' },
+        { label: 'Bill Payments', href: '/dashboard', icon: '🧾' },
       ],
       col2Title: 'Quick Links',
       col2Items: [
         { label: 'Transaction History', href: '/home/landingPage/manageRelationship/transactionAccounts', icon: '⇄' },
-        { label: 'Manage Limits', href: '/settings?tab=Settings', icon: '⏲' },
+        { label: 'Manage Limits', href: '/settings', icon: '⏲' },
       ]
     },
     {
       id: 'Deposits',
       label: 'Deposits',
-      href: '/home/landingPage/manageRelationship/deposits',
-      col1Title: 'Term & Fixed Deposits',
+      href: '/home/landingPage/accounts/deposits/create-fd?fdtype=FD=true',
+      col1Title: 'Products',
       col1Items: [
-        { label: 'Fixed Deposit (FD)', href: '/home/landingPage/manageRelationship/deposits', icon: '📈' },
-        { label: 'Recurring Deposit (RD)', href: '/home/landingPage/manageRelationship/deposits', icon: '🔁' },
-        { label: 'Open Fixed Deposit', href: '/home/landingPage/manageRelationship/deposits', icon: '✨' },
-        { label: 'Deposit Interest Certificate', href: '/home/landingPage/manageRelationship/deposits', icon: '📜' },
+        { label: 'Fixed Deposit', href: '/home/landingPage/accounts/deposits/create-fd?fdtype=FD=true', icon: '📈' },
+        { label: 'Recurring Deposit', href: '/home/landingPage/accounts/deposits/create-fd/recurring-deposit', icon: '🔁' },
+        { label: 'Annuity Deposit', href: '/home/landingPage/accounts/deposits/create-fd/annuity-deposit', icon: '📜' },
+        { label: 'Auto Sweep', href: '/home/landingPage/accounts/deposits/create-fd?fdtype=FD=true#autosweep', icon: '🔄' },
       ],
       col2Title: 'Quick Links',
       col2Items: [
-        { label: 'Sukanya Samriddhi Scheme', href: '/home/landingPage/manageRelationship/deposits', icon: '💡' },
-        { label: 'Tax Saving Deposits', href: '/home/landingPage/manageRelationship/deposits', icon: '📋' },
+        { label: 'Manage Deposits', href: '/home/landingPage/manageRelationship/deposits', icon: '💼' },
+        { label: 'View Interest Rate', href: '/home/landingPage/accounts/deposits/create-fd?fdtype=FD=true#interest-rates', icon: '🏷' },
+        { label: 'Manage PPF Accounts', href: '/home/landingPage/manageRelationship/deposits', icon: '🐷' },
+        { label: 'Requests', href: '/home/landingPage/manageRelationship/deposits?showRequestsModal=true', icon: '📄' },
       ]
     },
     {
@@ -125,16 +166,16 @@ export default function SbiGlobalBrandHeader({
         { label: 'Personal Loan', href: '/home/landingPage/etbPersonalLoan/description', icon: '👤' },
         { label: 'Loan Against Mutual Fund', href: '/home/landingPage/lending/etb-lamfu/description', icon: '💼' },
         { label: 'Home Loan', href: '/home/landingPage/lending/etb-home-loan/home-loan-steps', icon: '🏠' },
-        { label: 'Overdraft against Deposit', href: '/home/landingPage/etbPersonalLoan/description', icon: '🔒' },
-        { label: 'Education Loan', href: '/home/landingPage/etbPersonalLoan/description', icon: '🎓' },
+        { label: 'Overdraft against Deposit', href: '/home/landingPage/lending/etb-odad/odad-features', icon: '🔒' },
+        { label: 'Education Loan', href: '/home/landingPage/lending/etb-education-loan', icon: '🎓' },
         { label: 'Gold Loan', href: '/home/landingPage/etbPersonalLoan/description', icon: '🥇' },
       ],
       col2Title: 'Quick Links',
       col2Items: [
-        { label: 'View Existing Loans', href: '/home/landingPage/etbPersonalLoan/description', icon: '🏦' },
-        { label: 'Manage Loans', href: '/home/landingPage/etbPersonalLoan/description', icon: '🏦' },
-        { label: 'Check your Credit Score', href: '/home/landingPage/etbPersonalLoan/description', icon: '⏱' },
-        { label: 'Calculate Loan EMI', href: '/home/landingPage/etbPersonalLoan/description', icon: '🧮' },
+        { label: 'View Existing Loans', href: '/home/landingPage/lending/etb-manage-loan', icon: '🏦' },
+        { label: 'Manage Loans', href: '/home/landingPage/manageRelationship/loans/loans', icon: '🏦' },
+        { label: 'Check your Credit Score', href: '/home/landingPage/others/credit-score-simulator/verify-your-pan', icon: '⏱' },
+        { label: 'Calculate Loan EMI', href: '/home/landingPage/coming-soon', icon: '🧮' },
       ]
     },
     {
@@ -175,18 +216,29 @@ export default function SbiGlobalBrandHeader({
     {
       id: 'Insurance',
       label: 'Insurance',
-      href: '/home/landingPage/manageRelationship/insurance/insurance',
-      col1Title: 'Insurance Plans',
+      href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=Life%20Insurance&insuranceCategory=1&isNativeValue=false',
+      col1Title: 'Life Insurance',
       col1Items: [
-        { label: 'SBI Life Insurance', href: '/home/landingPage/manageRelationship/insurance/insurance', icon: '🛡' },
-        { label: 'Health Insurance', href: '/home/landingPage/manageRelationship/insurance/insurance', icon: '🏥' },
-        { label: 'Motor Insurance', href: '/home/landingPage/manageRelationship/insurance/insurance', icon: '🚗' },
-        { label: 'Link Existing Policy', href: '/home/landingPage/manageRelationship/insurance/insurance', icon: '🔗' },
+        { label: 'Protection Plans', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=Life%20Insurance&insuranceCategory=1&isNativeValue=false', icon: '☂️' },
+        { label: 'Child Plans', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=Life%20Insurance&insuranceCategory=2&isNativeValue=false', icon: '👶' },
+        { label: 'Retirement Plans', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=Life%20Insurance&insuranceCategory=3&isNativeValue=false', icon: '🧑‍🦯' },
+        { label: 'Wealth Creation', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=Life%20Insurance&insuranceCategory=4&isNativeValue=false', icon: '🌱' },
+        { label: 'Savings Plans', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=Life%20Insurance&insuranceCategory=5&isNativeValue=false', icon: '👛' },
+        { label: 'Group Plans', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=Life%20Insurance&insuranceCategory=6&isNativeValue=false', icon: '👥' },
       ],
-      col2Title: 'Quick Links',
+      col2Title: 'General Insurance',
       col2Items: [
-        { label: 'Buy New Policy', href: '/home/landingPage/manageRelationship/insurance/insurance', icon: '🛒' },
-        { label: 'Manage Policies', href: '/home/landingPage/manageRelationship/insurance/insurance', icon: '📑' },
+        { label: 'Health Plans', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=General%20Insurance&insuranceCategory=4&isNativeValue=false', icon: '🏥' },
+        { label: 'Motor Insurance', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=General%20Insurance&insuranceCategory=2&isNativeValue=false', icon: '🚗' },
+        { label: 'Travel Insurance', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=General%20Insurance&insuranceCategory=3&isNativeValue=false', icon: '🧳' },
+        { label: 'Accident Insurance', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=General%20Insurance&insuranceCategory=1&isNativeValue=false', icon: '🩹' },
+        { label: 'Group Plans', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?insuranceType=General%20Insurance&insuranceCategory=5&isNativeValue=false', icon: '👥' },
+      ],
+      col3Title: 'Quick Links',
+      col3Items: [
+        { label: 'Manage Policies', href: '/home/landingPage/manageRelationship/insurance', icon: '📑' },
+        { label: 'Resume Application', href: '/home/landingPage/jointVentures/insurances/general-insurance/dashboard?showResumeModal=true', icon: '▶️' },
+        { label: 'Tools & Calculators', href: '/home/landingPage/coming-soon?insuranceType=Quick%20Links&insuranceCategory=&isNativeValue=false&subCategoryUIN=&planType=', icon: '🧮' },
       ]
     },
     {
@@ -243,31 +295,66 @@ export default function SbiGlobalBrandHeader({
         break;
 
       // Deposits
-      case 'Fixed Deposit (FD)':
+      case 'Fixed Deposit':
+      case 'Manage Deposits':
         iconPath = '/images/category-icons/ic_fixed_deposit.svg';
         break;
-      case 'Recurring Deposit (RD)':
+      case 'Recurring Deposit':
+      case 'View Interest Rate':
         iconPath = '/images/category-icons/ic_recurring_deposit.svg';
         break;
-      case 'Deposit Interest Certificate':
+      case 'Annuity Deposit':
         iconPath = '/images/category-icons/ic_annuity_deposit.svg';
         break;
-      case 'Open Fixed Deposit':
+      case 'Auto Sweep':
         iconPath = '/images/category-icons/ic_auto_sweep.svg';
+        break;
+      case 'Manage PPF Accounts':
+        iconPath = '/images/category-icons/ic_ppf.svg';
+        break;
+      case 'Requests':
+        iconPath = '/images/category-icons/ic_cheque_services.svg';
         break;
 
       // Insurance
-      case 'SBI Life Insurance':
+      case 'Protection Plans':
         iconPath = '/images/category-icons/ic_life_insurance.svg';
         break;
-      case 'Health Insurance':
-        iconPath = '/images/category-icons/ic_health_insurance.svg';
+      case 'Child Plans':
+        iconPath = '/images/category-icons/ic_ppf.svg';
         break;
-      case 'Link Existing Policy':
-        iconPath = '/images/category-icons/ic_accident_insurance.svg';
+      case 'Retirement Plans':
+        iconPath = '/images/category-icons/ic_annuity_deposit.svg';
+        break;
+      case 'Wealth Creation':
+        iconPath = '/images/category-icons/ic_mutual_funds.svg';
+        break;
+      case 'Savings Plans':
+        iconPath = '/images/category-icons/ic_fixed_deposit.svg';
+        break;
+      case 'Group Plans':
+        iconPath = '/images/category-icons/ic_personal_loan.svg';
+        break;
+      case 'Health Plans':
+        iconPath = '/images/category-icons/ic_health_insurance.svg';
         break;
       case 'Motor Insurance':
         iconPath = '/images/category-icons/ic_car_insurance.svg';
+        break;
+      case 'Travel Insurance':
+        iconPath = '/images/category-icons/ic_forex_card.svg';
+        break;
+      case 'Accident Insurance':
+        iconPath = '/images/category-icons/ic_accident_insurance.svg';
+        break;
+      case 'Manage Policies':
+        iconPath = '/images/category-icons/ic_cheque_services.svg';
+        break;
+      case 'Resume Application':
+        iconPath = '/images/category-icons/ic_credit_card.svg';
+        break;
+      case 'Tools & Calculators':
+        iconPath = '/images/category-icons/ic_recurring_deposit.svg';
         break;
 
       // Cards
@@ -316,89 +403,8 @@ export default function SbiGlobalBrandHeader({
     );
   };
 
-  const renderPaymentsIcon = (label: string) => {
-    switch (label) {
-      case 'Quick Transfer':
-        return (
-          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21.5 2v6h-6" />
-            <path d="M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
-          </svg>
-        );
-      case 'Send Money':
-        return (
-          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="5" y="2" width="14" height="20" rx="2" />
-            <path d="M12 18h.01" />
-            <path d="M2 10h12m-3-3l3 3-3 3" />
-          </svg>
-        );
-      case 'Manage Payee':
-        return (
-          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-            <circle cx="12" cy="7" r="4" />
-          </svg>
-        );
-      case 'Schedule Payments':
-        return (
-          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-            <line x1="16" y1="2" x2="16" y2="6" />
-            <line x1="8" y1="2" x2="8" y2="6" />
-            <line x1="3" y1="10" x2="21" y2="10" />
-          </svg>
-        );
-      case 'Send Money Abroad':
-        return (
-          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M20 10H4M4 10l4-4M4 10l4 4M4 14h16M20 14l-4-4M20 14l-4 4" />
-          </svg>
-        );
-      case 'Bill Payments':
-        return (
-          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="4" y="2" width="16" height="20" rx="2" />
-            <line x1="8" y1="6" x2="16" y2="6" />
-            <line x1="8" y1="10" x2="16" y2="10" />
-            <line x1="8" y1="14" x2="16" y2="14" />
-            <line x1="8" y1="18" x2="12" y2="18" />
-          </svg>
-        );
-      case 'Transaction History':
-        return (
-          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M20 10H4M4 10l4-4M4 10l4 4" />
-            <path d="M4 14h16M20 14l-4-4M20 14l-4 4" />
-          </svg>
-        );
-      case 'Manage Limits':
-        return (
-          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M20.24 12.24a8 8 0 0 0-16.48 0" />
-            <path d="M12 17v-4" />
-            <circle cx="12" cy="17" r="1" />
-            <path d="m16 13-4-4" />
-          </svg>
-        );
-      default:
-        return (
-          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <circle cx="12" cy="12" r="10" />
-          </svg>
-        );
-    }
-  };
-
   return (
-    <div className="w-full bg-white font-sans z-50 sticky top-0 shadow-sm">
-      {/* Backdrop overlay for dimming the page content when dropdown menu is open */}
-      {openNavTab && (
-        <div 
-          className="fixed inset-0 bg-black/45 backdrop-blur-[1px] z-40 transition-opacity duration-200 cursor-pointer"
-          onClick={() => setOpenNavTab(null)}
-        />
-      )}
+    <div className="w-full bg-white font-sans z-50">
       
       {/* 1. TOP PURPLE UTILITY HEADER BAR */}
       <div className="bg-[#302985] text-white text-xs py-1.5 px-6 shadow-xs">
@@ -507,12 +513,7 @@ export default function SbiGlobalBrandHeader({
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      if (tab.id === 'Accounts') {
-                        router.push('/accounts');
-                        setOpenNavTab(null);
-                      } else {
-                        setOpenNavTab(isOpen ? null : tab.id);
-                      }
+                      setOpenNavTab(isOpen ? null : tab.id);
                     }}
                     className={`relative block px-3.5 py-2 font-sans font-semibold text-[14px] transition-all rounded-t-xl cursor-pointer ${
                       isActive 
@@ -529,88 +530,93 @@ export default function SbiGlobalBrandHeader({
 
                   {/* Mega Dropdown Click Card */}
                   {isOpen && (
-                    tab.id === 'Payments' ? (
-                      <div 
-                        onClick={(e) => e.stopPropagation()}
-                        className="absolute top-full left-[-92px] mt-2 w-[420px] bg-[#f2eff4] rounded-2xl p-7 shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-purple-200/40 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
-                      >
-                        <div className="grid grid-cols-[1.1fr_0.9fr] gap-x-8">
-                          
-                          {/* Column 1: Fund Transfer */}
-                          <div>
-                            <h4 className="text-[14px] font-bold text-[#1f2937] mb-4 tracking-tight">
-                              {tab.col1Title}
-                            </h4>
-                            <div className="flex flex-col">
-                              {tab.col1Items.map((item) => (
-                                <Link
-                                  key={item.label}
-                                  href={item.href}
-                                  target={item.href.startsWith('http') ? '_blank' : undefined}
-                                  rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                                  onClick={() => setTimeout(() => setOpenNavTab(null), 100)}
-                                  className="flex items-center gap-4 py-3.5 border-b border-slate-200 last:border-0 hover:opacity-80 transition-all group"
+                    <div 
+                      onClick={(e) => e.stopPropagation()}
+                      className={`absolute top-full mt-1 bg-[#f8f6fb] rounded-2xl p-4 md:p-5 shadow-2xl border border-purple-200/80 z-50 animate-in fade-in slide-in-from-top-2 duration-150 ${
+                        tab.col3Items ? 'w-[660px] -left-36 max-w-[95vw]' : 'w-[440px] left-0 max-w-[90vw]'
+                      }`}
+                    >
+                      <div className={`grid gap-6 ${tab.col3Items ? 'grid-cols-3' : 'grid-cols-2'}`}>
+                        
+                        {/* Column 1 */}
+                        <div>
+                          <h4 className="text-xs font-extrabold text-[#673391] uppercase tracking-wider mb-3 pb-1 border-b border-purple-200/60">
+                            {tab.col1Title}
+                          </h4>
+                          <div className="space-y-1">
+                            {tab.col1Items.map((item) => (
+                              <button
+                                key={item.label}
+                                type="button"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  handleNavItemClick(item);
+                                }}
+                                className="w-full text-left flex items-center gap-3 py-2 px-2 rounded-xl hover:bg-white transition-all group border-b border-purple-100/40 cursor-pointer"
+                              >
+                                <div className="w-8 h-8 rounded-lg bg-white border border-purple-200/70 text-[#673391] flex items-center justify-center text-sm shadow-2xs group-hover:scale-105 transition-transform flex-shrink-0">
+                                  {renderNavIcon(item.label)}
+                                </div>
+                                <span 
+                                  className="text-[13.5px] font-sans font-semibold text-slate-800 group-hover:text-[#673391] leading-tight tracking-normal"
+                                  style={{ fontFamily: "'Open Sans', sans-serif", fontWeight: 600 }}
                                 >
-                                  <div className="flex-shrink-0">
-                                    {renderPaymentsIcon(item.label)}
-                                  </div>
-                                  <span className="text-[14px] font-semibold text-[#1f2937] group-hover:text-[#702082] transition-colors">
-                                    {item.label}
-                                  </span>
-                                </Link>
-                              ))}
-                            </div>
+                                  {item.label}
+                                </span>
+                              </button>
+                            ))}
                           </div>
-
-                          {/* Column 2: Quick Links */}
-                          <div>
-                            <h4 className="text-[14px] font-bold text-[#1f2937] mb-4 tracking-tight">
-                              {tab.col2Title}
-                            </h4>
-                            <div className="flex flex-col">
-                              {tab.col2Items.map((item) => (
-                                <Link
-                                  key={item.label}
-                                  href={item.href}
-                                  target={item.href.startsWith('http') ? '_blank' : undefined}
-                                  rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                                  onClick={() => setTimeout(() => setOpenNavTab(null), 100)}
-                                  className="flex items-center gap-4 py-3.5 border-b border-slate-200 last:border-0 hover:opacity-80 transition-all group"
-                                >
-                                  <div className="flex-shrink-0">
-                                    {renderPaymentsIcon(item.label)}
-                                  </div>
-                                  <span className="text-[14px] font-semibold text-[#1f2937] group-hover:text-[#702082] transition-colors">
-                                    {item.label}
-                                  </span>
-                                </Link>
-                              ))}
-                            </div>
-                          </div>
-
                         </div>
-                      </div>
-                    ) : (
-                      <div 
-                        onClick={(e) => e.stopPropagation()}
-                        className="absolute top-full left-0 mt-1 w-[440px] max-w-[90vw] bg-[#f8f6fb] rounded-2xl p-4 md:p-5 shadow-2xl border border-purple-200/80 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
-                      >
-                        <div className="grid grid-cols-2 gap-6">
-                          
-                          {/* Column 1: Main Category Items */}
+
+                        {/* Column 2 */}
+                        <div>
+                          <h4 className="text-xs font-extrabold text-[#673391] uppercase tracking-wider mb-3 pb-1 border-b border-purple-200/60">
+                            {tab.col2Title}
+                          </h4>
+                          <div className="space-y-1">
+                            {tab.col2Items.map((item) => (
+                              <button
+                                key={item.label}
+                                type="button"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  handleNavItemClick(item);
+                                }}
+                                className="w-full text-left flex items-center gap-3 py-2 px-2 rounded-xl hover:bg-white transition-all group border-b border-purple-100/40 cursor-pointer"
+                              >
+                                <div className="w-8 h-8 rounded-lg bg-white border border-purple-200/70 text-[#673391] flex items-center justify-center text-sm shadow-2xs group-hover:scale-105 transition-transform flex-shrink-0">
+                                  {renderNavIcon(item.label)}
+                                </div>
+                                <span 
+                                  className="text-[13.5px] font-sans font-semibold text-slate-800 group-hover:text-[#673391] leading-tight tracking-normal"
+                                  style={{ fontFamily: "'Open Sans', sans-serif", fontWeight: 600 }}
+                                >
+                                  {item.label}
+                                </span>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Column 3 (If defined) */}
+                        {tab.col3Items && (
                           <div>
                             <h4 className="text-xs font-extrabold text-[#673391] uppercase tracking-wider mb-3 pb-1 border-b border-purple-200/60">
-                              {tab.col1Title}
+                              {tab.col3Title}
                             </h4>
                             <div className="space-y-1">
-                              {tab.col1Items.map((item) => (
-                                <Link
+                              {tab.col3Items.map((item) => (
+                                <button
                                   key={item.label}
-                                  href={item.href}
-                                  target={item.href.startsWith('http') ? '_blank' : undefined}
-                                  rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                                  onClick={() => setTimeout(() => setOpenNavTab(null), 100)}
-                                  className="flex items-center gap-3 py-2 px-2 rounded-xl hover:bg-white transition-all group border-b border-purple-100/40"
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    handleNavItemClick(item);
+                                  }}
+                                  className="w-full text-left flex items-center gap-3 py-2 px-2 rounded-xl hover:bg-white transition-all group border-b border-purple-100/40 cursor-pointer"
                                 >
                                   <div className="w-8 h-8 rounded-lg bg-white border border-purple-200/70 text-[#673391] flex items-center justify-center text-sm shadow-2xs group-hover:scale-105 transition-transform flex-shrink-0">
                                     {renderNavIcon(item.label)}
@@ -621,43 +627,14 @@ export default function SbiGlobalBrandHeader({
                                   >
                                     {item.label}
                                   </span>
-                                </Link>
+                                </button>
                               ))}
                             </div>
                           </div>
+                        )}
 
-                          {/* Column 2: Quick Links */}
-                          <div>
-                            <h4 className="text-xs font-extrabold text-[#673391] uppercase tracking-wider mb-3 pb-1 border-b border-purple-200/60">
-                              {tab.col2Title}
-                            </h4>
-                            <div className="space-y-1">
-                              {tab.col2Items.map((item) => (
-                                <Link
-                                  key={item.label}
-                                  href={item.href}
-                                  target={item.href.startsWith('http') ? '_blank' : undefined}
-                                  rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                                  onClick={() => setTimeout(() => setOpenNavTab(null), 100)}
-                                  className="flex items-center gap-3 py-1.5 px-2 rounded-xl hover:bg-white transition-all group"
-                                >
-                                  <div className="w-6 h-6 rounded-md bg-white border border-purple-200/70 text-[#673391] flex items-center justify-center text-xs shadow-xs group-hover:scale-105 transition-transform flex-shrink-0">
-                                    {renderNavIcon(item.label)}
-                                  </div>
-                                  <span 
-                                    className="text-[13.5px] font-sans font-semibold text-slate-700 group-hover:text-[#673391] leading-tight tracking-normal"
-                                    style={{ fontFamily: "'Open Sans', sans-serif", fontWeight: 600 }}
-                                  >
-                                    {item.label}
-                                  </span>
-                                </Link>
-                              ))}
-                            </div>
-                          </div>
-
-                        </div>
                       </div>
-                    )
+                    </div>
                   )}
 
                 </div>
@@ -679,6 +656,49 @@ export default function SbiGlobalBrandHeader({
 
         </div>
       </header>
+
+      {/* No Resume Application Modal (Exact Match to User Reference Screenshot) */}
+      {showResumeModal && (
+        <div 
+          className="fixed inset-0 bg-black/40 backdrop-blur-xs flex items-center justify-center z-50 p-4 animate-in fade-in duration-150"
+          onClick={() => setShowResumeModal(false)}
+        >
+          <div 
+            className="bg-white rounded-2xl max-w-2xl w-full p-8 shadow-2xl relative border border-slate-100 animate-in zoom-in-95 duration-150"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button Top Right */}
+            <button 
+              type="button" 
+              onClick={() => setShowResumeModal(false)}
+              className="absolute right-6 top-6 text-[#673391] hover:opacity-75 transition-opacity cursor-pointer"
+            >
+              <X size={22} />
+            </button>
+
+            {/* Modal Title */}
+            <h3 className="text-2xl font-bold text-[#673391] mb-14 tracking-tight" style={{ fontFamily: 'Roboto, sans-serif' }}>
+              No Resume Application
+            </h3>
+
+            {/* Modal Body */}
+            <p className="text-base font-normal text-slate-700 mb-16">
+              You don't have any pending application
+            </p>
+
+            {/* Modal Footer OK Button */}
+            <div className="flex justify-end pt-4 border-t border-slate-200">
+              <button
+                type="button"
+                onClick={() => setShowResumeModal(false)}
+                className="bg-white border border-[#673391] hover:bg-[#673391] hover:text-white text-[#673391] font-semibold text-sm py-2 px-14 rounded-full transition-all shadow-2xs cursor-pointer"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );

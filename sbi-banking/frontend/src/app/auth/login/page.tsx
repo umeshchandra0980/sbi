@@ -1564,7 +1564,7 @@ export default function LoginPage() {
             </div>
           </aside>
 
-          {/* Section 2: Do's & Don'ts (Bootstrap Grid col-6 col-md-3 Pixel-Perfect Clone) */}
+          {/* Section 2: Do's & Don'ts (Pixel-Perfect Screenshot Clone) */}
           <aside aria-label="Do's &amp; Don'ts">
             <div>
               <h1 style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 600, fontSize: '1.5em', lineHeight: '32px', color: '#673391', marginBottom: '24px' }}>
@@ -1572,65 +1572,67 @@ export default function LoginPage() {
               </h1>
             </div>
             <div className="dos-donts-container">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-[16px]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[16px]">
                 
                 {/* Do Card 1 */}
-                <div className="h-full w-full overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)]" style={{ backgroundColor: '#FFFFFF', borderRadius: '16px', padding: '20px', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}>
-                  <div className="flex items-center h-full">
-                    <div className="w-[25%] flex justify-center items-center flex-shrink-0">
-                      <div className="w-[52px] h-[52px] rounded-full flex items-center justify-center" style={{ backgroundColor: '#EAF7E7' }}>
-                        <img src="https://yonoretail.sbi.bank.in/assets/images/login/dosymbol.svg" alt="Do" className="w-[42px] h-[42px] object-contain" />
-                      </div>
+                <div className="h-full w-full overflow-hidden flex transition-all duration-300 hover:-translate-y-1 hover:shadow-md" style={{ backgroundColor: '#FFFFFF', borderRadius: '14px', border: '1px solid #489333' }}>
+                  <div className="w-[82px] flex-shrink-0 flex items-center justify-center py-4" style={{ backgroundColor: '#EEF8EB' }}>
+                    <div className="w-[46px] h-[46px] rounded-full flex items-center justify-center" style={{ backgroundColor: '#489333' }}>
+                      <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
                     </div>
-                    <div className="w-[75%] pl-[14px]">
-                      <div style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, fontSize: '18px', color: '#51A037', marginBottom: '2px' }}>Always</div>
-                      <p style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 400, fontSize: '15px', lineHeight: '22px', color: '#313131', margin: 0 }}>keep your computer free of malware</p>
-                    </div>
+                  </div>
+                  <div className="p-4 flex flex-col justify-center flex-1 bg-white">
+                    <div style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, fontSize: '15px', color: '#1B6A0E', marginBottom: '4px' }}>Always</div>
+                    <p style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 400, fontSize: '13px', lineHeight: '18px', color: '#333333', margin: 0 }}>keep your computer free of malware</p>
                   </div>
                 </div>
 
                 {/* Do Card 2 */}
-                <div className="h-full w-full overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)]" style={{ backgroundColor: '#FFFFFF', borderRadius: '16px', padding: '20px', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}>
-                  <div className="flex items-center h-full">
-                    <div className="w-[25%] flex justify-center items-center flex-shrink-0">
-                      <div className="w-[52px] h-[52px] rounded-full flex items-center justify-center" style={{ backgroundColor: '#EAF7E7' }}>
-                        <img src="https://yonoretail.sbi.bank.in/assets/images/login/dosymbol.svg" alt="Do" className="w-[42px] h-[42px] object-contain" />
-                      </div>
+                <div className="h-full w-full overflow-hidden flex transition-all duration-300 hover:-translate-y-1 hover:shadow-md" style={{ backgroundColor: '#FFFFFF', borderRadius: '14px', border: '1px solid #489333' }}>
+                  <div className="w-[82px] flex-shrink-0 flex items-center justify-center py-4" style={{ backgroundColor: '#EEF8EB' }}>
+                    <div className="w-[46px] h-[46px] rounded-full flex items-center justify-center" style={{ backgroundColor: '#489333' }}>
+                      <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
                     </div>
-                    <div className="w-[75%] pl-[14px]">
-                      <div style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, fontSize: '18px', color: '#51A037', marginBottom: '2px' }}>Always</div>
-                      <p style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 400, fontSize: '15px', lineHeight: '22px', color: '#313131', margin: 0 }}>change your passwords periodically</p>
-                    </div>
+                  </div>
+                  <div className="p-4 flex flex-col justify-center flex-1 bg-white">
+                    <div style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, fontSize: '15px', color: '#1B6A0E', marginBottom: '4px' }}>Always</div>
+                    <p style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 400, fontSize: '13px', lineHeight: '18px', color: '#333333', margin: 0 }}>change your passwords periodically</p>
                   </div>
                 </div>
 
                 {/* Don't Card 1 */}
-                <div className="h-full w-full overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)]" style={{ backgroundColor: '#FFFFFF', borderRadius: '16px', padding: '20px', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}>
-                  <div className="flex items-center h-full">
-                    <div className="w-[25%] flex justify-center items-center flex-shrink-0">
-                      <div className="w-[52px] h-[52px] rounded-full flex items-center justify-center" style={{ backgroundColor: '#FDE8E9' }}>
-                        <img src="https://yonoretail.sbi.bank.in/assets/images/login/dontsymbol.svg" alt="Don't" className="w-[42px] h-[42px] object-contain" />
-                      </div>
+                <div className="h-full w-full overflow-hidden flex transition-all duration-300 hover:-translate-y-1 hover:shadow-md" style={{ backgroundColor: '#FFFFFF', borderRadius: '14px', border: '1px solid #F6B880' }}>
+                  <div className="w-[82px] flex-shrink-0 flex items-center justify-center py-4" style={{ backgroundColor: '#FDF1E5' }}>
+                    <div className="w-[46px] h-[46px] rounded-full flex items-center justify-center" style={{ backgroundColor: '#F88200' }}>
+                      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                      </svg>
                     </div>
-                    <div className="w-[75%] pl-[14px]">
-                      <div style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, fontSize: '18px', color: '#ED1C24', marginBottom: '2px' }}>Never</div>
-                      <p style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 400, fontSize: '15px', lineHeight: '22px', color: '#313131', margin: 0 }}>respond to communication seeking passwords</p>
-                    </div>
+                  </div>
+                  <div className="p-4 flex flex-col justify-center flex-1 bg-white">
+                    <div style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, fontSize: '15px', color: '#111111', marginBottom: '4px' }}>Never</div>
+                    <p style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 400, fontSize: '13px', lineHeight: '18px', color: '#333333', margin: 0 }}>respond to communication seeking your passwords</p>
                   </div>
                 </div>
 
                 {/* Don't Card 2 */}
-                <div className="h-full w-full overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)]" style={{ backgroundColor: '#FFFFFF', borderRadius: '16px', padding: '20px', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}>
-                  <div className="flex items-center h-full">
-                    <div className="w-[25%] flex justify-center items-center flex-shrink-0">
-                      <div className="w-[52px] h-[52px] rounded-full flex items-center justify-center" style={{ backgroundColor: '#FDE8E9' }}>
-                        <img src="https://yonoretail.sbi.bank.in/assets/images/login/dontsymbol.svg" alt="Don't" className="w-[42px] h-[42px] object-contain" />
-                      </div>
+                <div className="h-full w-full overflow-hidden flex transition-all duration-300 hover:-translate-y-1 hover:shadow-md" style={{ backgroundColor: '#FFFFFF', borderRadius: '14px', border: '1px solid #F6B880' }}>
+                  <div className="w-[82px] flex-shrink-0 flex items-center justify-center py-4" style={{ backgroundColor: '#FDF1E5' }}>
+                    <div className="w-[46px] h-[46px] rounded-full flex items-center justify-center" style={{ backgroundColor: '#F88200' }}>
+                      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                      </svg>
                     </div>
-                    <div className="w-[75%] pl-[14px]">
-                      <div style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, fontSize: '18px', color: '#ED1C24', marginBottom: '2px' }}>Never</div>
-                      <p style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 400, fontSize: '15px', lineHeight: '22px', color: '#313131', margin: 0 }}>reveal passwords or card details to anyone</p>
-                    </div>
+                  </div>
+                  <div className="p-4 flex flex-col justify-center flex-1 bg-white">
+                    <div style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, fontSize: '15px', color: '#111111', marginBottom: '4px' }}>Never</div>
+                    <p style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 400, fontSize: '13px', lineHeight: '18px', color: '#333333', margin: 0 }}>reveal your passwords or card details to anyone</p>
                   </div>
                 </div>
 
