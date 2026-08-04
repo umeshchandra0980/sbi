@@ -391,35 +391,7 @@ export default function DashboardPage() {
 
             {/* RIGHT SIDEBAR COLUMN (4 Columns = 33.33%) */}
             <div className="dash-col-4 space-y-4">
-              
-              {/* Pre-Approved offers for you Panel */}
-              <div className="rightside-content-box shadow-xs">
-                <div className="rightside-header-row mb-4">
-                  <h1 className="rightside-title text-slate-800 text-[14.5px] font-bold font-sans">
-                    Pre-Approved offers for you
-                  </h1>
-                </div>
-                <div 
-                  onClick={() => toast.success("Checking Business Loan Eligibility...")}
-                  className="bg-white border border-slate-200/80 rounded-2xl p-4 flex flex-col items-center select-none cursor-pointer hover:bg-slate-50 transition-all"
-                >
-                  <div className="w-full bg-[#fdf5f7] rounded-xl py-6 flex items-center justify-center mb-3">
-                    <svg className="w-16 h-16 text-[#e06287]" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="16" y="8" width="32" height="44" rx="4" fill="#fde8ee" stroke="#e06287" strokeWidth="2" />
-                      <line x1="24" y1="20" x2="40" y2="20" stroke="#e06287" strokeWidth="2" strokeLinecap="round" />
-                      <line x1="24" y1="28" x2="40" y2="28" stroke="#e06287" strokeWidth="2" strokeLinecap="round" />
-                      <circle cx="32" cy="40" r="6" fill="#e06287" />
-                      <text x="32" y="43" fontSize="8" fontWeight="bold" textAnchor="middle" fill="#ffffff" fontFamily="sans-serif">%</text>
-                    </svg>
-                  </div>
-                  <div className="text-[14px] font-bold text-slate-800 text-center font-sans">
-                    Business Loan
-                  </div>
-                  <div className="text-[11px] text-[#681d82] text-center font-medium font-sans mt-2">
-                    Click here to check your eligibility.
-                  </div>
-                </div>
-              </div>
+
 
               {/* Investments Panel */}
               <div className="rightside-content-box shadow-xs">
