@@ -2,12 +2,13 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
 import {
   ChevronDown,
   HelpCircle,
-  Gift
+  Gift,
+  X
 } from 'lucide-react';
 
 export type NavTabId = 'Overview' | 'Accounts' | 'Payments' | 'Deposits' | 'Loans' | 'Cards' | 'Investments' | 'Insurance' | 'Services';
@@ -22,10 +23,46 @@ export default function SbiGlobalBrandHeader({
   activeTopTab = 'Banking'
 }: SbiGlobalBrandHeaderProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [openNavTab, setOpenNavTab] = useState<NavTabId | null>(null);
   const [liteMode, setLiteMode] = useState(false);
+  const [showResumeModal, setShowResumeModal] = useState(false);
 
   const navRef = React.useRef<HTMLElement>(null);
+
+  React.useEffect(() => {
+    if (searchParams.get('showResumeModal') === 'true') {
+      setShowResumeModal(true);
+    }
+  }, [searchParams]);
+
+  const handleNavItemClick = (item: { label: string; href: string; icon?: string }) => {
+    setOpenNavTab(null);
+    if (item.label === 'Resume Application' || item.href.includes('showResumeModal=true')) {
+      setShowResumeModal(true);
+      return;
+    }
+    if (item.label === 'Gold Loan') {
+      toast('Coming Soon', {
+        icon: 'ℹ️',
+        position: 'bottom-center',
+        style: {
+          background: '#333333',
+          color: '#ffffff',
+          fontSize: '13px',
+          fontWeight: 'bold',
+          borderRadius: '8px',
+          padding: '10px 18px',
+        },
+      });
+      return;
+    }
+    if (item.href.startsWith('http')) {
+      window.open(item.href, '_blank', 'noopener,noreferrer');
+    } else {
+      router.push(item.href);
+    }
+  };
 
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -514,25 +551,7 @@ export default function SbiGlobalBrandHeader({
                                 onClick={(e) => {
                                   e.preventDefault();
                                   e.stopPropagation();
-                                  setOpenNavTab(null);
-                                  if (item.label === 'Gold Loan') {
-                                    toast('Coming Soon', {
-                                      icon: 'ℹ️',
-                                      position: 'bottom-center',
-                                      style: {
-                                        background: '#333333',
-                                        color: '#ffffff',
-                                        fontSize: '13px',
-                                        fontWeight: 'bold',
-                                        borderRadius: '8px',
-                                        padding: '10px 18px',
-                                      },
-                                    });
-                                  } else if (item.href.startsWith('http')) {
-                                    window.open(item.href, '_blank', 'noopener,noreferrer');
-                                  } else {
-                                    router.push(item.href);
-                                  }
+                                  handleNavItemClick(item);
                                 }}
                                 className="w-full text-left flex items-center gap-3 py-2 px-2 rounded-xl hover:bg-white transition-all group border-b border-purple-100/40 cursor-pointer"
                               >
@@ -563,12 +582,7 @@ export default function SbiGlobalBrandHeader({
                                 onClick={(e) => {
                                   e.preventDefault();
                                   e.stopPropagation();
-                                  setOpenNavTab(null);
-                                  if (item.href.startsWith('http')) {
-                                    window.open(item.href, '_blank', 'noopener,noreferrer');
-                                  } else {
-                                    router.push(item.href);
-                                  }
+                                  handleNavItemClick(item);
                                 }}
                                 className="w-full text-left flex items-center gap-3 py-2 px-2 rounded-xl hover:bg-white transition-all group border-b border-purple-100/40 cursor-pointer"
                               >
@@ -600,12 +614,7 @@ export default function SbiGlobalBrandHeader({
                                   onClick={(e) => {
                                     e.preventDefault();
                                     e.stopPropagation();
-                                    setOpenNavTab(null);
-                                    if (item.href.startsWith('http')) {
-                                      window.open(item.href, '_blank', 'noopener,noreferrer');
-                                    } else {
-                                      router.push(item.href);
-                                    }
+                                    handleNavItemClick(item);
                                   }}
                                   className="w-full text-left flex items-center gap-3 py-2 px-2 rounded-xl hover:bg-white transition-all group border-b border-purple-100/40 cursor-pointer"
                                 >
@@ -647,6 +656,49 @@ export default function SbiGlobalBrandHeader({
 
         </div>
       </header>
+
+      {/* No Resume Application Modal (Exact Match to User Reference Screenshot) */}
+      {showResumeModal && (
+        <div 
+          className="fixed inset-0 bg-black/40 backdrop-blur-xs flex items-center justify-center z-50 p-4 animate-in fade-in duration-150"
+          onClick={() => setShowResumeModal(false)}
+        >
+          <div 
+            className="bg-white rounded-2xl max-w-2xl w-full p-8 shadow-2xl relative border border-slate-100 animate-in zoom-in-95 duration-150"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button Top Right */}
+            <button 
+              type="button" 
+              onClick={() => setShowResumeModal(false)}
+              className="absolute right-6 top-6 text-[#673391] hover:opacity-75 transition-opacity cursor-pointer"
+            >
+              <X size={22} />
+            </button>
+
+            {/* Modal Title */}
+            <h3 className="text-2xl font-bold text-[#673391] mb-14 tracking-tight" style={{ fontFamily: 'Roboto, sans-serif' }}>
+              No Resume Application
+            </h3>
+
+            {/* Modal Body */}
+            <p className="text-base font-normal text-slate-700 mb-16">
+              You don't have any pending application
+            </p>
+
+            {/* Modal Footer OK Button */}
+            <div className="flex justify-end pt-4 border-t border-slate-200">
+              <button
+                type="button"
+                onClick={() => setShowResumeModal(false)}
+                className="bg-white border border-[#673391] hover:bg-[#673391] hover:text-white text-[#673391] font-semibold text-sm py-2 px-14 rounded-full transition-all shadow-2xs cursor-pointer"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );
