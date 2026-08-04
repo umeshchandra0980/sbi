@@ -237,8 +237,10 @@ export default function HomeLoanStepsPage() {
 
             <button
               type="button"
-              onClick={() => setActiveTab('KnowMore')}
-              className={`pb-2.5 text-sm font-bold transition-all relative ${
+              onClick={() => {
+                window.open('https://homeloans.sbi.bank.in', '_blank', 'noopener,noreferrer');
+              }}
+              className={`pb-2.5 text-sm font-bold transition-all relative cursor-pointer ${
                 activeTab === 'KnowMore' ? 'text-[#5b2e80]' : 'text-slate-600 hover:text-[#5b2e80]'
               }`}
             >
@@ -453,19 +455,21 @@ export default function HomeLoanStepsPage() {
               1. I/we certify that the information and particulars provided by me/us in this application form (and all documents referred or provided herewith) are true, correct, complete and up to date in all respects and I have not withheld any information. I/we authorize State Bank of India to make inquiries related to or verify said information directly or through any third party. I/we further acknowledge the Bank's right to seek any information from any other source in this regard. I/we understand that all of the above-mentioned information
             </div>
 
-            {/* Inset Consent Box with Download */}
-            <div className="bg-[#f8f4fc] rounded-2xl p-4 mb-6 border border-purple-100">
-              <h4 className="text-xs font-extrabold text-slate-800 mb-2">
+            {/* Inset Consent Box with Download (Left aligned, half-width card with horizontal line above download link) */}
+            <div className="w-1/2 min-w-[260px] bg-[#f8f6fb] rounded-xl p-4 border border-purple-100/80 mb-6 shadow-2xs">
+              <h4 className="text-xs font-bold text-slate-800 mb-3">
                 Consent
               </h4>
-              <button
-                type="button"
-                onClick={() => toast.success("Downloading Consent Document...")}
-                className="w-full bg-[#f4edf9] hover:bg-[#eae0f5] text-[#5b2e80] font-bold py-2 px-4 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-colors"
-              >
-                <Download size={14} />
-                <span>Download</span>
-              </button>
+              <div className="border-t border-purple-100/80 pt-3 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => toast.success("Downloading Consent Document...")}
+                  className="text-[#673391] hover:text-[#522575] font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                >
+                  <Download size={14} strokeWidth={2} />
+                  <span>Download</span>
+                </button>
+              </div>
             </div>
 
             {/* Footer Row (Checkbox + Proceed Button) */}

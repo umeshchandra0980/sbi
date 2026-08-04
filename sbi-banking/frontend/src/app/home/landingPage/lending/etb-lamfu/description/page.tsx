@@ -163,8 +163,8 @@ export default function EtbLamfuDescriptionPage() {
               {/* Action Button */}
               <button
                 type="button"
-                onClick={() => toast.success("Redirecting to Overdraft Application...")}
-                className="w-full max-w-[340px] bg-[#5b2e80] hover:bg-[#4b1774] text-white font-bold py-3.5 px-6 rounded-full shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 text-sm mb-4"
+                onClick={() => router.push('/home/landingPage/lending/etb-lamfu/personal-details')}
+                className="w-full max-w-[340px] bg-[#5b2e80] hover:bg-[#4b1774] text-white font-bold py-3.5 px-6 rounded-full shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 text-sm mb-4 cursor-pointer"
               >
                 <span>Avail Overdraft Facility</span>
                 <ArrowRight size={18} />
@@ -173,8 +173,8 @@ export default function EtbLamfuDescriptionPage() {
               {/* Loan Calculator Link */}
               <button
                 type="button"
-                onClick={() => toast.success("Opening Loan Calculator...")}
-                className="inline-flex items-center gap-2 text-xs font-bold text-[#5b2e80] hover:underline"
+                onClick={() => router.push('/home/landingPage/lending/etb-lamfu/loan-calculator')}
+                className="inline-flex items-center gap-2 text-xs font-bold text-[#5b2e80] hover:underline cursor-pointer"
               >
                 <Calculator size={16} />
                 <span>Loan calculator</span>
@@ -192,7 +192,7 @@ export default function EtbLamfuDescriptionPage() {
             <button
               type="button"
               onClick={() => setActiveTab('Features')}
-              className={`pb-2.5 text-sm font-bold transition-all relative ${
+              className={`pb-2.5 text-sm font-bold transition-all relative cursor-pointer ${
                 activeTab === 'Features' ? 'text-[#5b2e80]' : 'text-slate-600 hover:text-[#5b2e80]'
               }`}
             >
@@ -205,7 +205,7 @@ export default function EtbLamfuDescriptionPage() {
             <button
               type="button"
               onClick={() => setActiveTab('Eligibility')}
-              className={`pb-2.5 text-sm font-bold transition-all relative ${
+              className={`pb-2.5 text-sm font-bold transition-all relative cursor-pointer ${
                 activeTab === 'Eligibility' ? 'text-[#5b2e80]' : 'text-slate-600 hover:text-[#5b2e80]'
               }`}
             >
@@ -217,8 +217,10 @@ export default function EtbLamfuDescriptionPage() {
 
             <button
               type="button"
-              onClick={() => setActiveTab('KnowMore')}
-              className={`pb-2.5 text-sm font-bold transition-all relative ${
+              onClick={() => {
+                window.open('https://sbi.bank.in/web/personal-banking/loans/personal-loans/real-time-xpress-credit', '_blank', 'noopener,noreferrer');
+              }}
+              className={`pb-2.5 text-sm font-bold transition-all relative cursor-pointer ${
                 activeTab === 'KnowMore' ? 'text-[#5b2e80]' : 'text-slate-600 hover:text-[#5b2e80]'
               }`}
             >
