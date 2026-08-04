@@ -369,8 +369,9 @@ export default function DashboardPage() {
             </div>
 
             {/* RIGHT SIDEBAR COLUMN (4 Columns = 33.33%) */}
-            <div className="dash-col-4">
-              
+            <div className="dash-col-4 space-y-4">
+
+
               {/* Investments Panel */}
               <div className="rightside-content-box">
                 <div className="rightside-header-row">
