@@ -32,7 +32,8 @@ import {
   Calendar,
   Filter,
   Building2,
-  ShieldCheck
+  ShieldCheck,
+  Star
 } from 'lucide-react';
 import './SbiLandingPageComponent.css';
 import SbiGlobalBrandHeader from './SbiGlobalBrandHeader';
@@ -131,6 +132,24 @@ export default function SbiLandingPageComponent({
   const [detailsSubTab, setDetailsSubTab] = useState<'Features' | 'Eligibility' | 'Documents required' | 'Tutorials'>('Features');
   const [npsCheck, setNpsCheck] = useState(false);
   const [npsTab, setNpsTab] = useState<'Features' | 'Eligibility' | 'Calculator'>('Features');
+  const [mfSubTab, setMfSubTab] = useState<'Home' | 'Invest' | 'Portfolio' | 'Ideas' | 'More'>('Home');
+  const [mfCarouselIndex, setMfCarouselIndex] = useState(0);
+  const [mfFilterTab, setMfFilterTab] = useState<'All funds' | 'Popular' | string>('Popular');
+  const [ideasDetail, setIdeasDetail] = useState<string | null>(null);
+  const [selectedIdeaFund, setSelectedIdeaFund] = useState<string>('SBI Balanced Advantage Fund');
+  const [viewingFundInfo, setViewingFundInfo] = useState<any | null>(null);
+  const [mfChartPeriod, setMfChartPeriod] = useState<'1M' | '3M' | '6M' | '1Y' | '5Y' | 'MAX'>('MAX');
+  const [riskometerOpen, setRiskometerOpen] = useState(false);
+  const [managerOpen, setManagerOpen] = useState(false);
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  const [exitLoadOpen, setExitLoadOpen] = useState(false);
+  const [expenseTaxOpen, setExpenseTaxOpen] = useState(false);
+  const [holdingsOpen, setHoldingsOpen] = useState(false);
+  const [similarFundsOpen, setSimilarFundsOpen] = useState(false);
+  const [fundDetailsSubTab, setFundDetailsSubTab] = useState<'Details' | 'Documents'>('Details');
+  const [holdingsSubTab, setHoldingsSubTab] = useState<'Stocks' | 'Sector Wise'>('Sector Wise');
+  const [similarCarouselIndex, setSimilarCarouselIndex] = useState(0);
+  const [moreCarouselIndex, setMoreCarouselIndex] = useState(0);
 
   useEffect(() => {
     setActiveTab(initialTab);
@@ -283,6 +302,30 @@ export default function SbiLandingPageComponent({
               <span className="sbi-bc-sep">&gt;</span>
               <span className="sbi-bc-current">Demat & Securities</span>
             </>
+          ) : activeTab === 'Investments' && investmentSubTab === 'Mutual Fund' ? (
+            viewingFundInfo !== null ? (
+              <>
+                <span className="sbi-bc-current cursor-pointer hover:underline" onClick={() => setViewingFundInfo(null)}>Mutual Funds</span>
+                <span className="sbi-bc-sep">&gt;</span>
+                <span className="sbi-bc-current">Fund Info</span>
+              </>
+            ) : ideasDetail !== null ? (
+              <>
+                <span className="sbi-bc-current cursor-pointer hover:underline" onClick={() => { setIdeasDetail(null); setMfSubTab('Home'); }}>Mutual Funds</span>
+                <span className="sbi-bc-sep">&gt;</span>
+                <span className="sbi-bc-current cursor-pointer hover:underline" onClick={() => { setIdeasDetail(null); setMfSubTab('Ideas'); }}>Ideas</span>
+                <span className="sbi-bc-sep">&gt;</span>
+                <span className="sbi-bc-current">{ideasDetail}</span>
+              </>
+            ) : mfSubTab === 'Ideas' ? (
+              <>
+                <span className="sbi-bc-current cursor-pointer hover:underline" onClick={() => setMfSubTab('Home')}>Mutual Funds</span>
+                <span className="sbi-bc-sep">&gt;</span>
+                <span className="sbi-bc-current">Ideas</span>
+              </>
+            ) : (
+              <span className="sbi-bc-current">Mutual Funds</span>
+            )
           ) : (
             <span className="sbi-bc-current">
               {searchParams?.get('view') === 'all' && (activeTab === 'Deposits' || activeTab === 'Loans') 
@@ -315,8 +358,16 @@ export default function SbiLandingPageComponent({
           </div>
         )}
 
+        {activeTab === 'Investments' && investmentSubTab === 'Mutual Fund' && (
+          <div className="flex justify-between items-center mb-4 mt-2">
+            <h1 className="text-[28px] font-bold text-[#302985] font-sans">
+              Mutual Funds
+            </h1>
+          </div>
+        )}
+
         {/* 4. SUB-NAVIGATION TABS BAR (Transaction Accounts | Deposits | Loans | Investments | Insurance) */}
-        {!showDematDetails && !(searchParams?.get('view') === 'all' && (activeTab === 'Deposits' || activeTab === 'Loans')) && (
+        {!showDematDetails && !(searchParams?.get('view') === 'all' && (activeTab === 'Deposits' || activeTab === 'Loans')) && !(activeTab === 'Investments' && investmentSubTab === 'Mutual Fund') && (
           <div className="sbi-tabs-container">
             <div className="sbi-tabs-row">
               {(['Transaction Accounts', 'Deposits', 'Loans', 'Investments', 'Insurance'] as const).map((tabLabel) => {
@@ -1280,49 +1331,53 @@ export default function SbiLandingPageComponent({
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
                   
                   {/* Left Sub-Menu Column (3/12 width) */}
-                  <div className="md:col-span-3 space-y-3">
-                    {/* Search Input */}
-                    <div className="sbi-search-card">
-                      <Search size={16} className="text-gray-400" />
-                      <input
-                        type="text"
-                        placeholder="Search here..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="sbi-search-input"
-                      />
+                  {investmentSubTab !== 'Mutual Fund' && (
+                    <div className="md:col-span-3 space-y-3">
+                      {/* Search Input */}
+                      <div className="sbi-search-card">
+                        <Search size={16} className="text-gray-400" />
+                        <input
+                          type="text"
+                          placeholder="Search here..."
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          className="sbi-search-input"
+                        />
+                      </div>
+
+                      {/* Vertical Menu Buttons */}
+                      {(['Mutual Fund', 'Demat & Securities', 'PPF', 'NPS', 'IPO'] as const).map((subItem) => {
+                        const isSelected = investmentSubTab === subItem;
+                        return (
+                          <button
+                            key={subItem}
+                            type="button"
+                            onClick={() => setInvestmentSubTab(subItem)}
+                            className={`sbi-inv-menu-btn select-none ${isSelected ? 'selected' : ''}`}
+                          >
+                            {subItem}
+                          </button>
+                        );
+                      })}
                     </div>
+                  )}
 
-                    {/* Vertical Menu Buttons */}
-                    {(['Mutual Fund', 'Demat & Securities', 'PPF', 'NPS', 'IPO'] as const).map((subItem) => {
-                      const isSelected = investmentSubTab === subItem;
-                      return (
-                        <button
-                          key={subItem}
-                          type="button"
-                          onClick={() => setInvestmentSubTab(subItem)}
-                          className={`sbi-inv-menu-btn select-none ${isSelected ? 'selected' : ''}`}
-                        >
-                          {subItem}
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  {/* Right Main Content Column (9/12 width) */}
-                  <div className="md:col-span-9">
+                  {/* Right Main Content Column */}
+                  <div className={investmentSubTab === 'Mutual Fund' ? 'col-span-12' : 'md:col-span-9'}>
                     <div className="sbi-content-card min-h-[460px] p-0 overflow-hidden relative flex flex-col">
                       
                       {/* Top Purple Tab Badge Header */}
-                      <div className="sbi-inv-header-tag select-none">
-                        {investmentSubTab === 'Demat & Securities' 
-                          ? 'Manage Demat & Securities' 
-                          : investmentSubTab === 'PPF' 
-                            ? 'Public Provident Fund (PPF)' 
-                            : investmentSubTab === 'NPS'
-                              ? 'National Pension System (NPS)'
-                              : investmentSubTab}
-                      </div>
+                      {investmentSubTab !== 'Mutual Fund' && (
+                        <div className="sbi-inv-header-tag select-none">
+                          {investmentSubTab === 'Demat & Securities' 
+                            ? 'Manage Demat & Securities' 
+                            : investmentSubTab === 'PPF' 
+                              ? 'Public Provident Fund (PPF)' 
+                              : investmentSubTab === 'NPS'
+                                ? 'National Pension System (NPS)'
+                                : investmentSubTab}
+                        </div>
+                      )}
 
                       {/* Content Selection check */}
                       {investmentSubTab === 'Demat & Securities' && (
@@ -1806,38 +1861,2570 @@ export default function SbiLandingPageComponent({
                       )}
 
                       {investmentSubTab === 'Mutual Fund' && (
-                        /* Standard Coming Soon page for Mutual Fund tab */
-                        <div className="p-8 flex-1 flex flex-col items-center justify-center text-center">
-                          {/* Hourglass/Phone vector */}
-                          <div className="w-56 h-48 relative mb-4 flex items-center justify-center">
-                            <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                              <ellipse cx="100" cy="115" rx="75" ry="25" fill="#f3e8ff" opacity="0.6" />
-                              <path d="M125 45 C125 45 155 45 155 70 C155 85 140 95 140 95 C140 95 155 105 155 120 C155 145 125 145 125 145 L125 45 Z" fill="#fce7f3" opacity="0.7" />
-                              <path d="M130 50 L150 50 L140 80 Z" fill="#ec4899" opacity="0.3" />
-                              <rect x="75" y="25" width="50" height="95" rx="8" fill="#ffffff" stroke="#30135d" strokeWidth="3" />
-                              <rect x="90" y="29" width="20" height="3" rx="1.5" fill="#e2e8f0" />
-                              <circle cx="100" cy="112" r="3" fill="#e2e8f0" />
-                              <rect x="83" y="70" width="34" height="6" rx="3" fill="#fce7f3" />
-                              <rect x="83" y="70" width="22" height="6" rx="3" fill="#d92588" />
-                              <circle cx="87" cy="73" r="1" fill="#ffffff" />
-                              <circle cx="92" cy="73" r="1" fill="#ffffff" />
-                              <circle cx="97" cy="73" r="1" fill="#ffffff" />
-                              <path d="M50 100 C40 60 70 40 75 50" stroke="#818cf8" strokeWidth="2" strokeDasharray="3 3" fill="none" />
-                              <path d="M130 90 C150 70 140 50 145 60" stroke="#818cf8" strokeWidth="2" strokeDasharray="3 3" fill="none" />
-                            </svg>
-                          </div>
-                          <h2 className="text-lg font-extrabold text-[#30135d] mb-1.5">Coming Soon</h2>
-                          <p className="text-xs text-slate-500 max-w-sm leading-relaxed">
-                            We are preparing to help you access this Service shortly
-                          </p>
-                          <p className="text-xs text-slate-500 mt-4">
-                            Explore Mutual Funds with a variety of options to grow your wealth.
-                          </p>
-                          <ul className="list-disc list-inside text-xs text-slate-500 mt-2">
-                            <li>Diversified portfolio options</li>
-                            <li>Professional fund management</li>
-                            <li>Easy SIP investments</li>
-                          </ul>
+                        <div className="p-6 flex-1 flex flex-col bg-[#f1f5f9] text-left font-sans w-full">
+                          
+                           {/* 1. Mutual Funds Page Tab Navigation */}
+                           {ideasDetail === null && viewingFundInfo === null && (
+                             <div className="flex border-b border-slate-200 mb-6 bg-white rounded-t-xl select-none w-full">
+                               {(['Home', 'Invest', 'Portfolio', 'Ideas', 'More'] as const).map((tab) => {
+                                 const isActive = mfSubTab === tab;
+                                 return (
+                                   <button
+                                     key={tab}
+                                     type="button"
+                                     onClick={() => { setMfSubTab(tab); setIdeasDetail(null); setViewingFundInfo(null); }}
+                                     className={`font-sans font-semibold text-[13px] px-6 py-3 relative transition-all ${
+                                       isActive ? 'text-[#702082] font-bold' : 'text-slate-500 hover:text-slate-800'
+                                     }`}
+                                   >
+                                     <span>{tab}</span>
+                                     {isActive && (
+                                       <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#702082] rounded-t" />
+                                     )}
+                                   </button>
+                                 );
+                               })}
+                             </div>
+                           )}
+
+                          {viewingFundInfo !== null ? (
+                            /* Detailed Fund Info View */
+                            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start w-full text-left font-sans mt-2">
+                              {/* Left Column - Fund Basic Info (lg:col-span-5) */}
+                              <div className="lg:col-span-5 flex flex-col gap-6 items-stretch justify-start w-full">
+                                <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-2xs text-left w-full space-y-5 flex flex-col">
+                                  {/* Fund Name */}
+                                  <div>
+                                    <h2 className="font-extrabold text-[19px] text-[#302985] tracking-tight leading-snug">
+                                      {viewingFundInfo.name}
+                                    </h2>
+                                    
+                                    {/* Tags Row */}
+                                    <div className="flex flex-wrap items-center gap-1.5 text-slate-500 font-semibold text-[11px] mt-2">
+                                      <span>{viewingFundInfo.category || 'Hybrid'}</span>
+                                      <span className="text-slate-300">|</span>
+                                      <span>Long Term</span>
+                                      <span className="text-slate-300">|</span>
+                                      <span>Long-Term Capital Appreciation</span>
+                                    </div>
+                                  </div>
+
+                                  {/* Wishlist Button */}
+                                  <button 
+                                    type="button" 
+                                    onClick={() => toast.success(`Added ${viewingFundInfo.name} to wishlist!`)}
+                                    className="border border-slate-300 hover:border-slate-400 rounded-full px-5 py-2 text-[12px] font-bold text-slate-600 hover:bg-slate-50 transition-colors cursor-pointer self-start flex items-center gap-1.5 shadow-3xs"
+                                  >
+                                    <svg className="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                                      <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                    </svg>
+                                    <span>Add to wishlist</span>
+                                  </button>
+
+                                  {/* Plan Selection dropdown box */}
+                                  <div className="space-y-1">
+                                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Plan</span>
+                                    <div className="border border-slate-200 bg-white rounded-xl p-3 px-4 flex items-center justify-between cursor-pointer hover:bg-slate-50/50 transition-colors w-full mt-1.5 shadow-3xs">
+                                      <span className="text-[12.5px] font-bold text-slate-700 truncate max-w-[280px]">
+                                        {viewingFundInfo.name} - Regular Plan - Growth
+                                      </span>
+                                      <ChevronDown size={15} className="text-slate-400 ml-2" />
+                                    </div>
+                                  </div>
+
+                                  {/* Info boxes row (Risk, Min SIP, Min Invest) */}
+                                  <div className="grid grid-cols-3 gap-2 w-full pt-1.5">
+                                    {/* Risk Involved */}
+                                    <div className="bg-[#f8fafc] border border-slate-200/40 rounded-xl p-3.5 flex flex-col justify-between text-left">
+                                      <div className="flex items-center gap-1 mb-1.5">
+                                        <span className="text-[9px] text-slate-400 font-bold uppercase leading-none">Risk Involved</span>
+                                        <svg className="w-3 h-3 text-amber-500 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+                                        </svg>
+                                      </div>
+                                      <span className="text-[13px] font-extrabold text-slate-800 leading-snug">
+                                        {viewingFundInfo.risk || 'Very High'}
+                                      </span>
+                                    </div>
+
+                                    {/* Min. SIP */}
+                                    <div className="bg-[#f8fafc] border border-slate-200/40 rounded-xl p-3.5 flex flex-col justify-between text-left">
+                                      <span className="text-[9px] text-slate-400 font-bold uppercase leading-none mb-1.5">Min. SIP</span>
+                                      <span className="text-[13px] font-extrabold text-slate-800 leading-snug">₹500</span>
+                                    </div>
+
+                                    {/* Min. Investment */}
+                                    <div className="bg-[#f8fafc] border border-slate-200/40 rounded-xl p-3.5 flex flex-col justify-between text-left">
+                                      <span className="text-[9px] text-slate-400 font-bold uppercase leading-none mb-1.5">Min. Investment</span>
+                                      <span className="text-[13px] font-extrabold text-slate-800 leading-snug">
+                                        {viewingFundInfo.minInvestment || '₹5,000'}
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                  {/* NAV and CAGR Row */}
+                                  <div className="bg-[#f8fafc] border border-slate-200/40 rounded-xl p-4.5 grid grid-cols-2 gap-4 w-full text-left">
+                                    <div>
+                                      <span className="text-[9.5px] text-slate-400 font-bold uppercase tracking-wider block">
+                                        NAV (As on 31 Jul 2026)
+                                      </span>
+                                      <div className="flex items-center gap-2 mt-1.5">
+                                        <span className="text-[16.5px] font-black text-slate-800 leading-none">
+                                          ₹66.68
+                                        </span>
+                                        <span className="bg-green-50 text-green-600 px-1.5 py-0.5 rounded text-[10px] font-extrabold flex items-center gap-0.5 leading-none">
+                                          <span>↑</span>
+                                          <span>0.24%</span>
+                                        </span>
+                                      </div>
+                                    </div>
+
+                                    <div>
+                                      <span className="text-[9.5px] text-slate-400 font-bold uppercase tracking-wider block">
+                                        CAGR
+                                      </span>
+                                      <span className="text-[16.5px] font-black text-green-600 mt-1.5 block leading-none">
+                                        {viewingFundInfo.cagr || '+12.18%'}
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                  {/* Invest Now Solid Button */}
+                                  <button
+                                    type="button"
+                                    onClick={() => toast.success(`Invested successfully in ${viewingFundInfo.name}!`)}
+                                    className="bg-[#702082] hover:bg-[#5c1a6b] text-white font-extrabold text-[14.5px] py-3.5 rounded-2xl w-full text-center shadow-md transition-all cursor-pointer mt-2"
+                                  >
+                                    Invest Now
+                                  </button>
+                                </div>
+                              </div>
+
+                              {/* Right Column - Chart and Details (lg:col-span-7) */}
+                              <div className="lg:col-span-7 flex flex-col gap-6 items-stretch justify-start w-full">
+                                {/* Interactive Returns Chart */}
+                                <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-2xs w-full flex flex-col justify-between min-h-[300px]">
+                                  {/* Chart SVG Canvas */}
+                                  <div className="w-full flex-1 min-h-[190px] relative flex items-center justify-center">
+                                    <svg className="w-full h-full" viewBox="0 0 540 180" fill="none">
+                                      <defs>
+                                        <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                                          <stop offset="0%" stopColor="#702082" stopOpacity="0.15" />
+                                          <stop offset="100%" stopColor="#702082" stopOpacity="0" />
+                                        </linearGradient>
+                                      </defs>
+                                      
+                                      {/* Grid Lines */}
+                                      <line x1="10" y1="30" x2="530" y2="30" stroke="#f1f5f9" strokeWidth="1" />
+                                      <line x1="10" y1="80" x2="530" y2="80" stroke="#f1f5f9" strokeWidth="1" />
+                                      <line x1="10" y1="130" x2="530" y2="130" stroke="#f1f5f9" strokeWidth="1" />
+
+                                      {/* Chart Path */}
+                                      {mfChartPeriod === 'MAX' && (
+                                        <>
+                                          <path d="M 10 120 C 60 100, 120 70, 180 90 C 240 110, 300 50, 360 60 C 420 70, 480 30, 540 20" stroke="#702082" strokeWidth="3" strokeLinecap="round" />
+                                          <path d="M 10 120 C 60 100, 120 70, 180 90 C 240 110, 300 50, 360 60 C 420 70, 480 30, 540 20 L 540 180 L 10 180 Z" fill="url(#chartGrad)" />
+                                        </>
+                                      )}
+                                      {mfChartPeriod !== 'MAX' && (
+                                        <>
+                                          <path d="M 10 110 C 100 130, 200 80, 300 90 C 400 100, 500 50, 540 40" stroke="#702082" strokeWidth="3" strokeLinecap="round" />
+                                          <path d="M 10 110 C 100 130, 200 80, 300 90 C 400 100, 500 50, 540 40 L 540 180 L 10 180 Z" fill="url(#chartGrad)" />
+                                        </>
+                                      )}
+                                    </svg>
+                                  </div>
+
+                                  {/* Period Selectors */}
+                                  <div className="flex justify-end gap-1.5 select-none pt-4 border-t border-slate-100">
+                                    {(['1M', '3M', '6M', '1Y', '5Y', 'MAX'] as const).map((period) => {
+                                      const isAct = mfChartPeriod === period;
+                                      return (
+                                        <button
+                                          key={period}
+                                          type="button"
+                                          onClick={() => setMfChartPeriod(period)}
+                                          className={`px-4.5 py-1.5 rounded-full text-[11px] font-bold transition-all ${
+                                            isAct 
+                                              ? 'bg-[#702082] text-white border border-transparent shadow-3xs' 
+                                              : 'text-slate-500 hover:text-slate-800 border border-slate-100 bg-white hover:bg-slate-50'
+                                          }`}
+                                        >
+                                          {period === 'MAX' ? 'Max' : period}
+                                        </button>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+
+                                {/* Accordions (Riskometer, Fund Manager, Fund Details) */}
+                                <div className="space-y-4 w-full">
+                                  
+                                  {/* Accordion 1: Riskometer */}
+                                  <div className="bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-2xs">
+                                    <div 
+                                      onClick={() => setRiskometerOpen(!riskometerOpen)}
+                                      className="p-5 flex items-center justify-between cursor-pointer hover:bg-slate-50/50 transition-colors select-none"
+                                    >
+                                      <span className="font-extrabold text-[14.5px] text-slate-700">Riskometer</span>
+                                      <ChevronDown size={16} className={`text-slate-400 transition-transform ${riskometerOpen ? 'rotate-180' : ''}`} />
+                                    </div>
+                                    {riskometerOpen && (
+                                      <div className="p-6 border-t border-slate-100 bg-slate-50/20 text-[12.5px] text-slate-500 leading-relaxed font-semibold">
+                                        <div className="flex flex-col items-center gap-4">
+                                          {/* Visual Risk Gauge representation */}
+                                          <svg className="w-56 h-28" viewBox="0 0 200 100">
+                                            <path d="M 20 90 A 80 80 0 0 1 180 90" fill="none" stroke="#e2e8f0" strokeWidth="18" strokeLinecap="round" />
+                                            {/* Colored segments */}
+                                            <path d="M 20 90 A 80 80 0 0 1 65 38" fill="none" stroke="#22c55e" strokeWidth="18" /> {/* Low */}
+                                            <path d="M 65 38 A 80 80 0 0 1 135 38" fill="none" stroke="#eab308" strokeWidth="18" /> {/* Moderate */}
+                                            <path d="M 135 38 A 80 80 0 0 1 180 90" fill="none" stroke="#ef4444" strokeWidth="18" /> {/* High */}
+                                            {/* Arrow pointer targeting Very High (near right side) */}
+                                            <path d="M 100 90 L 155 45" stroke="#1e293b" strokeWidth="3" strokeLinecap="round" />
+                                            <circle cx="100" cy="90" r="5" fill="#1e293b" />
+                                          </svg>
+                                          <div className="text-center">
+                                            <span className="text-[13px] font-black text-rose-600 bg-rose-50 px-3 py-1 rounded-full uppercase tracking-wider">
+                                              Very High Risk
+                                            </span>
+                                            <p className="mt-2.5 max-w-sm text-slate-400 font-semibold leading-relaxed">
+                                              Investors understand that their principal will be at very high risk in this fund allocation.
+                                            </p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+
+                                  {/* Accordion 2: Fund Manager */}
+                                  <div className="bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-2xs">
+                                    <div 
+                                      onClick={() => setManagerOpen(!managerOpen)}
+                                      className="p-5 flex items-center justify-between cursor-pointer hover:bg-slate-50/50 transition-colors select-none"
+                                    >
+                                      <span className="font-extrabold text-[14.5px] text-slate-700">Fund Manager</span>
+                                      <ChevronDown size={16} className={`text-slate-400 transition-transform ${managerOpen ? 'rotate-180' : ''}`} />
+                                    </div>
+                                    {managerOpen && (
+                                      <div className="p-6 border-t border-slate-100 bg-slate-50/20 text-[12.5px] text-slate-500 font-semibold leading-relaxed">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                                          {[
+                                            {
+                                              name: 'Mr. Dinesh Balachandran',
+                                              date: '12 February 2024',
+                                              gender: 'male'
+                                            },
+                                            {
+                                              name: 'Ms. Mansi Sajeja',
+                                              date: '12 February 2024',
+                                              gender: 'female'
+                                            },
+                                            {
+                                              name: 'Ms. Vandna Soni',
+                                              date: '12 February 2024',
+                                              gender: 'female'
+                                            }
+                                          ].map((mgr, i) => (
+                                            <div 
+                                              key={i}
+                                              className="bg-[#f5effa]/60 border border-purple-100/50 rounded-xl p-4.5 flex gap-3.5 items-center text-left"
+                                            >
+                                              {/* Avatar */}
+                                              <div className="w-9 h-9 rounded-full bg-[#e8dbf2] text-[#702082] flex items-center justify-center shrink-0 border border-purple-200">
+                                                {mgr.gender === 'male' ? (
+                                                  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
+                                                    <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                  </svg>
+                                                ) : (
+                                                  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
+                                                    <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                  </svg>
+                                                )}
+                                              </div>
+
+                                              <div className="flex-1 min-w-0">
+                                                <h4 className="font-extrabold text-slate-800 text-[13.5px] truncate">
+                                                  {mgr.name}
+                                                </h4>
+                                                <p className="text-slate-400 font-semibold text-[11px] mt-0.5 whitespace-nowrap">
+                                                  Managing since {mgr.date}
+                                                </p>
+                                                
+                                                <button
+                                                  type="button"
+                                                  onClick={() => toast.success(`Showing details of ${mgr.name}...`)}
+                                                  className="text-[11.5px] font-extrabold text-[#702082] hover:underline flex items-center gap-0.5 mt-2.5 cursor-pointer"
+                                                >
+                                                  <span>View Details</span>
+                                                  <ChevronRight size={11.5} className="text-[#702082]" />
+                                                </button>
+                                              </div>
+                                            </div>
+                                          ))}
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+
+                                  {/* Accordion 3: Fund Details */}
+                                  <div className="bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-2xs">
+                                    <div 
+                                      onClick={() => setDetailsOpen(!detailsOpen)}
+                                      className="p-5 flex items-center justify-between cursor-pointer hover:bg-slate-50/50 transition-colors select-none"
+                                    >
+                                      <span className="font-extrabold text-[14.5px] text-slate-700">Fund Details</span>
+                                      <ChevronDown size={16} className={`text-slate-400 transition-transform ${detailsOpen ? 'rotate-180' : ''}`} />
+                                    </div>
+                                    {detailsOpen && (
+                                      <div className="p-6 border-t border-slate-100 bg-slate-50/20 text-[12.5px] text-slate-500 font-semibold leading-relaxed">
+                                        
+                                        {/* Sub-tabs Row */}
+                                        <div className="flex items-center gap-3 mb-6 select-none">
+                                          <button
+                                            type="button"
+                                            onClick={() => setFundDetailsSubTab('Details')}
+                                            className={`px-5 py-1.5 rounded-full text-[11.5px] font-bold transition-all shadow-3xs cursor-pointer ${
+                                              fundDetailsSubTab === 'Details'
+                                                ? 'bg-[#702082] text-white'
+                                                : 'bg-[#f5effa]/85 text-[#702082] hover:bg-[#f5effa]'
+                                            }`}
+                                          >
+                                            Details
+                                          </button>
+                                          <button
+                                            type="button"
+                                            onClick={() => setFundDetailsSubTab('Documents')}
+                                            className={`px-5 py-1.5 rounded-full text-[11.5px] font-bold transition-all shadow-3xs cursor-pointer ${
+                                              fundDetailsSubTab === 'Documents'
+                                                ? 'bg-[#702082] text-white'
+                                                : 'bg-[#f5effa]/85 text-[#702082] hover:bg-[#f5effa]'
+                                            }`}
+                                          >
+                                            Documents
+                                          </button>
+                                        </div>
+
+                                        {fundDetailsSubTab === 'Details' ? (
+                                          <div className="grid grid-cols-2 gap-y-6 gap-x-6 text-left">
+                                            <div>
+                                              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">AUM</span>
+                                              <p className="text-slate-700 font-bold text-[13.5px] mt-0.5">₹17,397.93 Cr</p>
+                                            </div>
+                                            <div>
+                                              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">Fund Category</span>
+                                              <p className="text-slate-700 font-bold text-[13.5px] mt-0.5">Open Ended</p>
+                                            </div>
+                                            <div>
+                                              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">Min SIP Amount</span>
+                                              <p className="text-slate-700 font-bold text-[13.5px] mt-0.5">₹500</p>
+                                            </div>
+                                            <div>
+                                              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">Min Lumpsum Amount</span>
+                                              <p className="text-slate-700 font-bold text-[13.5px] mt-0.5">₹5,000</p>
+                                            </div>
+                                            <div>
+                                              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">Benchmark</span>
+                                              <p className="text-slate-700 font-bold text-[13.5px] mt-0.5 leading-snug">
+                                                45% CRISIL 10 Year Gilt Index + 40% Nifty 50 + 15% Price of Gold
+                                              </p>
+                                            </div>
+                                            <div>
+                                              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">Fund Age</span>
+                                              <p className="text-slate-700 font-bold text-[13.5px] mt-0.5">20 Years</p>
+                                            </div>
+                                          </div>
+                                        ) : (
+                                          /* Documents list tab */
+                                          <div className="space-y-3.5 text-left">
+                                            {[
+                                              'Key Information Memorandum (KIM)',
+                                              'Scheme Information Document (SID)',
+                                              'Factsheet - July 2026',
+                                              'Common Application Form'
+                                            ].map((doc, idx) => (
+                                              <div 
+                                                key={idx}
+                                                onClick={() => toast.success(`Downloading ${doc}...`)}
+                                                className="flex items-center justify-between p-3 rounded-xl border border-slate-100 hover:bg-[#f5effa]/30 hover:border-purple-100 transition-all cursor-pointer shadow-3xs"
+                                              >
+                                                <div className="flex items-center gap-3">
+                                                  <svg className="w-5 h-5 text-red-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                                    <polyline points="14 2 14 8 20 8" />
+                                                    <line x1="16" y1="13" x2="8" y2="13" />
+                                                    <line x1="16" y1="17" x2="8" y2="17" />
+                                                    <polyline points="10 9 9 9 8 9" />
+                                                  </svg>
+                                                  <span className="text-slate-700 font-bold text-[12.5px]">{doc}</span>
+                                                </div>
+                                                <svg className="w-4.5 h-4.5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                                                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                                  <polyline points="7 10 12 15 17 10" />
+                                                  <line x1="12" y1="15" x2="12" y2="3" />
+                                                </svg>
+                                              </div>
+                                            ))}
+                                          </div>
+                                        )}
+
+                                      </div>
+                                    )}
+                                  </div>
+
+                                  {/* Accordion 4: Exit Load */}
+                                  <div className="bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-2xs">
+                                    <div 
+                                      onClick={() => setExitLoadOpen(!exitLoadOpen)}
+                                      className="p-5 flex items-center justify-between cursor-pointer hover:bg-slate-50/50 transition-colors select-none"
+                                    >
+                                      <span className="font-extrabold text-[14.5px] text-slate-700">Exit Load</span>
+                                      <ChevronDown size={16} className={`text-slate-400 transition-transform ${exitLoadOpen ? 'rotate-180' : ''}`} />
+                                    </div>
+                                    {exitLoadOpen && (
+                                      <div className="p-6 border-t border-slate-100 bg-slate-50/20 text-[12px] text-slate-500 font-semibold leading-relaxed text-left space-y-4">
+                                        <p className="leading-relaxed">
+                                          For units allotted upto 28th Sep 2023 - Nil till 30th Oct 2023
+                                        </p>
+                                        <p className="leading-relaxed">
+                                          For units allotted from 29th Sep 2023 - For exit within 12 months from the date of allotment - For 10% of investments - NIL, For remaining investments - 1%; For exit after 12 months from the date of allotment - NIL
+                                        </p>
+                                        <p className="leading-relaxed">
+                                          From 31st Oct 2023 for all units - For exit within 12 months from the date of allotment - For 10% of investments - NIL, For remaining investments - 1%; For exit after 12 months from the date of allotment - NIL
+                                        </p>
+                                      </div>
+                                    )}
+                                  </div>
+
+                                  {/* Accordion 5: Expense Ratio & Tax */}
+                                  <div className="bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-2xs">
+                                    <div 
+                                      onClick={() => setExpenseTaxOpen(!expenseTaxOpen)}
+                                      className="p-5 flex items-center justify-between cursor-pointer hover:bg-slate-50/50 transition-colors select-none"
+                                    >
+                                      <span className="font-extrabold text-[14.5px] text-slate-700">Expense Ratio & Tax</span>
+                                      <ChevronDown size={16} className={`text-slate-400 transition-transform ${expenseTaxOpen ? 'rotate-180' : ''}`} />
+                                    </div>
+                                    {expenseTaxOpen && (
+                                      <div className="p-6 border-t border-slate-100 bg-slate-50/20 text-[12.5px] text-slate-500 font-semibold leading-relaxed text-left flex flex-col">
+                                        <div className="flex items-center gap-3 select-none">
+                                          <span className="text-[20px] font-black text-slate-800 tracking-tight leading-none">1.46%</span>
+                                          <span className="text-slate-400 text-[11.5px] font-bold">Expense Ratio (as on 31 July, 2026)</span>
+                                        </div>
+                                        
+                                        <div className="bg-[#f5effa]/50 border border-[#702082]/15 text-[#702082] rounded-xl p-3 px-4.5 flex items-center gap-2.5 mt-4 text-[12px] font-bold shadow-3xs">
+                                          <svg className="w-4 h-4 text-[#702082] shrink-0" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                                            <circle cx="12" cy="12" r="10" />
+                                            <line x1="12" y1="16" x2="12" y2="12" />
+                                            <line x1="12" y1="9" x2="12.01" y2="9" />
+                                          </svg>
+                                          <span>All expenses are inclusive of GST on management fees</span>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+
+                                  {/* Accordion 6: Holdings */}
+                                  <div className="bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-2xs">
+                                    <div 
+                                      onClick={() => setHoldingsOpen(!holdingsOpen)}
+                                      className="p-5 flex items-center justify-between cursor-pointer hover:bg-slate-50/50 transition-colors select-none"
+                                    >
+                                      <span className="font-extrabold text-[14.5px] text-slate-700">Holdings</span>
+                                      <ChevronDown size={16} className={`text-slate-400 transition-transform ${holdingsOpen ? 'rotate-180' : ''}`} />
+                                    </div>
+                                    {holdingsOpen && (
+                                      <div className="p-6 border-t border-slate-100 bg-slate-50/20 text-[12.5px] text-slate-500 font-semibold leading-relaxed text-left flex flex-col items-center">
+                                        {/* Sub-tabs Row */}
+                                        <div className="flex items-center gap-3 mb-6 select-none self-center">
+                                          <button
+                                            type="button"
+                                            onClick={() => setHoldingsSubTab('Stocks')}
+                                            className={`px-6 py-1.5 rounded-full text-[11.5px] font-bold transition-all shadow-3xs cursor-pointer ${
+                                              holdingsSubTab === 'Stocks'
+                                                ? 'bg-[#702082] text-white'
+                                                : 'bg-[#f5effa]/85 text-[#702082] hover:bg-[#f5effa]'
+                                            }`}
+                                          >
+                                            Stocks
+                                          </button>
+                                          <button
+                                            type="button"
+                                            onClick={() => setHoldingsSubTab('Sector Wise')}
+                                            className={`px-6 py-1.5 rounded-full text-[11.5px] font-bold transition-all shadow-3xs cursor-pointer ${
+                                              holdingsSubTab === 'Sector Wise'
+                                                ? 'bg-[#702082] text-white'
+                                                : 'bg-[#f5effa]/85 text-[#702082] hover:bg-[#f5effa]'
+                                            }`}
+                                          >
+                                            Sector Wise
+                                          </button>
+                                        </div>
+
+                                        {holdingsSubTab === 'Stocks' ? (
+                                          <div className="space-y-2.5 w-full">
+                                            <div className="flex justify-between items-center border-b border-slate-100 pb-1.5">
+                                              <span className="text-slate-700 font-bold">Government of India Securities</span>
+                                              <span className="text-slate-900 font-black">22.4%</span>
+                                            </div>
+                                            <div className="flex justify-between items-center border-b border-slate-100 pb-1.5">
+                                              <span className="text-slate-700 font-bold">HDFC Bank Ltd.</span>
+                                              <span className="text-slate-900 font-black">8.5%</span>
+                                            </div>
+                                            <div className="flex justify-between items-center border-b border-slate-100 pb-1.5">
+                                              <span className="text-slate-700 font-bold">ICICI Bank Ltd.</span>
+                                              <span className="text-slate-900 font-black">7.2%</span>
+                                            </div>
+                                            <div className="flex justify-between items-center border-b border-slate-100 pb-1.5">
+                                              <span className="text-slate-700 font-bold">Reliance Industries Ltd.</span>
+                                              <span className="text-slate-900 font-black">6.8%</span>
+                                            </div>
+                                            <div className="flex justify-between items-center">
+                                              <span className="text-slate-700 font-bold">Gold ETF</span>
+                                              <span className="text-slate-900 font-black">5.5%</span>
+                                            </div>
+                                          </div>
+                                        ) : (
+                                          /* Sector Wise Donut Chart */
+                                          <div className="flex flex-col md:flex-row items-center gap-8 justify-center w-full mt-4">
+                                            {/* Donut Chart SVG */}
+                                            <div className="relative w-48 h-48 shrink-0">
+                                              <svg className="w-full h-full" viewBox="0 0 200 200">
+                                                {/* Background track circle */}
+                                                <circle cx="100" cy="100" r="70" stroke="#cbd5e1" strokeWidth="18" fill="none" opacity="0.15" />
+                                                
+                                                {/* Blue segment (34.52%) -> stroke-dasharray: 439.8 -> 34.52% = 151.8 */}
+                                                <circle cx="100" cy="100" r="70" stroke="#00b0f0" strokeWidth="18" strokeDasharray="151.8 439.8" strokeDashoffset="0" fill="none" transform="rotate(-90 100 100)" />
+                                                
+                                                {/* Green segment (10.28%) -> 10.28% = 45.2 */}
+                                                <circle cx="100" cy="100" r="70" stroke="#22c55e" strokeWidth="18" strokeDasharray="45.2 439.8" strokeDashoffset="-151.8" fill="none" transform="rotate(-90 100 100)" />
+                                                
+                                                {/* Yellow segment (5.89%) -> 5.89% = 25.9 */}
+                                                <circle cx="100" cy="100" r="70" stroke="#eab308" strokeWidth="18" strokeDasharray="25.9 439.8" strokeDashoffset="-197.0" fill="none" transform="rotate(-90 100 100)" />
+                                                
+                                                {/* Dark Blue segment (5.71%) -> 5.71% = 25.1 */}
+                                                <circle cx="100" cy="100" r="70" stroke="#1e3a8a" strokeWidth="18" strokeDasharray="25.1 439.8" strokeDashoffset="-222.9" fill="none" transform="rotate(-90 100 100)" />
+                                                
+                                                {/* Red segment (5.13%) -> 5.13% = 22.6 */}
+                                                <circle cx="100" cy="100" r="70" stroke="#ef4444" strokeWidth="18" strokeDasharray="22.6 439.8" strokeDashoffset="-248.0" fill="none" transform="rotate(-90 100 100)" />
+                                                
+                                                {/* Orange segment (38.47%) -> 38.47% = 169.2 */}
+                                                <circle cx="100" cy="100" r="70" stroke="#f97316" strokeWidth="18" strokeDasharray="169.2 439.8" strokeDashoffset="-270.6" fill="none" transform="rotate(-90 100 100)" />
+
+                                                {/* Pointers & Labels inside SVG */}
+                                                {/* Blue segment pointer (right side) */}
+                                                <path d="M 148 55 L 175 45 L 188 45" stroke="#00b0f0" strokeWidth="1" fill="none" />
+                                                <text x="191" y="48" fontSize="8.5" fontWeight="bold" fill="#64748b" textAnchor="start">34.52%</text>
+
+                                                {/* Green segment pointer (bottom right) */}
+                                                <path d="M 148 150 L 165 170 L 180 170" stroke="#22c55e" strokeWidth="1" fill="none" />
+                                                <text x="183" y="173" fontSize="8.5" fontWeight="bold" fill="#64748b" textAnchor="start">10.28%</text>
+
+                                                {/* Yellow segment pointer (bottom middle) */}
+                                                <path d="M 120 168 L 125 185 L 140 185" stroke="#eab308" strokeWidth="1" fill="none" />
+                                                <text x="143" y="188" fontSize="8.5" fontWeight="bold" fill="#64748b" textAnchor="start">5.89%</text>
+
+                                                {/* Dark Blue segment pointer (bottom left) */}
+                                                <path d="M 90 168 L 85 185 L 70 185" stroke="#1e3a8a" strokeWidth="1" fill="none" />
+                                                <text x="67" y="188" fontSize="8.5" fontWeight="bold" fill="#64748b" textAnchor="end">5.71%</text>
+
+                                                {/* Red segment pointer (left bottom) */}
+                                                <path d="M 52 145 L 35 165 L 20 165" stroke="#ef4444" strokeWidth="1" fill="none" />
+                                                <text x="17" y="168" fontSize="8.5" fontWeight="bold" fill="#64748b" textAnchor="end">5.13%</text>
+
+                                                {/* Orange segment pointer (left middle/top) */}
+                                                <path d="M 45 80 L 15 80" stroke="#f97316" strokeWidth="1" />
+                                                <text x="12" y="83" fontSize="8.5" fontWeight="bold" fill="#64748b" textAnchor="end">38.47%</text>
+                                              </svg>
+                                            </div>
+
+                                            {/* Legend on the Right */}
+                                            <div className="flex-1 space-y-2 text-[12px] font-bold text-slate-700 w-full md:w-auto">
+                                              {[
+                                                { label: 'Fin Services', pct: '34.52%', color: 'bg-[#00b0f0]' },
+                                                { label: 'Mutual Funds', pct: '10.28%', color: 'bg-[#22c55e]' },
+                                                { label: 'Oil & Gas', pct: '5.89%', color: 'bg-[#eab308]' },
+                                                { label: 'Power', pct: '5.71%', color: 'bg-[#1e3a8a]' },
+                                                { label: 'Healthcare', pct: '5.13%', color: 'bg-[#ef4444]' },
+                                                { label: 'Others', pct: '38.47%', color: 'bg-[#f97316]' }
+                                              ].map((item, idx) => (
+                                                <div key={idx} className="flex items-center justify-between gap-6 border-b border-slate-50 pb-1 w-full md:min-w-[150px]">
+                                                  <div className="flex items-center gap-2">
+                                                    <div className={`w-2.5 h-2.5 rounded-full ${item.color} shrink-0`}></div>
+                                                    <span>{item.label}</span>
+                                                  </div>
+                                                  <span className="text-slate-400 font-extrabold">{item.pct}</span>
+                                                </div>
+                                              ))}
+                                            </div>
+                                          </div>
+                                        )}
+                                      </div>
+                                    )}
+                                  </div>
+
+                                  {/* Accordion 7: Similar Funds */}
+                                  <div className="bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-2xs">
+                                    <div 
+                                      onClick={() => setSimilarFundsOpen(!similarFundsOpen)}
+                                      className="p-5 flex items-center justify-between cursor-pointer hover:bg-slate-50/50 transition-colors select-none"
+                                    >
+                                      <span className="font-extrabold text-[14.5px] text-slate-700">Similar Funds</span>
+                                      <ChevronDown size={16} className={`text-slate-400 transition-transform ${similarFundsOpen ? 'rotate-180' : ''}`} />
+                                    </div>
+                                    {similarFundsOpen && (
+                                      <div className="p-6 border-t border-slate-100 bg-slate-50/20 text-[12.5px] text-slate-500 font-semibold leading-relaxed text-left flex flex-col">
+                                        {/* Slider Cards Container */}
+                                        <div className="flex gap-4 items-stretch overflow-hidden select-none">
+                                          {[
+                                            { name: 'SBI Equity Hybrid Fund', category: 'Hybrid', min: '₹1,000', cagr: '14.90%', desc: '100k+ invested in last 3 months' },
+                                            { name: 'SBI Multi Asset Allocation Fund', category: 'Hybrid', min: '₹5,000', cagr: '12.18%', desc: '100k+ invested in last 3 months' },
+                                            { name: 'SBI Contra Fund', category: 'Equity', min: '₹5,000', cagr: '18.33%', desc: '80k+ invested in last 3 months' },
+                                            { name: 'SBI Balanced Advantage Fund', category: 'Hybrid', min: '₹5,000', cagr: '9.98%', desc: '120k+ invested in last 3 months' }
+                                          ].slice(similarCarouselIndex, similarCarouselIndex + 2).map((sim, i) => (
+                                            <div 
+                                              key={i} 
+                                              onClick={() => {
+                                                // Redirect to the clicked fund info details page
+                                                setViewingFundInfo({
+                                                  name: sim.name,
+                                                  category: sim.category,
+                                                  cagr: sim.cagr,
+                                                  minSip: '₹500',
+                                                  minInvestment: sim.min,
+                                                  risk: 'Very High'
+                                                });
+                                              }}
+                                              className="border border-slate-200/90 rounded-2xl p-4.5 bg-white text-left w-[50%] shrink-0 shadow-2xs hover:border-[#702082]/30 hover:shadow-xs transition-all cursor-pointer flex flex-col justify-between"
+                                            >
+                                              <div>
+                                                {/* Header row: title, category and invest now */}
+                                                <div className="flex justify-between items-start gap-2">
+                                                  <div className="flex gap-2 items-start">
+                                                    <div className="w-6.5 h-6.5 rounded-full bg-[#f5effa] text-[#702082] flex items-center justify-center shrink-0 border border-purple-100 mt-0.5">
+                                                      <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                                                      </svg>
+                                                    </div>
+                                                    <div>
+                                                      <h4 className="font-extrabold text-slate-800 text-[13px] leading-tight line-clamp-1">
+                                                        {sim.name.length > 22 ? sim.name.slice(0, 20) + '...' : sim.name}
+                                                      </h4>
+                                                      <span className="text-[10.5px] text-slate-400 font-bold mt-0.5 block">{sim.category}</span>
+                                                    </div>
+                                                  </div>
+                                                  
+                                                  <button 
+                                                    type="button"
+                                                    onClick={(e) => {
+                                                      e.stopPropagation();
+                                                      toast.success(`Redirecting to invest in ${sim.name}...`);
+                                                    }}
+                                                    className="text-[#702082] font-black text-[11.5px] hover:underline whitespace-nowrap"
+                                                  >
+                                                    Invest Now
+                                                  </button>
+                                                </div>
+
+                                                {/* Inner values sub-box */}
+                                                <div className="bg-[#f5effa]/30 border border-slate-100 p-3 rounded-xl flex items-center justify-between mt-3 w-full shadow-3xs">
+                                                  <div>
+                                                    <span className="text-[9.5px] text-slate-400 font-bold uppercase tracking-wider block">Min. Investment</span>
+                                                    <span className="text-[#702082] font-black text-[13px] mt-0.5 block">{sim.min}</span>
+                                                  </div>
+                                                  <div className="text-right">
+                                                    <span className="text-[9.5px] text-slate-400 font-bold uppercase tracking-wider block">Returns *</span>
+                                                    <span className="text-green-600 font-black text-[13px] mt-0.5 block">{sim.cagr}</span>
+                                                  </div>
+                                                </div>
+                                              </div>
+
+                                              {/* Trend bottom text */}
+                                              <div className="flex items-center gap-1.5 mt-3 text-[10.5px] font-bold text-slate-400 select-none">
+                                                <svg className="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                                                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                                                </svg>
+                                                <span>{sim.desc}</span>
+                                              </div>
+
+                                            </div>
+                                          ))}
+                                        </div>
+
+                                        {/* Slider controls row */}
+                                        <div className="flex items-center gap-2 mt-4 select-none justify-start">
+                                          <button
+                                            type="button"
+                                            disabled={similarCarouselIndex === 0}
+                                            onClick={() => setSimilarCarouselIndex(similarCarouselIndex - 1)}
+                                            className="w-7 h-7 rounded-full border border-slate-200 text-slate-400 hover:text-[#702082] hover:border-purple-200 flex items-center justify-center transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed bg-white shadow-3xs"
+                                          >
+                                            <ChevronLeft size={14} strokeWidth={2.5} />
+                                          </button>
+                                          <button
+                                            type="button"
+                                            disabled={similarCarouselIndex >= 2}
+                                            onClick={() => setSimilarCarouselIndex(similarCarouselIndex + 1)}
+                                            className="w-7 h-7 rounded-full border border-slate-200 text-slate-400 hover:text-[#702082] hover:border-purple-200 flex items-center justify-center transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed bg-white shadow-3xs"
+                                          >
+                                            <ChevronRight size={14} strokeWidth={2.5} />
+                                          </button>
+                                        </div>
+
+                                      </div>
+                                    )}
+                                  </div>
+
+                                  {/* Disclaimer text */}
+                                  <div className="text-[11.5px] text-slate-400 font-semibold select-none pt-2 text-left">
+                                    Disclaimer: Data shown is as of 31 Jul 2026
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                          ) : mfSubTab === 'Home' ? (
+                            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start w-full">
+                              
+                              {/* Left Column: Carousel & SIP Returns Calculator (lg:col-span-4) */}
+                              <div className="lg:col-span-4 space-y-6 flex flex-col items-stretch justify-start w-full">
+                                
+                                {/* Carousel Card */}
+                                <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col justify-between min-h-[340px] w-full self-stretch">
+                                  {/* Title */}
+                                  <div className="p-4 pb-0 text-[13px] font-bold text-slate-700 font-sans">
+                                    Build wealth with ease with SBI Mutual Funds
+                                  </div>
+
+                                  {/* Carousel Contents */}
+                                  <div className="flex-1 flex flex-col justify-between relative select-none">
+                                    
+                                    <div className="w-full flex-1 relative min-h-[250px] bg-slate-50 flex items-center justify-center overflow-hidden">
+                                      {mfCarouselIndex === 0 && (
+                                        <img 
+                                          src="/images/landing/WhatsApp Image 2026-08-01 at 9.07.17 PM (1).jpeg" 
+                                          alt="Did you start an SIP?" 
+                                          className="w-full h-full object-cover"
+                                        />
+                                      )}
+                                      {mfCarouselIndex === 1 && (
+                                        <img 
+                                          src="/images/landing/WhatsApp Image 2026-08-01 at 9.07.33 PM.jpeg" 
+                                          alt="Make Salary Day Your SIP Day" 
+                                          className="w-full h-full object-cover"
+                                        />
+                                      )}
+                                      {mfCarouselIndex === 2 && (
+                                        <img 
+                                          src="/images/landing/WhatsApp Image 2026-08-01 at 9.07.32 PM.jpeg" 
+                                          alt="Jan Nivesh SIP" 
+                                          className="w-full h-full object-cover"
+                                        />
+                                      )}
+                                    </div>
+
+                                    {/* Indicators (Dots) */}
+                                    <div className="py-3 flex justify-center gap-1.5 bg-white border-t border-slate-100 select-none w-full">
+                                      {[0, 1, 2].map((idx) => (
+                                        <button
+                                          key={idx}
+                                          type="button"
+                                          onClick={() => setMfCarouselIndex(idx)}
+                                          className={`w-2 h-2 rounded-full transition-all ${
+                                            mfCarouselIndex === idx ? 'bg-[#702082] w-4' : 'bg-slate-300 hover:bg-slate-400'
+                                          }`}
+                                          aria-label={`Go to slide ${idx + 1}`}
+                                        />
+                                      ))}
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Jan Nivesh SIP Static Banner (Exact match to reference screenshots) */}
+                                <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col w-full self-stretch select-none">
+                                  <img 
+                                    src="/images/landing/WhatsApp Image 2026-08-01 at 9.07.32 PM.jpeg" 
+                                    alt="Jan Nivesh SIP Banner" 
+                                    className="w-full h-auto object-cover"
+                                  />
+                                </div>
+
+                                {/* Returns on Mutual Fund SIP Card (EXACT MATCH TO SCREENSHOT 2/3) */}
+                                <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 space-y-4 text-left flex flex-col items-start justify-start w-full self-stretch">
+                                  {/* Badge label */}
+                                  <div className="select-none self-start">
+                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#edfbf0] text-[#166534] border border-[#dcfce7] text-xs font-bold font-sans">
+                                      <Star size={11} className="fill-[#166534] text-[#166534]" />
+                                      Returns on Mutual Fund SIP
+                                    </span>
+                                  </div>
+
+                                  {/* Calculator text */}
+                                  <div className="text-slate-700 text-sm font-semibold leading-relaxed font-sans self-start text-left">
+                                    SIP of <span className="font-bold text-[#1e293b]">₹10,000/month</span> for <span className="font-bold text-[#1e293b]">20 years</span> at <span className="font-bold text-[#1e293b]">12% per annum</span>
+                                  </div>
+
+                                  {/* Highlighted Flag Badge */}
+                                  <div className="flex justify-start items-center w-full self-start select-none">
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-slate-700 text-[13px] font-bold font-sans">Returns</span>
+                                      <div className="relative bg-[#16a34a] text-white text-[13px] font-bold px-4 py-1 rounded-l font-sans">
+                                        ₹1 Crore
+                                        {/* Triangle Flag tip shape on right side */}
+                                        <div className="absolute left-full top-0 w-0 h-0 border-y-[13px] border-y-transparent border-l-[8px] border-l-[#16a34a]"></div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  {/* Area chart representation */}
+                                  <div className="pt-2 w-full self-stretch">
+                                    <div className="relative h-28 w-full">
+                                      <svg viewBox="0 0 200 100" preserveAspectRatio="none" className="w-full h-full">
+                                        <defs>
+                                          <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stopColor="#22c55e" stopOpacity="0.45" />
+                                            <stop offset="100%" stopColor="#22c55e" stopOpacity="0.0" />
+                                          </linearGradient>
+                                        </defs>
+                                        {/* Grid lines */}
+                                        <line x1="0" y1="90" x2="200" y2="90" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="3 3" />
+                                        <line x1="0" y1="60" x2="200" y2="60" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="3 3" />
+                                        <line x1="0" y1="30" x2="200" y2="30" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="3 3" />
+                                        
+                                        {/* Chart Fill Area */}
+                                        <path d="M 0 90 Q 50 82 100 68 T 150 42 T 200 10 L 200 90 L 0 90 Z" fill="url(#chartGrad)" />
+                                        
+                                        {/* Chart Line */}
+                                        <path d="M 0 90 Q 50 82 100 68 T 150 42 T 200 10" stroke="#16a34a" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+                                        
+                                        {/* Node marker at peak */}
+                                        <circle cx="200" cy="10" r="4" fill="#16a34a" stroke="#ffffff" strokeWidth="1.5" />
+                                      </svg>
+                                      
+                                      {/* Custom floating labels */}
+                                      <div className="absolute right-0 -top-1 text-[11px] font-bold text-slate-700 font-sans">
+                                        ₹1Cr.
+                                      </div>
+                                      <div className="absolute right-1 bottom-[26px] text-[10px] font-semibold text-slate-500 font-sans bg-white/80 px-1 rounded">
+                                        ₹24.0L inv
+                                      </div>
+                                    </div>
+
+                                    {/* X Axis Timeline Labels */}
+                                    <div className="flex justify-between items-center text-[10px] text-slate-400 font-medium pt-1 font-sans select-none w-full">
+                                      <span>Today</span>
+                                      <span>5Y</span>
+                                      <span>10Y</span>
+                                      <span>15Y</span>
+                                      <span>20Y</span>
+                                    </div>
+                                  </div>
+
+                                  {/* Start Investing Sub-card banner with watermark outline */}
+                                  <div className="relative bg-[#f1fcf4] border border-[#def7ec] rounded-2xl p-5 overflow-hidden w-full text-left flex flex-col items-start justify-start self-stretch select-none">
+                                    <svg className="absolute right-2 bottom-0 w-24 h-24 text-green-700/10 pointer-events-none" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                      <rect x="52" y="22" width="30" height="30" rx="3" />
+                                      <path d="M57 42 l6-6 5 5 8-8" />
+                                      <path d="M12 62 l16-12 16 12 v24 h-32 z" />
+                                      <rect x="20" y="70" width="8" height="10" />
+                                      <circle cx="70" cy="72" r="6" />
+                                      <circle cx="78" cy="80" r="5" />
+                                    </svg>
+
+                                    <div className="relative z-10 text-[14px] font-extrabold text-green-950 font-sans leading-snug max-w-[75%]">
+                                      Start investing and achieve your goals faster!
+                                    </div>
+                                    <button 
+                                      type="button"
+                                      onClick={() => toast.success("Opening SIP Calculator...")}
+                                      className="relative z-10 text-[12px] font-extrabold text-[#702082] hover:underline font-sans cursor-pointer mt-3 flex items-center gap-0.5"
+                                    >
+                                      Calculate SIP Today →
+                                    </button>
+                                  </div>
+
+                                </div>
+
+                              </div>
+
+                              {/* Right Column: Trending Funds list (lg:col-span-8) */}
+                              <div className="lg:col-span-8 space-y-6 w-full">
+                                
+                                {/* Section Title */}
+                                <div className="flex items-center justify-between select-none">
+                                  <h2 className="text-[18px] font-extrabold text-[#302985] font-sans">
+                                    Trending Funds
+                                  </h2>
+                                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-[#f5effa] text-[#702082] text-[10px] font-bold font-sans select-none border border-[#eadafb]/30 shadow-3xs">
+                                    ★ CAGR since inception
+                                  </span>
+                                </div>
+
+                                {/* Trending Funds Cards Grid */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full">
+                                  
+                                  {/* Fund 1: SBI Contra Fund */}
+                                  <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 space-y-4 text-left flex flex-col justify-between w-full">
+                                    <div className="space-y-4 w-full">
+                                      <div className="flex items-start justify-between w-full">
+                                        <div className="flex items-center gap-3">
+                                          <div className="w-9 h-9 rounded-full bg-[#f5effa] text-[#702082] flex items-center justify-center shrink-0">
+                                            <Star size={16} className="fill-[#702082] text-[#702082]" />
+                                          </div>
+                                          <div>
+                                            <h3 className="font-bold text-[14px] text-slate-800 font-sans">
+                                              SBI Contra Fund
+                                            </h3>
+                                            <span className="text-[10px] text-slate-400 font-medium font-sans uppercase">
+                                              Equity
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <button 
+                                          type="button"
+                                          onClick={() => toast.success("Navigating to SBI Contra Fund...")}
+                                          className="text-[12px] font-extrabold text-[#702082] hover:underline font-sans cursor-pointer"
+                                        >
+                                          Invest Now
+                                        </button>
+                                      </div>
+
+                                      {/* Info box */}
+                                      <div className="bg-[#f8fafc] border border-slate-100 rounded-xl p-4 grid grid-cols-2 gap-4 w-full">
+                                        <div>
+                                          <div className="text-[9px] text-slate-400 font-bold uppercase font-sans tracking-wider">
+                                            Min. Investment
+                                          </div>
+                                          <div className="text-[15px] font-extrabold text-slate-800 mt-1 font-sans">
+                                            ₹5,000
+                                          </div>
+                                        </div>
+                                        <div>
+                                          <div className="text-[9px] text-slate-400 font-bold uppercase font-sans tracking-wider">
+                                            Returns <span className="text-[#702082] font-extrabold">★</span>
+                                          </div>
+                                          <div className="text-[15px] font-extrabold text-green-600 mt-1 font-sans">
+                                            18.33%
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    {/* Footer */}
+                                    <div className="text-[11px] text-slate-400 font-medium flex items-center gap-1.5 pl-0.5 font-sans select-none mt-2">
+                                      <svg className="w-4 h-3.5 text-slate-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                                        <path d="M3 12c3-4 6-4 9 0s6 4 9 0" />
+                                      </svg>
+                                      <span>100k+ invested in last 3 months</span>
+                                    </div>
+                                  </div>
+
+                                  {/* Fund 2: SBI Equity Hybrid Fund */}
+                                  <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 space-y-4 text-left flex flex-col justify-between w-full">
+                                    <div className="space-y-4 w-full">
+                                      <div className="flex items-start justify-between w-full">
+                                        <div className="flex items-center gap-3">
+                                          <div className="w-9 h-9 rounded-full bg-[#f5effa] text-[#702082] flex items-center justify-center shrink-0">
+                                            <Star size={16} className="fill-[#702082] text-[#702082]" />
+                                          </div>
+                                          <div>
+                                            <h3 className="font-bold text-[14px] text-slate-800 font-sans">
+                                              SBI Equity Hybrid Fund
+                                            </h3>
+                                            <span className="text-[10px] text-slate-400 font-medium font-sans uppercase">
+                                              Hybrid
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <button 
+                                          type="button"
+                                          onClick={() => toast.success("Navigating to SBI Equity Hybrid Fund...")}
+                                          className="text-[12px] font-extrabold text-[#702082] hover:underline font-sans cursor-pointer"
+                                        >
+                                          Invest Now
+                                        </button>
+                                      </div>
+
+                                      {/* Info box */}
+                                      <div className="bg-[#f8fafc] border border-slate-100 rounded-xl p-4 grid grid-cols-2 gap-4 w-full">
+                                        <div>
+                                          <div className="text-[9px] text-slate-400 font-bold uppercase font-sans tracking-wider">
+                                            Min. Investment
+                                          </div>
+                                          <div className="text-[15px] font-extrabold text-slate-800 mt-1 font-sans">
+                                            ₹1,000
+                                          </div>
+                                        </div>
+                                        <div>
+                                          <div className="text-[9px] text-slate-400 font-bold uppercase font-sans tracking-wider">
+                                            Returns <span className="text-[#702082] font-extrabold">★</span>
+                                          </div>
+                                          <div className="text-[15px] font-extrabold text-green-600 mt-1 font-sans">
+                                            14.90%
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    {/* Footer */}
+                                    <div className="text-[11px] text-slate-400 font-medium flex items-center gap-1.5 pl-0.5 font-sans select-none mt-2">
+                                      <svg className="w-4 h-3.5 text-slate-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                                        <path d="M3 12c3-4 6-4 9 0s6 4 9 0" />
+                                      </svg>
+                                      <span>100k+ invested in last 3 months</span>
+                                    </div>
+                                  </div>
+
+                                  {/* Fund 3: SBI Gold Fund */}
+                                  <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 space-y-4 text-left flex flex-col justify-between w-full">
+                                    <div className="space-y-4 w-full">
+                                      <div className="flex items-start justify-between w-full">
+                                        <div className="flex items-center gap-3">
+                                          <div className="w-9 h-9 rounded-full bg-[#f5effa] text-[#702082] flex items-center justify-center shrink-0">
+                                            <Star size={16} className="fill-[#702082] text-[#702082]" />
+                                          </div>
+                                          <div>
+                                            <h3 className="font-bold text-[14px] text-slate-800 font-sans">
+                                              SBI Gold Fund
+                                            </h3>
+                                            <span className="text-[10px] text-slate-400 font-medium font-sans uppercase">
+                                              Other schemes
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <button 
+                                          type="button"
+                                          onClick={() => toast.success("Navigating to SBI Gold Fund...")}
+                                          className="text-[12px] font-extrabold text-[#702082] hover:underline font-sans cursor-pointer"
+                                        >
+                                          Invest Now
+                                        </button>
+                                      </div>
+
+                                      {/* Info box */}
+                                      <div className="bg-[#f8fafc] border border-slate-100 rounded-xl p-4 grid grid-cols-2 gap-4 w-full">
+                                        <div>
+                                          <div className="text-[9px] text-slate-400 font-bold uppercase font-sans tracking-wider">
+                                            Min. Investment
+                                          </div>
+                                          <div className="text-[15px] font-extrabold text-slate-800 mt-1 font-sans">
+                                            ₹5,000
+                                          </div>
+                                        </div>
+                                        <div>
+                                          <div className="text-[9px] text-slate-400 font-bold uppercase font-sans tracking-wider">
+                                            Returns <span className="text-[#702082] font-extrabold">★</span>
+                                          </div>
+                                          <div className="text-[15px] font-extrabold text-green-600 mt-1 font-sans">
+                                            9.97%
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    {/* Footer */}
+                                    <div className="text-[11px] text-slate-400 font-medium flex items-center gap-1.5 pl-0.5 font-sans select-none mt-2">
+                                      <svg className="w-4 h-3.5 text-slate-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                                        <path d="M3 12c3-4 6-4 9 0s6 4 9 0" />
+                                      </svg>
+                                      <span>100k+ invested in last 3 months</span>
+                                    </div>
+                                  </div>
+
+                                  {/* Investment Assistance Card (matching reference images) */}
+                                  <div className="bg-[#f0f4f8] border border-slate-200/80 rounded-2xl shadow-sm p-5 space-y-3.5 text-left flex flex-col justify-between w-full">
+                                    <div className="space-y-2.5 w-full">
+                                      <div className="flex items-center gap-2.5 w-full">
+                                        <div className="w-9 h-9 rounded-xl bg-slate-200/60 text-slate-600 flex items-center justify-center shrink-0">
+                                          <svg className="w-5 h-5 stroke-slate-600" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                            <path d="M9 14h2" />
+                                            <path d="M9 11h4" />
+                                            <path d="M9 8h6" />
+                                          </svg>
+                                        </div>
+                                        <h3 className="font-extrabold text-[14px] text-slate-800 font-sans">
+                                          Investment Assistance
+                                        </h3>
+                                      </div>
+                                      <p className="text-[11.5px] text-slate-500 leading-relaxed font-sans font-medium">
+                                        Answer simple questions to evaluate your risk profile and get recommendation to right fund allocation
+                                      </p>
+                                    </div>
+
+                                    <button 
+                                      type="button"
+                                      onClick={() => toast.success("Starting Risk Profile Assessment...")}
+                                      className="self-start text-[12px] font-extrabold text-[#702082] hover:underline font-sans cursor-pointer mt-2"
+                                    >
+                                      Start Assessment →
+                                    </button>
+                                  </div>
+
+                                </div>
+
+                                {/* 3. Learn More Video Section (EXACT MATCH TO REFERENCE IMAGES) */}
+                                <div className="border-t border-slate-200/60 pt-6 mt-8 w-full">
+                                  <div className="flex items-center justify-between mb-4 select-none w-full">
+                                    <h3 className="text-[15.5px] font-bold text-slate-800 font-sans">
+                                      Learn more about Mutual Funds
+                                    </h3>
+                                    <button 
+                                      type="button"
+                                      onClick={() => toast.success("Navigating to all Mutual Fund videos...")}
+                                      className="text-[12px] font-bold text-[#702082] hover:underline font-sans cursor-pointer"
+                                    >
+                                      View All
+                                    </button>
+                                  </div>
+
+                                  {/* 4 Video cards */}
+                                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full">
+                                    
+                                    {/* Video Card 1: What is Mutual Fund */}
+                                    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs hover:shadow-xs transition-shadow flex flex-col text-left cursor-pointer group" onClick={() => toast("Opening Video: What is Mutual Fund...")}>
+                                      {/* Video Thumbnail */}
+                                      <div className="h-32 relative flex items-center justify-center select-none overflow-hidden">
+                                        <img 
+                                          src="/images/landing/WhatsApp Image 2026-08-01 at 9.07.17 PM.jpeg" 
+                                          alt="What is Mutual Fund" 
+                                          className="absolute inset-0 w-full h-full object-cover"
+                                        />
+                                        {/* Play Icon Overlay */}
+                                        <div className="w-10 h-10 rounded-full bg-slate-900/60 text-white flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform z-10">
+                                          <svg className="w-4 h-4 fill-white ml-0.5" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z" />
+                                          </svg>
+                                        </div>
+                                        {/* Video controller bar overlay */}
+                                        <div className="absolute bottom-0 left-0 right-0 h-7 bg-gradient-to-t from-black/80 to-transparent flex items-center justify-start gap-3 px-2 z-10">
+                                          <svg className="w-3 h-3 fill-white" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z" />
+                                          </svg>
+                                          <svg className="w-3 h-3 stroke-white fill-none" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                                          </svg>
+                                        </div>
+                                        {/* Progress Bar */}
+                                        <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#e11d48] z-20"></div>
+                                      </div>
+                                      {/* Video metadata text */}
+                                      <div className="p-3 space-y-1">
+                                        <h4 className="font-bold text-[12px] text-slate-800 leading-snug group-hover:text-[#702082] transition-colors font-sans truncate">
+                                          What is Mutual Fund
+                                        </h4>
+                                        <p className="text-[10px] text-slate-500 leading-relaxed font-sans line-clamp-2">
+                                          What is Mutual Fund_ Mutual Fund Basics _ Learn About Mutual Funds _ SBI Mutual Fund
+                                        </p>
+                                      </div>
+                                    </div>
+
+                                    {/* Video Card 2: Benefits of Mutual Funds */}
+                                    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs hover:shadow-xs transition-shadow flex flex-col text-left cursor-pointer group" onClick={() => toast("Opening Video: Benefits of Mutual Funds...")}>
+                                      {/* Video Thumbnail */}
+                                      <div className="h-32 relative flex items-center justify-center select-none overflow-hidden">
+                                        <img 
+                                          src="/images/landing/WhatsApp Image 2026-08-01 at 9.07.17 PM.jpeg" 
+                                          alt="Benefits of Mutual Funds" 
+                                          className="absolute inset-0 w-full h-full object-cover"
+                                        />
+                                        <div className="w-10 h-10 rounded-full bg-slate-900/60 text-white flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform z-10">
+                                          <svg className="w-4 h-4 fill-white ml-0.5" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z" />
+                                          </svg>
+                                        </div>
+                                        {/* Video controller bar overlay */}
+                                        <div className="absolute bottom-0 left-0 right-0 h-7 bg-gradient-to-t from-black/80 to-transparent flex items-center justify-start gap-3 px-2 z-10">
+                                          <svg className="w-3 h-3 fill-white" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z" />
+                                          </svg>
+                                          <svg className="w-3 h-3 stroke-white fill-none" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                                          </svg>
+                                        </div>
+                                        {/* Progress Bar */}
+                                        <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#e11d48] z-20"></div>
+                                      </div>
+                                      <div className="p-3 space-y-1">
+                                        <h4 className="font-bold text-[12px] text-slate-800 leading-snug group-hover:text-[#702082] transition-colors font-sans truncate">
+                                          Benefits of Mutual Funds
+                                        </h4>
+                                        <p className="text-[10px] text-slate-500 leading-relaxed font-sans line-clamp-2">
+                                          Benefits of Mutual Funds _ Advantages of Mutual Funds _ SBI Mutual Fund
+                                        </p>
+                                      </div>
+                                    </div>
+
+                                    {/* Video Card 3: Type of Mutual Funds */}
+                                    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs hover:shadow-xs transition-shadow flex flex-col text-left cursor-pointer group" onClick={() => toast("Opening Video: Type of Mutual Funds...")}>
+                                      {/* Video Thumbnail */}
+                                      <div className="h-32 relative flex items-center justify-center select-none overflow-hidden">
+                                        <img 
+                                          src="/images/landing/WhatsApp Image 2026-08-01 at 9.07.19 PM (1).jpeg" 
+                                          alt="Type of Mutual Funds" 
+                                          className="absolute inset-0 w-full h-full object-cover"
+                                        />
+                                        <div className="w-10 h-10 rounded-full bg-slate-900/60 text-white flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform z-10">
+                                          <svg className="w-4 h-4 fill-white ml-0.5" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z" />
+                                          </svg>
+                                        </div>
+                                        {/* Video controller bar overlay */}
+                                        <div className="absolute bottom-0 left-0 right-0 h-7 bg-gradient-to-t from-black/80 to-transparent flex items-center justify-start gap-3 px-2 z-10">
+                                          <svg className="w-3 h-3 fill-white" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z" />
+                                          </svg>
+                                          <svg className="w-3 h-3 stroke-white fill-none" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                                          </svg>
+                                        </div>
+                                        {/* Progress Bar */}
+                                        <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#e11d48] z-20"></div>
+                                      </div>
+                                      <div className="p-3 space-y-1">
+                                        <h4 className="font-bold text-[12px] text-slate-800 leading-snug group-hover:text-[#702082] transition-colors font-sans truncate">
+                                          Type of Mutual Funds
+                                        </h4>
+                                        <p className="text-[10px] text-slate-500 leading-relaxed font-sans line-clamp-2">
+                                          Type of Mutual Funds _ Choosing the Right Mutual Fund _ SBI Mutual Fund
+                                        </p>
+                                      </div>
+                                    </div>
+
+                                    {/* Video Card 4: What is SIP */}
+                                    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs hover:shadow-xs transition-shadow flex flex-col text-left cursor-pointer group" onClick={() => toast("Opening Video: What is SIP...")}>
+                                      {/* Video Thumbnail */}
+                                      <div className="h-32 relative flex items-center justify-center select-none overflow-hidden">
+                                        <img 
+                                          src="/images/landing/WhatsApp Image 2026-08-01 at 9.07.18 PM.jpeg" 
+                                          alt="What is SIP" 
+                                          className="absolute inset-0 w-full h-full object-cover"
+                                        />
+                                        <div className="w-10 h-10 rounded-full bg-slate-900/60 text-white flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform z-10">
+                                          <svg className="w-4 h-4 fill-white ml-0.5" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z" />
+                                          </svg>
+                                        </div>
+                                        {/* Video controller bar overlay */}
+                                        <div className="absolute bottom-0 left-0 right-0 h-7 bg-gradient-to-t from-black/80 to-transparent flex items-center justify-start gap-3 px-2 z-10">
+                                          <svg className="w-3 h-3 fill-white" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z" />
+                                          </svg>
+                                          <svg className="w-3 h-3 stroke-white fill-none" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                                          </svg>
+                                        </div>
+                                        {/* Progress Bar */}
+                                        <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#e11d48] z-20"></div>
+                                      </div>
+                                      <div className="p-3 space-y-1">
+                                        <h4 className="font-bold text-[12px] text-slate-800 leading-snug group-hover:text-[#702082] transition-colors font-sans truncate">
+                                          What is SIP
+                                        </h4>
+                                        <p className="text-[10px] text-slate-500 leading-relaxed font-sans line-clamp-2">
+                                          What is SIP (Systematic Investment Plan) _ Advantages of SIP _ SIP Mutual Fund
+                                        </p>
+                                      </div>
+                                    </div>
+
+                                  </div>
+                                </div>
+
+                              </div>
+
+                            </div>
+                          ) : mfSubTab === 'Invest' ? (
+                            /* Invest Sub-tab Content (EXACT MATCH TO SCREENSHOTS) */
+                            <div className="space-y-6 w-full text-left font-sans select-none">
+                              
+                              {/* 1. Header Title & Returns Filter Row */}
+                              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 w-full">
+                                <h2 className="text-[17px] font-bold text-slate-800">
+                                  Explore Mutual Funds
+                                </h2>
+                                
+                                {/* Show Returns Filter */}
+                                <div className="flex items-center gap-2">
+                                  <span className="text-[11.5px] font-semibold text-slate-500">Show Returns:</span>
+                                  <div className="flex bg-slate-200/50 p-0.5 rounded-lg border border-slate-200/40">
+                                    {(['1M', '3M', '6M', '1Y', '5Y', 'MAX'] as const).map((period) => {
+                                      const isMax = period === 'MAX';
+                                      return (
+                                        <button
+                                          key={period}
+                                          type="button"
+                                          className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all ${
+                                            isMax 
+                                              ? 'bg-[#702082] text-white shadow-3xs' 
+                                              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/65'
+                                          }`}
+                                        >
+                                          {period}
+                                        </button>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* 2. Chip Filters & Search Bar Row */}
+                              <div className="flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-4 w-full">
+                                {/* Left Side Chip/Pill Buttons */}
+                                <div className="flex flex-wrap gap-2 items-center">
+                                  {[
+                                    { label: 'All funds' },
+                                    { label: 'Popular' },
+                                    { label: '* NFO', isSpecial: true },
+                                    { label: 'Equity' },
+                                    { label: 'Debts' },
+                                    { label: 'Tax Saving' },
+                                    { label: 'Solutions Oriented' },
+                                    { label: 'Hybrid' }
+                                  ].map((chip) => {
+                                    const isActive = mfFilterTab === chip.label;
+                                    return (
+                                      <button
+                                        key={chip.label}
+                                        type="button"
+                                        onClick={() => setMfFilterTab(chip.label)}
+                                        className={`px-3 py-1 rounded-full text-[10.5px] font-bold border transition-all ${
+                                          isActive 
+                                            ? 'bg-[#702082] text-white border-[#702082] shadow-3xs' 
+                                            : chip.isSpecial
+                                              ? 'bg-[#fff5f6] text-rose-600 border-rose-200/70 hover:bg-rose-100/40'
+                                              : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50'
+                                        }`}
+                                      >
+                                        {chip.label}
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+
+                                {/* Right Side Search & Filters */}
+                                <div className="flex items-center gap-3 shrink-0">
+                                  {/* Search Box */}
+                                  <div className="relative flex items-center bg-white border border-slate-200 rounded-lg px-3 py-1.5 w-full sm:w-[240px] focus-within:border-slate-300 transition-colors">
+                                    <Search size={14} className="text-slate-400 mr-2" />
+                                    <input
+                                      type="text"
+                                      placeholder="Search here..."
+                                      className="bg-transparent text-[11px] font-semibold text-slate-700 placeholder-slate-400 outline-none w-full"
+                                    />
+                                  </div>
+
+                                  {/* Funnel/Filter Icon with Badge */}
+                                  <button type="button" className="relative p-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-600 shrink-0 transition-colors">
+                                    <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                      <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+                                    </svg>
+                                    {/* Funnel Red Badge */}
+                                    <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#e11d48] text-white text-[8px] font-extrabold flex items-center justify-center border border-white">
+                                      0
+                                    </span>
+                                  </button>
+
+                                  {/* Sorting Arrow Icon */}
+                                  <button type="button" className="p-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-600 shrink-0 transition-colors">
+                                    <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                      <path d="M11 5L6 10M6 10L1 5M6 10V22" />
+                                      <path d="M13 19L18 14M18 14L23 19M18 14V2" />
+                                    </svg>
+                                  </button>
+                                </div>
+                              </div>
+
+                              {/* 3. Horizontal Mutual Funds Cards list */}
+                              <div className="space-y-4 w-full">
+                                {(() => {
+                                  const allFundsList = [
+                                    { name: 'SBI Silver ETF Fund of Fund', category: 'Other Schemes', minInvestment: '₹5,000', cagr: '54.78%' },
+                                    { name: 'SBI BSE PSU Bank Index Fund', category: 'Other Schemes', minInvestment: '₹5,000', cagr: '27.41%' },
+                                    { name: 'SBI Small Cap Fund', category: 'Equity', minInvestment: '₹5,000', cagr: '18.73%' },
+                                    { name: 'SBI Contra Fund', category: 'Equity', minInvestment: '₹5,000', cagr: '18.33%' },
+                                    { name: 'SBI US Specific Equity Active FoF', category: 'Other Schemes', minInvestment: '₹5,000', cagr: '18.31%' },
+                                    { name: 'SBI Focused Fund', category: 'Equity', minInvestment: '₹5,000', cagr: '18.23%' },
+                                    { name: 'SBI Healthcare Opportunities Fund', category: 'Equity', minInvestment: '₹5,000', cagr: '16.64%' },
+                                    { name: 'SBI Midcap Fund', category: 'Equity', minInvestment: '₹5,000', cagr: '16.13%' },
+                                    { name: 'SBI ELSS Tax Saver Fund (formerly known as SBI Long Term Equity Fund)', category: 'Equity', minInvestment: '₹500', cagr: '15.89%' },
+                                    { name: 'SBI Equity Hybrid Fund', category: 'Hybrid', minInvestment: '₹1,000', cagr: '14.90%' },
+                                    { name: 'SBI Large & Midcap Fund', category: 'Equity', minInvestment: '₹5,000', cagr: '14.67%' },
+                                    { name: 'SBI ESG Exclusionary Strategy Fund', category: 'Equity', minInvestment: '₹1,000', cagr: '13.90%' },
+                                    { name: 'SBI MNC Fund (formerly known as SBI Magnum global fund)', category: 'Equity', minInvestment: '₹5,000', cagr: '13.83%' },
+                                    { name: 'SBI Nifty Next 50 Index Fund', category: 'Other Schemes', minInvestment: '₹5,000', cagr: '13.80%' },
+                                    { name: 'SBI Dividend Yield Fund', category: 'Equity', minInvestment: '₹5,000', cagr: '13.70%' },
+                                    { name: 'SBI Retirement Benefit Fund Aggressive Plan', category: 'Solution Oriented Schemes', minInvestment: '₹5,000', cagr: '13.65%' },
+                                    { name: 'SBI Retirement Benefit Fund - Aggressive Hybrid Plan', category: 'Solution Oriented Schemes', minInvestment: '₹5,000', cagr: '12.88%' },
+                                    { name: 'SBI Gold Fund', category: 'Other Schemes', minInvestment: '₹5,000', cagr: '9.97%' },
+                                    { name: 'SBI Automotive Opportunities Fund', category: 'Equity', minInvestment: '₹5,000', cagr: '9.46%' },
+                                    { name: 'SBI Infrastructure Fund', category: 'Equity', minInvestment: '₹5,000', cagr: '8.97%' },
+                                    { name: 'SBI Retirement Benefit Fund - Conservative Hybrid Plan', category: 'Solution Oriented Schemes', minInvestment: '₹5,000', cagr: '8.83%' },
+                                    { name: 'SBI Equity Savings Fund', category: 'Hybrid', minInvestment: '₹1,000', cagr: '8.42%' },
+                                    { name: 'SBI Conservative Hybrid Fund', category: 'Hybrid', minInvestment: '₹5,000', cagr: '8.10%' },
+                                    { name: 'SBI Gilt Fund (Formerly known as SBI Magnum Gilt Fund)', category: 'Debt', minInvestment: '₹5,000', cagr: '7.83%' },
+                                    { name: 'SBI Medium Duration Fund (Formerly known as SBI Magnum Medium Duration Fund)', category: 'Debt', minInvestment: '₹5,000', cagr: '7.76%' },
+                                    { name: 'SBI Credit Risk Fund', category: 'Debt', minInvestment: '₹5,000', cagr: '7.55%' },
+                                    { name: 'SBI CRISIL IBX SDL Index- Sept 2027 Fund', category: 'Other Schemes', minInvestment: '₹5,000', cagr: '7.37%' },
+                                    { name: 'SBI Banking and PSU Fund', category: 'Debt', minInvestment: '₹5,000', cagr: '7.37%' },
+                                    { name: 'SBI Retirement Benefit Fund - Conservative Plan', category: 'Solution Oriented Schemes', minInvestment: '₹5,000', cagr: '7.30%' },
+                                    { name: 'SBI Low Duration Fund (Formerly known as SBI Magnum Low Duration Fund)', category: 'Debt', minInvestment: '₹5,000', cagr: '7.15%' },
+                                    { name: 'SBI Ultra Short Duration Fund (Formerly known as SBI Magnum Ultra Short Duration Fund)', category: 'Debt', minInvestment: '₹5,000', cagr: '7.04%' },
+                                    { name: 'SBI CPSE Bond Plus SDL Sep 2026 50-50 Index Fund', category: 'Other Schemes', minInvestment: '₹5,000', cagr: '6.05%' },
+                                    { name: 'SBI Income Plus Arbitrage Active FOF', category: 'Other Schemes', minInvestment: '₹5,000', cagr: '5.57%' },
+                                    { name: 'SBI Energy Opportunities Fund', category: 'Equity', minInvestment: '₹5,000', cagr: '4.68%' },
+                                    { name: 'SBI Quality Fund', category: 'Equity', minInvestment: '₹5,000', cagr: '2.47%' },
+                                    { name: 'SBI NIFTY G-SEC JUL 2031 INDEX FUND', category: 'Other Schemes', minInvestment: '₹5,000', cagr: '2.27%' },
+                                    { name: 'SBI Nifty Midcap 150 Momentum 50 ETF FOF', category: 'Other Schemes', minInvestment: '₹5,000', cagr: '0.00%', isNfo: true }
+                                  ];
+
+                                  const popularFundsList = [
+                                    { name: 'SBI Contra Fund', category: 'Equity', minInvestment: '₹5,000', cagr: '18.33%' },
+                                    { name: 'SBI Focused Fund', category: 'Equity', minInvestment: '₹5,000', cagr: '18.23%' },
+                                    { name: 'SBI ELSS Tax Saver Fund (formerly known as SBI Long Term Equity Fund)', category: 'Equity', minInvestment: '₹500', cagr: '15.89%' },
+                                    { name: 'SBI Equity Hybrid Fund', category: 'Hybrid', minInvestment: '₹1,000', cagr: '14.90%' }
+                                  ];
+
+                                  if (mfFilterTab === 'Popular') return popularFundsList;
+                                  if (mfFilterTab === 'All funds') return allFundsList;
+                                  if (mfFilterTab === '* NFO') {
+                                    return allFundsList.filter(f => f.isNfo === true);
+                                  }
+                                  if (mfFilterTab === 'Tax Saving') {
+                                    return allFundsList.filter(f => f.name.toLowerCase().includes('tax') || f.name.toLowerCase().includes('elss'));
+                                  }
+                                  if (mfFilterTab === 'Solutions Oriented') {
+                                    return allFundsList.filter(f => f.category.toLowerCase().includes('solution'));
+                                  }
+                                  if (mfFilterTab === 'Debts') {
+                                    return allFundsList.filter(f => f.category.toLowerCase().startsWith('debt'));
+                                  }
+                                  
+                                  const filtered = allFundsList.filter(f => f.category.toLowerCase() === mfFilterTab.toLowerCase());
+                                  if (filtered.length > 0) return filtered;
+                                  return allFundsList;
+                              })().map((fund, idx) => (
+                                  <div 
+                                    key={idx} 
+                                    onClick={() => setViewingFundInfo(fund)}
+                                    className="bg-white border border-slate-200/90 rounded-2xl p-4 grid grid-cols-1 md:grid-cols-12 gap-4 items-center w-full shadow-2xs hover:shadow-xs hover:border-slate-300/80 transition-all cursor-pointer group"
+                                  >
+                                    {/* Left Side Info & Heart wishlist: combined md:col-span-4 */}
+                                    <div className="flex items-center justify-between md:col-span-4 md:border-r md:border-slate-200/80 md:pr-4 text-left">
+                                      <div className="flex items-center gap-3.5">
+                                        <div className="w-9 h-9 rounded-full bg-[#f5effa] text-[#702082] flex items-center justify-center shrink-0">
+                                          <Star size={16} className="fill-[#702082] text-[#702082]" />
+                                        </div>
+                                        <div>
+                                          <h3 className="font-bold text-[14px] text-slate-800 leading-snug line-clamp-2 max-w-[200px] group-hover:text-[#702082] transition-colors">
+                                            {fund.name}
+                                          </h3>
+                                          <span className="text-[11px] text-slate-500 font-medium block mt-0.5">
+                                            {fund.category}
+                                          </span>
+                                        </div>
+                                      </div>
+                                      <button 
+                                        type="button" 
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          toast.success(`Added ${fund.name} to wishlist!`);
+                                        }}
+                                        className="p-1 text-slate-400 hover:text-rose-500 shrink-0 self-center"
+                                      >
+                                        <svg className="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                                        </svg>
+                                      </button>
+                                    </div>
+
+                                    {/* Min Investment Info */}
+                                    <div className="md:col-span-2 md:border-r md:border-slate-200/80 md:px-2 text-center">
+                                      <div className="text-[11px] text-slate-400 font-medium">
+                                        Min. Investment
+                                      </div>
+                                      <div className="text-[15px] font-bold text-[#702082] mt-0.5">
+                                        {fund.minInvestment}
+                                      </div>
+                                    </div>
+
+                                    {/* CAGR returns */}
+                                    <div className="md:col-span-2 md:border-r md:border-slate-200/80 md:px-2 text-center">
+                                      <div className="text-[11px] text-slate-400 font-medium">
+                                        CAGR
+                                      </div>
+                                      <div className="text-[15px] font-bold text-green-600 mt-0.5">
+                                        {fund.cagr}
+                                      </div>
+                                    </div>
+
+                                    {/* Trending Wave Outline & Invested Text */}
+                                    <div className="flex items-center gap-1.5 md:col-span-3 text-left text-slate-500 font-semibold text-[11px] select-none md:pl-4">
+                                      <svg className="w-4 h-3.5 text-slate-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                                        <path d="M3 12c3-4 6-4 9 0s6 4 9 0" />
+                                      </svg>
+                                      <span className="truncate">100K+ invested in last 3 months</span>
+                                    </div>
+
+                                    {/* Action button */}
+                                    <div className="md:col-span-1 text-right pr-2">
+                                      <button 
+                                        type="button" 
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          toast.success(`Starting investment process for ${fund.name}...`);
+                                        }}
+                                        className="text-[13px] font-extrabold text-[#702082] hover:underline whitespace-nowrap cursor-pointer"
+                                      >
+                                        Invest Now
+                                      </button>
+                                    </div>
+
+                                  </div>
+                                ))}
+                              </div>
+
+                            </div>
+                          ) : mfSubTab === 'Ideas' ? (
+                            ideasDetail === 'All Weather Investing' ? (
+                              /* 1. All Weather Investing Detailed View */
+                              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 w-full text-left font-sans mt-2">
+                                {/* Left Side Box: Let the experts do the hard work! (md:col-span-4) */}
+                                <div className="md:col-span-4 flex flex-col gap-6 items-stretch justify-start w-full">
+                                  {/* Info Card */}
+                                  <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-2xs text-left w-full">
+                                    <h3 className="font-extrabold text-[16px] text-slate-800 tracking-tight mb-2.5 leading-snug">
+                                      Let the experts do the hard work!
+                                    </h3>
+                                    <div className="bg-[#f1f5f9] border border-slate-200/40 rounded-xl p-4.5">
+                                      <p className="text-[12.5px] text-slate-500 font-semibold leading-relaxed">
+                                        Invest in funds that offer dynamic portfolio management solutions. They try to maintain the right mix of asset classes based on macro environments and fund house views.
+                                      </p>
+                                    </div>
+                                  </div>
+
+                                  {/* Key Benefits Card */}
+                                  <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-2xs text-left w-full">
+                                    <div className="text-[#702082] font-bold text-[12px] uppercase tracking-wider text-center w-full mb-4">
+                                      Key Benefits
+                                    </div>
+                                    <div className="grid grid-cols-3 gap-2 text-center">
+                                      {/* Item 1 */}
+                                      <div className="flex flex-col items-center">
+                                        <div className="w-10 h-10 rounded-full bg-[#f5effa] text-[#702082] flex items-center justify-center mb-2 shrink-0">
+                                          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                            <line x1="16" y1="2" x2="16" y2="6" />
+                                            <line x1="8" y1="2" x2="8" y2="6" />
+                                            <line x1="3" y1="10" x2="21" y2="10" />
+                                            <text x="12" y="18" fontSize="8.5" fontWeight="bold" textAnchor="middle" fill="currentColor" stroke="none">3+</text>
+                                          </svg>
+                                        </div>
+                                        <span className="text-[10px] text-slate-600 font-bold leading-tight">3+ Years of Investing</span>
+                                      </div>
+
+                                      {/* Item 2 */}
+                                      <div className="flex flex-col items-center">
+                                        <div className="w-10 h-10 rounded-full bg-[#f5effa] text-[#702082] flex items-center justify-center mb-2 shrink-0">
+                                          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <circle cx="12" cy="12" r="10" />
+                                            <text x="12" y="15.5" fontSize="11" fontWeight="black" textAnchor="middle" fill="currentColor" stroke="none">₹</text>
+                                          </svg>
+                                        </div>
+                                        <span className="text-[10px] text-slate-600 font-bold leading-tight">Wealth Creation</span>
+                                      </div>
+
+                                      {/* Item 3 */}
+                                      <div className="flex flex-col items-center">
+                                        <div className="w-10 h-10 rounded-full bg-[#f5effa] text-[#702082] flex items-center justify-center mb-2 shrink-0">
+                                          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+                                            <path d="M3 3v18h18" strokeWidth="2" />
+                                            <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3" />
+                                          </svg>
+                                        </div>
+                                        <span className="text-[10px] text-slate-600 font-bold leading-tight">Dynamic Asset Allocation</span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Right Side List: Funds to Invest (md:col-span-8) */}
+                                <div className="md:col-span-8 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-2xs w-full text-left space-y-6">
+                                  <div>
+                                    <h3 className="font-extrabold text-[15.5px] text-slate-800 leading-snug">
+                                      Select any one of the funds to invest in this idea
+                                    </h3>
+                                    <p className="text-[11px] text-slate-400 font-semibold mt-0.5">
+                                      All returns are shown since inception
+                                    </p>
+                                  </div>
+
+                                  {/* List of 2 Funds */}
+                                  <div className="space-y-6">
+                                    {[
+                                      {
+                                        name: 'SBI Balanced Advantage Fund',
+                                        returns: '9.98 %',
+                                        category: 'Hybrid',
+                                        risk: 'Very High',
+                                        desc: 'SBI Balanced Advantage Fund invests in equity & debt securities based on the market condition. Can act as an ideal choice for those looking for an optimal equity-debt allocation at all times.'
+                                      },
+                                      {
+                                        name: 'SBI Multi Asset Allocation Fund',
+                                        returns: '12.18 %',
+                                        category: 'Hybrid',
+                                        risk: 'Very High',
+                                        desc: 'SBI Multi Asset Allocation Fund majorly invests in a portfolio of non correlated asset classes to lower the volatility through diversification & also to capture the potential upside in equity, debt & gold.'
+                                      }
+                                    ].map((fund) => {
+                                      const isSelected = selectedIdeaFund === fund.name;
+                                      return (
+                                        <div 
+                                          key={fund.name}
+                                          onClick={() => setSelectedIdeaFund(fund.name)}
+                                          className={`border rounded-2xl p-5 text-left transition-all cursor-pointer flex gap-4 items-start ${
+                                            isSelected 
+                                              ? 'border-[#702082] bg-[#fdfafc]/35 shadow-xs' 
+                                              : 'border-slate-200 hover:border-slate-300'
+                                          }`}
+                                        >
+                                          {/* Custom Checkbox/Radio button on left */}
+                                          <div className={`w-4.5 h-4.5 rounded-full border flex items-center justify-center mt-1 shrink-0 ${
+                                            isSelected ? 'border-[#702082]' : 'border-slate-300'
+                                          }`}>
+                                            {isSelected && <div className="w-2.5 h-2.5 rounded-full bg-[#702082]"></div>}
+                                          </div>
+
+                                          <div className="flex-1 space-y-2">
+                                            {/* Fund Name */}
+                                            <h4 className="font-extrabold text-[14.5px] text-slate-800 select-none">
+                                              {fund.name}
+                                            </h4>
+
+                                            {/* Tags Row */}
+                                            <div className="flex flex-wrap items-center gap-2 mt-2">
+                                              <span className="bg-slate-100/80 px-2 py-0.5 rounded text-[10.5px] text-slate-500 font-bold leading-normal">
+                                                Returns: {fund.returns}
+                                              </span>
+                                              <span className="bg-slate-100/80 px-2 py-0.5 rounded text-[10.5px] text-slate-500 font-bold leading-normal">
+                                                {fund.category}
+                                              </span>
+                                              <span className="bg-rose-50 text-rose-600 px-2 py-0.5 rounded text-[10.5px] font-bold flex items-center gap-1.5 leading-normal">
+                                                <svg className="w-3 h-3 text-rose-500 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                                                </svg>
+                                                {fund.risk}
+                                              </span>
+                                            </div>
+
+                                            {/* Suitability Label */}
+                                            <p className="text-[12px] text-slate-800 font-bold mt-2">
+                                              Suitable for: <span className="font-semibold text-slate-500">Long-Term (3 years+)</span>
+                                            </p>
+
+                                            {/* Description */}
+                                            <p className="text-[12px] text-slate-400 font-semibold leading-relaxed mt-2.5">
+                                              {fund.desc}
+                                            </p>
+
+                                            {/* Action Button link */}
+                                            <button 
+                                              type="button"
+                                              onClick={(e) => {
+                                                e.stopPropagation();
+                                                setViewingFundInfo(fund);
+                                              }}
+                                              className="text-[12.5px] font-extrabold text-[#702082] hover:underline flex items-center gap-1.5 mt-4 cursor-pointer"
+                                            >
+                                              <span>View Fund Details</span>
+                                              <ChevronRight size={13} className="text-[#702082]" />
+                                            </button>
+                                          </div>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              </div>
+                            ) : ideasDetail === 'Retirement Planning' ? (
+                              /* 2. Retirement Planning Detailed View */
+                              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 w-full text-left font-sans mt-2">
+                                {/* Left Side Box */}
+                                <div className="md:col-span-4 flex flex-col gap-6 items-stretch justify-start w-full">
+                                  {/* Info Card */}
+                                  <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-2xs text-left w-full">
+                                    <h3 className="font-extrabold text-[16px] text-[#702082] tracking-tight mb-2.5 leading-snug">
+                                      Retirement Planning
+                                    </h3>
+                                    <div className="bg-[#f8fafc] border border-slate-200/40 rounded-xl p-4.5">
+                                      <h4 className="font-extrabold text-slate-800 text-[13.5px] leading-snug">
+                                        A one stop solution to meet your retirement planning needs.
+                                      </h4>
+                                      <p className="text-[12px] text-slate-500 font-semibold leading-relaxed mt-2">
+                                        Choose from 4 different plans based on your life stage and risk preference.
+                                      </p>
+                                    </div>
+                                  </div>
+
+                                  {/* Key Benefits Card */}
+                                  <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-2xs text-left w-full">
+                                    <div className="text-[#702082] font-bold text-[12px] uppercase tracking-wider text-center w-full mb-4">
+                                      Key Benefits
+                                    </div>
+                                    <div className="grid grid-cols-3 gap-2 text-center">
+                                      {/* Item 1 */}
+                                      <div className="flex flex-col items-center">
+                                        <div className="w-10 h-10 rounded-full bg-[#f5effa] text-[#702082] flex items-center justify-center mb-2 shrink-0">
+                                          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                            <line x1="16" y1="2" x2="16" y2="6" />
+                                            <line x1="8" y1="2" x2="8" y2="6" />
+                                            <line x1="3" y1="10" x2="21" y2="10" />
+                                            <text x="12" y="18" fontSize="8.5" fontWeight="bold" textAnchor="middle" fill="currentColor" stroke="none">5+</text>
+                                          </svg>
+                                        </div>
+                                        <span className="text-[10px] text-slate-600 font-bold leading-tight">5+ Years of Investing</span>
+                                      </div>
+
+                                      {/* Item 2 */}
+                                      <div className="flex flex-col items-center">
+                                        <div className="w-10 h-10 rounded-full bg-[#f5effa] text-[#702082] flex items-center justify-center mb-2 shrink-0">
+                                          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <circle cx="12" cy="12" r="10" />
+                                            <text x="12" y="15.5" fontSize="11" fontWeight="black" textAnchor="middle" fill="currentColor" stroke="none">₹</text>
+                                          </svg>
+                                        </div>
+                                        <span className="text-[10px] text-slate-600 font-bold leading-tight">Wealth Creation & Retirement corpus</span>
+                                      </div>
+
+                                      {/* Item 3 */}
+                                      <div className="flex flex-col items-center">
+                                        <div className="w-10 h-10 rounded-full bg-[#f5effa] text-[#702082] flex items-center justify-center mb-2 shrink-0">
+                                          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+                                            <circle cx="12" cy="12" r="10" />
+                                            <circle cx="12" cy="12" r="4" fill="currentColor" />
+                                            <line x1="12" y1="2" x2="12" y2="6" />
+                                            <line x1="12" y1="18" x2="12" y2="22" />
+                                            <line x1="2" y1="12" x2="6" y2="12" />
+                                            <line x1="18" y1="12" x2="22" y2="12" />
+                                          </svg>
+                                        </div>
+                                        <span className="text-[10px] text-slate-600 font-bold leading-tight">Disciplined Investment Approach</span>
+                                      </div>
+                                    </div>
+
+                                    {/* Bottom Lock-in Note */}
+                                    <p className="text-[10.5px] text-slate-400 font-semibold leading-relaxed mt-4.5 pt-3 border-t border-slate-100">
+                                      Note: Investment amount will be locked in for 5 years or until completion of 65 years of age whichever is earlier. Select a fund of your choice or opt in for Auto-Rebalance and let the experts handle it.
+                                    </p>
+                                  </div>
+                                </div>
+
+                                {/* Right Side List */}
+                                <div className="md:col-span-8 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-2xs w-full text-left space-y-6">
+                                  <div>
+                                    <h3 className="font-extrabold text-[15.5px] text-slate-800 leading-snug">
+                                      Select any one of the funds to invest in this idea
+                                    </h3>
+                                    <p className="text-[11px] text-slate-400 font-semibold mt-0.5">
+                                      All returns are shown since inception
+                                    </p>
+                                  </div>
+
+                                  {/* List of 4 Funds */}
+                                  <div className="space-y-6">
+                                    {[
+                                      {
+                                        name: 'SBI Retirement Benefit Fund Aggressive Plan',
+                                        returns: '13.65 %',
+                                        category: 'Solution Oriented Schemes',
+                                        risk: 'Very High',
+                                        desc: 'A solution-oriented retirement scheme targeting long-term wealth creation. It maintains a predominant equity posture to capitalize on capital growth opportunities over a 5+ year time horizon.'
+                                      },
+                                      {
+                                        name: 'SBI Retirement Benefit Fund - Aggressive Hybrid Plan',
+                                        returns: '12.88 %',
+                                        category: 'Solution Oriented Schemes',
+                                        risk: 'Very High',
+                                        desc: 'Maintains an active hybrid allocation, combining equity assets for growth and debt securities for relative stability, suitable for retirement wealth accumulation.'
+                                      },
+                                      {
+                                        name: 'SBI Retirement Benefit Fund - Conservative Hybrid Plan',
+                                        returns: '8.83 %',
+                                        category: 'Solution Oriented Schemes',
+                                        risk: 'High',
+                                        desc: 'Focuses on capital preservation with a significant allocation in debt securities and high-grade fixed income instruments, paired with modest equity exposure.'
+                                      },
+                                      {
+                                        name: 'SBI Retirement Benefit Fund - Conservative Plan',
+                                        returns: '7.30 %',
+                                        category: 'Solution Oriented Schemes',
+                                        risk: 'Moderately High',
+                                        desc: 'Highly conservative asset mix aimed at safeguarding principal capital while generating regular returns, ideal for investors nearing retirement stage.'
+                                      }
+                                    ].map((fund) => {
+                                      const isSelected = selectedIdeaFund === fund.name;
+                                      return (
+                                        <div 
+                                          key={fund.name}
+                                          onClick={() => setSelectedIdeaFund(fund.name)}
+                                          className={`border rounded-2xl p-5 text-left transition-all cursor-pointer flex gap-4 items-start ${
+                                            isSelected 
+                                              ? 'border-[#702082] bg-[#fdfafc]/35 shadow-xs' 
+                                              : 'border-slate-200 hover:border-slate-300'
+                                          }`}
+                                        >
+                                          {/* Custom Checkbox/Radio button on left */}
+                                          <div className={`w-4.5 h-4.5 rounded-full border flex items-center justify-center mt-1 shrink-0 ${
+                                            isSelected ? 'border-[#702082]' : 'border-slate-300'
+                                          }`}>
+                                            {isSelected && <div className="w-2.5 h-2.5 rounded-full bg-[#702082]"></div>}
+                                          </div>
+
+                                          <div className="flex-1 space-y-2">
+                                            {/* Fund Name */}
+                                            <h4 className="font-extrabold text-[14.5px] text-slate-800 select-none">
+                                              {fund.name}
+                                            </h4>
+
+                                            {/* Tags Row */}
+                                            <div className="flex flex-wrap items-center gap-2 mt-2">
+                                              <span className="bg-slate-100/80 px-2 py-0.5 rounded text-[10.5px] text-slate-500 font-bold leading-normal">
+                                                Returns: {fund.returns}
+                                              </span>
+                                              <span className="bg-slate-100/80 px-2 py-0.5 rounded text-[10.5px] text-slate-500 font-bold leading-normal">
+                                                {fund.category}
+                                              </span>
+                                              <span className="bg-rose-50 text-rose-600 px-2 py-0.5 rounded text-[10.5px] font-bold flex items-center gap-1.5 leading-normal">
+                                                <svg className="w-3 h-3 text-rose-500 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                                                </svg>
+                                                {fund.risk}
+                                              </span>
+                                            </div>
+
+                                            {/* Suitability Label */}
+                                            <p className="text-[12px] text-slate-800 font-bold mt-2">
+                                              Suitable for: <span className="font-semibold text-slate-500">Retirement & Long-Term (3 years+)</span>
+                                            </p>
+
+                                            {/* Action Button link */}
+                                            <button 
+                                              type="button"
+                                              onClick={(e) => {
+                                                e.stopPropagation();
+                                                setViewingFundInfo({
+                                                  name: fund.name,
+                                                  category: fund.category,
+                                                  cagr: fund.returns,
+                                                  minSip: '₹500',
+                                                  minInvestment: '₹5,000',
+                                                  risk: fund.risk
+                                                });
+                                              }}
+                                              className="text-[12.5px] font-extrabold text-[#702082] hover:underline flex items-center gap-1.5 mt-4 cursor-pointer"
+                                            >
+                                              <span>View Fund Details</span>
+                                              <ChevronRight size={13} className="text-[#702082]" />
+                                            </button>
+                                          </div>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              </div>
+                            ) : ideasDetail === 'Smart Save' ? (
+                              /* 3. Smart Save Detailed View */
+                              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 w-full text-left font-sans mt-2">
+                                {/* Left Side Box */}
+                                <div className="md:col-span-4 flex flex-col gap-6 items-stretch justify-start w-full">
+                                  {/* Info Card */}
+                                  <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-2xs text-left w-full">
+                                    <h3 className="font-extrabold text-[16px] text-[#702082] tracking-tight mb-2.5 leading-snug">
+                                      Smart Save
+                                    </h3>
+                                    <div className="bg-[#f8fafc] border border-slate-200/40 rounded-xl p-4.5">
+                                      <h4 className="font-extrabold text-slate-800 text-[13.5px] leading-snug">
+                                        Want to save more money risk free?
+                                      </h4>
+                                      <p className="text-[12px] text-slate-500 font-semibold leading-relaxed mt-2">
+                                        Potential to earn more than traditional savings instruments such as savings account and Fixed Deposits.
+                                      </p>
+                                    </div>
+                                  </div>
+
+                                  {/* Key Benefits Card */}
+                                  <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-2xs text-left w-full">
+                                    <div className="text-[#702082] font-bold text-[12px] uppercase tracking-wider text-center w-full mb-4">
+                                      Key Benefits
+                                    </div>
+                                    <div className="grid grid-cols-3 gap-2 text-center">
+                                      {/* Item 1 */}
+                                      <div className="flex flex-col items-center">
+                                        <div className="w-10 h-10 rounded-full bg-[#f5effa] text-[#702082] flex items-center justify-center mb-2 shrink-0">
+                                          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                            <line x1="16" y1="2" x2="16" y2="6" />
+                                            <line x1="8" y1="2" x2="8" y2="6" />
+                                            <line x1="3" y1="10" x2="21" y2="10" />
+                                            <text x="12" y="18" fontSize="8.5" fontWeight="bold" textAnchor="middle" fill="currentColor" stroke="none">3+</text>
+                                          </svg>
+                                        </div>
+                                        <span className="text-[10px] text-slate-600 font-bold leading-tight">Invest Upto 3 Months</span>
+                                      </div>
+
+                                      {/* Item 2 */}
+                                      <div className="flex flex-col items-center">
+                                        <div className="w-10 h-10 rounded-full bg-[#f5effa] text-[#702082] flex items-center justify-center mb-2 shrink-0">
+                                          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <circle cx="12" cy="12" r="10" />
+                                            <path d="M12 8v4l3 3" />
+                                            <text x="12" y="15.5" fontSize="11" fontWeight="black" textAnchor="middle" fill="currentColor" stroke="none">₹</text>
+                                          </svg>
+                                        </div>
+                                        <span className="text-[10px] text-slate-600 font-bold leading-tight">Redeem Funds Instantly*</span>
+                                      </div>
+
+                                      {/* Item 3 */}
+                                      <div className="flex flex-col items-center">
+                                        <div className="w-10 h-10 rounded-full bg-[#f5effa] text-[#702082] flex items-center justify-center mb-2 shrink-0">
+                                          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+                                            <path d="M23 6l-9.5 9.5-5-5L1 18" />
+                                            <path d="M17 6h6v6" />
+                                          </svg>
+                                        </div>
+                                        <span className="text-[10px] text-slate-600 font-bold leading-tight">Less Volatility</span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Right Side List */}
+                                <div className="md:col-span-8 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-2xs w-full text-left space-y-6">
+                                  <div>
+                                    <h3 className="font-extrabold text-[15.5px] text-slate-800 leading-snug">
+                                      Select any one of the funds to invest in this idea
+                                    </h3>
+                                    <p className="text-[11px] text-slate-400 font-semibold mt-0.5">
+                                      All returns are shown since inception
+                                    </p>
+                                  </div>
+
+                                  {/* List of 1 Fund */}
+                                  <div className="space-y-6">
+                                    {[
+                                      {
+                                        name: 'SBI Liquid Fund',
+                                        returns: '6.88 %',
+                                        category: 'Debt',
+                                        risk: 'Moderate',
+                                        desc: '*SBI Liquid Fund additionally, provides instant redemption upto ₹50,000 or 90% of redeemable balance whichever is lower'
+                                      }
+                                    ].map((fund) => {
+                                      const isSelected = selectedIdeaFund === fund.name;
+                                      return (
+                                        <div 
+                                          key={fund.name}
+                                          onClick={() => setSelectedIdeaFund(fund.name)}
+                                          className={`border rounded-2xl p-5 text-left transition-all cursor-pointer flex gap-4 items-start ${
+                                            isSelected 
+                                              ? 'border-[#702082] bg-[#fdfafc]/35 shadow-xs' 
+                                              : 'border-slate-200 hover:border-slate-300'
+                                          }`}
+                                        >
+                                          {/* Custom Checkbox/Radio button on left */}
+                                          <div className={`w-4.5 h-4.5 rounded-full border flex items-center justify-center mt-1 shrink-0 ${
+                                            isSelected ? 'border-[#702082]' : 'border-slate-300'
+                                          }`}>
+                                            {isSelected && <div className="w-2.5 h-2.5 rounded-full bg-[#702082]"></div>}
+                                          </div>
+
+                                          <div className="flex-1 space-y-2">
+                                            {/* Fund Name */}
+                                            <h4 className="font-extrabold text-[14.5px] text-slate-800 select-none">
+                                              {fund.name}
+                                            </h4>
+
+                                            {/* Tags Row */}
+                                            <div className="flex flex-wrap items-center gap-2 mt-2">
+                                              <span className="bg-slate-100/80 px-2 py-0.5 rounded text-[10.5px] text-slate-500 font-bold leading-normal">
+                                                Returns: {fund.returns}
+                                              </span>
+                                              <span className="bg-slate-100/80 px-2 py-0.5 rounded text-[10.5px] text-slate-500 font-bold leading-normal">
+                                                {fund.category}
+                                              </span>
+                                              <span className="bg-[#fffbeb] text-amber-600 px-2 py-0.5 rounded text-[10.5px] font-bold flex items-center gap-1.5 leading-normal border border-amber-100">
+                                                <svg className="w-3 h-3 text-amber-500 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                                                </svg>
+                                                {fund.risk}
+                                              </span>
+                                            </div>
+
+                                            {/* Description */}
+                                            <p className="text-[12px] text-slate-400 font-semibold leading-relaxed mt-2.5">
+                                              {fund.desc}
+                                            </p>
+
+                                            {/* Action Button link */}
+                                            <button 
+                                              type="button"
+                                              onClick={(e) => {
+                                                e.stopPropagation();
+                                                setViewingFundInfo({
+                                                  name: fund.name,
+                                                  category: fund.category,
+                                                  cagr: fund.returns,
+                                                  minSip: '₹500',
+                                                  minInvestment: '₹5,000',
+                                                  risk: fund.risk
+                                                });
+                                              }}
+                                              className="text-[12.5px] font-extrabold text-[#702082] hover:underline flex items-center gap-1.5 mt-4 cursor-pointer"
+                                            >
+                                              <span>View Fund Details</span>
+                                              <ChevronRight size={13} className="text-[#702082]" />
+                                            </button>
+                                          </div>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              </div>
+                            ) : ideasDetail === "Beginner's Kit" ? (
+                              /* 4. Beginner's Kit Detailed View */
+                              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 w-full text-left font-sans mt-2">
+                                {/* Left Side Box */}
+                                <div className="md:col-span-4 flex flex-col gap-6 items-stretch justify-start w-full">
+                                  {/* Info Card */}
+                                  <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-2xs text-left w-full">
+                                    <h3 className="font-extrabold text-[16px] text-[#702082] tracking-tight mb-2.5 leading-snug">
+                                      Beginner's Kit
+                                    </h3>
+                                    <div className="bg-[#f8fafc] border border-slate-200/40 rounded-xl p-4.5">
+                                      <h4 className="font-extrabold text-slate-800 text-[13.5px] leading-snug">
+                                        Start your investment journey
+                                      </h4>
+                                      <p className="text-[12px] text-slate-500 font-semibold leading-relaxed mt-2">
+                                        This kit contains funds from 3 categories suitable for majority of first time investors - Balanced Funds, ELSS Funds & Money Market Funds.
+                                      </p>
+                                    </div>
+                                  </div>
+
+                                  {/* Key Benefits Card */}
+                                  <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-2xs text-left w-full">
+                                    <div className="text-[#702082] font-bold text-[12px] uppercase tracking-wider text-center w-full mb-4">
+                                      Key Benefits
+                                    </div>
+                                    <div className="grid grid-cols-3 gap-2 text-center">
+                                      {/* Item 1 */}
+                                      <div className="flex flex-col items-center">
+                                        <div className="w-10 h-10 rounded-full bg-[#f5effa] text-[#702082] flex items-center justify-center mb-2 shrink-0">
+                                          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                                          </svg>
+                                        </div>
+                                        <span className="text-[10px] text-slate-600 font-bold leading-tight">Manage Market Volatility</span>
+                                      </div>
+
+                                      {/* Item 2 */}
+                                      <div className="flex flex-col items-center">
+                                        <div className="w-10 h-10 rounded-full bg-[#f5effa] text-[#702082] flex items-center justify-center mb-2 shrink-0">
+                                          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <circle cx="12" cy="12" r="10" />
+                                            <text x="12" y="15.5" fontSize="11" fontWeight="black" textAnchor="middle" fill="currentColor" stroke="none">₹</text>
+                                          </svg>
+                                        </div>
+                                        <span className="text-[10px] text-slate-600 font-bold leading-tight">Potential Wealth Creation</span>
+                                      </div>
+
+                                      {/* Item 3 */}
+                                      <div className="flex flex-col items-center">
+                                        <div className="w-10 h-10 rounded-full bg-[#f5effa] text-[#702082] flex items-center justify-center mb-2 shrink-0">
+                                          <svg className="w-5 h-5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                            <polyline points="14 2 14 8 20 8" />
+                                          </svg>
+                                        </div>
+                                        <span className="text-[10px] text-slate-600 font-bold leading-tight">Tax Saving through ELSS</span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Right Side List */}
+                                <div className="md:col-span-8 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-2xs w-full text-left space-y-6">
+                                  <div>
+                                    <h3 className="font-extrabold text-[15.5px] text-slate-800 leading-snug">
+                                      Select any one of the funds to invest in this idea
+                                    </h3>
+                                    <p className="text-[11px] text-slate-400 font-semibold mt-0.5">
+                                      All returns are shown since inception
+                                    </p>
+                                  </div>
+
+                                  {/* List of 3 Funds */}
+                                  <div className="space-y-6">
+                                    {[
+                                      {
+                                        name: 'SBI Balanced Advantage Fund',
+                                        returns: '9.98 %',
+                                        category: 'Hybrid',
+                                        risk: 'Very High',
+                                        suitable: 'Long-Term (3 years+)',
+                                        desc: 'A balanced fund can help to manage market volatility effectively, it is a dynamic asset allocation fund which invests in equity and debt depending on the current market conditions with the aim to balance the risk and the reward.'
+                                      },
+                                      {
+                                        name: 'SBI Long Term Equity Fund (ELSS)',
+                                        returns: '15.89 %',
+                                        category: 'Equity',
+                                        risk: 'Very High',
+                                        suitable: 'Tax Planning & Long-Term (3 years+)',
+                                        desc: 'An ELSS fund, this fund offers the benefit of tax saving with the potential of wealth creation in a single go.'
+                                      },
+                                      {
+                                        name: 'SBI Savings Fund',
+                                        returns: '6.98 %',
+                                        category: 'Debt',
+                                        risk: 'Low to Moderate',
+                                        suitable: 'Short-Term Parking (1-3 Years)',
+                                        desc: 'A money market fund, such funds invest in money market instruments which are perceived to be liquid in nature. This gives your money an opportunity to earn reasonable returns while having the convenience to access it whenever required.'
+                                      }
+                                    ].map((fund) => {
+                                      const isSelected = selectedIdeaFund === fund.name;
+                                      return (
+                                        <div 
+                                          key={fund.name}
+                                          onClick={() => setSelectedIdeaFund(fund.name)}
+                                          className={`border rounded-2xl p-5 text-left transition-all cursor-pointer flex gap-4 items-start ${
+                                            isSelected 
+                                              ? 'border-[#702082] bg-[#fdfafc]/35 shadow-xs' 
+                                              : 'border-slate-200 hover:border-slate-300'
+                                          }`}
+                                        >
+                                          {/* Custom Checkbox/Radio button on left */}
+                                          <div className={`w-4.5 h-4.5 rounded-full border flex items-center justify-center mt-1 shrink-0 ${
+                                            isSelected ? 'border-[#702082]' : 'border-slate-300'
+                                          }`}>
+                                            {isSelected && <div className="w-2.5 h-2.5 rounded-full bg-[#702082]"></div>}
+                                          </div>
+
+                                          <div className="flex-1 space-y-2">
+                                            {/* Fund Name */}
+                                            <h4 className="font-extrabold text-[14.5px] text-slate-800 select-none">
+                                              {fund.name}
+                                            </h4>
+
+                                            {/* Tags Row */}
+                                            <div className="flex flex-wrap items-center gap-2 mt-2">
+                                              <span className="bg-slate-100/80 px-2 py-0.5 rounded text-[10.5px] text-slate-500 font-bold leading-normal">
+                                                Returns: {fund.returns}
+                                              </span>
+                                              <span className="bg-slate-100/80 px-2 py-0.5 rounded text-[10.5px] text-slate-500 font-bold leading-normal">
+                                                {fund.category}
+                                              </span>
+                                              <span className={`px-2 py-0.5 rounded text-[10.5px] font-bold flex items-center gap-1.5 leading-normal ${
+                                                fund.risk === 'Low to Moderate'
+                                                  ? 'bg-green-50 text-green-600'
+                                                  : 'bg-rose-50 text-rose-600'
+                                              }`}>
+                                                <svg className="w-3 h-3 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                                                </svg>
+                                                {fund.risk}
+                                              </span>
+                                            </div>
+
+                                            {/* Suitability Label */}
+                                            <p className="text-[12px] text-slate-800 font-bold mt-2">
+                                              Suitable for: <span className="font-semibold text-slate-500">{fund.suitable}</span>
+                                            </p>
+
+                                            {/* Description */}
+                                            <p className="text-[12px] text-slate-400 font-semibold leading-relaxed mt-2.5">
+                                              {fund.desc}
+                                            </p>
+
+                                            {/* Action Button link */}
+                                            <button 
+                                              type="button"
+                                              onClick={(e) => {
+                                                e.stopPropagation();
+                                                setViewingFundInfo({
+                                                  name: fund.name,
+                                                  category: fund.category,
+                                                  cagr: fund.returns,
+                                                  minSip: '₹500',
+                                                  minInvestment: '₹5,000',
+                                                  risk: fund.risk
+                                                });
+                                              }}
+                                              className="text-[12.5px] font-extrabold text-[#702082] hover:underline flex items-center gap-1.5 mt-4 cursor-pointer"
+                                            >
+                                              <span>View Fund Details</span>
+                                              <ChevronRight size={13} className="text-[#702082]" />
+                                            </button>
+                                          </div>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              </div>
+                            ) : (
+                              /* Ideas subtab: grid of investment ideas */
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full mt-2">
+                                {[
+                                  {
+                                    title: 'All Weather Investing',
+                                    desc: "Markets can fluctuate, your peace of mind shouldn't",
+                                    icon: (
+                                      <svg className="w-[22px] h-[22px] text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <rect x="3" y="13" width="4" height="8" rx="1" fill="#f5effa"/>
+                                        <rect x="10" y="8" width="4" height="13" rx="1" fill="#f5effa"/>
+                                        <rect x="17" y="3" width="4" height="18" rx="1" fill="#f5effa"/>
+                                        <path d="M5 11l7-4 7-2" strokeWidth="2"/>
+                                      </svg>
+                                    )
+                                  },
+                                  {
+                                    title: 'Smart Save',
+                                    desc: 'Potential to earn more than traditional savings instrument',
+                                    icon: (
+                                      <svg className="w-[22px] h-[22px] text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M19 7h-8a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-8a3 3 0 0 0-3-3z" fill="#f5effa"/>
+                                        <path d="M16 11h.01M16 14h.01" strokeWidth="2.5" strokeLinecap="round"/>
+                                        <path d="M8 11H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h4"/>
+                                      </svg>
+                                    )
+                                  },
+                                  {
+                                    title: 'Retirement Planning',
+                                    desc: 'A one-stop solution to meet your retirement planning needs',
+                                    icon: (
+                                      <svg className="w-[22px] h-[22px] text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M12 2v20M12 12a5 5 0 0 1 5-5h2M12 12a5 5 0 0 0-5-5H5" strokeWidth="2"/>
+                                        <path d="M12 2A9 9 0 0 1 21 11H3A9 9 0 0 1 12 2Z" fill="#f5effa"/>
+                                        <path d="M9 17a3 3 0 0 0 6 0" />
+                                      </svg>
+                                    )
+                                  },
+                                  {
+                                    title: "Beginner's Kit",
+                                    desc: 'Funds hand-picked for the first time investors',
+                                    icon: (
+                                      <svg className="w-[22px] h-[22px] text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <rect x="3" y="7" width="18" height="13" rx="2" fill="#f5effa"/>
+                                        <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+                                        <path d="M12 12v3"/>
+                                      </svg>
+                                    )
+                                  },
+                                  {
+                                    title: "India's Leaders",
+                                    desc: "Invest in India's leading companies",
+                                    icon: (
+                                      <svg className="w-[22px] h-[22px] text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M3 21h18M5 21V7l5 3v11M14 21V3l5 4v14" fill="#f5effa"/>
+                                        <circle cx="16" cy="7" r="1"/>
+                                        <circle cx="7" cy="11" r="1"/>
+                                      </svg>
+                                    )
+                                  }
+                                ].map((idea, i) => (
+                                  <div 
+                                    key={i} 
+                                    onClick={() => {
+                                      if (idea.title === 'All Weather Investing') {
+                                        setIdeasDetail('All Weather Investing');
+                                        setSelectedIdeaFund('SBI Balanced Advantage Fund');
+                                      } else if (idea.title === 'Retirement Planning') {
+                                        setIdeasDetail('Retirement Planning');
+                                        setSelectedIdeaFund('SBI Retirement Benefit Fund Aggressive Plan');
+                                      } else if (idea.title === 'Smart Save') {
+                                        setIdeasDetail('Smart Save');
+                                        setSelectedIdeaFund('SBI Liquid Fund');
+                                      } else if (idea.title === "Beginner's Kit") {
+                                        setIdeasDetail("Beginner's Kit");
+                                        setSelectedIdeaFund('SBI Balanced Advantage Fund');
+                                      } else {
+                                        toast.success(`Opening ${idea.title}...`);
+                                      }
+                                    }}
+                                    className="bg-white border border-slate-200/90 rounded-2xl p-5 flex items-center justify-between shadow-2xs hover:shadow-xs hover:border-slate-300 transition-all cursor-pointer group"
+                                  >
+                                    <div className="flex items-center gap-4 text-left">
+                                      <div className="w-12 h-12 rounded-full bg-[#f5effa] flex items-center justify-center shrink-0 transition-transform group-hover:scale-105">
+                                        {idea.icon}
+                                      </div>
+                                      <div>
+                                        <h3 className="font-bold text-[14.5px] text-slate-800 leading-snug">
+                                          {idea.title}
+                                        </h3>
+                                        <p className="text-[12.2px] text-slate-400 font-semibold leading-relaxed mt-0.5 max-w-[240px]">
+                                          {idea.desc}
+                                        </p>
+                                      </div>
+                                    </div>
+                                    <div className="w-9 h-9 rounded-full border border-slate-200/80 flex items-center justify-center text-[#702082] group-hover:bg-[#f5effa] shrink-0 transition-all">
+                                      <svg className="w-4 h-4 text-[#702082] transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                      </svg>
+                                    </div>
+                                  </div>
+                                ))}
+                                <div className="hidden md:block"></div>
+                              </div>
+                            )
+                          ) : mfSubTab === 'More' ? (
+                            /* More Sub-tab: Customized dashboard matching the mockup */
+                            <div className="space-y-6 w-full text-left font-sans mt-2">
+                              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                                {/* Left Side Box */}
+                                <div className="lg:col-span-5 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-2xs flex flex-col justify-between min-h-[220px]">
+                                  <div className="space-y-6">
+                                    <h3 className="font-extrabold text-[22px] text-[#702082] tracking-tight leading-tight select-none">
+                                      You do not have any existing investments with us. Invest now!
+                                    </h3>
+                                    
+                                    <div className="divide-y divide-slate-100">
+                                      {/* Wishlist Link */}
+                                      <div 
+                                        onClick={() => {
+                                          setMfSubTab('Invest');
+                                          setMfFilterTab('Wishlist');
+                                        }}
+                                        className="flex items-center justify-between py-4 cursor-pointer group"
+                                      >
+                                        <span className="text-[13.5px] text-slate-700 font-bold select-none group-hover:text-[#702082] transition-colors">
+                                          Wishlist
+                                        </span>
+                                        <ChevronRight size={16} className="text-slate-400 group-hover:text-[#702082] transition-all group-hover:translate-x-0.5" />
+                                      </div>
+
+                                      {/* Learn more Link */}
+                                      <div 
+                                        onClick={() => {
+                                          toast.success("Opening Mutual Funds tutorials...");
+                                        }}
+                                        className="flex items-center justify-between py-4 cursor-pointer group"
+                                      >
+                                        <span className="text-[13.5px] text-slate-700 font-bold select-none group-hover:text-[#702082] transition-colors">
+                                          Learn more about Mutual Funds
+                                        </span>
+                                        <ChevronRight size={16} className="text-slate-400 group-hover:text-[#702082] transition-all group-hover:translate-x-0.5" />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Right Side Banner Carousel */}
+                                <div className="lg:col-span-7 bg-white border border-slate-200/90 rounded-2xl p-5 shadow-2xs flex flex-col items-center justify-between min-h-[220px]">
+                                  <div className="w-full relative overflow-hidden rounded-xl border border-slate-100 flex-1 min-h-[160px] flex items-stretch">
+                                    {moreCarouselIndex === 0 ? (
+                                      /* Slide 1: Catch the Wave */
+                                      <div className="w-full bg-[#005c53] text-white p-5 relative flex flex-col justify-between text-left select-none">
+                                        <div>
+                                          <div className="flex justify-between items-start">
+                                            <div className="text-[9px] font-black tracking-widest text-[#a3e635] uppercase">
+                                              Presenting
+                                            </div>
+                                            {/* Small Logo outline */}
+                                            <div className="text-[9px] font-bold text-slate-100 flex items-center gap-1">
+                                              <span className="w-1.5 h-1.5 rounded-full bg-[#a3e635]"></span>
+                                              SBI MUTUAL FUND
+                                            </div>
+                                          </div>
+                                          <h4 className="text-[15px] font-black tracking-tight mt-1 max-w-[85%] leading-tight text-white uppercase">
+                                            SBI NIFTY MIDCAP 150 MOMENTUM 50 ETF FOF
+                                          </h4>
+                                          <p className="text-[11px] text-slate-200 mt-1 font-bold">
+                                            CATCH THE WAVE AS IT BUILDS
+                                          </p>
+                                        </div>
+                                        <div>
+                                          <div className="flex items-center gap-4 mt-3">
+                                            <button 
+                                              type="button"
+                                              onClick={() => toast.success("Redirecting to NFO Investment...")}
+                                              className="bg-[#a3e635] text-slate-900 font-extrabold text-[10.5px] px-3.5 py-1.5 rounded hover:bg-[#bef264] transition-all shadow-3xs cursor-pointer"
+                                            >
+                                              Invest Now!
+                                            </button>
+                                            <span className="text-[10px] font-bold text-[#a3e635]">
+                                              NFO Period: 27th Jul - 5th Aug, 2026
+                                            </span>
+                                          </div>
+                                          <div className="text-[7.5px] text-slate-300 font-semibold leading-tight mt-3">
+                                            Registered Name: SBI Mutual Fund. SEBI Registration Number: MF/009/93/3. <br />
+                                            Mutual Fund investments are subject to market risks, read all scheme related documents carefully.
+                                          </div>
+                                        </div>
+                                        {/* Background waves vector watermark */}
+                                        <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-20 pointer-events-none">
+                                          <svg className="w-20 h-20 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+                                            <path d="M2 12c5-5 5 5 10 0s5-5 10 0" />
+                                            <path d="M2 16c5-5 5 5 10 0s5-5 10 0" />
+                                          </svg>
+                                        </div>
+                                      </div>
+                                    ) : (
+                                      /* Slide 2: JanNivesh SIP */
+                                      <div className="w-full bg-slate-50 p-5 flex items-stretch justify-between text-left relative overflow-hidden select-none">
+                                        <div className="z-10 max-w-[62%] flex flex-col justify-between h-full">
+                                          <div>
+                                            <div className="text-[9.5px] font-black text-[#e92976] tracking-wider uppercase">
+                                              JanNivesh SIP
+                                            </div>
+                                            <h4 className="text-[14.5px] font-extrabold text-[#302985] mt-1.5 leading-snug">
+                                              Viksit Bharat Hoga Desh,<br />Jab Har Koi Kare Nivesh.
+                                            </h4>
+                                          </div>
+                                          <div>
+                                            <button 
+                                              type="button"
+                                              onClick={() => toast.success("Redirecting to JanNivesh SIP...")}
+                                              className="bg-[#0070c0] text-white font-black text-[10.5px] px-3.5 py-1.5 rounded-md hover:bg-[#005bb0] transition-all shadow-3xs cursor-pointer mt-2 w-fit"
+                                            >
+                                              Invest Now
+                                            </button>
+                                            <div className="text-[7.5px] text-slate-400 font-semibold leading-tight mt-2.5">
+                                              Mutual Fund investments are subject to market risks, read all scheme related documents carefully.
+                                            </div>
+                                          </div>
+                                        </div>
+                                        {/* Illustration vectors */}
+                                        <div className="absolute right-0 bottom-0 top-0 w-[38%] flex items-end justify-center select-none opacity-90 pr-2 pb-1">
+                                          <img 
+                                            src="/images/landing/WhatsApp Image 2026-08-01 at 9.07.17 PM.jpeg" 
+                                            alt="JanNivesh SIP Illustration" 
+                                            className="h-[90%] object-contain" 
+                                          />
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+
+                                  {/* Carousel Dot Indicators */}
+                                  <div className="flex items-center gap-1.5 justify-center mt-3 select-none">
+                                    {[0, 1].map((idx) => (
+                                      <button
+                                        key={idx}
+                                        type="button"
+                                        onClick={() => setMoreCarouselIndex(idx)}
+                                        className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                                          moreCarouselIndex === idx ? 'bg-[#702082] px-2.5' : 'bg-slate-200'
+                                        }`}
+                                      />
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Bottom Green Banner */}
+                              <div className="bg-[#f4fbf7] border border-emerald-100 rounded-2xl p-5 flex items-center justify-between w-full shadow-2xs hover:border-emerald-200 transition-colors select-none">
+                                <div className="text-left space-y-1">
+                                  <h4 className="text-[15px] font-bold text-[#166534]">
+                                    Start investing and achieve your goals faster!
+                                  </h4>
+                                  <button 
+                                    type="button"
+                                    onClick={() => toast.success("Opening SIP Calculator...")}
+                                    className="text-[13px] font-extrabold text-[#702082] hover:underline flex items-center gap-1 cursor-pointer"
+                                  >
+                                    Calculate SIP Today &rarr;
+                                  </button>
+                                </div>
+                                <div className="w-16 h-12 flex items-center justify-center opacity-70">
+                                  {/* Goal/Piggy bank mini illustration */}
+                                  <svg className="w-10 h-10 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                  </svg>
+                                </div>
+                              </div>
+                            </div>
+                          ) : (
+                            /* Other Sub-tabs: Coming Soon screen */
+                            <div className="bg-white border border-slate-200/90 rounded-2xl py-20 px-8 flex flex-col items-center justify-center w-full select-none shadow-xs">
+                              {/* Central Illustration */}
+                              <div className="relative w-72 h-56 flex items-center justify-center mb-6">
+                                {/* Hourglass in the background */}
+                                <svg className="absolute w-44 h-44 text-pink-100/90" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M25 15H75V25C75 40 60 45 53 50C60 55 75 60 75 75V85H25V75C25 60 40 55 47 50C40 45 25 40 25 25V15Z" fill="#FCE7F3" stroke="#FBCFE8" strokeWidth="1.5" strokeLinejoin="round"/>
+                                  <path d="M30 20H70" stroke="#FBCFE8" strokeWidth="1.5"/>
+                                  <path d="M30 80H70" stroke="#FBCFE8" strokeWidth="1.5"/>
+                                  {/* Sand */}
+                                  <path d="M33 25H67C65 37 50 42 50 45C50 42 35 37 33 25Z" fill="#F472B6" opacity="0.25"/>
+                                  <path d="M48 52C48 52 35 60 33 75H67C65 60 52 52 52 52L48 52Z" fill="#F472B6" opacity="0.35"/>
+                                  <circle cx="50" cy="50" r="1.5" fill="#F472B6" />
+                                  <circle cx="50" cy="58" r="1.2" fill="#F472B6" />
+                                  <circle cx="50" cy="66" r="1.2" fill="#F472B6" />
+                                </svg>
+
+                                {/* Dotted Curved Line Arrows & Clouds */}
+                                <svg className="absolute w-full h-full" viewBox="0 0 300 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  {/* Left loop arrow */}
+                                  <path d="M 75,150 C 50,120 50,85 85,75" stroke="#CBD5E1" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="3 4"/>
+                                  <path d="M 85,75 L 77,75 M 85,75 L 83,83" stroke="#94A3B8" strokeWidth="1.5" strokeLinecap="round"/>
+                                  <path d="M 75,150 L 72,143 M 75,150 L 82,148" stroke="#94A3B8" strokeWidth="1.5" strokeLinecap="round"/>
+                                  
+                                  {/* Right loop arrow */}
+                                  <path d="M 225,150 C 250,120 250,85 215,75" stroke="#CBD5E1" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="3 4"/>
+                                  <path d="M 215,75 L 223,75 M 215,75 L 217,83" stroke="#94A3B8" strokeWidth="1.5" strokeLinecap="round"/>
+                                  <path d="M 225,150 L 228,143 M 225,150 L 218,148" stroke="#94A3B8" strokeWidth="1.5" strokeLinecap="round"/>
+
+                                  {/* Left Clouds */}
+                                  <path d="M 40,165 A 12,12 0 0,1 60,155 A 16,16 0 0,1 85,160 A 8,8 0 0,1 95,165 M 30,175 A 10,10 0 0,1 40,165 H 105 A 10,10 0 0,1 105,175 Z" fill="#F1F5F9" opacity="0.9"/>
+                                  {/* Right Clouds */}
+                                  <path d="M 195,165 A 12,12 0 0,1 215,155 A 16,16 0 0,1 240,160 A 8,8 0 0,1 250,165 M 185,175 A 10,10 0 0,1 195,165 H 260 A 10,10 0 0,1 260,175 Z" fill="#F1F5F9" opacity="0.9"/>
+                                </svg>
+
+                                {/* Smartphone on top */}
+                                <div className="relative w-[78px] h-[138px] bg-white border-[3px] border-[#302985] rounded-[16px] shadow-[0_8px_20px_-6px_rgba(48,41,133,0.2)] flex flex-col items-center justify-between py-3.5 px-2 z-10">
+                                  {/* Speaker / Notch */}
+                                  <div className="w-8 h-1.5 bg-[#302985] rounded-full shrink-0"></div>
+                                  
+                                  {/* Progress bar and dots */}
+                                  <div className="w-full flex flex-col items-center gap-2 mt-4">
+                                    {/* Simulated horizontal loading segments */}
+                                    <div className="w-full bg-slate-100 h-2.5 rounded-full p-0.5 flex items-center">
+                                      <div className="bg-[#e92976] h-1.5 rounded-full flex gap-0.5 justify-start px-0.5 items-center w-[75%]">
+                                        <span className="w-0.5 h-0.5 bg-white rounded-full"></span>
+                                        <span className="w-0.5 h-0.5 bg-white rounded-full"></span>
+                                        <span className="w-0.5 h-0.5 bg-white rounded-full"></span>
+                                      </div>
+                                    </div>
+                                    
+                                    {/* Progress Dots */}
+                                    <div className="flex items-center gap-1">
+                                      <span className="w-1 h-1 rounded-full bg-[#e92976]"></span>
+                                      <span className="w-1 h-1 rounded-full bg-[#e92976]"></span>
+                                      <span className="w-1.5 h-1.5 rounded-full bg-[#e92976] animate-pulse"></span>
+                                      <span className="w-1 h-1 rounded-full bg-slate-200"></span>
+                                      <span className="w-1 h-1 rounded-full bg-slate-200"></span>
+                                    </div>
+                                  </div>
+
+                                  {/* Bottom Home Indicator */}
+                                  <div className="w-6 h-1 bg-slate-200 rounded-full shrink-0"></div>
+                                </div>
+                              </div>
+
+                              {/* Text Info */}
+                              <h2 className="text-[25px] font-bold text-[#302985] mb-2 select-none tracking-tight">
+                                Coming Soon
+                              </h2>
+                              <p className="text-[13px] text-slate-500 font-medium text-center max-w-[320px] select-none leading-relaxed">
+                                We are preparing to help you access this Service shortly
+                              </p>
+                            </div>
+                          )}
+
                         </div>
                       )}
 
@@ -1848,7 +4435,7 @@ export default function SbiLandingPageComponent({
               )}
 
               {/* Business Loan Banner */}
-              <BusinessLoanBanner />
+              {investmentSubTab !== 'Mutual Fund' && <BusinessLoanBanner />}
             </div>
           )}
 
