@@ -8,6 +8,7 @@ import {
   Search,
   MoreVertical,
   ChevronRight,
+  ChevronLeft,
   ChevronDown,
   ChevronUp,
   HelpCircle,
