@@ -249,33 +249,22 @@ export default function HelpSupportPage() {
                   </span>
                 </div>
 
-                {/* Topics List with Custom Scrollbar */}
-                <div className="max-h-[280px] overflow-y-auto pr-2 space-y-1 custom-scrollbar">
-                  {selfHelpTopics.map((topic, idx) => {
-                    const isSelected = selectedTopic === topic;
-                    return (
-                      <div
-                        key={idx}
-                        onClick={() => handleSelectTopic(topic)}
-                        className={`flex items-center gap-3 py-2.5 px-3 rounded-2xl cursor-pointer transition-all border-b border-slate-100 last:border-0 ${
-                          isSelected
-                            ? 'bg-[#f4edf9] text-[#673391] font-bold border-purple-200/80'
-                            : 'hover:bg-slate-50 text-slate-700 font-semibold'
-                        }`}
-                      >
-                        <div className={`w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors ${
-                          isSelected
-                            ? 'bg-[#673391] text-white'
-                            : 'bg-[#f4edf9] text-[#673391] border border-purple-200/60'
-                        }`}>
-                          <Tv size={15} />
-                        </div>
-                        <span className="text-xs md:text-sm flex-1 leading-snug">
-                          {topic}
-                        </span>
+                {/* Topics List with Custom Scrollbar (Matching Image 2) */}
+                <div className="max-h-[160px] overflow-y-auto pr-3 custom-scrollbar border-t border-slate-200/80">
+                  {selfHelpTopics.map((topic, idx) => (
+                    <div
+                      key={idx}
+                      onClick={() => handleSelectTopic(topic)}
+                      className="flex items-center gap-4 py-3.5 px-1 cursor-pointer transition-opacity hover:opacity-80 border-b border-slate-200/80 bg-transparent"
+                    >
+                      <div className="w-8 h-6 rounded-xs border-2 border-[#673391] text-[#673391] flex items-center justify-center bg-white flex-shrink-0 relative">
+                        <div className="w-0 h-0 border-y-4 border-y-transparent border-l-6 border-l-[#673391] ml-0.5" />
                       </div>
-                    );
-                  })}
+                      <span className="text-xs md:text-sm font-bold text-[#673391] leading-snug flex-1">
+                        {topic}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               </div>
 
