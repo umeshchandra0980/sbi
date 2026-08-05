@@ -1,0 +1,616 @@
+/* e-secure-lock.css - SBI YONO Net Banking e-Secure Lock Page */
+
+.esecure-page-wrapper {
+  background-color: #f3f4f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #1e293b;
+}
+
+/* ========== Breadcrumb ========== */
+.esecure-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 0 6px;
+  font-size: 12.5px;
+  color: #64748b;
+  max-width: 1300px;
+  margin: 0 auto;
+  width: 100%;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.esecure-breadcrumb-home {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: #64748b;
+  transition: color 0.2s;
+}
+
+.esecure-breadcrumb-home:hover {
+  color: #302985;
+}
+
+.esecure-breadcrumb-sep {
+  color: #94a3b8;
+  font-size: 11px;
+  user-select: none;
+}
+
+.esecure-breadcrumb-link {
+  color: #302985;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.esecure-breadcrumb-link:hover {
+  color: #4a3db8;
+  text-decoration: underline;
+}
+
+.esecure-breadcrumb-current {
+  color: #475569;
+  font-weight: 500;
+}
+
+/* ========== Page Title ========== */
+.esecure-page-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #302985;
+  padding: 4px 0 18px;
+  max-width: 1300px;
+  margin: 0 auto;
+  width: 100%;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+/* ========== Main Body ========== */
+.esecure-body-container {
+  flex: 1;
+  max-width: 1300px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 24px 40px;
+}
+
+/* ========== Card ========== */
+.esecure-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
+  padding: 28px 32px 32px;
+  min-height: 380px;
+}
+
+/* ========== YONO Section Header ========== */
+.esecure-section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #302985;
+  margin-bottom: 16px;
+  letter-spacing: 0.2px;
+}
+
+/* ========== Tabs ========== */
+.esecure-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid #e2e8f0;
+  margin-bottom: 0;
+}
+
+.esecure-tab {
+  background: transparent;
+  border: none;
+  padding: 10px 24px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+}
+
+.esecure-tab:hover {
+  color: #302985;
+}
+
+.esecure-tab.active {
+  color: #302985;
+  border-bottom-color: #302985;
+  font-weight: 700;
+}
+
+/* ========== Tab Content ========== */
+.esecure-tab-content {
+  padding-top: 20px;
+  min-height: 260px;
+}
+
+/* ========== Active Accounts Layout ========== */
+.esecure-active-layout {
+  display: flex;
+  gap: 0;
+  min-height: 260px;
+}
+
+.esecure-accounts-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+}
+
+.esecure-account-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 12px;
+  border-bottom: 1px solid #f1f5f9;
+  cursor: pointer;
+  transition: background 0.15s;
+  border-radius: 6px;
+}
+
+.esecure-account-row:hover {
+  background: #f8fafc;
+}
+
+/* Custom Checkbox */
+.esecure-checkbox-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.esecure-checkbox-wrap input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #b0b8c9;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.esecure-checkbox-wrap input[type="checkbox"]:checked {
+  background: #302985;
+  border-color: #302985;
+}
+
+.esecure-checkbox-wrap input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 6px;
+  height: 11px;
+  border: solid #ffffff;
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+}
+
+.esecure-account-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+/* ========== Illustration Panel ========== */
+.esecure-illustration-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+  position: relative;
+}
+
+/* Shield SVG Illustration (Matches SBI Pink/Magenta design) */
+.esecure-shield-illustration {
+  width: 260px;
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.esecure-shield-svg-container {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Background pinkish blob */
+.esecure-shield-bg-blob {
+  position: absolute;
+  width: 200px;
+  height: 180px;
+  background: radial-gradient(ellipse at center, #fce4ec 0%, #f8bbd0 40%, #f48fb1 80%, transparent 100%);
+  border-radius: 50% 50% 50% 50% / 45% 45% 55% 55%;
+  opacity: 0.45;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+/* Main shield */
+.esecure-shield-main {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.esecure-shield-icon-wrap {
+  position: relative;
+  width: 100px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.esecure-shield-icon-wrap svg {
+  filter: drop-shadow(0 4px 12px rgba(194, 24, 91, 0.15));
+}
+
+/* Password field in illustration */
+.esecure-password-field-illust {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: absolute;
+  bottom: 14px;
+  left: -40px;
+  z-index: 3;
+}
+
+.esecure-password-dots-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  background: #ffffff;
+  border: 2px solid #c2185b;
+  border-radius: 6px;
+  padding: 6px 12px;
+  min-width: 70px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.esecure-password-dots-box span {
+  font-size: 18px;
+  font-weight: 900;
+  color: #1e293b;
+  letter-spacing: 3px;
+  line-height: 1;
+}
+
+.esecure-lock-badge {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 10px rgba(194, 24, 91, 0.25);
+}
+
+/* Person silhouette */
+.esecure-person-silhouette {
+  position: absolute;
+  right: -24px;
+  bottom: -10px;
+  z-index: 1;
+  opacity: 0.3;
+}
+
+/* ========== Locked Accounts (Empty State) ========== */
+.esecure-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  gap: 12px;
+  padding: 40px 0;
+}
+
+.esecure-empty-icon {
+  width: 56px;
+  height: 56px;
+  background: #f1f5f9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+}
+
+/* ========== Bottom Action Bar ========== */
+.esecure-bottom-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0 0;
+  margin-top: auto;
+  max-width: 1300px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-bottom: 32px;
+}
+
+.esecure-btn-previous {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1.5px solid #d1d5db;
+  border-radius: 24px;
+  padding: 10px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #302985;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.esecure-btn-previous:hover {
+  background: #f8fafc;
+  border-color: #302985;
+  box-shadow: 0 2px 8px rgba(48, 41, 133, 0.08);
+}
+
+.esecure-btn-lock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #302985 0%, #4a3db8 100%);
+  border: none;
+  border-radius: 24px;
+  padding: 10px 36px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 2px 10px rgba(48, 41, 133, 0.2);
+}
+
+.esecure-btn-lock:hover:not(:disabled) {
+  background: linear-gradient(135deg, #24206a 0%, #3a2fa0 100%);
+  box-shadow: 0 4px 16px rgba(48, 41, 133, 0.3);
+  transform: translateY(-1px);
+}
+
+.esecure-btn-lock:disabled {
+  background: #d1d5db;
+  color: #9ca3af;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.esecure-btn-lock:disabled:hover {
+  transform: none;
+}
+
+/* ========== Footer ========== */
+.esecure-footer {
+  background: #f8f9fb;
+  border-top: 1px solid #e2e8f0;
+  padding: 14px 0;
+  text-align: center;
+}
+
+.esecure-footer-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  font-size: 11.5px;
+  color: #94a3b8;
+}
+
+.esecure-footer-link {
+  color: #302985;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.esecure-footer-link:hover {
+  color: #4a3db8;
+  text-decoration: underline;
+}
+
+/* ========== Lock Confirmation Modal ========== */
+.esecure-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: esecure-fadeIn 0.2s ease;
+}
+
+.esecure-modal {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 32px 36px;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  animation: esecure-slideUp 0.3s ease;
+  text-align: center;
+}
+
+.esecure-modal-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px;
+  background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.esecure-modal-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 10px;
+}
+
+.esecure-modal-text {
+  font-size: 13.5px;
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.esecure-modal-btns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.esecure-modal-cancel {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 28px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.esecure-modal-cancel:hover {
+  background: #e2e8f0;
+}
+
+.esecure-modal-confirm {
+  background: linear-gradient(135deg, #302985 0%, #4a3db8 100%);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 28px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.esecure-modal-confirm:hover {
+  background: linear-gradient(135deg, #24206a 0%, #3a2fa0 100%);
+}
+
+/* ========== Success Toast ========== */
+.esecure-success-banner {
+  background: linear-gradient(135deg, #d5f5e3 0%, #a9dfbf 100%);
+  border: 1px solid #82e0aa;
+  border-radius: 8px;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  animation: esecure-slideDown 0.3s ease;
+}
+
+.esecure-success-banner-icon {
+  width: 28px;
+  height: 28px;
+  background: #1e8449;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.esecure-success-banner-text {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #1e8449;
+}
+
+/* ========== Animations ========== */
+@keyframes esecure-fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes esecure-slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes esecure-slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 768px) {
+  .esecure-active-layout {
+    flex-direction: column;
+  }
+
+  .esecure-illustration-panel {
+    min-height: 180px;
+  }
+
+  .esecure-card {
+    padding: 20px 16px 24px;
+  }
+
+  .esecure-bottom-bar {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .esecure-breadcrumb,
+  .esecure-page-title {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}

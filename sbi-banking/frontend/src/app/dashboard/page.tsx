@@ -578,7 +578,7 @@ export default function DashboardPage() {
                     </div>
                     <span className="rightside-item-name">Cheque Services</span>
                   </div>
-                  <div className="rightside-item" onClick={() => toast.success("e-Secure Lock")}>
+                  <div className="rightside-item" onClick={() => router.push('/services/e-secure-lock')}>
                     <div className="rightside-icon-box">
                       <img src="/images/category-icons/ic_esecure_lock.svg" alt="e-Secure Lock" className="w-5 h-5 object-contain" />
                     </div>

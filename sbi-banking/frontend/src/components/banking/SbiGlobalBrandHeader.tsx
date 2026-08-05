@@ -118,7 +118,7 @@ function SbiGlobalBrandHeaderContent({
       ],
       col2Title: 'Quick Links',
       col2Items: [
-        { label: 'View Profile', href: '/profile', icon: '👤' },
+        { label: 'View Profile', href: '/profile?tab=ManageMyProfile', icon: '👤' },
         { label: 'Settings', href: '/settings', icon: '⚙' },
       ]
     },
@@ -273,17 +273,17 @@ function SbiGlobalBrandHeaderContent({
         { label: 'Cheque Services', href: '/home/landingPage/services/cheque-services', icon: '📑' },
         { label: 'Doorstep Banking', href: '/home/landingPage/services/doorstep-banking', icon: '🚪' },
         { label: 'Positive Pay System', href: '/home/landingPage/services/cheque-services/positive-pay', icon: '✍️' },
-        { label: 'Apply/Manage FASTag', href: '/home/landingPage/services/tax-related', icon: '🚗' },
+        { label: 'Apply/Manage FASTag', href: '/home/landingPage/services/fastag', icon: '🚗' },
       ],
       col2Title: 'Quick Links',
       col2Items: [
-        { label: 'Manage Nominee', href: '/profile', icon: '🚪' },
-        { label: 'Manage My Profile', href: '/profile', icon: '👤' },
-        { label: 'e-Secure Lock', href: '/settings', icon: '🔒' },
+        { label: 'Manage Nominee', href: '/profile?tab=ManageNominee', icon: '🚪' },
+        { label: 'Manage My Profile', href: '/profile?tab=ManageMyProfile', icon: '👤' },
+        { label: 'e-Secure Lock', href: '/services/e-secure-lock', icon: '🔒' },
         { label: 'Stop Cheque', href: '/home/landingPage/services/cheque-services/enquire-stop-revoke', icon: '🛑' },
-        { label: 'Update My Security', href: '/settings', icon: '🛡' },
+        { label: 'Update My Security', href: '/settings?tab=UpdateMySecurity', icon: '🛡' },
         { label: 'Report- Unauthorized Transactions', href: '/settings', icon: '⚠️' },
-        { label: 'Security Question', href: '/settings', icon: '📱' },
+        { label: 'Security Question', href: '/settings?tab=UpdateMySecurity&subTab=SecurityQuestions', icon: '📱' },
       ]
     }
   ];
@@ -725,7 +725,7 @@ function SbiGlobalBrandHeaderContent({
 
           {/* Profile Circle Pill */}
           <div 
-            onClick={() => router.push('/profile')}
+            onClick={() => router.push('/profile?tab=ManageMyProfile')}
             className="flex items-center gap-2 bg-[#673391] text-white py-1 px-3 rounded-full text-xs font-bold shadow-xs cursor-pointer hover:bg-[#561578] transition-colors flex-shrink-0"
           >
             <div className="w-6 h-6 rounded-full bg-amber-200 text-[#673391] flex items-center justify-center text-[10px] font-black">

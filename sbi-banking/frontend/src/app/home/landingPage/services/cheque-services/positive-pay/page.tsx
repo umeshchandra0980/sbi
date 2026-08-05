@@ -16,7 +16,7 @@ export default function PositivePayPage() {
         <SbiGlobalBrandHeader activeNav="Services" activeTopTab="Banking" />
 
         {/* Main Container */}
-        <main className="max-w-[1280px] w-full mx-auto px-4 py-6">
+        <main className="max-w-[1280px] w-full mx-auto px-4 py-6 pb-24">
           
           {/* Breadcrumb Navigation */}
           <div className="flex items-center gap-2 text-xs font-semibold text-slate-600 mb-4">
@@ -86,16 +86,18 @@ export default function PositivePayPage() {
         </main>
       </div>
 
-      {/* Bottom Action Footer (Matching Screenshot) */}
-      <footer className="max-w-[1280px] w-full mx-auto px-4 py-4 flex justify-end">
-        <button
-          type="button"
-          onClick={() => router.push('/dashboard')}
-          className="bg-[#673391] hover:bg-[#561578] text-white font-extrabold text-xs md:text-sm py-3 px-10 rounded-full shadow-md hover:shadow-lg transition-all cursor-pointer"
-        >
-          Go to Homepage
-        </button>
-      </footer>
+      {/* Bottom Action Sticky Footer Bar */}
+      <div className="fixed bottom-0 left-0 right-0 w-full bg-white border-t border-slate-200/80 shadow-[0_-8px_20px_rgba(0,0,0,0.04)] py-4 px-6 md:px-12 z-40 animate-in slide-in-from-bottom duration-200">
+        <div className="max-w-[1280px] w-full mx-auto flex justify-end">
+          <button
+            type="button"
+            onClick={() => router.push('/dashboard')}
+            className="bg-[#673391] hover:bg-[#561578] text-white font-extrabold text-xs md:text-sm py-3 px-10 rounded-full shadow-md hover:shadow-lg transition-all cursor-pointer"
+          >
+            Go to Homepage
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

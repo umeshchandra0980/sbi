@@ -1,0 +1,521 @@
+/* stop-cheque.css - SBI YONO Net Banking Stop Cheque Page */
+
+.stopcheque-page-wrapper {
+  background-color: #f3f4f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #1e293b;
+}
+
+/* ========== Breadcrumb ========== */
+.stopcheque-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 0 6px;
+  font-size: 12.5px;
+  color: #64748b;
+  max-width: 1300px;
+  margin: 0 auto;
+  width: 100%;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.stopcheque-breadcrumb-home {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: #64748b;
+  transition: color 0.2s;
+}
+
+.stopcheque-breadcrumb-home:hover {
+  color: #302985;
+}
+
+.stopcheque-breadcrumb-sep {
+  color: #94a3b8;
+  font-size: 11px;
+  user-select: none;
+}
+
+.stopcheque-breadcrumb-link {
+  color: #302985;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.stopcheque-breadcrumb-link:hover {
+  color: #4a3db8;
+  text-decoration: underline;
+}
+
+.stopcheque-breadcrumb-current {
+  color: #475569;
+  font-weight: 500;
+}
+
+/* ========== Page Title ========== */
+.stopcheque-page-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #302985;
+  padding: 4px 0 18px;
+  max-width: 1300px;
+  margin: 0 auto;
+  width: 100%;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+/* ========== Main Body ========== */
+.stopcheque-body-container {
+  flex: 1;
+  max-width: 1300px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 24px 40px;
+}
+
+/* ========== Card ========== */
+.stopcheque-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
+  padding: 28px 32px 32px;
+  min-height: 380px;
+}
+
+/* ========== Tabs ========== */
+.stopcheque-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid #e2e8f0;
+  margin-bottom: 0;
+}
+
+.stopcheque-tab {
+  background: transparent;
+  border: none;
+  padding: 10px 24px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  white-space: nowrap;
+}
+
+.stopcheque-tab:hover {
+  color: #302985;
+}
+
+.stopcheque-tab.active {
+  color: #302985;
+  border-bottom-color: #302985;
+  font-weight: 700;
+}
+
+/* ========== Tab Content ========== */
+.stopcheque-tab-content {
+  padding-top: 24px;
+  min-height: 260px;
+}
+
+/* ========== Select Account Section ========== */
+.stopcheque-section-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 14px;
+}
+
+.stopcheque-account-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 14px 20px;
+  min-width: 260px;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.stopcheque-account-card:hover {
+  border-color: #302985;
+  box-shadow: 0 2px 8px rgba(48, 41, 133, 0.08);
+}
+
+.stopcheque-account-card.selected {
+  border-color: #302985;
+  box-shadow: 0 0 0 2px rgba(48, 41, 133, 0.12);
+}
+
+.stopcheque-account-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #302985 0%, #4a3db8 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stopcheque-account-icon svg {
+  color: #ffffff;
+}
+
+.stopcheque-account-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stopcheque-account-number-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stopcheque-account-number {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #1e293b;
+  letter-spacing: 0.3px;
+}
+
+.stopcheque-eye-icon {
+  color: #94a3b8;
+  cursor: pointer;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.stopcheque-eye-icon:hover {
+  color: #302985;
+}
+
+.stopcheque-account-type {
+  font-size: 12px;
+  font-weight: 600;
+  color: #302985;
+}
+
+/* ========== Divider ========== */
+.stopcheque-divider {
+  border: none;
+  border-top: 1px dashed #e2e8f0;
+  margin: 24px 0;
+}
+
+/* ========== Cheque Number Section ========== */
+.stopcheque-cheque-section-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 18px;
+}
+
+.stopcheque-info-icon {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid #94a3b8;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #94a3b8;
+  cursor: help;
+  transition: all 0.2s;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.stopcheque-info-icon:hover {
+  border-color: #302985;
+  color: #302985;
+}
+
+/* ========== Input Fields Row ========== */
+.stopcheque-input-row {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.stopcheque-input-group {
+  flex: 1;
+  max-width: 340px;
+}
+
+.stopcheque-input {
+  width: 100%;
+  border: none;
+  border-bottom: 1.5px solid #d1d5db;
+  padding: 10px 0;
+  font-size: 14px;
+  color: #1e293b;
+  background: transparent;
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: inherit;
+}
+
+.stopcheque-input::placeholder {
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+.stopcheque-input:focus {
+  border-bottom-color: #302985;
+}
+
+/* ========== Search Button ========== */
+.stopcheque-search-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border: 1.5px solid #d1d5db;
+  border-radius: 24px;
+  padding: 10px 36px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  margin-top: 4px;
+}
+
+.stopcheque-search-btn:hover {
+  border-color: #302985;
+  color: #302985;
+  box-shadow: 0 2px 8px rgba(48, 41, 133, 0.08);
+}
+
+/* ========== Lost Cheque Book Link ========== */
+.stopcheque-lost-link {
+  display: inline-block;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #302985;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s;
+  margin-top: 4px;
+  margin-bottom: 20px;
+}
+
+.stopcheque-lost-link:hover {
+  color: #4a3db8;
+  text-decoration: underline;
+}
+
+/* ========== Stop Cheque Reason Dropdown ========== */
+.stopcheque-reason-group {
+  max-width: 340px;
+  margin-bottom: 20px;
+}
+
+.stopcheque-select {
+  width: 100%;
+  border: none;
+  border-bottom: 1.5px solid #d1d5db;
+  padding: 10px 0;
+  font-size: 14px;
+  color: #94a3b8;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  font-family: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 4px center;
+  background-size: 16px;
+  padding-right: 28px;
+}
+
+.stopcheque-select:focus {
+  border-bottom-color: #302985;
+}
+
+.stopcheque-select.has-value {
+  color: #1e293b;
+}
+
+/* ========== Service Charge Info Banner ========== */
+.stopcheque-info-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+  padding: 12px 18px;
+  margin-top: 8px;
+}
+
+.stopcheque-info-banner-icon {
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid #f59e0b;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #f59e0b;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.stopcheque-info-banner-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: #92400e;
+  line-height: 1.5;
+}
+
+/* ========== Go to Homepage Button ========== */
+.stopcheque-homepage-btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+  padding-top: 16px;
+}
+
+.stopcheque-homepage-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border: 1.5px solid #d1d5db;
+  border-radius: 24px;
+  padding: 10px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.stopcheque-homepage-btn:hover {
+  border-color: #302985;
+  color: #302985;
+  box-shadow: 0 2px 8px rgba(48, 41, 133, 0.08);
+}
+
+/* ========== Footer ========== */
+.stopcheque-footer-wrapper {
+  margin-top: auto;
+}
+
+.stopcheque-footer-links-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0;
+  background: #f0f0f0;
+  border-top: 1px solid #e0e0e0;
+}
+
+.stopcheque-footer-link {
+  color: #1a0dab;
+  text-decoration: underline;
+  font-size: 12px;
+  font-weight: 400;
+  transition: color 0.2s;
+}
+
+.stopcheque-footer-link:hover {
+  color: #302985;
+}
+
+.stopcheque-footer-sep {
+  color: #999999;
+  font-size: 12px;
+  user-select: none;
+}
+
+.stopcheque-footer-dark-bar {
+  width: 100%;
+  height: 24px;
+  background: #3a3a3a;
+}
+
+/* ========== Animations ========== */
+@keyframes stopcheque-fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes stopcheque-slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 768px) {
+  .stopcheque-card {
+    padding: 20px 16px 24px;
+  }
+
+  .stopcheque-input-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .stopcheque-input-group {
+    max-width: 100%;
+  }
+
+  .stopcheque-reason-group {
+    max-width: 100%;
+  }
+
+  .stopcheque-breadcrumb,
+  .stopcheque-page-title {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .stopcheque-body-container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .stopcheque-tabs {
+    overflow-x: auto;
+  }
+
+  .stopcheque-tab {
+    padding: 10px 16px 12px;
+    font-size: 13px;
+  }
+}
