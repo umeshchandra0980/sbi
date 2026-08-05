@@ -286,9 +286,9 @@ function ViewAllAccountsContent() {
             View All Accounts
           </h1>
 
-          {/* Sub-Navigation Tabs Bar */}
-          <div className="flex justify-between items-center border-b border-slate-200/80 mb-6">
-            <div className="flex items-center gap-1">
+          {/* Sub-Navigation Tabs Bar (Matching Image 1) */}
+          <div className="flex justify-between items-end mb-0 border-b border-transparent">
+            <div className="flex items-end gap-1">
               {(['Transaction Accounts', 'Deposits', 'Loans', 'Investments', 'Insurance'] as const).map((tabLabel) => {
                 const tabHref = tabLabel === 'Transaction Accounts' 
                   ? '/home/landingPage/manageRelationship/transactionAccounts'
@@ -298,44 +298,41 @@ function ViewAllAccountsContent() {
                   <Link
                     key={tabLabel}
                     href={tabHref}
-                    className={`font-sans font-semibold text-[13px] px-[18px] py-[10px] pb-[12px] relative transition-all ${
+                    className={`font-sans text-[15px] px-6 pt-3 pb-2.5 relative transition-all ${
                       isActive 
-                        ? 'text-[#302985] font-bold bg-white rounded-t-xl shadow-xs' 
-                        : 'text-slate-500 hover:text-slate-800'
+                        ? 'text-[#632a88] font-extrabold bg-white rounded-t-2xl shadow-2xs z-10' 
+                        : 'text-[#64748b] hover:text-[#302985] font-bold'
                     }`}
-                    style={{ fontFamily: "'Open Sans', sans-serif" }}
                   >
-                    <span>{tabLabel}</span>
-                    {isActive && (
-                      <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#302985] rounded-t" />
-                    )}
+                    <div className="flex flex-col items-center">
+                      <span>{tabLabel}</span>
+                      {isActive && (
+                        <div className="w-6 h-[3.5px] bg-[#632a88] rounded-full mt-1" />
+                      )}
+                    </div>
                   </Link>
                 );
               })}
             </div>
 
             <Link
-              href="/accounts"
-              className="flex items-center gap-1 border-[1.5px] border-[#702082] text-[#702082] bg-white hover:bg-[#f3e8ff] rounded-full px-4 py-1.5 text-[12px] font-bold transition-all shadow-xs select-none"
+              href="/accounts?view=all"
+              className="flex items-center gap-1 border-[1.5px] border-[#702082] text-[#702082] bg-white hover:bg-[#f3e8ff] rounded-full px-4 py-1.5 text-[12px] font-bold transition-all shadow-xs select-none mb-2"
             >
               <span>View All Accounts</span>
               <ChevronRight size={14} className="stroke-[2.5px]" />
             </Link>
           </div>
 
-          {/* Page Header Title */}
-          <h1 className="text-[26px] font-bold text-[#702082] mb-5 tracking-tight font-sans">
-            View All Accounts
-          </h1>
-
-          {/* Main Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-            
-            {/* Left Column: Accordions Container (8/12 width) */}
-            <div className="lg:col-span-8 space-y-4">
+          {/* Main Content Workspace Container (Solid Pure White Background matching Screenshot 2) */}
+          <div className="bg-white rounded-b-3xl rounded-tr-3xl border border-slate-200/70 shadow-sm p-6 sm:p-8 -mt-[1px] relative z-0">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               
-              {/* Large Rounded White Container */}
-              <div className="bg-white rounded-2xl border border-slate-200/70 shadow-sm p-6 space-y-4 min-h-[420px]">
+              {/* Left Column: Accordions Container (8/12 width) */}
+              <div className="lg:col-span-8 space-y-4">
+                
+                {/* Large Inner Container */}
+                <div className="bg-white rounded-2xl border border-slate-200/60 p-5 space-y-4 min-h-[420px]">
                 
                 {/* ================= ACCORDION 1: TRANSACTION ACCOUNTS ================= */}
                 <div className="border border-slate-200/80 rounded-xl overflow-hidden shadow-2sm border-r-4 border-r-[#702082] transition-all">
@@ -563,9 +560,9 @@ function ViewAllAccountsContent() {
                   </ul>
                 </div>
               </div>
-            </div>
-
+            </div> {/* End Right Column */}
           </div> {/* End Grid */}
+        </div> {/* End Outer White Workspace Container */}
 
         </main>
       )}

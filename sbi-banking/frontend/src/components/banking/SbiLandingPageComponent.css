@@ -288,52 +288,52 @@
 .sbi-tabs-container {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #e5e7eb;
-  margin-bottom: 24px;
+  align-items: flex-end;
+  margin-bottom: 0;
   padding-bottom: 0;
+  border-bottom: 1px solid transparent;
 }
 
 .sbi-tabs-row {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-end;
+  gap: 4px;
 }
 
 .sbi-tab-btn {
   background: transparent;
   border: none;
-  font-size: 13px;
-  font-weight: 600;
-  color: #6b7280;
-  padding: 10px 18px 12px 18px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #64748b;
+  padding: 12px 24px 10px 24px;
   cursor: pointer;
   position: relative;
-  transition: color 0.15s;
+  transition: all 0.15s ease;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
 }
 
 .sbi-tab-btn:hover {
-  color: #1f2937;
+  color: #302985;
 }
 
 .sbi-tab-btn.active {
-  color: #351664;
-  font-weight: 700;
+  color: #632a88;
+  font-weight: 800;
   background-color: #ffffff;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.02);
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.02);
+  z-index: 10;
 }
 
 .sbi-tab-indicator {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 28px;
-  height: 4.5px;
-  background-color: #702082;
+  width: 24px;
+  height: 3.5px;
+  background-color: #632a88;
   border-radius: 9999px;
+  margin: 4px auto 0 auto;
 }
 
 .sbi-view-all-btn {
@@ -355,7 +355,21 @@
   background-color: #f3e8ff;
 }
 
-/* 5. CARDS & SIDEBARS */
+/* 5. MAIN WORKSPACE WHITE CONTAINER AREA (Matching Screenshot 2) */
+.sbi-workspace-area {
+  background-color: #ffffff !important;
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
+  border-top-right-radius: 24px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  padding: 28px;
+  margin-top: -1px;
+  position: relative;
+  z-index: 1;
+}
+
+/* 6. CARDS & SIDEBARS */
 .sbi-content-card {
   background-color: #ffffff;
   border: 1px solid #e5e7eb;
