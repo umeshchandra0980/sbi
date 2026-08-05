@@ -20,7 +20,7 @@ export default function EFileVerifyPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f4f0f8] font-sans text-slate-800 flex flex-col relative">
+    <div className="min-h-screen bg-[#f4f0f8] text-slate-800 flex flex-col relative" style={{ fontFamily: 'Roboto, sans-serif' }}>
       {/* Header */}
       <SbiGlobalBrandHeader activeNav="Services" activeTopTab="Banking" />
 
@@ -28,7 +28,7 @@ export default function EFileVerifyPage() {
       <main className="flex-1 max-w-[1280px] w-full mx-auto px-4 py-6">
         
         {/* Breadcrumb Navigation */}
-        <div className="flex items-center gap-2 text-xs font-semibold text-slate-600 mb-4">
+        <div className="flex items-center gap-2 text-[12px] font-semibold text-slate-600 mb-4">
           <Link href="/dashboard" className="hover:text-[#673391] transition-colors flex items-center gap-1">
             <Home size={14} className="text-[#673391]" />
           </Link>
@@ -37,7 +37,7 @@ export default function EFileVerifyPage() {
         </div>
 
         {/* Page Heading */}
-        <h1 className="text-2xl md:text-3xl font-extrabold text-[#673391] mb-6 tracking-tight">
+        <h1 className="text-[18px] font-bold text-[#673391] mb-6 tracking-tight">
           E-filing
         </h1>
 
@@ -66,7 +66,7 @@ export default function EFileVerifyPage() {
             </button>
 
             {/* Modal Title */}
-            <h2 className="text-xl md:text-2xl font-bold text-[#673391] mb-6 tracking-tight">
+            <h2 className="text-[18px] font-semibold text-[#673391] mb-6 tracking-tight">
               PAN &amp; Email ID Required
             </h2>
 
@@ -90,24 +90,17 @@ export default function EFileVerifyPage() {
               </div>
 
               {/* Message Text */}
-              <div className="flex-1 text-sm md:text-base font-normal text-slate-700 leading-relaxed text-center sm:text-left">
-                PAN &amp; Email ID required to proceed further with Tax Related services.
+              <div className="flex-1 text-[14px] font-normal text-slate-700 leading-relaxed text-center sm:text-left">
+                Please update your PAN &amp; Email ID in your profile before proceeding.
               </div>
             </div>
 
-            {/* Bottom Action Buttons */}
-            <div className="flex items-center justify-end gap-3 pt-6 border-t border-slate-100">
-              <button
-                type="button"
-                onClick={handleClose}
-                className="bg-white border border-[#673391] hover:bg-purple-50 text-[#673391] font-bold text-sm py-2.5 px-10 rounded-full transition-all cursor-pointer"
-              >
-                Back
-              </button>
+            {/* Bottom Action Button */}
+            <div className="flex justify-end pt-6 gap-3">
               <button
                 type="button"
                 onClick={handleOkay}
-                className="bg-[#673391] hover:bg-[#561578] text-white font-extrabold text-sm py-2.5 px-8 rounded-full shadow-md hover:shadow-lg transition-all cursor-pointer"
+                className="bg-[#673391] hover:bg-[#561578] text-white font-semibold text-[14px] py-2.5 px-8 rounded-full shadow-md hover:shadow-lg transition-all cursor-pointer"
               >
                 Update Now
               </button>

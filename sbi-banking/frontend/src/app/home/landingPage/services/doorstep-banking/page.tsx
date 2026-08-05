@@ -48,7 +48,7 @@ export default function DoorstepBankingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#f4f0f8] font-sans text-slate-800 flex flex-col justify-between relative">
+    <div className="min-h-screen bg-[#f4f0f8] text-slate-800 flex flex-col justify-between relative" style={{ fontFamily: 'Roboto, sans-serif' }}>
       <div>
         {/* Header */}
         <SbiGlobalBrandHeader activeNav="Services" activeTopTab="Banking" />
@@ -57,7 +57,7 @@ export default function DoorstepBankingPage() {
         <main className="max-w-[1280px] w-full mx-auto px-4 py-6 pb-24">
           
           {/* Breadcrumb Navigation */}
-          <div className="flex items-center gap-2 text-xs font-semibold text-slate-600 mb-4">
+          <div className="flex items-center gap-2 text-[12px] font-semibold text-slate-600 mb-4">
             <Link href="/dashboard" className="hover:text-[#673391] transition-colors flex items-center gap-1">
               <Home size={14} className="text-[#673391]" />
             </Link>
@@ -68,7 +68,7 @@ export default function DoorstepBankingPage() {
           </div>
 
           {/* Page Heading */}
-          <h1 className="text-2xl md:text-3xl font-extrabold text-[#673391] mb-6 tracking-tight">
+          <h1 className="text-[18px] font-bold text-[#673391] mb-6 tracking-tight">
             Doorstep Banking
           </h1>
 
@@ -77,10 +77,10 @@ export default function DoorstepBankingPage() {
             
             {/* SECTION 1: PICK-UP SERVICES */}
             <div>
-              <h2 className="text-lg md:text-xl font-bold text-[#673391] mb-1">
+              <h2 className="text-[18px] font-semibold text-[#673391] mb-1">
                 Pick-Up Services
               </h2>
-              <p className="text-xs text-slate-500 font-medium mb-4">
+              <p className="text-[14px] text-slate-500 font-normal mb-4">
                 Collect from customer and deliver to the branch
               </p>
 

@@ -19,7 +19,7 @@
 /* Individual Banner Pill Card */
 .quick-banner-card {
   position: relative;
-  background: #702082;
+  background: linear-gradient(135deg, #702082 0%, #4a1558 100%);
   border-radius: 16px;
   height: 82px;
   display: flex;
@@ -28,16 +28,16 @@
   overflow: hidden;
   color: #ffffff;
   text-decoration: none;
-  box-shadow: 0 4px 16px rgba(112, 26, 117, 0.14);
+  box-shadow: 0 2px 10px rgba(112, 32, 130, 0.18);
   cursor: pointer;
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   user-select: none;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-family: Roboto, sans-serif !important;
 }
 
 .quick-banner-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(112, 26, 117, 0.25);
+  box-shadow: 0 6px 18px rgba(111, 38, 127, 0.25);
 }
 
 .quick-banner-card:focus-visible {

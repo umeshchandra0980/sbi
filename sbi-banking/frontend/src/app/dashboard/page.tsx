@@ -14,6 +14,7 @@ import { RelationshipOverviewCards } from '@/components/banking/RelationshipOver
 import { QuickFeatureBanners } from '@/components/banking/QuickFeatureBanners';
 import './dashboard.css';
 import SbiGlobalBrandHeader from '@/components/banking/SbiGlobalBrandHeader';
+import SbiFixedFooter from '@/components/banking/SbiFixedFooter';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -26,68 +27,87 @@ export default function DashboardPage() {
   // Banner Carousel State
   const [bannerSlide, setBannerSlide] = useState(0);
 
-  // Instagram Story Modal State
+  // Instagram Story Modal & Sliding Window State
   const [activeStoryIndex, setActiveStoryIndex] = useState<number | null>(null);
   const [storyProgress, setStoryProgress] = useState(0);
+  const [startIndex, setStartIndex] = useState(0);
+  const visibleCount = 8;
 
   const storiesList = [
     { 
       id: 1, 
       label: 'Welcome to Yono', 
-      logo: '/stories/story1.jpg',
-      fullImage: '/stories/story1.jpg',
+      logo: '/assets/images/stories/welcome.png',
+      fullImage: '/assets/images/stories/welcome.png',
       subtitle: 'Official Announcement'
     },
     { 
       id: 2, 
       label: 'Fraud Awareness', 
-      logo: '/stories/story2.jpg',
-      fullImage: '/stories/story2.jpg',
-      subtitle: 'Security Tip'
+      logo: '/assets/images/stories/fraud_awareness.png',
+      fullImage: '/assets/images/stories/fraud_awareness.png',
+      subtitle: 'Security Tip & Alert'
     },
     { 
       id: 3, 
       label: 'Tax Related Services', 
-      logo: '/stories/story3.jpg',
-      fullImage: '/stories/story3.jpg',
+      logo: '/assets/images/stories/tax_related.png',
+      fullImage: '/assets/images/stories/tax_related.png',
       subtitle: 'Go to Services > Tax Related'
     },
     { 
       id: 4, 
       label: 'e - Secure Lock', 
-      logo: '/stories/story4.png',
-      fullImage: '/stories/story4.png',
+      logo: '/assets/images/stories/esecure_lock.png',
+      fullImage: '/assets/images/stories/esecure_lock.png',
       subtitle: 'Instant Lock / Unlock'
     },
     { 
       id: 5, 
       label: 'Sustainability', 
-      logo: '/stories/story5.jpg',
-      fullImage: '/stories/story5.jpg',
+      logo: '/assets/images/stories/sustainability.png',
+      fullImage: '/assets/images/stories/sustainability.png',
       subtitle: 'Track Carbon Footprint'
     },
     { 
       id: 6, 
       label: 'SIP', 
-      logo: '/stories/story1.jpg',
-      fullImage: '/stories/story1.jpg',
+      logo: '/assets/images/stories/sip.png',
+      fullImage: '/assets/images/stories/sip.png',
       subtitle: 'Smart Investments'
     },
     { 
       id: 7, 
       label: 'Credit Card', 
-      logo: '/stories/story2.jpg',
-      fullImage: '/stories/story2.jpg',
+      logo: '/assets/images/stories/credit_card.png',
+      fullImage: '/assets/images/stories/credit_card.png',
       subtitle: 'Exclusive SBI Rewards'
     },
     { 
       id: 8, 
       label: 'Invest Now', 
-      logo: '/stories/story3.jpg',
-      fullImage: '/stories/story3.jpg',
+      logo: '/assets/images/stories/invest_now.png',
+      fullImage: '/assets/images/stories/invest_now.png',
       subtitle: 'Wealth Management'
     },
+    { 
+      id: 9, 
+      label: 'Secure your future', 
+      logo: '/assets/images/stories/secure_future.png',
+      fullImage: '/assets/images/stories/secure_future.png',
+      subtitle: 'Insurance & Pension'
+    },
+    { 
+      id: 10, 
+      label: 'Dream your Home', 
+      logo: '/assets/images/stories/dream_your_home.png',
+      fullImage: '/assets/images/stories/dream_your_home.png',
+      subtitle: 'Home Loan Offers'
+    },
   ];
+
+  const maxStartIndex = Math.max(0, storiesList.length - visibleCount);
+  const visibleStories = storiesList.slice(startIndex, startIndex + visibleCount);
 
   // Animated Progress Loader Timer (5 Seconds Per Story)
   React.useEffect(() => {
@@ -129,12 +149,18 @@ export default function DashboardPage() {
   };
 
   const bannerImages = [
-    "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/welcome_64x64",
-    "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/credit_card_web_873x203",
-    "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/873_by_203",
-    "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/pabl_banner",
-    "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/feedback_banner_2_2_873x203"
+    "/assets/images/banners/Credit_Card_Web-873x203.jpg",
+    "/assets/images/banners/873_BY_203.png",
+    "/assets/images/banners/PABL_Banner.png"
   ];
+
+  // Auto-slide Promo Banner Carousel
+  React.useEffect(() => {
+    const bannerTimer = setInterval(() => {
+      setBannerSlide((prev) => (prev + 1) % bannerImages.length);
+    }, 4000);
+    return () => clearInterval(bannerTimer);
+  }, [bannerImages.length]);
 
   const currentUser = user || MOCK_USER;
   const fullName = currentUser.full_name || 'DUMPALA VISHNU VARDHAN';
@@ -162,24 +188,62 @@ export default function DashboardPage() {
             {/* LEFT MAIN COLUMN (8 Columns = 66.66%) */}
             <div className="dash-col-8">
               
-              {/* Salutation Greeting & Quick Links Carousel */}
-              <div className="salutation-box">
-                <div className="salutation-txt-box">
-                  Hello <span className="font-extrabold">{fullName.split(' ')[0]}</span>, Let&apos;s get started!
+              {/* Salutation Greeting & Quick Links Carousel (Sliding Window of 8 items, 1-item step) */}
+              <div className="salutation-box bg-white rounded-2xl p-5 border border-slate-200/80 shadow-2xs mb-4">
+                <div className="salutation-txt-box text-base sm:text-lg font-bold text-[#702082] mb-4 font-sans">
+                  Hello <span className="font-extrabold text-[#302985]">Dumpala</span>, Let&apos;s get started!
                 </div>
 
-                <div className="scroll-container">
-                  {storiesList.map((story, sIdx) => (
-                    <div key={sIdx} className="circle-container" onClick={() => setActiveStoryIndex(sIdx)}>
-                      <div className="circle">
-                        <img src={story.logo} alt={story.label} />
-                      </div>
-                      <p className="storyname">{story.label}</p>
-                    </div>
-                  ))}
+                <div className="relative flex items-center w-full justify-between gap-1 sm:gap-2">
+                  {/* Left Arrow Button (Sliding 1 item left) */}
+                  <button 
+                    type="button" 
+                    disabled={startIndex === 0}
+                    className={`w-8 h-8 rounded-full border border-[#702082] text-[#702082] flex items-center justify-center bg-white transition-all shrink-0 cursor-pointer shadow-2xs z-10 ${
+                      startIndex === 0 ? 'opacity-25 cursor-not-allowed' : 'hover:bg-purple-50 hover:scale-105'
+                    }`}
+                    onClick={() => setStartIndex((prev) => Math.max(0, prev - 1))}
+                    aria-label="Previous Stories"
+                  >
+                    <ChevronLeft size={18} strokeWidth={2.2} />
+                  </button>
 
-                  <button type="button" className="story-next-btn" aria-label="Next Stories">
-                    <ChevronRight size={18} />
+                  {/* Exactly 8 Circle Stories in a row (No Scrollbar, 1-Item Sliding Window) */}
+                  <div className="grid grid-cols-8 gap-1.5 sm:gap-2.5 w-full items-start justify-items-center overflow-hidden py-1">
+                    {visibleStories.map((story, idx) => {
+                      const actualIndex = startIndex + idx;
+                      return (
+                        <div 
+                          key={actualIndex} 
+                          className="circle-container flex flex-col items-center cursor-pointer group w-full" 
+                          onClick={() => setActiveStoryIndex(actualIndex)}
+                        >
+                          <div className="w-[52px] h-[52px] sm:w-[58px] sm:h-[58px] rounded-full border-[2.2px] border-[#702082] p-0.5 bg-white shadow-2xs group-hover:scale-105 transition-transform overflow-hidden flex items-center justify-center">
+                            <img 
+                              src={story.logo} 
+                              alt={story.label} 
+                              className="w-full h-full object-cover rounded-full"
+                            />
+                          </div>
+                          <p className="storyname text-[11px] font-bold text-slate-700 text-center leading-tight mt-2 group-hover:text-[#702082] transition-colors">
+                            {story.label}
+                          </p>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Right Arrow Button (Sliding 1 item right) */}
+                  <button 
+                    type="button" 
+                    disabled={startIndex >= maxStartIndex}
+                    className={`w-8 h-8 rounded-full border border-[#702082] text-[#702082] flex items-center justify-center bg-white transition-all shrink-0 cursor-pointer shadow-2xs z-10 ${
+                      startIndex >= maxStartIndex ? 'opacity-25 cursor-not-allowed' : 'hover:bg-purple-50 hover:scale-105'
+                    }`}
+                    onClick={() => setStartIndex((prev) => Math.min(maxStartIndex, prev + 1))}
+                    aria-label="Next Stories"
+                  >
+                    <ChevronRight size={18} strokeWidth={2.2} />
                   </button>
                 </div>
               </div>
@@ -214,7 +278,12 @@ export default function DashboardPage() {
                           onClick={() => setPaymentsSubTab('bills')}
                           className={`pt-tab ${paymentsSubTab === 'bills' ? 'active' : ''}`}
                         >
-                          <img src="/assets/images/bill_payments/BBPS Logo.svg" alt="BBPS Logo" className="bbps-tag-img" />
+                          <img 
+                            src="/assets/images/bill_payments/BBPS Logo.svg" 
+                            onError={(e) => { (e.target as HTMLImageElement).src = 'https://yonoretail.sbi.bank.in/assets/images/bill_payments/BBPS%20Logo.svg'; }}
+                            alt="BBPS Logo" 
+                            className="bbps-tag-img" 
+                          />
                           Bill payments
                         </button>
                       </div>
@@ -223,7 +292,12 @@ export default function DashboardPage() {
                         <div className="optionsFT">
                           <div className="iconWithTitle-pt" onClick={() => router.push('/home/landingPage/fund-transfer/quick-transfer/bank-selection')}>
                             <div className="pt-icon-circle">
-                              <img src="/assets/images/landing_page/quicktransfer.svg" alt="Quick Transfer" className="w-5 h-5" />
+                              <img 
+                                src="/assets/images/landing_page/quicktransfer.svg" 
+                                onError={(e) => { (e.target as HTMLImageElement).src = 'https://yonoretail.sbi.bank.in/assets/images/landing-page/QuickTransfer.svg'; }}
+                                alt="Quick Transfer" 
+                                className="w-5 h-5" 
+                              />
                             </div>
                             <span className="pt-title">Quick Transfer</span>
                             <span className="pt-subTitle">Upto ₹50,000</span>
@@ -231,7 +305,12 @@ export default function DashboardPage() {
 
                           <div className="iconWithTitle-pt" onClick={() => toast.success("Send Money To own/other account")}>
                             <div className="pt-icon-circle">
-                              <img src="/assets/images/landing_page/sendmoney.svg" alt="Send Money" className="w-5 h-5" />
+                              <img 
+                                src="/assets/images/landing_page/sendmoney.svg" 
+                                onError={(e) => { (e.target as HTMLImageElement).src = 'https://yonoretail.sbi.bank.in/assets/images/landing-page/sendMoney.svg'; }}
+                                alt="Send Money" 
+                                className="w-5 h-5" 
+                              />
                             </div>
                             <span className="pt-title">Send Money</span>
                             <span className="pt-subTitle">To own/other account</span>
@@ -239,14 +318,24 @@ export default function DashboardPage() {
 
                           <div className="iconWithTitle-pt" onClick={() => toast.success("Send Money Abroad")}>
                             <div className="pt-icon-circle">
-                              <img src="/assets/images/landing_page/sendmoneyabroad.svg" alt="Send Money Abroad" className="w-5 h-5" />
+                              <img 
+                                src="/assets/images/landing_page/sendmoneyabroad.svg" 
+                                onError={(e) => { (e.target as HTMLImageElement).src = 'https://yonoretail.sbi.bank.in/assets/images/landing-page/sendMoneyAbroad.svg'; }}
+                                alt="Send Money Abroad" 
+                                className="w-5 h-5" 
+                              />
                             </div>
                             <span className="pt-title">Send Money Abroad</span>
                           </div>
 
                           <div className="iconWithTitle-pt" onClick={() => toast.success("Schedule Payments")}>
                             <div className="pt-icon-circle">
-                              <img src="/assets/images/landing_page/schedulepayments.svg" alt="Schedule Payments" className="w-5 h-5" />
+                              <img 
+                                src="/assets/images/landing_page/schedulepayments.svg" 
+                                onError={(e) => { (e.target as HTMLImageElement).src = 'https://yonoretail.sbi.bank.in/assets/images/landing-page/schedulePayments.svg'; }}
+                                alt="Schedule Payments" 
+                                className="w-5 h-5" 
+                              />
                             </div>
                             <span className="pt-title">Schedule Payments</span>
                           </div>
@@ -255,29 +344,49 @@ export default function DashboardPage() {
                         <div className="py-2">
                           <div className="optionsFT flex items-center justify-start gap-8 py-2 px-2">
                             <div className="iconWithTitle-pt cursor-pointer group flex flex-col items-center" onClick={() => toast.success('Opening Mobile Prepaid Recharge')}>
-                              <div className="w-11 h-11 rounded-full border border-purple-200 bg-white flex items-center justify-center text-purple-800 shadow-xs group-hover:scale-105 transition-transform">
-                                <Phone size={20} className="text-[#673391]" />
+                              <div className="w-11 h-11 rounded-full border border-purple-200 bg-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform overflow-hidden p-1.5">
+                                <img 
+                                  src="/assets/images/bill_payments/mobilerecharge.svg" 
+                                  onError={(e) => { (e.target as HTMLImageElement).src = 'https://cdn.onlineyono.sbi.bank.in/documents/d/sbi-yono-2.0/mobilerecharge_svg'; }}
+                                  alt="Mobile Prepaid" 
+                                  className="w-full h-full object-contain" 
+                                />
                               </div>
                               <span className="pt-title text-[11px] font-semibold text-slate-800 mt-2 text-center leading-tight">Mobile<br />Prepaid</span>
                             </div>
 
                             <div className="iconWithTitle-pt cursor-pointer group flex flex-col items-center" onClick={() => toast.success('Opening Mobile Postpaid Bill Payment')}>
-                              <div className="w-11 h-11 rounded-full border border-purple-200 bg-white flex items-center justify-center text-purple-800 shadow-xs group-hover:scale-105 transition-transform">
-                                <Smartphone size={20} className="text-[#673391]" />
+                              <div className="w-11 h-11 rounded-full border border-purple-200 bg-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform overflow-hidden p-1.5">
+                                <img 
+                                  src="/assets/images/bill_payments/mobile-postpaid.svg" 
+                                  onError={(e) => { (e.target as HTMLImageElement).src = 'https://cdn.onlineyono.sbi.bank.in/documents/d/sbi-yono-2.0/mobile-postpaid_svg'; }}
+                                  alt="Mobile Postpaid" 
+                                  className="w-full h-full object-contain" 
+                                />
                               </div>
                               <span className="pt-title text-[11px] font-semibold text-slate-800 mt-2 text-center leading-tight">Mobile<br />Postpaid</span>
                             </div>
 
                             <div className="iconWithTitle-pt cursor-pointer group flex flex-col items-center" onClick={() => toast.success('Opening Electricity Bill Payment')}>
-                              <div className="w-11 h-11 rounded-full border border-purple-200 bg-white flex items-center justify-center text-purple-800 shadow-xs group-hover:scale-105 transition-transform">
-                                <Zap size={20} className="text-[#673391]" />
+                              <div className="w-11 h-11 rounded-full border border-purple-200 bg-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform overflow-hidden p-1.5">
+                                <img 
+                                  src="/assets/images/bill_payments/electricity.svg" 
+                                  onError={(e) => { (e.target as HTMLImageElement).src = 'https://cdn.onlineyono.sbi.bank.in/documents/d/sbi-yono-2.0/electricity_svg'; }}
+                                  alt="Electricity" 
+                                  className="w-full h-full object-contain" 
+                                />
                               </div>
                               <span className="pt-title text-[11px] font-semibold text-slate-800 mt-2 text-center leading-tight">Electricity</span>
                             </div>
 
                             <div className="iconWithTitle-pt cursor-pointer group flex flex-col items-center" onClick={() => toast.success('Opening FASTag Recharge')}>
-                              <div className="w-11 h-11 rounded-full border border-purple-200 bg-white flex items-center justify-center text-purple-800 shadow-xs group-hover:scale-105 transition-transform">
-                                <Car size={20} className="text-[#673391]" />
+                              <div className="w-11 h-11 rounded-full border border-purple-200 bg-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform overflow-hidden p-1.5">
+                                <img 
+                                  src="/assets/images/bill_payments/fasttag.svg" 
+                                  onError={(e) => { (e.target as HTMLImageElement).src = 'https://cdn.onlineyono.sbi.bank.in/documents/d/sbi-yono-2.0/fasttag_svg'; }}
+                                  alt="FASTag" 
+                                  className="w-full h-full object-contain" 
+                                />
                               </div>
                               <span className="pt-title text-[11px] font-semibold text-slate-800 mt-2 text-center leading-tight">FASTag</span>
                             </div>
@@ -307,7 +416,8 @@ export default function DashboardPage() {
                       </div>
                       <div className="relative w-24 h-20 flex items-center justify-center">
                         <img 
-                          src="/assets/images/landing_page/sendmoney.svg" 
+                          src="/assets/images/landing_page/IC_first_fund_transfer.svg" 
+                          onError={(e) => { (e.target as HTMLImageElement).src = 'https://yonoretail.sbi.bank.in/assets/images/landing-page/IC_first_fund_transfer.svg'; }}
                           alt="Transfer Money Illustration" 
                           className="w-full h-full object-contain"
                         />
@@ -323,7 +433,12 @@ export default function DashboardPage() {
                     
                     <div className="flex-1 flex flex-col items-center justify-center text-center p-2">
                       <div className="w-28 h-28 mb-2 flex items-center justify-center">
-                        <img src="/assets/images/landing_page/IC_Bill_Payment_Schedule.svg" alt="Calendar Schedule" className="w-full h-full object-contain" />
+                        <img 
+                          src="/assets/images/landing_page/IC_Bill_Payment_Schedule.svg" 
+                          onError={(e) => { (e.target as HTMLImageElement).src = 'https://yonoretail.sbi.bank.in/assets/images/landing-page/IC_Bill_Payment_Schedule.svg'; }}
+                          alt="Calendar Schedule" 
+                          className="w-full h-full object-contain" 
+                        />
                       </div>
                       <div className="font-extrabold text-slate-900 text-sm">Never Miss Your Payments Now</div>
                       <p className="text-xs text-slate-600 mt-1 mb-4">Track and get reminder for your upcoming Payments</p>
@@ -346,13 +461,31 @@ export default function DashboardPage() {
                   onCreditScoreClick={() => toast.success('Checking your Credit Score... CIBIL Score: 785')}
                 />
 
-                {/* Promo Banner Carousel (873x203 DOM Exact) */}
+                {/* Promo Banner Carousel (873x203 DOM Exact with Side Arrow Controls) */}
                 <div className="banner-page-carousel">
+                  <button 
+                    type="button" 
+                    onClick={() => setBannerSlide((bannerSlide - 1 + bannerImages.length) % bannerImages.length)}
+                    className="banner-nav-arrow banner-nav-left"
+                    aria-label="Previous Banner"
+                  >
+                    <ChevronLeft size={20} strokeWidth={2.5} className="text-[#673391]" />
+                  </button>
+
                   <img 
                     src={bannerImages[bannerSlide]} 
                     alt="SBI Promo Banner" 
                     className="banner-img-main" 
                   />
+
+                  <button 
+                    type="button" 
+                    onClick={() => setBannerSlide((bannerSlide + 1) % bannerImages.length)}
+                    className="banner-nav-arrow banner-nav-right"
+                    aria-label="Next Banner"
+                  >
+                    <ChevronRight size={20} strokeWidth={2.5} className="text-[#673391]" />
+                  </button>
 
                   <div className="carousel-indicators-dots">
                     {bannerImages.map((_, bIdx) => (
@@ -495,25 +628,25 @@ export default function DashboardPage() {
                 <div className="rightside-grid">
                   <div className="rightside-item" onClick={() => toast.success("Life Insurance")}>
                     <div className="rightside-icon-box">
-                      <img src="/images/category-icons/ic_life_insurance.svg" alt="Life Insurance" className="w-5 h-5 object-contain" />
+                      <img src="/assets/images/insurance/protectionPlans.svg" alt="Life Insurance" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Life</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("Health Insurance")}>
                     <div className="rightside-icon-box">
-                      <img src="/images/category-icons/ic_health_insurance.svg" alt="Health Insurance" className="w-5 h-5 object-contain" />
+                      <img src="/assets/images/insurance/IC_NewHealthinsurance.svg" alt="Health Insurance" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Health</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("Accident Insurance")}>
                     <div className="rightside-icon-box">
-                      <img src="/images/category-icons/ic_accident_insurance.svg" alt="Accident Insurance" className="w-5 h-5 object-contain" />
+                      <img src="/assets/images/insurance/IC_NewAccidentinsurance.svg" alt="Accident Insurance" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Accident</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("Motor Insurance")}>
                     <div className="rightside-icon-box">
-                      <img src="/images/category-icons/ic_car_insurance.svg" alt="Motor Insurance" className="w-5 h-5 object-contain" />
+                      <img src="/assets/images/insurance/IC_NewCarInsurance.svg" alt="Motor Insurance" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Motor</span>
                   </div>
@@ -562,25 +695,25 @@ export default function DashboardPage() {
                 <div className="rightside-grid">
                   <div className="rightside-item" onClick={() => toast.success("Account Related Services")}>
                     <div className="rightside-icon-box">
-                      <img src="/images/category-icons/ic_profile_details.svg" alt="Account Related" className="w-5 h-5 object-contain" />
+                      <img src="/assets/images/services/new_account_related_services.svg" alt="Account Related" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Account Related</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("Tax Related Services")}>
                     <div className="rightside-icon-box">
-                      <img src="/images/category-icons/ic_tax_related.svg" alt="Tax Related" className="w-5 h-5 object-contain" />
+                      <img src="/assets/images/services/Cate_IC_tax_related.svg" alt="Tax Related" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Tax Related</span>
                   </div>
                   <div className="rightside-item" onClick={() => toast.success("Cheque Services")}>
                     <div className="rightside-icon-box">
-                      <img src="/images/category-icons/ic_cheque_services.svg" alt="Cheque Services" className="w-5 h-5 object-contain" />
+                      <img src="/assets/images/services/Cate_IC_Cheque_Services.svg" alt="Cheque Services" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">Cheque Services</span>
                   </div>
                   <div className="rightside-item" onClick={() => router.push('/services/e-secure-lock')}>
                     <div className="rightside-icon-box">
-                      <img src="/images/category-icons/ic_esecure_lock.svg" alt="e-Secure Lock" className="w-5 h-5 object-contain" />
+                      <img src="/assets/images/services/esecure-header.svg" alt="e-Secure Lock" className="w-5 h-5 object-contain" />
                     </div>
                     <span className="rightside-item-name">e-Secure Lock</span>
                   </div>
@@ -593,16 +726,8 @@ export default function DashboardPage() {
         </div>
       </main>
 
-      {/* ================= FOOTER ================= */}
-      <footer className="dash-footer">
-        <div className="dash-footer-links">
-          <a href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" className="dash-footer-link">About SBI</a>
-          <span>|</span>
-          <a href="https://onlinesbi.sbi.bank.in" target="_blank" rel="noopener noreferrer" className="dash-footer-link">Terms &amp; Conditions</a>
-          <span>|</span>
-          <a href="https://sbi.bank.in" target="_blank" rel="noopener noreferrer" className="dash-footer-link">Privacy Policy</a>
-        </div>
-      </footer>
+      {/* FIXED SBI GLOBAL FOOTER (16px Roboto, Fixed at Bottom at All Times) */}
+      <SbiFixedFooter />
 
       {/* ================= INSTAGRAM-STYLE STORY VIEWER MODAL ================= */}
       {activeStoryIndex !== null && (
