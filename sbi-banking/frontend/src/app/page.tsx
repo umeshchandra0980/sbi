@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Sparkles, ArrowRight, Play, Pause, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react'
+import { Play, Pause, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react'
 import '@/app/sbi-home.css'
 
 export default function Home() {
@@ -11,7 +11,7 @@ export default function Home() {
   // State management
   const [isMarqueePaused, setIsMarqueePaused] = useState(false)
   const [isUsefulLinksOpen, setIsUsefulLinksOpen] = useState(false)
-  const [activeSlide, setActiveSlide] = useState(0)
+  const [activeSlide, setActiveSlide] = useState(4) // Start with slide 4 (SBI Mutual Fund) as default active like original HTML
   const [isCarouselPlaying, setIsCarouselPlaying] = useState(true)
 
   // Carousel slide images & metadata
@@ -21,7 +21,7 @@ export default function Home() {
     { src: '/images/banners/banner-13.jpg', title: 'Register Complaint of Unauthorized Transaction', href: 'https://crh.sbi.bank.in/' },
     { src: '/images/banners/banner-09.jpg', title: 'Publicizing the Centralized Number Series 1600', href: 'https://sbi.bank.in/' },
     { src: '/images/banners/banner-07.jpg', title: 'SBI Mutual Fund', href: 'https://www.sbimf.com/' },
-    { src: '/images/banners/banner-05.jpg', title: 'PM-Vidyalaxmi Scheme', href: 'https://sbi.bank.in/web/personal-banking/sbi-pm-vidyalaxmi' },
+    { src: '/images/banners/banner-15.jpg', title: 'PM-Vidyalaxmi Scheme', href: 'https://sbi.bank.in/web/personal-banking/sbi-pm-vidyalaxmi' },
     { src: '/images/banners/banner-10.jpg', title: 'SBISSL Banner', href: 'https://diy.sbisecurities.in/' },
     { src: '/images/banners/banner-12.jpg', title: 'Loan Against Mutual Fund', href: '/home/landingPage/lending/etb-lamfu/description' },
     { src: '/images/banners/banner-03.jpg', title: 'SBI Card', href: 'http://www.sbicard.com/' },
@@ -30,7 +30,9 @@ export default function Home() {
     { src: '/images/banners/banner-14.jpg', title: 'SBI PMJJBY-PMSBY Schemes', href: 'https://sbi.bank.in/' },
     { src: '/images/banners/banner-06.jpg', title: 'DICGC', href: 'https://www.dicgc.org.in' },
     { src: '/images/banners/banner-04.jpg', title: 'Reserve Bank - Integrated Ombudsman Scheme', href: 'https://retail.sbi.bank.in/' },
-    { src: '/images/banners/banner-15.jpg', title: 'Meet All Your Banking & Financial Needs', href: 'https://onlineapply.sbi.bank.in/' },
+    { src: '/images/banners/banner-05.jpg', title: 'RBI-Integrated Ombudsman Scheme', href: 'https://retail.sbi.bank.in/' },
+    { src: '/images/banners/banner-20.jpg', title: 'Meet All Your Banking & Financial Needs', href: 'https://onlineapply.sbi.bank.in/' },
+    { src: '/images/banners/banner-19.jpg', title: 'Beware of Cyber Frauds', href: 'https://cybercrime.gov.in/' },
     { src: '/images/banners/banner-01.jpg', title: 'Beware of Cyber Frauds', href: 'https://cybercrime.gov.in/' }
   ]
 
@@ -65,13 +67,13 @@ export default function Home() {
   }
 
   return (
-    <div className="pre-login-wrapper pb-12 select-none relative min-h-screen bg-[#fafbfc]">
+    <div className="max-w-[1366px] mx-auto bg-white min-h-screen pb-12 select-none relative shadow-md font-sans">
       
       {/* 0. PREMIUM DEV PORTAL ACCESS BANNER */}
-      <div className="bg-gradient-to-r from-violet-800 to-indigo-900 text-white px-4 py-2.5 flex flex-wrap items-center justify-between gap-4 text-xs font-medium z-50 sticky top-0 shadow-md">
+      <div className="bg-gradient-to-r from-violet-800 to-indigo-900 text-white px-4 py-2 flex items-center justify-between gap-4 text-xs font-semibold z-50 sticky top-0 shadow-sm">
         <div className="flex items-center gap-2">
           <span className="bg-violet-700 text-yellow-400 font-bold px-2 py-0.5 rounded flex items-center gap-1 animate-pulse">
-            <Sparkles size={12} /> DEMO PORTAL
+            ★ DEMO PORTAL
           </span>
           <span className="text-violet-100 hidden sm:inline">
             Direct access to the banking dashboards bypassing all multi-step forms and verification checks.
@@ -80,7 +82,7 @@ export default function Home() {
         <div className="flex items-center gap-3">
           <button 
             onClick={() => router.push('/auth/login')}
-            className="bg-yellow-500 hover:bg-yellow-400 text-violet-950 font-bold px-3 py-1.5 rounded transition-all flex items-center gap-1 shadow-sm"
+            className="bg-yellow-500 hover:bg-yellow-400 text-violet-950 font-bold px-3 py-1 rounded transition-all flex items-center gap-1 shadow-sm cursor-pointer"
           >
             Quick Access / Login Panel <ArrowRight size={12} />
           </button>
@@ -88,254 +90,257 @@ export default function Home() {
       </div>
 
       {/* 1. HEADER */}
-      <header className="pre-login-header bg-white d-flex align-items-center justify-content-between">
-        <div className="flex-grow-1">
-          <a href="https://sbi.bank.in/" title="SBI Logo" aria-label="SBI Logo">
-            <img src="/images/logo.png" alt="SBI Logo" className="pre-login-logo" />
+      <header className="flex px-4 py-3 align-items-center justify-between bg-white border-b border-slate-200">
+        <div className="flex-grow">
+          <a href="https://sbi.bank.in/" title="Logo" id="logo" aria-label="SBI Logo">
+            <img src="/images/logo.png" alt="SBI Logo" className="h-12 object-contain" />
           </a>
         </div>
-        <div className="px-4 text-[13px] font-semibold text-[#032e63] hover:underline hidden md:block">
+        <div className="px-4 text-[13px] font-semibold text-[#032e63] hover:underline self-center hidden md:block">
           <a href="#mainContent">Skip to main content</a>
         </div>
-        <div>
-          <img src="/images/yono-logo.png" alt="Yono SBI Logo" className="pre-login-yono select-none" />
+        <div id="SbiYonoLogo" className="hidden md:flex items-center">
+          <img src="/images/yono-logo.png" alt="YONO SBI Logo" className="h-10 object-contain" />
         </div>
       </header>
 
       {/* 2. NAVIGATION BAR */}
-      <nav className="pre-login-navbar navbar navbar-expand-lg py-1 justify-content-between text-white shadow-xs">
-        <div className="d-flex w-full justify-content-between align-items-center">
-          <div className="d-flex flex-wrap gap-1 align-items-center text-xs font-bold">
+      <nav id="navigation" className="bg-[#032e63] px-3 py-1 flex items-center justify-between text-white shadow-xs select-none">
+        <div className="flex w-full justify-between items-center">
+          <div className="flex flex-wrap gap-1 items-center text-xs font-bold">
             
             {/* Services Dropdown */}
-            <div className="position-relative">
+            <div className="relative">
               <button 
                 type="button" 
                 onClick={() => toggleDropdown('services')}
-                className="btn text-white text-[12px] font-bold px-3 py-1 hover:text-yellow-400"
+                className="text-white hover:text-yellow-400 px-3 py-1.5 focus:outline-none flex items-center gap-1 cursor-pointer"
               >
-                Services ▾
+                Services <span className="text-[10px]">▾</span>
               </button>
               {activeDropdown === 'services' && (
-                <ul className="dropdown-menu show d-block position-absolute shadow-md p-1 mt-1 rounded text-start z-50">
-                  <li><a className="dropdown-item" href="https://retail.sbi.bank.in/npersonal/sbi_home.html">Personal Internet Banking</a></li>
-                  <li><a className="dropdown-item" href="https://corp.sbi.bank.in/corporate/sbi/sbi_home.html">Corporate Internet Banking</a></li>
-                  <li><a className="dropdown-item" href="https://mobilityretail.sbi/sbf_retail.html">yono LITE Mobile Banking</a></li>
-                  <li><a className="dropdown-item" href="https://mobilityretail.sbi/sbf_corporate.html">yono BUSINESS Mobile Banking</a></li>
-                  <li><a className="dropdown-item" href="https://www.sbipayments.com/">SBI Payments</a></li>
-                  <li><a className="dropdown-item" href="https://retail.sbi.bank.in/npersonal/tax_retail.html">Online Tax printing</a></li>
+                <ul className="absolute left-0 mt-1 bg-[#032e63] border border-white/10 rounded shadow-lg min-w-[240px] z-50 py-1 text-left list-none m-0">
+                  <li><a className="block px-4 py-2 hover:bg-[#0d4484] hover:text-yellow-400 text-white text-[13px] no-underline border-b border-white/5" href="https://retail.sbi.bank.in/npersonal/sbi_home.html">Personal Internet Banking</a></li>
+                  <li><a className="block px-4 py-2 hover:bg-[#0d4484] hover:text-yellow-400 text-white text-[13px] no-underline border-b border-white/5" href="https://corp.sbi.bank.in/corporate/sbi/sbi_home.html">Corporate Internet Banking</a></li>
+                  <li><a className="block px-4 py-2 hover:bg-[#0d4484] hover:text-yellow-400 text-white text-[13px] no-underline border-b border-white/5" href="https://mobilityretail.sbi/sbf_retail.html">yono LITE</a></li>
+                  <li><a className="block px-4 py-2 hover:bg-[#0d4484] hover:text-yellow-400 text-white text-[13px] no-underline border-b border-white/5" href="https://mobilityretail.sbi/sbf_corporate.html">yono BUSINESS</a></li>
+                  <li><a className="block px-4 py-2 hover:bg-[#0d4484] hover:text-yellow-400 text-white text-[13px] no-underline border-b border-white/5" href="https://www.sbipayments.com/">SBI Payments</a></li>
+                  <li><a className="block px-4 py-2 hover:bg-[#0d4484] hover:text-yellow-400 text-white text-[13px] no-underline" href="https://retail.sbi.bank.in/npersonal/tax_retail.html">Online Tax / Challan printing</a></li>
                 </ul>
               )}
             </div>
 
             {/* FAQ Dropdown */}
-            <div className="position-relative">
+            <div className="relative">
               <button 
                 type="button" 
                 onClick={() => toggleDropdown('faq')}
-                className="btn text-white text-[12px] font-bold px-3 py-1 hover:text-yellow-400"
+                className="text-white hover:text-yellow-400 px-3 py-1.5 focus:outline-none flex items-center gap-1 cursor-pointer"
               >
-                FAQ ▾
+                FAQ <span className="text-[10px]">▾</span>
               </button>
               {activeDropdown === 'faq' && (
-                <ul className="dropdown-menu show d-block position-absolute shadow-md p-1 mt-1 rounded text-start z-50">
-                  <li><a className="dropdown-item" href="https://retail.sbi.bank.in/npersonal/faq.html">Personal Banking FAQ</a></li>
-                  <li><a className="dropdown-item" href="https://corp.sbi.bank.in/corporate/sbi/corp_faq.html">Corporate Banking FAQ</a></li>
-                  <li><a className="dropdown-item" href="https://mobilityretail.sbi/sbustaticweb/mobile/faq.html">Yono LITE FAQ</a></li>
-                  <li><a className="dropdown-item" href="https://mobilityretail.sbi/sbijava/mobile/sbsecure_otp_app_faq.html">State Bank Secure OTP App</a></li>
+                <ul className="absolute left-0 mt-1 bg-[#032e63] border border-white/10 rounded shadow-lg min-w-[220px] z-50 py-1 text-left list-none m-0">
+                  <li><a className="block px-4 py-2 hover:bg-[#0d4484] hover:text-yellow-400 text-white text-[13px] no-underline border-b border-white/5" href="https://retail.sbi.bank.in/npersonal/faq.html">Personal Banking FAQ</a></li>
+                  <li><a className="block px-4 py-2 hover:bg-[#0d4484] hover:text-yellow-400 text-white text-[13px] no-underline border-b border-white/5" href="https://corp.sbi.bank.in/corporate/sbi/corp_faq.html">Corporate Banking FAQ</a></li>
+                  <li><a className="block px-4 py-2 hover:bg-[#0d4484] hover:text-yellow-400 text-white text-[13px] no-underline border-b border-white/5" href="https://mobilityretail.sbi/sbustaticweb/mobile/faq.html">Yono LITE FAQ</a></li>
+                  <li><a className="block px-4 py-2 hover:bg-[#0d4484] hover:text-yellow-400 text-white text-[13px] no-underline" href="https://mobilityretail.sbi/sbijava/mobile/sbsecure_otp_app_faq.html">State Bank Secure OTP App</a></li>
                 </ul>
               )}
             </div>
 
-            <a href="https://sbi.bank.in/" className="btn text-white text-[12px] font-bold px-3 py-1 hover:text-yellow-400">Corporate Website</a>
+            <a href="https://sbi.bank.in/" className="text-white hover:text-yellow-400 px-3 py-1.5 no-underline">Corporate Website</a>
 
             {/* SBIePay Lite Dropdown */}
-            <div className="position-relative">
+            <div className="relative">
               <button 
                 type="button" 
                 onClick={() => toggleDropdown('sbiepay')}
-                className="btn text-white text-[12px] font-bold px-3 py-1 hover:text-yellow-400"
+                className="text-white hover:text-yellow-400 px-3 py-1.5 focus:outline-none flex items-center gap-1 cursor-pointer"
               >
-                SBIePay Lite <span className="text-[10px] font-normal">(SBMOPS)</span> ▾
+                SBIePay Lite <span className="text-[10px] font-normal">(SBMOPS)</span> <span className="text-[10px]">▾</span>
               </button>
               {activeDropdown === 'sbiepay' && (
-                <ul className="dropdown-menu show d-block position-absolute shadow-md p-1 mt-1 rounded text-start z-50">
-                  <li><a className="dropdown-item" href="https://merchant.sbi.bank.in/mopsprelogin/mopsremittanceform.htm">Reprint Remittance Form</a></li>
-                  <li><a className="dropdown-item" href="https://merchant.sbi.bank.in/mopsprelogin/mopsBilldeskCancelTransaction.htm">Cancel RTGS/NEFT Transactions</a></li>
-                  <li><a className="dropdown-item" href="https://merchant.sbi.bank.in/mopsprelogin/mopsRtgsNeftChallanDownload.htm">NEFT PAP Challan Reprint</a></li>
-                  <li><a className="dropdown-item" href="https://merchant.sbi.bank.in/sbijava/sbiepaylite/html/payment_gateway_charges.html">Payment Gateway Charges</a></li>
+                <ul className="absolute left-0 mt-1 bg-[#032e63] border border-white/10 rounded shadow-lg min-w-[280px] z-50 py-1 text-left list-none m-0">
+                  <li><a className="block px-4 py-2 hover:bg-[#0d4484] hover:text-yellow-400 text-white text-[13px] no-underline border-b border-white/5" href="https://merchant.sbi.bank.in/mopsprelogin/mopsremittanceform.htm">Reprint Remittance Form</a></li>
+                  <li><a className="block px-4 py-2 hover:bg-[#0d4484] hover:text-yellow-400 text-white text-[13px] no-underline border-b border-white/5" href="https://merchant.sbi.bank.in/mopsprelogin/mopsBilldeskCancelTransaction.htm">Cancel RTGS/NEFT/Branch Txn</a></li>
+                  <li><a className="block px-4 py-2 hover:bg-[#0d4484] hover:text-yellow-400 text-white text-[13px] no-underline border-b border-white/5" href="https://merchant.sbi.bank.in/mopsprelogin/mopsRtgsNeftChallanDownload.htm">RTGS-NEFT PAP Challan Reprint</a></li>
+                  <li><a className="block px-4 py-2 hover:bg-[#0d4484] hover:text-yellow-400 text-white text-[13px] no-underline" href="https://merchant.sbi.bank.in/sbijava/sbiepaylite/html/payment_gateway_charges.html">Payment Gateway Charges</a></li>
                 </ul>
               )}
             </div>
 
-            <a href="https://sbi.bank.in/web/personal-banking/donations" className="btn text-white text-[12px] font-bold px-3 py-1 hover:text-yellow-400">Donations</a>
-            <a href="https://sbcollect.sbi.bank.in/sbicollect/icollecthome.htm" className="btn text-white text-[12px] font-bold px-3 py-1 hover:text-yellow-400">SB Collect</a>
-            <a href="#" className="btn text-white text-[12px] font-bold px-3 py-1 hover:text-yellow-400">Videos</a>
+            <a href="https://sbi.bank.in/web/personal-banking/donations" className="text-white hover:text-yellow-400 px-3 py-1.5 no-underline">Donations</a>
+            <a href="https://sbcollect.sbi.bank.in/sbicollect/icollecthome.htm" className="text-white hover:text-yellow-400 px-3 py-1.5 no-underline">SB Collect</a>
+            <a href="#" className="text-white hover:text-yellow-400 px-3 py-1.5 no-underline">Videos</a>
 
             {/* Apply Account Dropdown */}
-            <div className="position-relative">
+            <div className="relative">
               <button 
                 type="button" 
                 onClick={() => toggleDropdown('apply')}
-                className="btn text-white text-[12px] font-bold px-3 py-1 hover:text-yellow-400"
+                className="text-white hover:text-yellow-400 px-3 py-1.5 focus:outline-none flex items-center gap-1 cursor-pointer"
               >
-                Apply for SB/ Current Account <sup className="text-yellow-300 font-extrabold animate-pulse text-[9px]">New</sup> ▾
+                Apply for SB/ Current Account <sup className="text-yellow-300 font-extrabold text-[9px] animate-pulse">New</sup> <span className="text-[10px]">▾</span>
               </button>
               {activeDropdown === 'apply' && (
-                <ul className="dropdown-menu show d-block position-absolute shadow-md p-1 mt-1 rounded text-start z-50">
-                  <li><a className="dropdown-item font-semibold" href="https://retail.sbi.bank.in/vkyc/vkyclanding.htm">Open Insta Plus Savings (VKYC)</a></li>
-                  <li><a className="dropdown-item" href="https://nridigital.sbi.bank.in">for NRE/NRO Accounts</a></li>
-                  <li><a className="dropdown-item" href="https://corp.sbi.bank.in/oaorevamp/oaolanding.htm">Corporate Current Account</a></li>
-                  <li><a className="dropdown-item" href="https://retail.sbi.bank.in/npersonal/reg_forms.html">Banking Forms</a></li>
+                <ul className="absolute left-0 mt-1 bg-[#032e63] border border-white/10 rounded shadow-lg min-w-[240px] z-50 py-1 text-left list-none m-0">
+                  <li><a className="block px-4 py-2 hover:bg-[#0d4484] hover:text-yellow-400 text-white text-[13px] no-underline border-b border-white/5 font-semibold" href="https://retail.sbi.bank.in/vkyc/vkyclanding.htm">Open Insta Plus Savings (VKYC)</a></li>
+                  <li><a className="block px-4 py-2 hover:bg-[#0d4484] hover:text-yellow-400 text-white text-[13px] no-underline border-b border-white/5" href="https://nridigital.sbi.bank.in">for NRE/NRO</a></li>
+                  <li><a className="block px-4 py-2 hover:bg-[#0d4484] hover:text-yellow-400 text-white text-[13px] no-underline border-b border-white/5" href="https://corp.sbi.bank.in/oaorevamp/oaolanding.htm">Current Account</a></li>
+                  <li><a className="block px-4 py-2 hover:bg-[#0d4484] hover:text-yellow-400 text-white text-[13px] no-underline" href="https://retail.sbi.bank.in/npersonal/reg_forms.html">Banking Forms</a></li>
                 </ul>
               )}
             </div>
 
-            <a href="https://retail.sbi.bank.in/npscorp/npsCorporateRegistration.htm" className="btn text-white text-[12px] font-bold px-3 py-1 hover:text-yellow-400">NPS</a>
-            <a href="https://customer.sbiunipay.sbi.bank.in/CustomerPortal/quickPay" className="btn text-white text-[12px] font-bold px-3 py-1 hover:text-yellow-400">SBI Unipay</a>
+            <a href="https://retail.sbi.bank.in/npscorp/npsCorporateRegistration.htm" className="text-white hover:text-yellow-400 px-3 py-1.5 no-underline">NPS</a>
+            <a href="https://customer.sbiunipay.sbi.bank.in/CustomerPortal/quickPay" className="text-white hover:text-yellow-400 px-3 py-1.5 no-underline">SBI Unipay</a>
 
             {/* Loans Dropdown */}
-            <div className="position-relative">
+            <div className="relative">
               <button 
                 type="button" 
                 onClick={() => toggleDropdown('loans')}
-                className="btn text-white text-[12px] font-bold px-3 py-1 hover:text-yellow-400"
+                className="text-white hover:text-yellow-400 px-3 py-1.5 focus:outline-none flex items-center gap-1 cursor-pointer"
               >
-                SBI Loans <sup className="text-yellow-300 font-extrabold animate-pulse text-[9px]">New</sup> ▾
+                SBI Loans <sup className="text-yellow-300 font-extrabold text-[9px] animate-pulse">New</sup> <span className="text-[10px]">▾</span>
               </button>
               {activeDropdown === 'loans' && (
-                <ul className="dropdown-menu show d-block position-absolute shadow-md p-1 mt-1 rounded text-start z-50">
-                  <li><a className="dropdown-item font-semibold" href="https://retail.sbi.bank.in/lamf/mflanding.htm">Loan Against Mutual Fund</a></li>
-                  <li><a className="dropdown-item" href="https://homeloans.sbi.bank.in/">Home Loan</a></li>
-                  <li><a className="dropdown-item" href="https://emudra.sbi.bank.in:8044/emudra">e-MUDRA Loan</a></li>
-                  <li><a className="dropdown-item" href="https://sbi.bank.in/web/personal-banking/loans/gold-loan">Gold Loan</a></li>
-                  <li><a className="dropdown-item" href="https://onlineapply.sbi.bank.in/personal-banking/personal-loan">Xpress Credit Personal Loan</a></li>
+                <ul className="absolute left-0 mt-1 bg-[#032e63] border border-white/10 rounded shadow-lg min-w-[240px] z-50 py-1 text-left list-none m-0">
+                  <li><a className="block px-4 py-2 hover:bg-[#0d4484] hover:text-yellow-400 text-white text-[13px] no-underline border-b border-white/5 font-semibold" href="https://retail.sbi.bank.in/lamf/mflanding.htm">Loan Against Mutual Fund</a></li>
+                  <li><a className="block px-4 py-2 hover:bg-[#0d4484] hover:text-yellow-400 text-white text-[13px] no-underline border-b border-white/5" href="https://homeloans.sbi.bank.in/">Home Loan</a></li>
+                  <li><a className="block px-4 py-2 hover:bg-[#0d4484] hover:text-yellow-400 text-white text-[13px] no-underline border-b border-white/5" href="https://emudra.sbi.bank.in:8044/emudra">e-MUDRA Gold Loan</a></li>
+                  <li><a className="block px-4 py-2 hover:bg-[#0d4484] hover:text-yellow-400 text-white text-[13px] no-underline" href="https://onlineapply.sbi.bank.in/personal-banking/personal-loan">Xpress Credit Personal Loan</a></li>
                 </ul>
               )}
             </div>
 
-            <a href="https://yonoretail.sbi.bank.in/accounts/re-kyc/kyc-entry?srcChn=RINB" className="btn text-white text-[12px] font-bold px-3 py-1 hover:text-yellow-400">Update KYC <sup className="text-yellow-300 font-extrabold animate-pulse text-[9px]">New</sup></a>
+            <a href="https://yonoretail.sbi.bank.in/accounts/re-kyc/kyc-entry?srcChn=RINB" className="text-white hover:text-yellow-400 px-3 py-1.5 no-underline">Update KYC <sup className="text-yellow-300 font-extrabold text-[9px] animate-pulse">New</sup></a>
 
           </div>
-          <div className="pe-2">
-            <a href="#" className="text-yellow-300 hover:text-white font-extrabold text-[13px] border border-yellow-300 px-2 py-0.5 rounded transition-all">हिंदी</a>
+          <div className="pr-1">
+            <a href="#" className="text-yellow-300 hover:text-white font-extrabold text-[12px] border border-yellow-300 px-2 py-0.5 rounded transition-all">हिंदी</a>
           </div>
         </div>
       </nav>
 
-      {/* 3. MAIN CONTENT */}
-      <main id="mainContent" className="container-xxxl container-fluid mt-4 px-4 space-y-4">
+      {/* 3. MAIN CONTENT CONTAINER */}
+      <main id="mainContent" className="px-4 mt-3 space-y-3">
         
-        {/* Browser cache warning */}
+        {/* Cache & Disclaimer warning */}
         <div id="disclaimerBox" className="w-full">
           <div className="cacheText shadow-2xs leading-relaxed text-slate-800">
             <span className="cache_blink">If slowness is observed during Login Page loading, please refresh the page for better experience.</span>
-            <div className="mt-1.5 text-xs text-slate-600 font-medium">
+            <div className="mt-2 text-[12px] text-slate-600 font-medium">
               SBI never asks for confidential information such as PIN and OTP from customers. Any such call can be made only by a fraudster. Please do not share personal info.
             </div>
           </div>
         </div>
 
-        {/* Announcement Marquee */}
-        <div className="marquee-container shadow-2xs rounded border border-blue-100 flex align-items-center">
+        {/* Announcement scrolling marquee */}
+        <div className="marquee-container shadow-2xs rounded border border-blue-100 flex items-center p-2">
           <button 
             type="button" 
             onClick={() => setIsMarqueePaused(!isMarqueePaused)}
-            className="flex items-center justify-center bg-blue-600 text-white rounded p-1 hover:bg-blue-700 transition-colors"
+            className="flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white rounded p-1.5 transition-colors cursor-pointer mr-3"
             aria-label="Pause marquee"
           >
-            {isMarqueePaused ? <Play size={11} fill="white" /> : <Pause size={11} fill="white" />}
+            {isMarqueePaused ? <Play size={10} fill="white" /> : <Pause size={10} fill="white" />}
           </button>
-          <div className="marquee-text-flow select-text">
+          <div className="marquee-text-flow select-text text-sm">
             <div className={`marquee-text-inner ${isMarqueePaused ? 'marquee-paused' : ''}`}>
               SBI Authenticator App is now LIVE for our YONo Net-banking! Download and Log in SBI Authenticator App to enable YONO Net-banking for getting OTPs on SBI Authenticator App.
             </div>
           </div>
         </div>
 
-        {/* 4. BANKING CONTENT CARDS */}
-        <div id="bankingBoxes" className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        {/* 4. BANKING CONTENT PANEL CARDS */}
+        <div id="bankingBoxes" className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
           
           {/* PERSONAL BANKING COLUMN */}
-          <div className="banking-card flex flex-col items-center">
-            <div className="mt-2 mb-4">
-              <img src="/images/yono_netbanking.png" alt="Yono Netbanking Logo" className="h-10 object-contain" />
+          <div className="banking-card flex flex-col items-center p-5 border border-slate-200 rounded-md bg-white">
+            <div className="mt-2 mb-3">
+              <img src="/images/yono_netbanking.png" alt="Yono Netbanking Logo" className="h-12 object-contain" />
             </div>
-            <h2 className="banking-card-title">
-              <span className="personal_highlight">PERSONAL</span> BANKING
+            <h2 className="banking-card-title text-lg font-bold text-[#032e63] mt-1 mb-4">
+              <span className="personal_highlight text-[#e6007e]">PERSONAL</span> BANKING
             </h2>
 
-            <button 
-              onClick={() => router.push('/auth/login')}
-              className="login-btn-banner cursor-pointer shadow-sm hover:shadow transition-all"
-            >
-              <span>LOGIN</span>
-              <img src="/images/arrow.png" alt="Personal Login Arrow" className="w-5 object-contain" />
-            </button>
+            <div className="my-3">
+              <button 
+                onClick={() => router.push('/auth/login')}
+                className="bg-[#0b3875] hover:bg-[#072c5c] text-white font-extrabold py-2 px-6 rounded flex items-center justify-between gap-6 cursor-pointer shadow-sm hover:shadow transition-all"
+              >
+                <span className="text-[13px] tracking-wider">LOGIN</span>
+                <img src="/images/arrow.png" alt="Personal Login Arrow" className="h-3 object-contain" />
+              </button>
+            </div>
 
             {/* Icon links below row */}
-            <div className="grid grid-cols-4 w-full mt-6 pt-4 border-t border-slate-100">
-              <a href="#" className="banking-sublink hover:text-pink-600 transition-colors">
-                <img src="/images/new_user.png" alt="New User" />
-                <span>New User Registration</span>
+            <div className="grid grid-cols-4 w-full mt-6 pt-4 border-t border-slate-100 text-center">
+              <a href="#" className="flex flex-col items-center gap-1 text-[11px] font-bold text-slate-700 hover:text-pink-600 border-r border-slate-200 last:border-none no-underline">
+                <img src="/images/new_user.png" alt="New User" className="w-8 h-8 object-contain" />
+                <span>New User Registration / Activation</span>
               </a>
-              <a href="https://yonoretail.sbi.bank.in/registration/services/complaint/help-support" className="banking-sublink hover:text-pink-600 transition-colors">
-                <img src="/images/how_do_i.png" alt="How Do I" />
+              <a href="https://yonoretail.sbi.bank.in/registration/services/complaint/help-support" className="flex flex-col items-center gap-1 text-[11px] font-bold text-slate-700 hover:text-pink-600 border-r border-slate-200 last:border-none no-underline">
+                <img src="/images/how_do_i.png" alt="How Do I" className="w-8 h-8 object-contain" />
                 <span>How Do I</span>
               </a>
-              <a href="https://crh.sbi.bank.in/" className="banking-sublink hover:text-pink-600 transition-colors">
-                <img src="/images/customer_care.png" alt="Customer Care" />
-                <span>Customer Care</span>
+              <a href="https://crh.sbi.bank.in/" className="flex flex-col items-center gap-1 text-[11px] font-bold text-slate-700 hover:text-pink-600 border-r border-slate-200 last:border-none no-underline">
+                <img src="/images/customer_care.png" alt="Customer Care" className="w-8 h-8 object-contain" />
+                <span>Customer Care - Personal</span>
               </a>
-              <a href="#" className="banking-sublink hover:text-pink-600 transition-colors">
-                <img src="/images/lock_unlock.png" alt="Lock/Unlock" />
+              <a href="#" className="flex flex-col items-center gap-1 text-[11px] font-bold text-slate-700 hover:text-pink-600 border-r border-slate-200 last:border-none no-underline">
+                <img src="/images/lock_unlock.png" alt="Lock/Unlock" className="w-8 h-8 object-contain" />
                 <span>Lock & Unlock User</span>
               </a>
             </div>
 
-            <p className="text-slate-500 text-[11px] leading-relaxed mt-4 px-4 text-center">
+            <p className="text-slate-500 text-[12px] leading-relaxed mt-4 px-4 text-center">
               SBI&apos;s internet banking portal provides personal banking services that gives you complete control over all your banking demands online.
             </p>
           </div>
 
           {/* CORPORATE BANKING COLUMN */}
-          <div className="banking-card flex flex-col items-center">
-            <div className="mt-2 mb-4">
-              <img src="/images/ybbi_corp.png" alt="Yono Business Logo" className="h-10 object-contain" />
+          <div className="banking-card flex flex-col items-center p-5 border border-slate-200 rounded-md bg-white">
+            <div className="mt-2 mb-3">
+              <img src="/images/ybbi_corp.png" alt="Yono Business Logo" className="h-12 object-contain" />
             </div>
-            <h2 className="banking-card-title">
-              <span className="personal_highlight">CORPORATE</span> BANKING
+            <h2 className="banking-card-title text-lg font-bold text-[#032e63] mt-1 mb-4">
+              <span className="personal_highlight text-[#e6007e]">CORPORATE</span> BANKING
             </h2>
 
-            <a 
-              href="https://yonobusiness.sbi.bank.in/" 
-              className="login-btn-banner shadow-sm hover:shadow transition-all"
-            >
-              <span>LOGIN</span>
-              <img src="/images/arrow.png" alt="Corporate Login Arrow" className="w-5 object-contain" />
-            </a>
+            <div className="my-3">
+              <a 
+                href="https://yonobusiness.sbi.bank.in/" 
+                className="bg-[#0b3875] hover:bg-[#072c5c] text-white font-extrabold py-2 px-6 rounded flex items-center justify-between gap-6 cursor-pointer shadow-sm hover:shadow transition-all no-underline"
+              >
+                <span className="text-[13px] tracking-wider">LOGIN</span>
+                <img src="/images/arrow.png" alt="Corporate Login Arrow" className="h-3 object-contain" />
+              </a>
+            </div>
 
-            <p className="text-[#302985] font-semibold text-xs leading-relaxed mt-4 px-6 text-center italic">
+            <p className="text-[#302985] font-semibold text-xs leading-normal mt-3 px-6 text-left italic">
               Have you tried our new simplified and intuitive business banking platform? Log in to yonobusiness.sbi.bank.in to avail business banking services.
             </p>
 
             {/* Icon links below row */}
-            <div className="grid grid-cols-3 w-full mt-6 pt-4 border-t border-slate-100">
-              <a href="https://yonobusiness.sbi.bank.in/preonboard/landing/registration" className="banking-sublink hover:text-pink-600 transition-colors">
-                <img src="/images/new_user.png" alt="New Corporate" />
+            <div className="grid grid-cols-3 w-full mt-6 pt-4 border-t border-slate-100 text-center">
+              <a href="https://yonobusiness.sbi.bank.in/preonboard/landing/registration" className="flex flex-col items-center gap-1 text-[11px] font-bold text-slate-700 hover:text-pink-600 border-r border-slate-200 last:border-none no-underline">
+                <img src="/images/new_user.png" alt="New Corporate" className="w-8 h-8 object-contain" />
                 <span>New Corporate Registration</span>
               </a>
-              <a href="https://corp.sbi.bank.in/ybbihelp/help_corporate.html" className="banking-sublink hover:text-pink-600 transition-colors">
-                <img src="/images/how_do_i.png" alt="How Do I" />
+              <a href="https://corp.sbi.bank.in/ybbihelp/help_corporate.html" className="flex flex-col items-center gap-1 text-[11px] font-bold text-slate-700 hover:text-pink-600 border-r border-slate-200 last:border-none no-underline">
+                <img src="/images/how_do_i.png" alt="How Do I" className="w-8 h-8 object-contain" />
                 <span>How Do I</span>
               </a>
-              <a href="https://yonobusiness.sbi.bank.in/ContactUs" className="banking-sublink hover:text-pink-600 transition-colors">
-                <img src="/images/customer_care.png" alt="Customer Care" />
-                <span>Customer Care</span>
+              <a href="https://yonobusiness.sbi.bank.in/ContactUs" className="flex flex-col items-center gap-1 text-[11px] font-bold text-slate-700 hover:text-pink-600 border-r border-slate-200 last:border-none no-underline">
+                <img src="/images/customer_care.png" alt="Customer Care" className="w-8 h-8 object-contain" />
+                <span>Customer Care - Corporate</span>
               </a>
             </div>
 
-            <p className="text-slate-500 text-[11px] leading-relaxed mt-4 px-4 text-center">
+            <p className="text-slate-500 text-[12px] leading-relaxed mt-4 px-4 text-center">
               Corporate Banking application to administer and manage non personal accounts online.
             </p>
           </div>
@@ -357,7 +362,7 @@ export default function Home() {
             <a href="https://retail.sbi.bank.in/npersonal/reg_forms.html" className="useful-link-item"><span>▸ Banking Forms</span></a>
             <a href="https://www.psballiance.com/doorstep-banking.html" className="useful-link-item"><span>▸ Doorstep Banking</span></a>
             <a href="https://www.sbigeneral.in/portal/downloads" className="useful-link-item"><span>▸ SBI General Document Download</span></a>
-            <a href="https://fastag.sbi.bank.in/" className="useful-link-item"><span>▸ SBI FasTag</span></a>
+            <a href="https://fastag.sbi.bank.in/" className="useful-link-item"><span>▸ FastTag</span></a>
 
             <a href="https://sbi.bank.in/web/salary-account" className="useful-link-item"><span>▸ SBI Salary Account</span></a>
             <a href="https://sbi.bank.in/web/nri/home" className="useful-link-item"><span>▸ NRI Services</span></a>
@@ -393,7 +398,7 @@ export default function Home() {
             <button 
               type="button" 
               onClick={() => setIsUsefulLinksOpen(!isUsefulLinksOpen)}
-              className="border border-[#032e63] text-[#032e63] rounded px-4 py-1.5 text-xs font-bold hover:bg-slate-200 transition-colors flex items-center gap-1.5"
+              className="border border-[#032e63] text-[#032e63] rounded px-4 py-1.5 text-xs font-bold hover:bg-slate-200 transition-colors flex items-center gap-1.5 cursor-pointer focus:outline-none"
             >
               <span>{isUsefulLinksOpen ? '▴ Less Useful Links' : '▾ More Useful Links'}</span>
             </button>
@@ -420,7 +425,7 @@ export default function Home() {
             <button 
               type="button" 
               onClick={handlePrevSlide}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-2 transition-all"
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-2 transition-all cursor-pointer border-none"
               aria-label="Previous slide"
             >
               <ChevronLeft size={24} />
@@ -428,7 +433,7 @@ export default function Home() {
             <button 
               type="button" 
               onClick={handleNextSlide}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-2 transition-all"
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-2 transition-all cursor-pointer border-none"
               aria-label="Next slide"
             >
               <ChevronRight size={24} />
@@ -441,7 +446,7 @@ export default function Home() {
               <button 
                 type="button"
                 onClick={() => setIsCarouselPlaying(!isCarouselPlaying)}
-                className="bg-[#032e63] text-white rounded-full p-1.5 hover:bg-[#0c427f] transition-all"
+                className="bg-[#032e63] text-white rounded-full p-1.5 hover:bg-[#0c427f] transition-all cursor-pointer border-none"
                 title={isCarouselPlaying ? 'Pause Carousel Autoplay' : 'Play Carousel Autoplay'}
               >
                 {isCarouselPlaying ? <Pause size={12} fill="white" /> : <Play size={12} fill="white" />}
@@ -456,7 +461,7 @@ export default function Home() {
                   key={idx}
                   type="button"
                   onClick={() => setActiveSlide(idx)}
-                  className={`w-5 h-1.5 rounded-full transition-all ${activeSlide === idx ? 'bg-[#032e63] w-8' : 'bg-slate-300 hover:bg-slate-400'}`}
+                  className={`w-5 h-1.5 rounded-full transition-all border-none cursor-pointer ${activeSlide === idx ? 'bg-[#032e63] w-8' : 'bg-slate-300 hover:bg-slate-400'}`}
                   aria-label={`Go to slide ${idx + 1}`}
                 />
               ))}
@@ -576,7 +581,7 @@ export default function Home() {
       </nav>
 
       {/* 8. FOOTER */}
-      <footer id="footer" className="container-xxxl container-fluid bg-[#032e63] text-white/80 py-4 px-6 mt-8 flex flex-col md:flex-row justify-between items-center text-xs gap-3 border-t border-white/10">
+      <footer id="footer" className="bg-[#032e63] text-white/80 py-4 px-6 mt-8 flex flex-col md:flex-row justify-between items-center text-xs gap-3 border-t border-white/10">
         <div>
           © State Bank of India (APM Id:Serv_Tran_564)
         </div>
