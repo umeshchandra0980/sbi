@@ -129,12 +129,18 @@ export default function DashboardPage() {
   };
 
   const bannerImages = [
-    "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/welcome_64x64",
-    "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/credit_card_web_873x203",
-    "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/873_by_203",
-    "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/pabl_banner",
-    "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/feedback_banner_2_2_873x203"
+    "/assets/images/banners/Credit_Card_Web-873x203.jpg",
+    "/assets/images/banners/873_BY_203.png",
+    "/assets/images/banners/PABL_Banner.png"
   ];
+
+  // Auto-slide Promo Banner Carousel
+  React.useEffect(() => {
+    const bannerTimer = setInterval(() => {
+      setBannerSlide((prev) => (prev + 1) % bannerImages.length);
+    }, 4000);
+    return () => clearInterval(bannerTimer);
+  }, [bannerImages.length]);
 
   const currentUser = user || MOCK_USER;
   const fullName = currentUser.full_name || 'DUMPALA VISHNU VARDHAN';
@@ -214,7 +220,12 @@ export default function DashboardPage() {
                           onClick={() => setPaymentsSubTab('bills')}
                           className={`pt-tab ${paymentsSubTab === 'bills' ? 'active' : ''}`}
                         >
-                          <img src="/assets/images/bill_payments/BBPS Logo.svg" alt="BBPS Logo" className="bbps-tag-img" />
+                          <img 
+                            src="/assets/images/bill_payments/BBPS Logo.svg" 
+                            onError={(e) => { (e.target as HTMLImageElement).src = 'https://yonoretail.sbi.bank.in/assets/images/bill_payments/BBPS%20Logo.svg'; }}
+                            alt="BBPS Logo" 
+                            className="bbps-tag-img" 
+                          />
                           Bill payments
                         </button>
                       </div>
@@ -223,7 +234,12 @@ export default function DashboardPage() {
                         <div className="optionsFT">
                           <div className="iconWithTitle-pt" onClick={() => router.push('/home/landingPage/fund-transfer/quick-transfer/bank-selection')}>
                             <div className="pt-icon-circle">
-                              <img src="/assets/images/landing_page/quicktransfer.svg" alt="Quick Transfer" className="w-5 h-5" />
+                              <img 
+                                src="/assets/images/landing_page/quicktransfer.svg" 
+                                onError={(e) => { (e.target as HTMLImageElement).src = 'https://yonoretail.sbi.bank.in/assets/images/landing-page/QuickTransfer.svg'; }}
+                                alt="Quick Transfer" 
+                                className="w-5 h-5" 
+                              />
                             </div>
                             <span className="pt-title">Quick Transfer</span>
                             <span className="pt-subTitle">Upto ₹50,000</span>
@@ -231,7 +247,12 @@ export default function DashboardPage() {
 
                           <div className="iconWithTitle-pt" onClick={() => toast.success("Send Money To own/other account")}>
                             <div className="pt-icon-circle">
-                              <img src="/assets/images/landing_page/sendmoney.svg" alt="Send Money" className="w-5 h-5" />
+                              <img 
+                                src="/assets/images/landing_page/sendmoney.svg" 
+                                onError={(e) => { (e.target as HTMLImageElement).src = 'https://yonoretail.sbi.bank.in/assets/images/landing-page/sendMoney.svg'; }}
+                                alt="Send Money" 
+                                className="w-5 h-5" 
+                              />
                             </div>
                             <span className="pt-title">Send Money</span>
                             <span className="pt-subTitle">To own/other account</span>
@@ -239,14 +260,24 @@ export default function DashboardPage() {
 
                           <div className="iconWithTitle-pt" onClick={() => toast.success("Send Money Abroad")}>
                             <div className="pt-icon-circle">
-                              <img src="/assets/images/landing_page/sendmoneyabroad.svg" alt="Send Money Abroad" className="w-5 h-5" />
+                              <img 
+                                src="/assets/images/landing_page/sendmoneyabroad.svg" 
+                                onError={(e) => { (e.target as HTMLImageElement).src = 'https://yonoretail.sbi.bank.in/assets/images/landing-page/sendMoneyAbroad.svg'; }}
+                                alt="Send Money Abroad" 
+                                className="w-5 h-5" 
+                              />
                             </div>
                             <span className="pt-title">Send Money Abroad</span>
                           </div>
 
                           <div className="iconWithTitle-pt" onClick={() => toast.success("Schedule Payments")}>
                             <div className="pt-icon-circle">
-                              <img src="/assets/images/landing_page/schedulepayments.svg" alt="Schedule Payments" className="w-5 h-5" />
+                              <img 
+                                src="/assets/images/landing_page/schedulepayments.svg" 
+                                onError={(e) => { (e.target as HTMLImageElement).src = 'https://yonoretail.sbi.bank.in/assets/images/landing-page/schedulePayments.svg'; }}
+                                alt="Schedule Payments" 
+                                className="w-5 h-5" 
+                              />
                             </div>
                             <span className="pt-title">Schedule Payments</span>
                           </div>
@@ -255,29 +286,49 @@ export default function DashboardPage() {
                         <div className="py-2">
                           <div className="optionsFT flex items-center justify-start gap-8 py-2 px-2">
                             <div className="iconWithTitle-pt cursor-pointer group flex flex-col items-center" onClick={() => toast.success('Opening Mobile Prepaid Recharge')}>
-                              <div className="w-11 h-11 rounded-full border border-purple-200 bg-white flex items-center justify-center text-purple-800 shadow-xs group-hover:scale-105 transition-transform">
-                                <Phone size={20} className="text-[#673391]" />
+                              <div className="w-11 h-11 rounded-full border border-purple-200 bg-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform overflow-hidden p-1.5">
+                                <img 
+                                  src="/assets/images/bill_payments/mobilerecharge.svg" 
+                                  onError={(e) => { (e.target as HTMLImageElement).src = 'https://cdn.onlineyono.sbi.bank.in/documents/d/sbi-yono-2.0/mobilerecharge_svg'; }}
+                                  alt="Mobile Prepaid" 
+                                  className="w-full h-full object-contain" 
+                                />
                               </div>
                               <span className="pt-title text-[11px] font-semibold text-slate-800 mt-2 text-center leading-tight">Mobile<br />Prepaid</span>
                             </div>
 
                             <div className="iconWithTitle-pt cursor-pointer group flex flex-col items-center" onClick={() => toast.success('Opening Mobile Postpaid Bill Payment')}>
-                              <div className="w-11 h-11 rounded-full border border-purple-200 bg-white flex items-center justify-center text-purple-800 shadow-xs group-hover:scale-105 transition-transform">
-                                <Smartphone size={20} className="text-[#673391]" />
+                              <div className="w-11 h-11 rounded-full border border-purple-200 bg-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform overflow-hidden p-1.5">
+                                <img 
+                                  src="/assets/images/bill_payments/mobile-postpaid.svg" 
+                                  onError={(e) => { (e.target as HTMLImageElement).src = 'https://cdn.onlineyono.sbi.bank.in/documents/d/sbi-yono-2.0/mobile-postpaid_svg'; }}
+                                  alt="Mobile Postpaid" 
+                                  className="w-full h-full object-contain" 
+                                />
                               </div>
                               <span className="pt-title text-[11px] font-semibold text-slate-800 mt-2 text-center leading-tight">Mobile<br />Postpaid</span>
                             </div>
 
                             <div className="iconWithTitle-pt cursor-pointer group flex flex-col items-center" onClick={() => toast.success('Opening Electricity Bill Payment')}>
-                              <div className="w-11 h-11 rounded-full border border-purple-200 bg-white flex items-center justify-center text-purple-800 shadow-xs group-hover:scale-105 transition-transform">
-                                <Zap size={20} className="text-[#673391]" />
+                              <div className="w-11 h-11 rounded-full border border-purple-200 bg-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform overflow-hidden p-1.5">
+                                <img 
+                                  src="/assets/images/bill_payments/electricity.svg" 
+                                  onError={(e) => { (e.target as HTMLImageElement).src = 'https://cdn.onlineyono.sbi.bank.in/documents/d/sbi-yono-2.0/electricity_svg'; }}
+                                  alt="Electricity" 
+                                  className="w-full h-full object-contain" 
+                                />
                               </div>
                               <span className="pt-title text-[11px] font-semibold text-slate-800 mt-2 text-center leading-tight">Electricity</span>
                             </div>
 
                             <div className="iconWithTitle-pt cursor-pointer group flex flex-col items-center" onClick={() => toast.success('Opening FASTag Recharge')}>
-                              <div className="w-11 h-11 rounded-full border border-purple-200 bg-white flex items-center justify-center text-purple-800 shadow-xs group-hover:scale-105 transition-transform">
-                                <Car size={20} className="text-[#673391]" />
+                              <div className="w-11 h-11 rounded-full border border-purple-200 bg-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform overflow-hidden p-1.5">
+                                <img 
+                                  src="/assets/images/bill_payments/fasttag.svg" 
+                                  onError={(e) => { (e.target as HTMLImageElement).src = 'https://cdn.onlineyono.sbi.bank.in/documents/d/sbi-yono-2.0/fasttag_svg'; }}
+                                  alt="FASTag" 
+                                  className="w-full h-full object-contain" 
+                                />
                               </div>
                               <span className="pt-title text-[11px] font-semibold text-slate-800 mt-2 text-center leading-tight">FASTag</span>
                             </div>
@@ -307,7 +358,8 @@ export default function DashboardPage() {
                       </div>
                       <div className="relative w-24 h-20 flex items-center justify-center">
                         <img 
-                          src="/assets/images/landing_page/sendmoney.svg" 
+                          src="/assets/images/landing_page/IC_first_fund_transfer.svg" 
+                          onError={(e) => { (e.target as HTMLImageElement).src = 'https://yonoretail.sbi.bank.in/assets/images/landing-page/IC_first_fund_transfer.svg'; }}
                           alt="Transfer Money Illustration" 
                           className="w-full h-full object-contain"
                         />
@@ -323,7 +375,12 @@ export default function DashboardPage() {
                     
                     <div className="flex-1 flex flex-col items-center justify-center text-center p-2">
                       <div className="w-28 h-28 mb-2 flex items-center justify-center">
-                        <img src="/assets/images/landing_page/IC_Bill_Payment_Schedule.svg" alt="Calendar Schedule" className="w-full h-full object-contain" />
+                        <img 
+                          src="/assets/images/landing_page/IC_Bill_Payment_Schedule.svg" 
+                          onError={(e) => { (e.target as HTMLImageElement).src = 'https://yonoretail.sbi.bank.in/assets/images/landing-page/IC_Bill_Payment_Schedule.svg'; }}
+                          alt="Calendar Schedule" 
+                          className="w-full h-full object-contain" 
+                        />
                       </div>
                       <div className="font-extrabold text-slate-900 text-sm">Never Miss Your Payments Now</div>
                       <p className="text-xs text-slate-600 mt-1 mb-4">Track and get reminder for your upcoming Payments</p>
@@ -346,13 +403,31 @@ export default function DashboardPage() {
                   onCreditScoreClick={() => toast.success('Checking your Credit Score... CIBIL Score: 785')}
                 />
 
-                {/* Promo Banner Carousel (873x203 DOM Exact) */}
+                {/* Promo Banner Carousel (873x203 DOM Exact with Side Arrow Controls) */}
                 <div className="banner-page-carousel">
+                  <button 
+                    type="button" 
+                    onClick={() => setBannerSlide((bannerSlide - 1 + bannerImages.length) % bannerImages.length)}
+                    className="banner-nav-arrow banner-nav-left"
+                    aria-label="Previous Banner"
+                  >
+                    <ChevronLeft size={20} strokeWidth={2.5} className="text-[#673391]" />
+                  </button>
+
                   <img 
                     src={bannerImages[bannerSlide]} 
                     alt="SBI Promo Banner" 
                     className="banner-img-main" 
                   />
+
+                  <button 
+                    type="button" 
+                    onClick={() => setBannerSlide((bannerSlide + 1) % bannerImages.length)}
+                    className="banner-nav-arrow banner-nav-right"
+                    aria-label="Next Banner"
+                  >
+                    <ChevronRight size={20} strokeWidth={2.5} className="text-[#673391]" />
+                  </button>
 
                   <div className="carousel-indicators-dots">
                     {bannerImages.map((_, bIdx) => (
