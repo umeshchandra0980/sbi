@@ -1238,3 +1238,195 @@ html, body, .site {
   }
 }
 
+/* Official Pre-login Page Specific Layout & Themes */
+.pre-login-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  background: #fff;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #333;
+}
+.pre-login-header {
+  border-bottom: 2.5px solid #032e63;
+  padding: 12px 20px;
+}
+.pre-login-logo {
+  height: 52px;
+  width: auto;
+}
+.pre-login-yono {
+  height: 48px;
+  width: auto;
+}
+.pre-login-navbar {
+  background: #032e63;
+  padding: 4px 16px;
+}
+.pre-login-navbar .dropdown-menu {
+  background-color: #032e63;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.pre-login-navbar .dropdown-item {
+  color: #fff !important;
+  font-size: 13px;
+  border-bottom: 1px dashed rgba(255,255,255,0.1);
+  padding: 8px 16px;
+}
+.pre-login-navbar .dropdown-item:hover {
+  background-color: #0d4484;
+  color: #fddb00 !important;
+}
+.cacheText {
+  background: #fdf6e2;
+  border: 1px solid #f5dba5;
+  border-radius: 4px;
+  padding: 10px 15px;
+  color: #721c24;
+  font-size: 13px;
+  text-align: center;
+}
+.cache_blink {
+  font-weight: 700;
+  color: #d32f2f;
+  animation: blink-animation 1.5s steps(5, start) infinite;
+}
+@keyframes blink-animation {
+  to { visibility: hidden; }
+}
+.marquee-container {
+  background: #e3f2fd;
+  border: 1px solid #bbdefb;
+  color: #0d47a1;
+  padding: 8px 15px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.marquee-text-flow {
+  flex-grow: 1;
+  overflow: hidden;
+  position: relative;
+  height: 20px;
+}
+.marquee-text-inner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  line-height: 20px;
+  text-align: left;
+  transform: translateX(100%);
+  animation: scroll-left-announcement 25s linear infinite;
+}
+@keyframes scroll-left-announcement {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+.marquee-paused {
+  animation-play-state: paused !important;
+}
+.banking-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.banking-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+.banking-card-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #032e63;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+.personal_highlight {
+  color: #e6007e; /* Pink Yono style */
+}
+.login-btn-banner {
+  background: #032e63;
+  color: #fff;
+  border-radius: 4px;
+  padding: 10px 24px;
+  font-weight: 700;
+  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  transition: background 0.2s;
+  text-decoration: none;
+}
+.login-btn-banner:hover {
+  background: #0c427f;
+  color: #fff;
+}
+.banking-sublink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #333;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  gap: 6px;
+  padding: 8px 4px;
+  border-right: 1px solid #eee;
+}
+.banking-sublink:last-child {
+  border-right: none;
+}
+.banking-sublink img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+.useful-link-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #032e63;
+  text-decoration: none;
+  font-weight: 600;
+}
+.useful-link-item:hover {
+  color: #e6007e;
+  text-decoration: underline;
+}
+.social-floating-bar {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 6px;
+  border-radius: 8px 0 0 8px;
+  box-shadow: -2px 4px 12px rgba(0,0,0,0.15);
+}
+.social-floating-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: #fff;
+  transition: transform 0.2s;
+}
+.social-floating-link:hover {
+  transform: scale(1.1);
+}
+
