@@ -10,10 +10,16 @@ import {
 } from 'lucide-react';
 
 export default function HelpSupportPage() {
-  const [selectedTopic, setSelectedTopic] = useState('Create Goals');
+  const [selectedTopic, setSelectedTopic] = useState('How to Create & View Fixed Deposit');
   const [isPlaying, setIsPlaying] = useState(false);
 
   const selfHelpTopics = [
+    'How to Create & View Fixed Deposit',
+    'How to Download Interest Certificate & Balance Certificate',
+    'How to avail Insta Home Top-Up Loan (IHTL)',
+    'How to Manage Debit Card',
+    'How to View & Download Deposits & Loan Statements',
+    'How to Manage Nominee(s)',
     'Create Goals',
     'Manage Goals',
     'Credit Card Compare Features',
