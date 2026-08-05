@@ -286,7 +286,7 @@ function SbiGlobalBrandHeaderContent({
         { label: 'e-Secure Lock', href: '/settings', icon: '🔒' },
         { label: 'Stop Cheque', href: '/home/landingPage/services/cheque-services/enquire-stop-revoke', icon: '🛑' },
         { label: 'Update My Security', href: '/settings', icon: '🛡' },
-        { label: 'Report- Unauthorized Transactions', href: '/settings', icon: '⚠️' },
+        { label: 'Report- Unauthorized Transactions', href: '/home/landingPage/services/complaint/help-support', icon: '⚠️' },
         { label: 'Security Question', href: '/home/landingPage/set-security-question', icon: '📱' },
       ]
     }
