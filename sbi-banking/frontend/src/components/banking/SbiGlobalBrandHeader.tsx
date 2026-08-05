@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
@@ -38,7 +38,7 @@ const YonoRingIcon = ({ className = "w-4 h-4", color }: { className?: string; co
   </svg>
 );
 
-export default function SbiGlobalBrandHeader({
+function SbiGlobalBrandHeaderContent({
   activeNav = 'Overview',
   activeTopTab = 'Banking'
 }: SbiGlobalBrandHeaderProps) {
@@ -402,36 +402,46 @@ export default function SbiGlobalBrandHeader({
 
       // Services
       case 'Account Related':
-      case 'Manage My Profile':
+        iconPath = '/images/category-icons/account_related.svg';
+        break;
       case 'Update Profile Details':
+      case 'Manage My Profile':
+        iconPath = '/images/category-icons/manage_profile.svg';
+        break;
       case 'Doorstep Banking':
       case 'Manage Nominee':
-        iconPath = '/images/category-icons/ic_profile_details.svg';
+        iconPath = '/images/category-icons/doorstep_banking.svg';
         break;
       case 'Pension Related':
-        iconPath = '/images/category-icons/ic_annuity_deposit.svg';
+        iconPath = '/images/category-icons/pension_related.svg';
         break;
       case 'Tax Related':
       case 'ATM / Branch Locator':
-        iconPath = '/images/category-icons/ic_tax_related.svg';
+        iconPath = '/images/category-icons/tax_related.svg';
         break;
       case 'Cheque Services':
-      case 'Stop Cheque':
       case 'Positive Pay System':
       case 'Cheque Book Request':
-        iconPath = '/images/category-icons/ic_cheque_services.svg';
+        iconPath = '/images/category-icons/cheque_services.svg';
+        break;
+      case 'Stop Cheque':
+        iconPath = '/images/category-icons/stop_cheque.svg';
         break;
       case 'Apply/Manage FASTag':
-        iconPath = '/images/category-icons/ic_car_insurance.svg';
+        iconPath = '/images/category-icons/fastag.svg';
         break;
       case 'e-Secure Lock':
       case 'Lock / Unlock User Access':
-        iconPath = '/images/category-icons/ic_esecure_lock.svg';
+        iconPath = '/images/category-icons/esecure_lock.svg';
         break;
       case 'Update My Security':
+        iconPath = '/images/category-icons/update_security.svg';
+        break;
       case 'Report- Unauthorized Transactions':
+        iconPath = '/images/category-icons/unauthorized_transactions.svg';
+        break;
       case 'Security Question':
-        iconPath = '/images/category-icons/ic_nps.svg';
+        iconPath = '/images/category-icons/security_question.svg';
         break;
 
       default:
@@ -549,7 +559,7 @@ export default function SbiGlobalBrandHeader({
       </div>
 
       {/* 2. MAIN WHITE BRAND NAVBAR WITH INTERACTIVE MEGA DROPDOWN CLICK MENU */}
-      <header className="bg-white border-b border-slate-200/80 px-4 md:px-6 py-3.5 shadow-xs relative">
+      <header className="bg-white border-b border-slate-200/80 px-4 md:px-6 py-3.5 shadow-xs relative z-50">
         <div className="max-w-[1280px] mx-auto flex items-center justify-between gap-4">
           
           {/* Left Group: Logo + Nav Items */}
@@ -771,5 +781,13 @@ export default function SbiGlobalBrandHeader({
       )}
 
     </div>
+  );
+}
+
+export default function SbiGlobalBrandHeader(props: SbiGlobalBrandHeaderProps) {
+  return (
+    <Suspense fallback={null}>
+      <SbiGlobalBrandHeaderContent {...props} />
+    </Suspense>
   );
 }

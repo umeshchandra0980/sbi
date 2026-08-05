@@ -121,6 +121,7 @@ class UserResponse(BaseModel):
     is_verified: bool
     last_login: Optional[datetime]
     created_at: datetime
+    profile_image: Optional[str] = None
 
     model_config = {"from_attributes": True}
 

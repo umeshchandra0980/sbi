@@ -12,7 +12,11 @@ export default function DirectTaxesPage() {
 
   const handleClose = () => {
     setShowModal(false);
-    router.push('/dashboard');
+  };
+
+  const handleOkay = () => {
+    setShowModal(false);
+    router.push('/home/landingPage/services/tax-related');
   };
 
   const steps = [
@@ -106,10 +110,10 @@ export default function DirectTaxesPage() {
             <div className="flex justify-end pt-4 border-t border-slate-100 flex-shrink-0">
               <button
                 type="button"
-                onClick={handleClose}
+                onClick={handleOkay}
                 className="bg-[#673391] hover:bg-[#561578] text-white font-extrabold text-xs md:text-sm py-3 px-8 rounded-full shadow-md hover:shadow-lg transition-all cursor-pointer"
               >
-                Go to Homepage
+                Okay
               </button>
             </div>
 

@@ -12,7 +12,11 @@ export default function FormGHHomePage() {
 
   const handleClose = () => {
     setShowModal(false);
-    router.push('/dashboard');
+  };
+
+  const handleOkay = () => {
+    setShowModal(false);
+    router.push('/home/landingPage/services/tax-related');
   };
 
   return (
@@ -114,7 +118,7 @@ export default function FormGHHomePage() {
             <div className="flex justify-end pt-6">
               <button
                 type="button"
-                onClick={handleClose}
+                onClick={handleOkay}
                 className="bg-[#673391] hover:bg-[#561578] text-white font-bold text-sm py-3 px-12 rounded-full shadow-md hover:shadow-lg transition-all cursor-pointer"
               >
                 Okay

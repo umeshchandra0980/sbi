@@ -14,6 +14,7 @@ import {
 import './profile.css';
 import '../dashboard/dashboard.css';
 import SbiGlobalBrandHeader from '@/components/banking/SbiGlobalBrandHeader';
+import ImageUpload from '@/components/ui/ImageUpload';
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -91,13 +92,18 @@ export default function SettingsPage() {
             {/* Left Sidebar Panel */}
             <div className="profile-left-sidebar">
               
-              {/* User Avatar Card */}
-              <div className="profile-user-card">
+              {/* User Avatar Card */}                <div className="profile-user-card">
                 <div className="profile-avatar-wrapper">
-                  <div className="profile-avatar-circle">{initials}</div>
-                  <div className="avatar-pencil-badge" title="Edit Avatar">
-                    <Edit2 size={11} />
-                  </div>
+                  <ImageUpload 
+                    currentImage={user?.profile_image}
+                    onUpload={(url) => {
+                      toast.success('Profile image updated!');
+                    }}
+                    onDelete={() => {
+                      toast.success('Profile image removed!');
+                    }}
+                    className="mx-auto"
+                  />
                 </div>
 
                 <h2 className="profile-user-name">{fullName}</h2>

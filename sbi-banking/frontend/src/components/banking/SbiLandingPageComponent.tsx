@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
@@ -100,7 +100,7 @@ function ShieldIllustration({ className = "w-72 h-48" }: { className?: string })
   );
 }
 
-export default function SbiLandingPageComponent({
+function SbiLandingPageComponentContent({
   initialTab = 'Deposits',
   initialInvestmentSubTab = 'Mutual Fund'
 }: SbiLandingPageComponentProps) {
@@ -5817,6 +5817,14 @@ export default function SbiLandingPageComponent({
       )}
 
     </div>
+  );
+}
+
+export default function SbiLandingPageComponent(props: SbiLandingPageComponentProps) {
+  return (
+    <Suspense fallback={null}>
+      <SbiLandingPageComponentContent {...props} />
+    </Suspense>
   );
 }
 
