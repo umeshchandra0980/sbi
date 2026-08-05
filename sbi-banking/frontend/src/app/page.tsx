@@ -18,22 +18,22 @@ export default function Home() {
   const carouselSlides = [
     { src: '/images/banners/banner-16.jpg', title: 'AWARENESS OF THE PUBLIC', href: 'https://sbi.bank.in/' },
     { src: '/images/banners/banner-18.jpg', title: 'Branch Feedback Journey', href: 'https://crh.sbi.bank.in/branchfeedback' },
-    { src: '/images/banners/banner-13.jpg', title: 'Register Complaint of Unauthorized Transaction', href: 'https://crh.sbi.bank.in/' },
+    { src: '/images/banners/banner-13.png', title: 'Register Complaint of Unauthorized Transaction', href: 'https://crh.sbi.bank.in/' },
     { src: '/images/banners/banner-09.jpg', title: 'Publicizing the Centralized Number Series 1600', href: 'https://sbi.bank.in/' },
-    { src: '/images/banners/banner-07.jpg', title: 'SBI Mutual Fund', href: 'https://www.sbimf.com/' },
+    { src: '/images/banners/banner-07.png', title: 'SBI Mutual Fund', href: 'https://www.sbimf.com/' },
     { src: '/images/banners/banner-15.jpg', title: 'PM-Vidyalaxmi Scheme', href: 'https://sbi.bank.in/web/personal-banking/sbi-pm-vidyalaxmi' },
     { src: '/images/banners/banner-10.jpg', title: 'SBISSL Banner', href: 'https://diy.sbisecurities.in/' },
     { src: '/images/banners/banner-12.jpg', title: 'Loan Against Mutual Fund', href: '/home/landingPage/lending/etb-lamfu/description' },
-    { src: '/images/banners/banner-03.jpg', title: 'SBI Card', href: 'http://www.sbicard.com/' },
-    { src: '/images/banners/banner-08.jpg', title: 'Digital eRupee', href: 'https://sbi.bank.in/' },
+    { src: '/images/banners/banner-03.png', title: 'SBI Card', href: 'http://www.sbicard.com/' },
+    { src: '/images/banners/banner-08.png', title: 'Digital eRupee', href: 'https://sbi.bank.in/' },
     { src: '/images/banners/banner-11.jpg', title: 'Door Step Banking', href: 'https://www.psballiance.com/' },
     { src: '/images/banners/banner-14.jpg', title: 'SBI PMJJBY-PMSBY Schemes', href: 'https://sbi.bank.in/' },
     { src: '/images/banners/banner-06.jpg', title: 'DICGC', href: 'https://www.dicgc.org.in' },
-    { src: '/images/banners/banner-04.jpg', title: 'Reserve Bank - Integrated Ombudsman Scheme', href: 'https://retail.sbi.bank.in/' },
+    { src: '/images/banners/banner-04.png', title: 'Reserve Bank - Integrated Ombudsman Scheme', href: 'https://retail.sbi.bank.in/' },
     { src: '/images/banners/banner-05.jpg', title: 'RBI-Integrated Ombudsman Scheme', href: 'https://retail.sbi.bank.in/' },
     { src: '/images/banners/banner-20.jpg', title: 'Meet All Your Banking & Financial Needs', href: 'https://onlineapply.sbi.bank.in/' },
     { src: '/images/banners/banner-19.jpg', title: 'Beware of Cyber Frauds', href: 'https://cybercrime.gov.in/' },
-    { src: '/images/banners/banner-01.jpg', title: 'Beware of Cyber Frauds', href: 'https://cybercrime.gov.in/' }
+    { src: '/images/banners/banner-01.png', title: 'Beware of Cyber Frauds', href: 'https://cybercrime.gov.in/' }
   ]
 
   // Carousel autoplay hook
