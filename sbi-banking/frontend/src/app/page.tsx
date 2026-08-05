@@ -35,7 +35,7 @@ export default function Home() {
         </div>
       </div>
 
-      <Header />
+      <Header isHomePage={true} />
       <Hero />
       <HomeCards />
       <OtherServices />

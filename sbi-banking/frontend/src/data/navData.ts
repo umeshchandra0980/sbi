@@ -17,6 +17,7 @@ export interface BrandLogo {
 export interface MegaLink {
   label: string;
   href: string;
+  isHeading?: boolean;
 }
 
 export interface MegaColumn {
@@ -231,8 +232,8 @@ export const megaMenu: MegaMenuItem[] = [
       {
         heading: { label: 'Misc Services', href: '' },
         links: [
-          { label: 'Form 60', href: `${B}/documents/16012/0/11052026_form_no_97.pdf` },
-          { label: 'Form 121', href: `${B}/documents/16012/22770835/30032026_Form+121.pdf` },
+          { label: 'Form 60', href: `${B}/documents/16012/0/11052026_form_no_97.pdf/098d5eb8-95dd-e86b-89dd-05754752ba37?t=1778501367720` },
+          { label: 'Form 121', href: `${B}/documents/16012/22770835/30032026_Form+121+%28In+place+of+Form+15G+%26+H%29+w.e.f+01.04.2026+%281%29.pdf/c38d1b41-ef8c-5cf8-700c-5a60e5bfe0a8?t=1774872625596` },
           { label: 'Deceased Settlement', href: `${B}/web/personal-banking/information-services/deceased-settlement` },
           { label: 'Doorstep Banking Services', href: 'https://bank.sbi/dsb' },
           { label: 'DICGC', href: `${B}/web/personal-banking/dicgc` },
@@ -248,11 +249,11 @@ export const megaMenu: MegaMenuItem[] = [
           { label: 'Revised Service Charges', href: `${B}/web/personal-banking/information-services/kyc-guidelines/revised-service-charges` },
           { label: 'Debit Card Related Charges', href: `${B}/web/personal-banking/information-services/kyc-guidelines/debit-card-related-charges` },
           { label: 'Broking Services', href: `${B}/web/personal-banking/information-services/kyc-guidelines/broking-services` },
-          { label: 'MICR Codes', href: `${B}/web/personal-banking/information-services/kyc-guidelines/micr-codes` },
+          { label: 'MICR codes', href: `${B}/web/personal-banking/information-services/kyc-guidelines/micr-codes` },
           { label: 'E-Rail', href: `${B}/web/personal-banking/information-services/kyc-guidelines/e-rail` },
-          { label: 'SBI Quick Missed Call Banking', href: `${B}/web/personal-banking/information-services/kyc-guidelines/sbi-quick-missed-call-banking` },
+          { label: 'Sbi Quick Missed Call Banking', href: `${B}/web/personal-banking/information-services/kyc-guidelines/sbi-quick-missed-call-banking` },
           { label: 'Business Continuity Planning', href: `${B}/web/personal-banking/information-services/kyc-guidelines/business-continuity-planning` },
-          { label: 'Inflation Indexed National Savings Securities', href: `${B}/web/personal-banking/information-services/kyc-guidelines/inflation-indexed-national-savings-securities` },
+          { label: 'Inflation indexed national savings securities', href: `${B}/web/personal-banking/information-services/kyc-guidelines/inflation-indexed-national-savings-securities` },
           { label: 'Foreign Inward Remittance', href: `${B}/web/personal-banking/information-services/kyc-guidelines/foreign-inward-remittance` },
           { label: 'Insurance Cover For Deposits', href: `${B}/web/personal-banking/kyc-guidelines/insurance-cover-for-deposits` },
           { label: 'FCRA Amendment 2020', href: `${B}/web/personal-banking/fcra-amendment-2020` },
@@ -263,17 +264,18 @@ export const megaMenu: MegaMenuItem[] = [
           { label: 'Unclaimed Deposit Accounts Claim', href: `${B}/web/personal-banking/information-services/deaf-claim` },
           { label: 'Latest Tax Related Guidelines', href: `${B}/web/personal-banking/information-n-services/latest-tax-related-guidelines` },
           { label: 'Process of Reactivation of Inoperative Accounts', href: `${B}/web/personal-banking/imformation_n_services/process-of-reactivation-of-inoperative-accounts` },
-          { label: 'Waiver of ADWM Cash Deposit Charges', href: `${B}/web/personal-banking/information-services/waiver-of-adwm-cash-deposit-charges` },
-          { label: 'Revision of ADWM Cash Deposit Charges', href: `${B}/documents/16012/22770835/Service-charges_in_english.pdf` },
+          { label: 'Waiver of ADWM Cash Deposit charges', href: `${B}/web/personal-banking/information-services/waiver-of-adwm-cash-deposit-charges` },
+          { label: 'Revision of ADWM Cash Deposit charges', href: `${B}/documents/16012/22770835/Service-charges_in_english.pdf` },
           { label: 'Facilities to Senior Citizens', href: `${B}/documents/16012/396762/151024-Facilities+for+Senior+Citizens+updated+August+2024.pdf` },
         ],
       },
       {
-        heading: { label: 'Videos & Information', href: `${B}/web/personal-banking/information-services/videos-and-information` },
+        heading: { label: 'Videos & Informations', href: `${B}/web/personal-banking/information-services/videos-and-information` },
         links: [
-          { label: 'CTS Continuous Clearing', href: `${B}/web/personal-banking/information-services/videos-and-information` },
-          { label: 'Branches accessible to Divyangjan', href: `${B}/documents/16012/22770835/BRANCH+ACCESSIBLE+TO+DIVYANGJAN.pdf` },
-          { label: 'ATMs accessible to Divyangjan', href: `${B}/documents/16012/22770835/TOUCH+POINTS+IDENTIFIED+AS+ACCESSIBLE+CENTRE+AS+ON+30.09.2025.pdf` },
+          { label: 'Information', href: '', isHeading: true },
+          { label: 'Information for Customer- CTS Continuous Clearing', href: `${B}/documents/16012/22770835/23032026_FINAL+SBI_CTS_26.02.26+%282%29.jpg/06fd7f81-6cba-0595-c7cc-84e1e0484dda?t=1774244861928` },
+          { label: 'Branches accessible to Divyangjan', href: `${B}/documents/16012/22770835/BRANCH+ACCESSIBLE+TO+DIVYANGJAN.pdf/49ad26c2-b8a0-b846-8f40-e362200bef49?t=1759903386654` },
+          { label: 'ATMs accessible to Divyangjan', href: `${B}/documents/16012/22770835/TOUCH+POINTS+IDENTIFIED+AS+ACCESSIBLE+CENTRE+AS+ON+30.09.2025.pdf/e82bcfdb-7457-92c9-5855-4898f6362423?t=1763529319666` },
         ],
       },
       {
@@ -281,9 +283,21 @@ export const megaMenu: MegaMenuItem[] = [
         links: [
           { label: 'Direct Tax', href: `${B}/web/personal-banking/information-services/government-business/direct-tax` },
           { label: 'Indirect Taxes', href: `${B}/web/personal-banking/information-services/government-business/indirect-taxes` },
-          { label: 'Passport Seva Kendra', href: `${B}/web/personal-banking/information-services/government-business/passport-seva-kendra` },
+          { label: 'Passport Seva kendra', href: `${B}/web/personal-banking/information-services/government-business/passport-seva-kendra` },
           { label: 'Pension', href: `${B}/web/personal-banking/information-services/government-business/pension` },
           { label: 'State Gov Taxes', href: `${B}/web/personal-banking/information-services/government-business/state-gov-taxes` },
+          { label: 'online payment', href: `${B}/web/personal-banking/information-services/government-business/online-payment` },
+          { label: 'Pension Payment', href: `${B}/web/personal-banking/information-services/government-business/pension-payment` },
+          { label: 'Digital Life Certificate', href: `${B}/web/personal-banking/information-services/government-business/digital-life-certificate` },
+          { label: 'Timelines For Credit Decisions', href: `${B}/web/personal-banking/information-services/government-business/timelines-for-credit-decisions` },
+          { label: 'RTGS/NEFT', href: `${B}/web/personal-banking/rtgs-neft` },
+          { label: 'Pension Seva', href: `${B}/web/personal-banking/pension-seva` },
+          { label: 'Interest Rates', href: `${B}/web/interest-rates/interest-rates/loan-schemes-interest-rates` },
+          { label: 'Student Engagement Program 2019-20', href: `${B}/web/personal-banking/information-services/government-business/student-engagement-program-2019-20` },
+          { label: 'Merger of Associate Banks', href: `${B}/web/personal-banking/information-services/government-business/merger-of-associate-banks` },
+          { label: 'FX-Retail', href: `${B}/web/personal-banking/fx-retail` },
+          { label: 'Financial Literacy', href: `${B}/web/personal-banking/information-services/government-business/financial-literacy` },
+          { label: 'NCW Helpline for Women', href: `${B}/documents/16012/12924450/08102021_NCW+helpline.pdf` },
         ],
       },
     ],

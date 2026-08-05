@@ -18,6 +18,26 @@ interface SbiGlobalBrandHeaderProps {
   activeTopTab?: 'Banking' | 'Lifestyle' | 'Rewards';
 }
 
+const YonoRingIcon = ({ className = "w-4 h-4", color }: { className?: string; color?: string }) => (
+  <svg 
+    viewBox="-45 -45 90 90" 
+    className={className} 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="miter"
+      fillOpacity="0"
+      strokeMiterlimit="10"
+      stroke={color || "currentColor"}
+      strokeOpacity="1"
+      strokeWidth="13"
+      d="M5.692999839782715,36.185001373291016 C-4.301000118255615,37.75699996948242 -13.38700008392334,35.566001892089844 -21.562999725341797,29.613000869750977 C-29.73900032043457,23.660999298095703 -34.61399841308594,15.687000274658203 -36.1870002746582,5.691999912261963 C-37.757999420166016,-4.302000045776367 -35.569000244140625,-13.38700008392334 -29.61400032043457,-21.56399917602539 C-23.65999984741211,-29.73900032043457 -15.685999870300293,-34.61199951171875 -5.692999839782715,-36.183998107910156 C-4.488999843597412,-36.37300109863281 -3.2980000972747803,-36.507999420166016 -2.121000051498413,-36.5890007019043"
+    />
+  </svg>
+);
+
 export default function SbiGlobalBrandHeader({
   activeNav = 'Overview',
   activeTopTab = 'Banking'
@@ -411,44 +431,80 @@ export default function SbiGlobalBrandHeader({
         <div className="max-w-[1400px] mx-auto flex flex-wrap justify-between items-center gap-2">
           
           {/* Left Top Tabs */}
+<<<<<<< HEAD
           <div className="flex items-center gap-2">
             <button 
               type="button" 
               onClick={() => router.push('/dashboard')}
               className={`px-3.5 py-1 text-xs font-bold rounded-t-md transition-colors ${
                 activeTopTab === 'Banking' ? 'bg-white text-[#302985]' : 'text-white/80 hover:text-white'
+=======
+          <div className="flex items-end gap-3 md:gap-5">
+            <button 
+              type="button" 
+              onClick={() => router.push('/dashboard')}
+              className={`px-4 py-2 text-[13px] font-bold rounded-t-xl transition-colors flex items-center gap-2 relative z-10 ${
+                activeTopTab === 'Banking' ? 'bg-white text-[#502b85]' : 'text-white/90 hover:text-white mb-0.5'
+>>>>>>> 51437bd (feat: add YONO ring icons to navbar tabs and YONO Net Banking Lite toggle switch)
               }`}
             >
-              Banking
+              <YonoRingIcon 
+                className="w-4 h-4 flex-shrink-0" 
+                color={activeTopTab === 'Banking' ? '#502b85' : 'rgb(251,251,251)'} 
+              />
+              <span>Banking</span>
             </button>
+            
             <button 
               type="button" 
               onClick={() => router.push('/home/landingPage/lifestyle')}
+<<<<<<< HEAD
               className={`px-3.5 py-1 text-xs font-bold rounded-t-md transition-colors ${
                 activeTopTab === 'Lifestyle' ? 'bg-white text-[#302985]' : 'text-white/80 hover:text-white'
               }`}
             >
               Lifestyle
+=======
+              className={`px-4 py-2 text-[13px] font-bold rounded-t-xl transition-colors flex items-center gap-2 relative z-10 ${
+                activeTopTab === 'Lifestyle' ? 'bg-white text-[#502b85]' : 'text-white/90 hover:text-white mb-0.5'
+              }`}
+            >
+              <YonoRingIcon 
+                className="w-4 h-4 flex-shrink-0" 
+                color={activeTopTab === 'Lifestyle' ? '#502b85' : 'rgb(251,251,251)'} 
+              />
+              <span>Lifestyle</span>
             </button>
+
             <button 
               type="button" 
               onClick={() => router.push('/home/landingPage/others/rewards-end-point/rewards-endState')}
-              className={`px-3.5 py-1 text-xs font-bold rounded-t-md transition-colors flex items-center gap-1 ${
-                activeTopTab === 'Rewards' ? 'bg-white text-[#302985]' : 'text-white/80 hover:text-white'
+              className={`px-4 py-2 text-[13px] font-bold rounded-t-xl transition-colors flex items-center gap-2 relative z-10 ${
+                activeTopTab === 'Rewards' ? 'bg-white text-[#502b85]' : 'text-white/90 hover:text-white mb-0.5'
               }`}
             >
-              <Gift size={13} />
+              <YonoRingIcon 
+                className="w-4 h-4 flex-shrink-0" 
+                color={activeTopTab === 'Rewards' ? '#502b85' : 'rgb(251,251,251)'} 
+              />
               <span>Rewards</span>
             </button>
             
-            <div className="flex items-center gap-2 ml-4 font-semibold text-xs text-white">
-              <span>YONO Net Banking Lite</span>
+            <div className="flex items-center gap-2.5 ml-4 mb-2 font-semibold text-xs text-white">
+              <span className="text-[13px] font-medium tracking-wide">YONO Net Banking Lite</span>
               <button 
                 type="button"
-                onClick={() => setLiteMode(!liteMode)}
-                className={`px-2 py-0.5 rounded-full text-[10px] font-bold transition-colors ${
-                  liteMode ? 'bg-emerald-500 text-white' : 'bg-slate-400 text-white'
+                onClick={() => {
+                  const nextState = !liteMode;
+                  setLiteMode(nextState);
+                  toast.success(nextState ? 'YONO Net Banking Lite turned ON' : 'YONO Net Banking Lite turned OFF');
+                }}
+                className={`px-3 py-0.5 rounded-full text-[11px] font-extrabold tracking-wider transition-all duration-200 cursor-pointer shadow-xs ${
+                  liteMode 
+                    ? 'bg-[#22c55e] text-white hover:bg-[#16a34a]' 
+                    : 'bg-[#909ea8] text-white hover:bg-[#7e8c97]'
                 }`}
+                title="Toggle YONO Net Banking Lite"
               >
                 {liteMode ? 'ON' : 'OFF'}
               </button>

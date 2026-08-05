@@ -89,18 +89,12 @@ export default function LandingPage() {
         </div>
         <div className="flex items-center">
           <a href="#mainContent" className="auth-landing-skip-link">Skip to main content</a>
-          <div className="auth-landing-logo-right">
-            <div className="yono-sbi-square-badge">
-              <span className="yono-text"><span className="pink-char">y</span>ono</span>
-              <span className="sbi-text">
-                <svg className="sbi-logo-inline" viewBox="0 0 30 30" width="10" height="10">
-                  <circle cx="15" cy="15" r="14" fill="#ffffff"/>
-                  <circle cx="15" cy="15" r="4.5" fill="#242e65"/>
-                  <rect x="13.5" y="15" width="3" height="15" fill="#242e65"/>
-                </svg>
-                SBI
-              </span>
-            </div>
+          <div className="auth-landing-logo-right ml-4">
+            <img 
+              src="/assets/images/img/yonosbilogin.png" 
+              alt="Yono SBI" 
+              style={{ height: '48px', width: 'auto', objectFit: 'contain' }} 
+            />
           </div>
         </div>
       </header>

@@ -59,9 +59,10 @@ function TopBar() {
 
 interface BrandBarProps {
   onToggleMenu: () => void;
+  isHomePage?: boolean;
 }
 
-function BrandBar({ onToggleMenu }: BrandBarProps) {
+function BrandBar({ onToggleMenu, isHomePage }: BrandBarProps) {
   return (
     <header className="brandbar">
       <div className="brandbar-inner">
@@ -77,11 +78,17 @@ function BrandBar({ onToggleMenu }: BrandBarProps) {
               {l.label}
             </a>
           ))}
-          {brandLogos.map((b: BrandLogo) => (
-            <a key={b.alt} href="#" className="brand-logo">
-              <img src={b.src} alt={b.alt} />
-            </a>
-          ))}
+          {brandLogos.map((b: BrandLogo) => {
+            let src = b.src;
+            if (isHomePage && b.alt === 'YONO SBI') {
+              src = '/assets/images/img/YONO new Logo Horizontal.png';
+            }
+            return (
+              <a key={b.alt} href="#" className="brand-logo">
+                <img src={src} alt={b.alt} />
+              </a>
+            );
+          })}
         </nav>
 
         <form className="search" role="search" onSubmit={(e) => e.preventDefault()}>
@@ -181,7 +188,11 @@ function BlueBar({ collapsed }: BlueBarProps) {
   );
 }
 
-export default function Header() {
+interface HeaderProps {
+  isHomePage?: boolean;
+}
+
+export default function Header({ isHomePage }: HeaderProps = {}) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -196,7 +207,7 @@ export default function Header() {
         </a>
         <div className="header-right">
           <TopBar />
-          <BrandBar onToggleMenu={() => setMenuOpen((v) => !v)} />
+          <BrandBar onToggleMenu={() => setMenuOpen((v) => !v)} isHomePage={isHomePage} />
         </div>
       </div>
       <BlueBar collapsed={menuOpen} />

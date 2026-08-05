@@ -1,9 +1,9 @@
 :root {
-  --purple: #280071;
-  --yellow: #ffd100;
-  --blue: #12a8e0;
-  --pink: #e6007e;
-  --magenta: #c2185b;
+  --purple: #3A1976;
+  --yellow: #fddb00;
+  --blue: #1698D3;
+  --pink: #d9217c;
+  --gray: #f5f6f7;
   --text: #333;
 }
 /* ---------- HEADER LAYOUT ----------
@@ -240,7 +240,9 @@
 /* ---------- BLUE BAR ---------- */
 .bluebar {
   background: var(--blue);
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .bluebar-inner {
@@ -287,7 +289,8 @@
   position: absolute;
   left: 0;
   top: 100%;
-  background: #fff;
+  background: #3A3D44;
+  color: #fff;
   box-shadow: 0 12px 28px rgba(0, 0, 0, .18);
   border-top: 3px solid var(--yellow);
   display: none;
@@ -317,26 +320,29 @@
 
 .mega-col h3 {
   font-size: 14px;
-  color: var(--purple);
+  color: #F5C518;
+  font-weight: 600;
   margin-bottom: 8px;
   padding-bottom: 6px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .mega-col h3 a {
-  color: var(--purple);
+  color: #F5C518;
+  text-decoration: none;
 }
 
 .mega-col a {
   display: block;
-  color: #444;
+  color: #FFFFFF;
+  text-decoration: none;
   font-size: 13px;
   padding: 5px 0;
   line-height: 1.3;
 }
 
 .mega-col>a:hover {
-  color: var(--pink);
+  color: #F5C518;
   padding-left: 4px;
 }
 
