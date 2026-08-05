@@ -1,6 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+export const dynamic = 'force-dynamic';
+
+import React, { useState, Suspense } from 'react';
 import Link from 'next/link';
 import SbiGlobalBrandHeader from '@/components/banking/SbiGlobalBrandHeader';
 import { ChevronRight, ChevronLeft, Search, ArrowRight, Download, CheckCircle2, X } from 'lucide-react';
@@ -8,7 +10,7 @@ import toast from 'react-hot-toast';
 
 import { useSearchParams } from 'next/navigation';
 
-export default function InsuranceDashboardPage() {
+function InsuranceDashboardPageContent() {
   const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState<'Protection Plans' | 'Child Plans' | 'Retirement Plans' | 'Wealth Creation' | 'Savings Plans' | 'Health Plans' | 'Accident Insurance' | 'Motor Insurance' | 'Travel Insurance' | 'Group Plans' | null>('Protection Plans');
   const [selectedPlan, setSelectedPlan] = useState<'Plan A' | 'Plan B'>('Plan A');
@@ -1097,5 +1099,13 @@ export default function InsuranceDashboardPage() {
         </div>
       </footer>
     </div>
+  );
+}
+
+export default function InsuranceDashboardPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-[#faf8fd] text-sm text-slate-500">Loading...</div>}>
+      <InsuranceDashboardPageContent />
+    </Suspense>
   );
 }

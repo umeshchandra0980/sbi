@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
@@ -38,7 +38,7 @@ const YonoRingIcon = ({ className = "w-4 h-4", color }: { className?: string; co
   </svg>
 );
 
-export default function SbiGlobalBrandHeader({
+function SbiGlobalBrandHeaderContent({
   activeNav = 'Overview',
   activeTopTab = 'Banking'
 }: SbiGlobalBrandHeaderProps) {
@@ -781,5 +781,13 @@ export default function SbiGlobalBrandHeader({
       )}
 
     </div>
+  );
+}
+
+export default function SbiGlobalBrandHeader(props: SbiGlobalBrandHeaderProps) {
+  return (
+    <Suspense fallback={null}>
+      <SbiGlobalBrandHeaderContent {...props} />
+    </Suspense>
   );
 }

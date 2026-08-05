@@ -1,12 +1,14 @@
 'use client';
 
-import React from 'react';
+export const dynamic = 'force-dynamic';
+
+import React, { Suspense } from 'react';
 import Link from 'next/link';
 import SbiGlobalBrandHeader from '@/components/banking/SbiGlobalBrandHeader';
 import { ChevronLeft } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 
-export default function ComingSoonPage() {
+function ComingSoonContent() {
   const searchParams = useSearchParams();
   const insuranceType = searchParams.get('insuranceType');
 
@@ -95,5 +97,13 @@ export default function ComingSoonPage() {
       </footer>
 
     </div>
+  );
+}
+
+export default function ComingSoonPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-[#faf8fd] text-sm text-slate-500">Loading...</div>}>
+      <ComingSoonContent />
+    </Suspense>
   );
 }

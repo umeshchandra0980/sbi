@@ -14,6 +14,7 @@ export interface User {
   last_login?: string
   is_verified?: boolean
   created_at?: string
+  profile_image?: string
 }
 
 interface AuthState {
