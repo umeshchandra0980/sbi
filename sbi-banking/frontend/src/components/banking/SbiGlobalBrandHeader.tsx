@@ -402,36 +402,46 @@ export default function SbiGlobalBrandHeader({
 
       // Services
       case 'Account Related':
-      case 'Manage My Profile':
+        iconPath = '/images/category-icons/account_related.svg';
+        break;
       case 'Update Profile Details':
+      case 'Manage My Profile':
+        iconPath = '/images/category-icons/manage_profile.svg';
+        break;
       case 'Doorstep Banking':
       case 'Manage Nominee':
-        iconPath = '/images/category-icons/ic_profile_details.svg';
+        iconPath = '/images/category-icons/doorstep_banking.svg';
         break;
       case 'Pension Related':
-        iconPath = '/images/category-icons/ic_annuity_deposit.svg';
+        iconPath = '/images/category-icons/pension_related.svg';
         break;
       case 'Tax Related':
       case 'ATM / Branch Locator':
-        iconPath = '/images/category-icons/ic_tax_related.svg';
+        iconPath = '/images/category-icons/tax_related.svg';
         break;
       case 'Cheque Services':
-      case 'Stop Cheque':
       case 'Positive Pay System':
       case 'Cheque Book Request':
-        iconPath = '/images/category-icons/ic_cheque_services.svg';
+        iconPath = '/images/category-icons/cheque_services.svg';
+        break;
+      case 'Stop Cheque':
+        iconPath = '/images/category-icons/stop_cheque.svg';
         break;
       case 'Apply/Manage FASTag':
-        iconPath = '/images/category-icons/ic_car_insurance.svg';
+        iconPath = '/images/category-icons/fastag.svg';
         break;
       case 'e-Secure Lock':
       case 'Lock / Unlock User Access':
-        iconPath = '/images/category-icons/ic_esecure_lock.svg';
+        iconPath = '/images/category-icons/esecure_lock.svg';
         break;
       case 'Update My Security':
+        iconPath = '/images/category-icons/update_security.svg';
+        break;
       case 'Report- Unauthorized Transactions':
+        iconPath = '/images/category-icons/unauthorized_transactions.svg';
+        break;
       case 'Security Question':
-        iconPath = '/images/category-icons/ic_nps.svg';
+        iconPath = '/images/category-icons/security_question.svg';
         break;
 
       default:
@@ -457,21 +467,12 @@ export default function SbiGlobalBrandHeader({
         <div className="max-w-[1400px] mx-auto flex flex-wrap justify-between items-center gap-2">
           
           {/* Left Top Tabs */}
-<<<<<<< HEAD
-          <div className="flex items-center gap-2">
-            <button 
-              type="button" 
-              onClick={() => router.push('/dashboard')}
-              className={`px-3.5 py-1 text-xs font-bold rounded-t-md transition-colors ${
-                activeTopTab === 'Banking' ? 'bg-white text-[#302985]' : 'text-white/80 hover:text-white'
-=======
           <div className="flex items-end gap-3 md:gap-5">
             <button 
               type="button" 
               onClick={() => router.push('/dashboard')}
               className={`px-4 py-2 text-[13px] font-bold rounded-t-xl transition-colors flex items-center gap-2 relative z-10 ${
                 activeTopTab === 'Banking' ? 'bg-white text-[#502b85]' : 'text-white/90 hover:text-white mb-0.5'
->>>>>>> 51437bd (feat: add YONO ring icons to navbar tabs and YONO Net Banking Lite toggle switch)
               }`}
             >
               <YonoRingIcon 
@@ -484,13 +485,6 @@ export default function SbiGlobalBrandHeader({
             <button 
               type="button" 
               onClick={() => router.push('/home/landingPage/lifestyle')}
-<<<<<<< HEAD
-              className={`px-3.5 py-1 text-xs font-bold rounded-t-md transition-colors ${
-                activeTopTab === 'Lifestyle' ? 'bg-white text-[#302985]' : 'text-white/80 hover:text-white'
-              }`}
-            >
-              Lifestyle
-=======
               className={`px-4 py-2 text-[13px] font-bold rounded-t-xl transition-colors flex items-center gap-2 relative z-10 ${
                 activeTopTab === 'Lifestyle' ? 'bg-white text-[#502b85]' : 'text-white/90 hover:text-white mb-0.5'
               }`}
@@ -565,7 +559,7 @@ export default function SbiGlobalBrandHeader({
       </div>
 
       {/* 2. MAIN WHITE BRAND NAVBAR WITH INTERACTIVE MEGA DROPDOWN CLICK MENU */}
-      <header className="bg-white border-b border-slate-200/80 px-4 md:px-6 py-3.5 shadow-xs relative">
+      <header className="bg-white border-b border-slate-200/80 px-4 md:px-6 py-3.5 shadow-xs relative z-50">
         <div className="max-w-[1280px] mx-auto flex items-center justify-between gap-4">
           
           {/* Left Group: Logo + Nav Items */}
