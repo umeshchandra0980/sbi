@@ -264,20 +264,26 @@ export default function SbiGlobalBrandHeader({
     {
       id: 'Services',
       label: 'Services',
-      href: '/settings',
-      col1Title: 'Service Requests',
+      href: '/home/landingPage/services/tax-related',
+      col1Title: 'Quick Services',
       col1Items: [
-        { label: 'Update Profile Details', href: '/profile', icon: '👤' },
-        { label: 'ATM / Branch Locator', href: '/settings', icon: '📍' },
-        { label: 'Cheque Book Request', href: '/settings', icon: '📝' },
-        { label: 'Lock / Unlock User Access', href: '/settings', icon: '🛡' },
+        { label: 'Account Related', href: '/home/landingPage/services/tax-related', icon: '🏦' },
+        { label: 'Pension Related', href: '/home/landingPage/services/tax-related', icon: '🧑‍🦯' },
+        { label: 'Tax Related', href: '/home/landingPage/services/tax-related', icon: '📄' },
+        { label: 'Cheque Services', href: '/home/landingPage/services/tax-related', icon: '📑' },
+        { label: 'Doorstep Banking', href: '/home/landingPage/services/tax-related', icon: '🚪' },
+        { label: 'Positive Pay System', href: '/home/landingPage/services/tax-related', icon: '✍️' },
+        { label: 'Apply/Manage FASTag', href: '/home/landingPage/services/tax-related', icon: '🚗' },
       ],
-      col2Title: 'Lifestyle & Utilities',
+      col2Title: 'Quick Links',
       col2Items: [
-        { label: 'Flight, Train & Bus Bookings', href: '/home/landingPage/lifestyle', icon: '✈️' },
-        { label: 'Gift Vouchers & Vouchers', href: '/home/landingPage/lifestyle', icon: '🎁' },
-        { label: 'ClearTax & YONO Motorz', href: '/home/landingPage/lifestyle', icon: '🚗' },
-        { label: 'Customer Care Support', href: '/settings', icon: '📞' },
+        { label: 'Manage Nominee', href: '/profile', icon: '🚪' },
+        { label: 'Manage My Profile', href: '/profile', icon: '👤' },
+        { label: 'e-Secure Lock', href: '/settings', icon: '🔒' },
+        { label: 'Stop Cheque', href: '/settings', icon: '🛑' },
+        { label: 'Update My Security', href: '/settings', icon: '🛡' },
+        { label: 'Report- Unauthorized Transactions', href: '/settings', icon: '⚠️' },
+        { label: 'Security Question', href: '/settings', icon: '📱' },
       ]
     }
   ];
@@ -395,17 +401,37 @@ export default function SbiGlobalBrandHeader({
         break;
 
       // Services
+      case 'Account Related':
+      case 'Manage My Profile':
       case 'Update Profile Details':
+      case 'Doorstep Banking':
+      case 'Manage Nominee':
         iconPath = '/images/category-icons/ic_profile_details.svg';
         break;
+      case 'Pension Related':
+        iconPath = '/images/category-icons/ic_annuity_deposit.svg';
+        break;
+      case 'Tax Related':
       case 'ATM / Branch Locator':
         iconPath = '/images/category-icons/ic_tax_related.svg';
         break;
+      case 'Cheque Services':
+      case 'Stop Cheque':
+      case 'Positive Pay System':
       case 'Cheque Book Request':
         iconPath = '/images/category-icons/ic_cheque_services.svg';
         break;
+      case 'Apply/Manage FASTag':
+        iconPath = '/images/category-icons/ic_car_insurance.svg';
+        break;
+      case 'e-Secure Lock':
       case 'Lock / Unlock User Access':
         iconPath = '/images/category-icons/ic_esecure_lock.svg';
+        break;
+      case 'Update My Security':
+      case 'Report- Unauthorized Transactions':
+      case 'Security Question':
+        iconPath = '/images/category-icons/ic_nps.svg';
         break;
 
       default:
@@ -589,7 +615,11 @@ export default function SbiGlobalBrandHeader({
                     <div 
                       onClick={(e) => e.stopPropagation()}
                       className={`absolute top-full mt-1 bg-[#f8f6fb] rounded-2xl p-4 md:p-5 shadow-2xl border border-purple-200/80 z-50 animate-in fade-in slide-in-from-top-2 duration-150 ${
-                        tab.col3Items ? 'w-[660px] -left-36 max-w-[95vw]' : 'w-[440px] left-0 max-w-[90vw]'
+                        tab.col3Items 
+                          ? 'w-[660px] -left-36 max-w-[95vw]' 
+                          : tab.id === 'Services'
+                          ? 'w-[560px] -left-48 max-w-[90vw]'
+                          : 'w-[480px] left-0 max-w-[90vw]'
                       }`}
                     >
                       <div className={`grid gap-6 ${tab.col3Items ? 'grid-cols-3' : 'grid-cols-2'}`}>
