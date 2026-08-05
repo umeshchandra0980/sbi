@@ -15,8 +15,8 @@
 
 * { box-sizing: border-box; }
 
-body, button, input, select, textarea {
-  font-family: 'Open Sans', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+body, h1, h2, h3, h4, h5, h6, button, input, select, textarea {
+  font-family: Roboto, 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -60,5 +60,62 @@ body, button, input, select, textarea {
 
 .font-semibold {
   font-weight: 500 !important;
+}
+
+/* SBI Yono Net Banking Lite Switch styling matching Angular DOM */
+.yonolitediv {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.sliderLite {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 66px;
+  height: 26px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  font-size: 11px;
+  font-weight: 800;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.sliderLite::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sliderOff {
+  padding-left: 28px;
+  justify-content: flex-start;
+  background-color: transparent;
+}
+
+.sliderOff::before {
+  left: 2px;
+}
+
+.sliderOn {
+  padding-left: 10px;
+  justify-content: flex-start;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: #ffffff;
+}
+
+.sliderOn::before {
+  left: 42px;
 }
 

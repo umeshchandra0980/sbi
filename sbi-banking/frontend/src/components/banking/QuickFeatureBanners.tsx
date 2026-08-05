@@ -25,10 +25,10 @@ export const QuickFeatureBanners: React.FC<QuickFeatureBannersProps> = ({
       >
         <div className="banner-content-left">
           <p className="banner-text-wrapper flex flex-col items-start justify-center">
-            <small className="check text-white/95">Check your</small>
-            <strong className="banner-heading leading-tight flex items-center gap-1.5 mt-0.5">
+            <small className="check text-white text-xs font-normal">Check your</small>
+            <strong className="banner-heading text-white font-bold text-[17px] leading-tight flex items-center gap-1 mt-0.5">
               <span>Credit Score</span>
-              <svg className="w-3.5 h-3.5 text-white shrink-0 mt-[2px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg className="w-4 h-4 text-white shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                 <path d="m9 18 6-6-6-6" />
               </svg>
             </strong>
@@ -37,7 +37,7 @@ export const QuickFeatureBanners: React.FC<QuickFeatureBannersProps> = ({
 
         <div className="banner-illustration-area">
           <svg className="banner-cutout-svg" viewBox="0 0 200 100" preserveAspectRatio="none">
-            <path d="M 125 0 C 110 30 100 70 100 100 L 200 100 L 200 0 Z" fill="#ebeef5" />
+            <path d="M 65 0 C 40 25, 20 65, 0 100 L 200 100 L 200 0 Z" fill="#ffffff" />
           </svg>
 
           <div className="banner-graphic-container">
@@ -79,11 +79,11 @@ export const QuickFeatureBanners: React.FC<QuickFeatureBannersProps> = ({
       >
         <div className="banner-content-left">
           <p className="banner-text-wrapper">
-            <strong className="banner-heading pfm-heading leading-tight flex flex-col items-start">
+            <strong className="banner-heading text-white font-bold text-[17px] leading-tight flex flex-col items-start">
               <span>Personal Finance</span>
-              <span className="flex items-center gap-1.5 mt-0.5">
+              <span className="flex items-center gap-1 mt-0.5">
                 <span>Manager</span>
-                <svg className="w-3.5 h-3.5 text-white shrink-0 mt-[2px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg className="w-4 h-4 text-white shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                   <path d="m9 18 6-6-6-6" />
                 </svg>
               </span>
@@ -93,7 +93,7 @@ export const QuickFeatureBanners: React.FC<QuickFeatureBannersProps> = ({
 
         <div className="banner-illustration-area">
           <svg className="banner-cutout-svg" viewBox="0 0 200 100" preserveAspectRatio="none">
-            <path d="M 125 0 C 110 30 100 70 100 100 L 200 100 L 200 0 Z" fill="#ebeef5" />
+            <path d="M 65 0 C 40 25, 20 65, 0 100 L 200 100 L 200 0 Z" fill="#ffffff" />
           </svg>
 
           <div className="banner-graphic-container">

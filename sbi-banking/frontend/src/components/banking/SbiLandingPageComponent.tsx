@@ -337,6 +337,18 @@ function SbiLandingPageComponentContent({
             ) : (
               <span className="sbi-bc-current">Mutual Funds</span>
             )
+          ) : activeTab === 'Investments' ? (
+            <span className="sbi-bc-current">
+              {investmentSubTab === 'NPS' 
+                ? 'NPS Account' 
+                : investmentSubTab === 'Demat & Securities' 
+                  ? 'Demat & Securities' 
+                  : investmentSubTab === 'PPF' 
+                    ? 'PPF Account' 
+                    : investmentSubTab === 'IPO' 
+                      ? 'IPO' 
+                      : 'Mutual Funds'}
+            </span>
           ) : (
             <span className="sbi-bc-current">
               {searchParams?.get('view') === 'all' && (activeTab === 'Deposits' || activeTab === 'Loans') 
@@ -378,7 +390,7 @@ function SbiLandingPageComponentContent({
         )}
 
         {/* 4. SUB-NAVIGATION TABS BAR (Transaction Accounts | Deposits | Loans | Investments | Insurance) */}
-        {!showDematDetails && !(searchParams?.get('view') === 'all' && (activeTab === 'Deposits' || activeTab === 'Loans')) && !(activeTab === 'Investments' && investmentSubTab === 'Mutual Fund') && (
+        {!showDematDetails && !(searchParams?.get('view') === 'all' && (activeTab === 'Deposits' || activeTab === 'Loans')) && activeTab !== 'Investments' && (
           <div className="sbi-tabs-container">
             <div className="sbi-tabs-row">
               {(['Transaction Accounts', 'Deposits', 'Loans', 'Investments', 'Insurance'] as const).map((tabLabel) => {
@@ -516,11 +528,7 @@ function SbiLandingPageComponentContent({
                       >
                         <div className="flex items-center gap-4">
                           <div className="w-10 h-10 bg-transparent flex items-center justify-center text-[#702082] rounded-full border border-slate-100 shrink-0">
-                            <svg className="w-6.5 h-6.5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                              <path d="M6 16c0 3 3 5 6 5s6-2 6-5V8H6v8z" strokeLinecap="round" strokeLinejoin="round" />
-                              <path d="M12 2v6" strokeLinecap="round" strokeLinejoin="round" />
-                              <text x="12" y="15.2" fontSize="7.5" fontWeight="bold" textAnchor="middle" fill="#702082" stroke="none" fontFamily="sans-serif">₹</text>
-                            </svg>
+                            <img src="/assets/images/landing-page/IC_FixedDeposit.svg" alt="Fixed Deposit" className="w-6.5 h-6.5 object-contain" />
                           </div>
                           <div className="text-left">
                             <div className="text-[14.5px] font-bold text-slate-800 font-sans">Fixed Deposit</div>
@@ -541,11 +549,7 @@ function SbiLandingPageComponentContent({
                       >
                         <div className="flex items-center gap-4">
                           <div className="w-10 h-10 bg-transparent flex items-center justify-center text-[#702082] rounded-full border border-slate-100 shrink-0">
-                            <svg className="w-6.5 h-6.5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                              <path d="M12 2a10 10 0 0 1 8 4M20 6h-4M20 6V2" strokeLinecap="round" strokeLinejoin="round" />
-                              <path d="M12 22a10 10 0 0 1-8-4M4 18h4M4 18v4" strokeLinecap="round" strokeLinejoin="round" />
-                              <text x="12" y="15.8" fontSize="9.5" fontWeight="900" textAnchor="middle" fill="#702082" stroke="none" fontFamily="sans-serif">₹</text>
-                            </svg>
+                            <img src="/assets/images/landing-page/IC_NewRecurringdeposit.svg" alt="Recurring Deposit" className="w-6.5 h-6.5 object-contain" />
                           </div>
                           <div className="text-left">
                             <div className="text-[14.5px] font-bold text-slate-800 font-sans">Recurring Deposit</div>
@@ -566,13 +570,7 @@ function SbiLandingPageComponentContent({
                       >
                         <div className="flex items-center gap-4">
                           <div className="w-10 h-10 bg-transparent flex items-center justify-center text-[#702082] rounded-full border border-slate-100 shrink-0">
-                            <svg className="w-6.5 h-6.5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                              <rect x="4" y="4" width="16" height="16" rx="2" strokeLinecap="round" strokeLinejoin="round" />
-                              <line x1="9" y1="2" x2="9" y2="6" strokeLinecap="round" strokeLinejoin="round" />
-                              <line x1="15" y1="2" x2="15" y2="6" strokeLinecap="round" strokeLinejoin="round" />
-                              <line x1="4" y1="9" x2="20" y2="9" strokeLinecap="round" strokeLinejoin="round" />
-                              <text x="12" y="16.5" fontSize="9.5" fontWeight="900" textAnchor="middle" fill="#702082" stroke="none" fontFamily="sans-serif">₹</text>
-                            </svg>
+                            <img src="/assets/images/landing-page/Header_Annuity_deposit.svg" alt="Annuity Deposit" className="w-6.5 h-6.5 object-contain" />
                           </div>
                           <div className="text-left">
                             <div className="text-[14.5px] font-bold text-slate-800 font-sans">Annuity Deposit</div>
@@ -593,11 +591,7 @@ function SbiLandingPageComponentContent({
                       >
                         <div className="flex items-center gap-4">
                           <div className="w-10 h-10 bg-transparent flex items-center justify-center text-[#702082] rounded-full border border-slate-100 shrink-0">
-                            <svg className="w-6.5 h-6.5 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                              <circle cx="12" cy="12" r="10" strokeDasharray="3 3" />
-                              <path d="M12 2a10 10 0 0 1 10 10" strokeLinecap="round" strokeLinejoin="round" />
-                              <text x="12" y="15.5" fontSize="9.5" fontWeight="900" textAnchor="middle" fill="#702082" stroke="none" fontFamily="sans-serif">₹</text>
-                            </svg>
+                            <img src="/assets/images/landing-page/header_autosweep.svg" alt="Auto Sweep" className="w-6.5 h-6.5 object-contain" />
                           </div>
                           <div className="text-left">
                             <div className="text-[14.5px] font-bold text-slate-800 font-sans">Auto Sweep</div>
@@ -1021,57 +1015,27 @@ function SbiLandingPageComponentContent({
                       {[
                         { 
                           name: 'Loan Against Mutual Fund',
-                          icon: (
-                            <svg className="w-6 h-6 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                              <circle cx="12" cy="8" r="5" strokeLinecap="round" strokeLinejoin="round" />
-                              <path d="M3 21h18M12 13v8M19 18l-3 3-3-3" strokeLinecap="round" strokeLinejoin="round" />
-                              <text x="12" y="11" fontSize="6.5" fontWeight="bold" textAnchor="middle" fill="#702082" stroke="none" fontFamily="sans-serif">₹</text>
-                            </svg>
-                          )
+                          iconImg: '/assets/images/lamfu/Cate_IC_loan_against_mutual_fund.svg'
                         },
                         { 
                           name: 'Personal Loan',
-                          icon: (
-                            <svg className="w-6 h-6 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          )
+                          iconImg: '/assets/images/landing-page/IC_NewPersonalLoan.svg'
                         },
                         { 
-                          name: 'Car Loan',
-                          icon: (
-                            <svg className="w-6 h-6 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                              <rect x="3" y="11" width="18" height="6" rx="2" strokeLinecap="round" strokeLinejoin="round" />
-                              <path d="M5 11l2-5h10l2 5M7 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM17 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          )
+                          name: 'Overdraft against Deposit',
+                          iconImg: '/assets/images/landing-page/IC_NewODagainstFD.svg'
                         },
                         { 
                           name: 'Home Loan',
-                          icon: (
-                            <svg className="w-6 h-6 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" strokeLinecap="round" strokeLinejoin="round" />
-                              <polyline points="9 22 9 12 15 12 15 22" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          )
+                          iconImg: '/assets/images/landing-page/IC_NewHomeLoan.svg'
                         },
                         { 
                           name: 'Education Loan',
-                          icon: (
-                            <svg className="w-6 h-6 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                              <path d="M22 10v6M2 10l10-5 10 5-10 5z" strokeLinecap="round" strokeLinejoin="round" />
-                              <path d="M6 12v5c0 2 2.5 3 6 3s6-1 6-3v-5" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          )
+                          iconImg: '/assets/images/landing-page/IC_NewEducationloan.svg'
                         },
                         { 
                           name: 'Gold Loan',
-                          icon: (
-                            <svg className="w-6 h-6 text-[#702082]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                              <path d="M2 20h20M5 17h14M7 14h10M9 11h6M11 8h2" strokeLinecap="round" strokeLinejoin="round" />
-                              <circle cx="12" cy="4" r="2" fill="#702082" />
-                            </svg>
-                          )
+                          iconImg: '/assets/images/landing-page/IC_NewGoldLoan.svg'
                         },
                       ].map((opt, idx) => (
                         <div 
@@ -1105,7 +1069,7 @@ function SbiLandingPageComponentContent({
                           className="bg-white hover:bg-purple-50/20 border border-slate-200/80 rounded-xl p-3 flex flex-col items-center justify-center text-center cursor-pointer transition-all hover:scale-[1.03] active:scale-[0.97] shadow-2xs h-28 w-full"
                         >
                           <div className="w-10 h-10 bg-transparent flex items-center justify-center rounded-full border border-slate-50 shrink-0 mb-2">
-                            {opt.icon}
+                            <img src={opt.iconImg} alt={opt.name} className="w-6.5 h-6.5 object-contain" />
                           </div>
                           <span className="text-[11.5px] font-bold text-slate-700 leading-tight font-sans">
                             {opt.name}
@@ -1342,7 +1306,7 @@ function SbiLandingPageComponentContent({
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
                   
                   {/* Left Sub-Menu Column (3/12 width) */}
-                  {investmentSubTab !== 'Mutual Fund' && (
+                  {activeTab !== 'Investments' && investmentSubTab !== 'Mutual Fund' && (
                     <div className="md:col-span-3 space-y-3">
                       {/* Search Input */}
                       <div className="sbi-search-card">
@@ -1373,12 +1337,12 @@ function SbiLandingPageComponentContent({
                     </div>
                   )}
 
-                  {/* Right Main Content Column */}
-                  <div className={investmentSubTab === 'Mutual Fund' ? 'col-span-12' : 'md:col-span-9'}>
+                  {/* Right Main Content Column (Full width col-span-12 when in Investments mode) */}
+                  <div className={activeTab === 'Investments' || investmentSubTab === 'Mutual Fund' ? 'col-span-12' : 'md:col-span-9'}>
                     <div className="sbi-content-card min-h-[460px] p-0 overflow-hidden relative flex flex-col">
                       
-                      {/* Top Purple Tab Badge Header */}
-                      {investmentSubTab !== 'Mutual Fund' && (
+                      {/* Top Purple Tab Badge Header (Hidden in Investments mode) */}
+                      {activeTab !== 'Investments' && investmentSubTab !== 'Mutual Fund' && (
                         <div className="sbi-inv-header-tag select-none">
                           {investmentSubTab === 'Demat & Securities' 
                             ? 'Manage Demat & Securities' 
@@ -1505,73 +1469,78 @@ function SbiLandingPageComponentContent({
                       )}
 
                       {investmentSubTab === 'NPS' && (
-                        /* NPS View (Screenshot 2, 3, 4) */
-                        <div className="p-8 flex-1 flex flex-col justify-between items-stretch text-left bg-white w-full h-full space-y-6">
+                        /* NPS View (Exact Match to Image 2) */
+                        <div className="p-8 flex-1 flex flex-col justify-between items-stretch text-left bg-white w-full h-full space-y-6 font-sans select-none">
                           
                           {/* Title and Contribution Option Box */}
-                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200 pb-6 mb-2">
-                            <h2 className="text-[28px] font-bold text-[#681d82] tracking-tight pl-2">
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200/80 pb-5 mb-1">
+                            <h2 className="text-[26px] font-extrabold text-[#5b247c] tracking-tight">
                               NPS Account
                             </h2>
                             <button
                               type="button"
                               onClick={() => toast.success("Opening NPS Contribution Page...")}
-                              className="flex items-center justify-between gap-4 border border-[#dbcdf0] bg-[#f3effa] hover:bg-[#eae3f5] rounded-xl py-3 px-5 transition-all text-left max-w-xl cursor-pointer group shadow-xs select-none"
+                              className="flex items-center justify-between gap-4 border border-[#e2d5f0] bg-[#f5effa] hover:bg-[#ebdcf7] rounded-xl py-3 px-5 transition-all text-left max-w-xl cursor-pointer group shadow-2xs"
                             >
                               <div className="flex items-center gap-3">
-                                {/* Custom banknote icon with Rupee sign inside */}
-                                <svg className="w-6 h-5 text-[#681d82] shrink-0" viewBox="0 0 24 20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                                  <rect x="2" y="4" width="20" height="12" rx="2" />
-                                  <circle cx="12" cy="10" r="2.5" strokeWidth="1.5" />
-                                  <text x="12" y="12" fontSize="6.5" fontWeight="900" fill="currentColor" textAnchor="middle" stroke="none">₹</text>
-                                </svg>
-                                <span className="text-[13.5px] font-bold text-[#681d82] leading-tight">
+                                <div className="w-7 h-7 rounded-lg bg-[#5b247c]/10 flex items-center justify-center text-[#5b247c] shrink-0">
+                                  <svg className="w-4.5 h-4 text-[#5b247c]" viewBox="0 0 24 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <rect x="2" y="4" width="20" height="12" rx="2" />
+                                    <circle cx="12" cy="10" r="2.5" strokeWidth="1.5" />
+                                    <text x="12" y="12" fontSize="6.5" fontWeight="900" fill="currentColor" textAnchor="middle" stroke="none">₹</text>
+                                  </svg>
+                                </div>
+                                <span className="text-[13.5px] font-bold text-[#5b247c] leading-tight">
                                   Make one time contribution to self/other NPS Accounts
                                 </span>
                               </div>
-                              <ChevronRight size={16} className="text-[#681d82] stroke-[2.5px] shrink-0 ml-1" />
+                              <ChevronRight size={16} className="text-[#5b247c] stroke-[2.5px] shrink-0 ml-1" />
                             </button>
                           </div>
 
-                          {/* 3 NPS Info cards in a row */}
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          {/* 3 NPS Info cards in a row (Full Width 3 equal cols) */}
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                             {/* Card 1: Tax Savings */}
-                            <div className="bg-gradient-to-br from-[#a21caf] to-[#b5179e] text-white rounded-2xl p-4 flex items-center justify-between shadow-2xs">
-                              <div className="space-y-1 pr-1">
-                                <h4 className="text-xs font-bold tracking-wide">Tax savings</h4>
-                                <p className="text-[10px] text-purple-100/90 leading-tight">Minimize taxes with smart investment</p>
+                            <div className="bg-gradient-to-r from-[#b5179e] via-[#8e1b8b] to-[#702082] text-white rounded-2xl p-5 flex items-center justify-between shadow-xs">
+                              <div className="space-y-1 pr-2">
+                                <h4 className="text-[15px] font-extrabold tracking-wide">Tax savings</h4>
+                                <p className="text-[11px] text-purple-100/90 font-semibold leading-tight">Minimize taxes with smart investment</p>
                               </div>
-                              <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0 text-white font-bold text-lg select-none">
+                              <div className="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center shrink-0 text-white font-extrabold text-xl select-none shadow-3xs">
                                 %
                               </div>
                             </div>
 
                             {/* Card 2: Secured Retirements */}
-                            <div className="bg-[#702082] text-white rounded-2xl p-4 flex items-center justify-between shadow-2xs">
-                              <div className="space-y-1 pr-1">
-                                <h4 className="text-xs font-bold tracking-wide">Secured retirements</h4>
-                                <p className="text-[10px] text-purple-100/90 leading-tight">Plan carefully for a stable financial future</p>
+                            <div className="bg-gradient-to-r from-[#5b247c] via-[#481c63] to-[#341147] text-white rounded-2xl p-5 flex items-center justify-between shadow-xs">
+                              <div className="space-y-1 pr-2">
+                                <h4 className="text-[15px] font-extrabold tracking-wide">Secured retirements</h4>
+                                <p className="text-[11px] text-purple-100/90 font-semibold leading-tight">Plan carefully for a stable financial future</p>
                               </div>
-                              <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0 text-white">
-                                <Building2 size={18} />
+                              <div className="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center shrink-0 text-white shadow-3xs">
+                                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
+                                  <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
                               </div>
                             </div>
 
                             {/* Card 3: Wealth Creation */}
-                            <div className="bg-[#302985] text-white rounded-2xl p-4 flex items-center justify-between shadow-2xs">
-                              <div className="space-y-1 pr-1">
-                                <h4 className="text-xs font-bold tracking-wide">Wealth creation</h4>
-                                <p className="text-[10px] text-indigo-100/90 leading-tight">Invest wisely to build long term prosperity</p>
+                            <div className="bg-gradient-to-r from-[#3a4484] via-[#2f376f] to-[#202651] text-white rounded-2xl p-5 flex items-center justify-between shadow-xs">
+                              <div className="space-y-1 pr-2">
+                                <h4 className="text-[15px] font-extrabold tracking-wide">Wealth creation</h4>
+                                <p className="text-[11px] text-indigo-100/90 font-semibold leading-tight">Invest wisely to build long term prosperity</p>
                               </div>
-                              <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0 text-white">
-                                <ShieldCheck size={18} />
+                              <div className="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center shrink-0 text-white shadow-3xs">
+                                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
+                                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                </svg>
                               </div>
                             </div>
                           </div>
 
                           {/* Subtabs and features bullet list box */}
-                          <div className="space-y-4">
-                            <div className="flex items-center gap-6 border-b border-slate-100 pb-2">
+                          <div className="space-y-4 pt-2">
+                            <div className="flex items-center gap-8 border-b border-slate-200/60 pb-2">
                               {(['Features', 'Eligibility', 'Calculator'] as const).map((tab) => {
                                 const isActive = npsTab === tab;
                                 return (
@@ -1579,24 +1548,24 @@ function SbiLandingPageComponentContent({
                                     key={tab}
                                     type="button"
                                     onClick={() => setNpsTab(tab)}
-                                    className={`text-xs font-bold transition-all relative pb-2 ${
-                                      isActive ? 'text-[#702082]' : 'text-slate-500 hover:text-slate-800'
+                                    className={`text-[13px] font-extrabold transition-all relative pb-2 cursor-pointer ${
+                                      isActive ? 'text-[#5b247c]' : 'text-slate-500 hover:text-slate-800'
                                     }`}
                                   >
                                     <span>{tab}</span>
                                     {isActive && (
-                                      <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#702082] rounded-full" />
+                                      <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#5b247c] rounded-full" />
                                     )}
                                   </button>
                                 );
                               })}
                             </div>
 
-                            {/* Subtabs text box */}
+                            {/* Subtabs text box (Full width matching Image 2) */}
                             {npsTab === 'Features' ? (
-                              <div className="bg-slate-50 rounded-xl p-5 border border-slate-100/85 text-[11.5px] text-[#475569] leading-relaxed space-y-3 relative font-normal shadow-3xs">
-                                <div className="font-bold text-slate-800 text-xs">All Citizen Model</div>
-                                <ul className="space-y-2 text-[11px]">
+                              <div className="bg-[#f8f7fc] rounded-2xl p-6 border border-slate-200/60 text-[12.5px] text-[#334155] leading-relaxed space-y-4 relative font-medium shadow-3xs">
+                                <div className="font-extrabold text-slate-800 text-[13.5px]">All Citizen Model</div>
+                                <ul className="space-y-2 text-[12px] text-slate-700">
                                   <li className="list-disc pl-1 ml-4">
                                     National Pension System (NPS) is a voluntary retirement savings plan where you can define your contributions.
                                   </li>
@@ -1616,36 +1585,37 @@ function SbiLandingPageComponentContent({
                                     It offers two accounts: Tier-I and Tier-II with three investment options (Active, Auto & Balanced Life Cycle Funds). In active choice, the allocation is decided by the subscriber. In auto choice, subscribers are completely assisted in asset allocation decisions. Balanced Life cycle fund allows automatic rebalancing of the asset classes as per age and risk profile of the subscriber.
                                   </li>
                                 </ul>
-                                <div className="text-right">
-                                  <button type="button" onClick={() => toast.success("Showing more features...")} className="text-[#702082] hover:underline font-bold text-[10px]">
-                                    View more ▾
+                                <div className="text-right pt-2">
+                                  <button type="button" onClick={() => toast.success("Showing more features...")} className="text-[#5b247c] hover:underline font-bold text-[11.5px] inline-flex items-center gap-1 cursor-pointer">
+                                    <span>View more</span>
+                                    <span>v</span>
                                   </button>
                                 </div>
                               </div>
                             ) : (
-                              <div className="bg-slate-50 border border-slate-100 rounded-xl p-5 text-xs text-slate-500 font-semibold text-center shadow-3xs">
+                              <div className="bg-[#f8f7fc] border border-slate-200/60 rounded-2xl p-6 text-xs text-slate-500 font-semibold text-center shadow-3xs">
                                 NPS {npsTab} information will be available shortly.
                               </div>
                             )}
                           </div>
 
                           {/* Pre-existing checkbox declaration and Apply Now footer */}
-                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-t border-slate-100 pt-5 mt-4">
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-t border-slate-200/60 pt-5 mt-4">
                             <label className="flex items-center gap-2.5 cursor-pointer select-none">
                               <input
                                 type="checkbox"
                                 checked={npsCheck}
                                 onChange={(e) => setNpsCheck(e.target.checked)}
-                                className="rounded border-slate-300 text-[#702082] focus:ring-[#702082] w-4 h-4 cursor-pointer accent-[#702082]"
+                                className="rounded border-slate-300 text-[#5b247c] focus:ring-[#5b247c] w-4 h-4 cursor-pointer accent-[#5b247c]"
                               />
-                              <span className="text-xs text-slate-600 font-medium">I do not hold any pre-existing account under NPS</span>
+                              <span className="text-xs text-slate-700 font-medium">I do not hold any pre-existing account under NPS</span>
                             </label>
 
                             <div className="flex items-center gap-3">
                               <button
                                 type="button"
                                 onClick={() => toast.success("NPS account verification started")}
-                                className="border border-[#702082] hover:bg-[#702082]/5 text-[#702082] px-6 py-2 rounded-full text-xs font-bold transition-all cursor-pointer shadow-3xs"
+                                className="border border-[#5b247c] hover:bg-[#5b247c]/5 text-[#5b247c] px-6 py-2.5 rounded-full text-xs font-bold transition-all cursor-pointer shadow-3xs"
                               >
                                 Add my NPS Account
                               </button>
@@ -1653,9 +1623,9 @@ function SbiLandingPageComponentContent({
                                 type="button"
                                 disabled={!npsCheck}
                                 onClick={() => toast.success("Opening NPS Onboarding Application Form...")}
-                                className={`px-8 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm ${
+                                className={`px-8 py-2.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm ${
                                   npsCheck 
-                                    ? 'bg-[#702082] hover:bg-[#5c1a6b] text-white cursor-pointer' 
+                                    ? 'bg-[#5b247c] hover:bg-[#481c63] text-white cursor-pointer' 
                                     : 'bg-slate-200 text-slate-400 cursor-not-allowed'
                                 }`}
                               >

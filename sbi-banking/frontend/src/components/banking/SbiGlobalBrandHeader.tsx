@@ -8,6 +8,7 @@ import {
   ChevronDown,
   HelpCircle,
   Gift,
+  ShoppingBag,
   X
 } from 'lucide-react';
 
@@ -211,14 +212,17 @@ function SbiGlobalBrandHeaderContent({
       col1Title: 'Investment Options',
       col1Items: [
         { label: 'Mutual Funds', href: '/home/landingPage/manageRelationship/investments/mutual-fund', icon: '📊' },
-        { label: 'Demat & Securities', href: '/home/landingPage/manageRelationship/investments/mutual-fund', icon: '📈' },
-        { label: 'Public Provident Fund (PPF)', href: '/home/landingPage/manageRelationship/investments/mutual-fund', icon: '🐷' },
-        { label: 'National Pension System (NPS)', href: '/home/landingPage/manageRelationship/investments/mutual-fund', icon: '🛡' },
+        { label: 'Demat & Securities', href: '/home/landingPage/manageRelationship/investments/demat-overview', icon: '📈' },
+        { label: 'Public Provident Fund (PPF)', href: '/home/landingPage/manageRelationship/investments/manage-ppf', icon: '🐷' },
+        { label: 'National Pension System (NPS)', href: '/home/landingPage/manageRelationship/investments/nps', icon: '🛡' },
+        { label: 'IPO', href: '/home/landingPage/manageRelationship/investments/manage-ipo', icon: '🚀' },
       ],
       col2Title: 'Quick Links',
       col2Items: [
-        { label: 'Apply for IPO', href: '/home/landingPage/manageRelationship/investments/mutual-fund', icon: '🚀' },
-        { label: 'Folio Summary', href: '/home/landingPage/manageRelationship/investments/mutual-fund', icon: '📑' },
+        { label: 'Invest in Mutual Funds', href: '/home/landingPage/manageRelationship/investments/mutual-fund', icon: '📊' },
+        { label: 'Manage NPS Account', href: '/home/landingPage/manageRelationship/investments/nps', icon: '🛡' },
+        { label: 'Manage PPF Account', href: '/home/landingPage/manageRelationship/investments/manage-ppf', icon: '🐷' },
+        { label: 'Apply for IPO', href: '/home/landingPage/manageRelationship/investments/manage-ipo', icon: '🚀' },
       ]
     },
     {
@@ -282,52 +286,82 @@ function SbiGlobalBrandHeaderContent({
     switch (label) {
       // Investments
       case 'Mutual Funds':
-        iconPath = '/images/category-icons/ic_mutual_funds.svg';
+      case 'Invest in Mutual Funds':
+      case 'Folio Summary':
+        iconPath = '/assets/images/landing-page/IC_NewMutualFunds.svg';
         break;
       case 'Demat & Securities':
-        iconPath = '/images/category-icons/ic_demat_account.svg';
+        iconPath = '/assets/images/landing-page/Cate_IC_demat_acc.svg';
         break;
       case 'National Pension System (NPS)':
-        iconPath = '/images/category-icons/ic_nps.svg';
+        iconPath = '/assets/images/landing-page/IC_Newnps.svg';
+        break;
+      case 'Manage NPS Account':
+        iconPath = '/assets/images/landing-page/manage-nps-account-header.svg';
         break;
       case 'Public Provident Fund (PPF)':
-        iconPath = '/images/category-icons/ic_ppf.svg';
+        iconPath = '/assets/images/landing-page/IC_Newppf.svg';
+        break;
+      case 'Manage PPF Account':
+        iconPath = '/assets/images/landing-page/manage-ppf-header.svg';
+        break;
+      case 'IPO':
+      case 'Apply for IPO':
+        iconPath = '/assets/images/landing-page/IPO_new_logo.svg';
         break;
 
       // Loans
       case 'Personal Loan':
-        iconPath = '/images/category-icons/ic_personal_loan.svg';
+        iconPath = '/assets/images/landing-page/IC_NewPersonalLoan.svg';
         break;
       case 'Loan Against Mutual Fund':
-        iconPath = '/images/category-icons/ic_loan_against_mutual_fund.svg';
+        iconPath = '/assets/images/lamfu/Cate_IC_loan_against_mutual_fund.svg';
         break;
       case 'Home Loan':
-        iconPath = '/images/category-icons/ic_home_loan.svg';
+        iconPath = '/assets/images/landing-page/IC_NewHomeLoan.svg';
+        break;
+      case 'Overdraft against Deposit':
+        iconPath = '/assets/images/landing-page/IC_NewODagainstFD.svg';
+        break;
+      case 'Education Loan':
+        iconPath = '/assets/images/landing-page/IC_NewEducationloan.svg';
         break;
       case 'Gold Loan':
-        iconPath = '/images/category-icons/ic_gold_loan.svg';
+        iconPath = '/assets/images/landing-page/IC_NewGoldLoan.svg';
+        break;
+      case 'View Existing Loans':
+      case 'Manage Loans':
+        iconPath = '/assets/images/manage-loans/view_loan.svg';
+        break;
+      case 'Check your Credit Score':
+        iconPath = '/assets/images/landing-page/IC_credit_score.svg';
+        break;
+      case 'Calculate Loan EMI':
+        iconPath = '/assets/images/landing-page/calculate-loan-emi-header.svg';
         break;
 
       // Deposits
       case 'Fixed Deposit':
       case 'Manage Deposits':
-        iconPath = '/images/category-icons/ic_fixed_deposit.svg';
+        iconPath = '/assets/images/landing-page/IC_FixedDeposit.svg';
         break;
       case 'Recurring Deposit':
-      case 'View Interest Rate':
-        iconPath = '/images/category-icons/ic_recurring_deposit.svg';
+        iconPath = '/assets/images/landing-page/IC_NewRecurringdeposit.svg';
         break;
       case 'Annuity Deposit':
-        iconPath = '/images/category-icons/ic_annuity_deposit.svg';
+        iconPath = '/assets/images/landing-page/Header_Annuity_deposit.svg';
         break;
       case 'Auto Sweep':
-        iconPath = '/images/category-icons/ic_auto_sweep.svg';
+        iconPath = '/assets/images/landing-page/header_autosweep.svg';
+        break;
+      case 'View Interest Rate':
+        iconPath = '/assets/images/landing-page/view-interest-rate-header.svg';
         break;
       case 'Manage PPF Accounts':
-        iconPath = '/images/category-icons/ic_ppf.svg';
+        iconPath = '/assets/images/landing-page/manage-ppf-header.svg';
         break;
       case 'Requests':
-        iconPath = '/images/category-icons/ic_cheque_services.svg';
+        iconPath = '/assets/images/landing-page/requests-header.svg';
         break;
 
       // Insurance
@@ -449,30 +483,26 @@ function SbiGlobalBrandHeaderContent({
     <div className="w-full bg-white font-sans z-50">
       
       {/* 1. TOP PURPLE UTILITY HEADER BAR */}
-      <div className="bg-[#302985] text-white text-xs py-1.5 px-6 shadow-xs">
+      <div className="bg-[#54247C] text-white text-xs pt-1 px-6 shadow-xs">
         <div className="max-w-[1400px] mx-auto flex flex-wrap justify-between items-center gap-2">
           
           {/* Left Top Tabs */}
-          <div className="flex items-end gap-3 md:gap-5">
+          <div className="flex items-end gap-3 md:gap-4">
             <button 
               type="button" 
               onClick={() => router.push('/dashboard')}
-              className={`px-4 py-2 text-[13px] font-bold rounded-t-xl transition-colors flex items-center gap-2 relative z-10 ${
-                activeTopTab === 'Banking' ? 'bg-white text-[#502b85]' : 'text-white/90 hover:text-white mb-0.5'
+              className={`px-5 py-2 text-[14px] font-bold rounded-t-[12px] transition-colors flex items-center gap-2 relative z-10 ${
+                activeTopTab === 'Banking' ? 'bg-[#f5f4f9] text-[#54247C]' : 'text-white/95 hover:text-white mb-0.5'
               }`}
             >
-              <YonoRingIcon 
-                className="w-4 h-4 flex-shrink-0" 
-                color={activeTopTab === 'Banking' ? '#502b85' : 'rgb(251,251,251)'} 
-              />
               <span>Banking</span>
             </button>
             
             <button 
               type="button" 
               onClick={() => router.push('/home/landingPage/lifestyle')}
-              className={`px-4 py-2 text-[13px] font-bold rounded-t-xl transition-colors flex items-center gap-2 relative z-10 ${
-                activeTopTab === 'Lifestyle' ? 'bg-white text-[#502b85]' : 'text-white/90 hover:text-white mb-0.5'
+              className={`px-4 py-2 text-[14px] font-bold rounded-t-[12px] transition-colors flex items-center gap-2 relative z-10 ${
+                activeTopTab === 'Lifestyle' ? 'bg-[#f5f4f9] text-[#54247C]' : 'text-white/95 hover:text-white mb-0.5'
               }`}
             >
               <img 
@@ -486,8 +516,8 @@ function SbiGlobalBrandHeaderContent({
             <button 
               type="button" 
               onClick={() => router.push('/home/landingPage/others/rewards-end-point/rewards-endState')}
-              className={`px-4 py-2 text-[13px] font-bold rounded-t-xl transition-colors flex items-center gap-2 relative z-10 ${
-                activeTopTab === 'Rewards' ? 'bg-white text-[#502b85]' : 'text-white/90 hover:text-white mb-0.5'
+              className={`px-4 py-2 text-[14px] font-bold rounded-t-[12px] transition-colors flex items-center gap-2 relative z-10 ${
+                activeTopTab === 'Rewards' ? 'bg-[#f5f4f9] text-[#54247C]' : 'text-white/95 hover:text-white mb-0.5'
               }`}
             >
               <img 
@@ -498,46 +528,87 @@ function SbiGlobalBrandHeaderContent({
               <span>Rewards</span>
             </button>
             
-            <div className="flex items-center gap-2.5 ml-4 mb-2 font-semibold text-xs text-white">
-              <span className="text-[13px] font-medium tracking-wide">YONO Net Banking Lite</span>
-              <button 
-                type="button"
-                onClick={() => {
-                  const nextState = !liteMode;
-                  setLiteMode(nextState);
-                  toast.success(nextState ? 'YONO Net Banking Lite turned ON' : 'YONO Net Banking Lite turned OFF');
-                }}
-                className={`px-3 py-0.5 rounded-full text-[11px] font-extrabold tracking-wider transition-all duration-200 cursor-pointer shadow-xs ${
-                  liteMode 
-                    ? 'bg-[#22c55e] text-white hover:bg-[#16a34a]' 
-                    : 'bg-[#909ea8] text-white hover:bg-[#7e8c97]'
-                }`}
-                title="Toggle YONO Net Banking Lite"
-              >
-                {liteMode ? 'ON' : 'OFF'}
-              </button>
+            <div className="whatsNewSwitchToOld flex items-center gap-2.5 ml-4 mb-1.5 font-semibold text-xs text-white">
+              <div className="switchNew flex items-center gap-2">
+                <div className="div text-[13.5px] font-semibold tracking-wide">YONO Net Banking Lite</div>
+                <div className="yonolitediv">
+                  <input 
+                    type="checkbox" 
+                    role="switch" 
+                    tabIndex={0} 
+                    checked={liteMode}
+                    onChange={() => {
+                      const nextState = !liteMode;
+                      setLiteMode(nextState);
+                      toast.success(nextState ? 'YONO Net Banking Lite turned ON' : 'YONO Net Banking Lite turned OFF');
+                    }}
+                    className="toggleSwitchLite opacity-0 absolute w-full h-full cursor-pointer z-10" 
+                    title="Toggle YONO Net Banking Lite"
+                  />
+                  <span className={`sliderLite ${liteMode ? 'sliderOn' : 'sliderOff'}`}>
+                    {liteMode ? 'ON' : 'OFF'}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
 
           {/* Right Support & Tools */}
-          <div className="flex items-center gap-4 text-xs text-white/90">
-            <a href="https://crh.sbi.bank.in" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:underline">
-              <HelpCircle size={13} />
+          <div className="flex items-center gap-3.5 text-xs text-white/90 mb-1">
+            <a 
+              href="https://crh.sbi.bank.in" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="flex items-center gap-1.5 hover:underline text-white font-medium"
+            >
+              <img src="/assets/images/landing_page/get-help.svg" alt="Get Help" className="w-4 h-4" />
               <span>Get Help</span>
-              <span className="font-bold">1800-11-1101</span>
             </a>
-            <div className="flex items-center gap-1 cursor-pointer">
-              <span>English</span>
-              <ChevronDown size={12} />
+
+            <div className="flex items-center font-extrabold text-white text-xs">
+              <span>1800-11-1101</span>
             </div>
-            <span className="font-bold cursor-pointer">– A +</span>
+
+            <div className="flex items-center gap-1 cursor-pointer bg-white/10 px-2 py-0.5 rounded text-white text-xs">
+              <span>English</span>
+              <img src="/assets/images/landing_page/langarrow.svg" alt="Language Arrow" className="w-3.5 h-3.5" />
+            </div>
+
+            {/* Font Sizing Controls */}
+            <div className="flex items-center gap-1 bg-white/10 px-1.5 py-0.5 rounded">
+              <button 
+                type="button" 
+                onClick={() => toast.success("Font size decreased")}
+                className="hover:opacity-80 p-0.5"
+                title="Decrease Font"
+              >
+                <img src="/assets/images/landing_page/IC_minus.svg" alt="Decrease Font" className="w-3.5 h-3.5" />
+              </button>
+              <button 
+                type="button" 
+                onClick={() => toast.success("Font size reset to normal")}
+                className="hover:opacity-80 p-0.5"
+                title="Normal Font"
+              >
+                <img src="/assets/images/landing_page/font-normal.svg" alt="Normal Font" className="w-3 h-3" />
+              </button>
+              <button 
+                type="button" 
+                onClick={() => toast.success("Font size increased")}
+                className="hover:opacity-80 p-0.5"
+                title="Increase Font"
+              >
+                <img src="/assets/images/landing_page/add.svg" alt="Increase Font" className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
             <button 
               type="button" 
               onClick={() => {
                 toast.success('Logged out successfully');
                 router.push('/auth/login');
               }}
-              className="border border-white/60 hover:bg-white/10 px-2.5 py-0.5 rounded text-xs transition-colors"
+              className="border border-white/70 hover:bg-white/20 px-3 py-0.5 rounded text-xs font-bold transition-colors"
             >
               Logout
             </button>
@@ -566,6 +637,7 @@ function SbiGlobalBrandHeaderContent({
               {navTabs.map((tab) => {
                 const isOpen = openNavTab === tab.id;
                 const isActive = openNavTab === null ? activeNav === tab.id : openNavTab === tab.id;
+                const isDirectLink = tab.id === 'Overview' || tab.id === 'Accounts';
 
                 return (
                   <div 
@@ -577,7 +649,12 @@ function SbiGlobalBrandHeaderContent({
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      setOpenNavTab(isOpen ? null : tab.id);
+                      if (isDirectLink) {
+                        setOpenNavTab(null);
+                        router.push(tab.href);
+                      } else {
+                        setOpenNavTab(isOpen ? null : tab.id);
+                      }
                     }}
                     className={`relative block px-3.5 py-2 font-sans font-semibold text-[14px] transition-all rounded-t-xl cursor-pointer ${
                       isActive 
@@ -592,8 +669,8 @@ function SbiGlobalBrandHeaderContent({
                     )}
                   </button>
 
-                  {/* Mega Dropdown Click Card */}
-                  {isOpen && (
+                  {/* Mega Dropdown Click Card (Only for tabs that are not direct links) */}
+                  {isOpen && !isDirectLink && (
                     <div 
                       onClick={(e) => e.stopPropagation()}
                       className={`absolute top-full mt-1 bg-[#f8f6fb] rounded-2xl p-4 md:p-5 shadow-2xl border border-purple-200/80 z-50 animate-in fade-in slide-in-from-top-2 duration-150 ${

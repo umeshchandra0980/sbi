@@ -17,8 +17,19 @@ export default function ManageRelationshipPage() {
       initialTab = 'Loans';
     } else if (firstSlug === 'investments') {
       initialTab = 'Investments';
-      if (slug.length > 1 && slug[1].toLowerCase() === 'mutual-fund') {
-        initialInvestmentSubTab = 'Mutual Fund';
+      if (slug.length > 1) {
+        const subSlug = slug[1].toLowerCase();
+        if (subSlug.includes('demat')) {
+          initialInvestmentSubTab = 'Demat & Securities';
+        } else if (subSlug.includes('ppf')) {
+          initialInvestmentSubTab = 'PPF';
+        } else if (subSlug.includes('nps')) {
+          initialInvestmentSubTab = 'NPS';
+        } else if (subSlug.includes('ipo')) {
+          initialInvestmentSubTab = 'IPO';
+        } else {
+          initialInvestmentSubTab = 'Mutual Fund';
+        }
       }
     } else if (firstSlug === 'insurance') {
       initialTab = 'Insurance';

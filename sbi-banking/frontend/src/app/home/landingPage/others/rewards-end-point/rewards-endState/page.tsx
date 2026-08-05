@@ -33,6 +33,14 @@ export default function SbiRewardsPage() {
   const [activeTab, setActiveTab] = useState<'Offers' | 'Summary' | 'Smart Rewards'>('Offers');
   const [pointsCount, setPointsCount] = useState<number>(0);
   const [selectedOfferModal, setSelectedOfferModal] = useState<any>(null);
+  const [rewardBannerIndex, setRewardBannerIndex] = useState(0);
+
+  const rewardBanners = [
+    { title: "Sustainability Lifestyle", img: "/assets/images/lifestyle/sustainability_lifestyle_banner.png" },
+    { title: "Discounts & Products", img: "/assets/images/lifestyle/discounts-products-web-1.png" },
+    { title: "One Stop Shopping", img: "/assets/images/lifestyle/omp-web-1.png" },
+    { title: "Hotel Bookings", img: "/assets/images/lifestyle/omp-hotel-web-1.png" },
+  ];
 
   // Quick Circle Stories / Banners matching SBI YONO Rewards
   const quickBanners = [
@@ -180,6 +188,39 @@ export default function SbiRewardsPage() {
             aria-label="Next Features"
           >
             <ChevronRight size={20} />
+          </button>
+        </div>
+
+        {/* 3-CARD PROMO BANNER CONTAINER (Exact Match to User Screenshot) */}
+        <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-2xs mb-6 relative group select-none">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {[
+              rewardBanners[rewardBannerIndex % rewardBanners.length],
+              rewardBanners[(rewardBannerIndex + 1) % rewardBanners.length],
+              rewardBanners[(rewardBannerIndex + 2) % rewardBanners.length],
+            ].map((banner, idx) => (
+              <div 
+                key={idx}
+                onClick={() => toast(`Opening ${banner.title}`)}
+                className="rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all cursor-pointer h-40 sm:h-44 relative group/card border border-slate-100"
+              >
+                <img 
+                  src={banner.img} 
+                  alt={banner.title} 
+                  className="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-300"
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Overlapping Right Circular Arrow Button (Exact Match to Screenshot) */}
+          <button 
+            type="button" 
+            className="w-9 h-9 rounded-full bg-white shadow-lg border border-slate-100 flex items-center justify-center text-[#702082] hover:bg-purple-50 transition-all absolute -right-3 top-1/2 -translate-y-1/2 cursor-pointer z-10 hover:scale-110"
+            onClick={() => setRewardBannerIndex((prev) => (prev + 1) % rewardBanners.length)}
+            aria-label="Next Promo Cards"
+          >
+            <ChevronRight size={18} />
           </button>
         </div>
 
