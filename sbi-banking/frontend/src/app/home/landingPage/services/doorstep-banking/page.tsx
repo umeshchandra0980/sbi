@@ -54,7 +54,7 @@ export default function DoorstepBankingPage() {
         <SbiGlobalBrandHeader activeNav="Services" activeTopTab="Banking" />
 
         {/* Main Container */}
-        <main className="max-w-[1280px] w-full mx-auto px-4 py-6">
+        <main className="max-w-[1280px] w-full mx-auto px-4 py-6 pb-24">
           
           {/* Breadcrumb Navigation */}
           <div className="flex items-center gap-2 text-xs font-semibold text-slate-600 mb-4">
@@ -196,17 +196,17 @@ export default function DoorstepBankingPage() {
         </main>
       </div>
 
-      {/* Bottom Action Footer */}
-      <footer className="max-w-[1280px] w-full mx-auto px-4 py-4 flex justify-end">
+      {/* Bottom Action Floating Button */}
+      <div className="fixed bottom-6 right-6 md:right-12 z-40">
         <button
           type="button"
           onClick={() => setShowModal(true)}
-          className="bg-[#673391] hover:bg-[#561578] text-white font-extrabold text-xs md:text-sm py-3 px-8 rounded-full shadow-md hover:shadow-lg transition-all cursor-pointer flex items-center gap-2"
+          className="bg-[#673391] hover:bg-[#561578] text-white font-extrabold text-xs md:text-sm py-3.5 px-8 rounded-full shadow-xl hover:shadow-2xl transition-all cursor-pointer flex items-center gap-2 border border-purple-200/20"
         >
           <span>Go to PSB Alliance</span>
           <span>&rarr;</span>
         </button>
-      </footer>
+      </div>
 
       {/* PSB Alliance Confirmation Modal (Exact Match to Screenshot 3) */}
       {showModal && (
