@@ -19,6 +19,24 @@ export default function CreditCardLandingPage() {
   // Carousel State: 0: Cashback, 1: SimplyCLICK, 2: ELITE
   const [activeCardIndex, setActiveCardIndex] = useState(1); 
   const [selectedNetwork, setSelectedNetwork] = useState('Mastercard');
+  const [isNetworkDropdownOpen, setIsNetworkDropdownOpen] = useState(false);
+  const networkDropdownRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (networkDropdownRef.current && !networkDropdownRef.current.contains(event.target as Node)) {
+        setIsNetworkDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const networkOptions = [
+    { value: 'Mastercard', label: 'Mastercard' },
+    { value: 'Visa', label: 'Visa Signature' },
+    { value: 'RuPay', label: 'RuPay Contactless' },
+  ];
 
   const cardsData = [
     {
@@ -188,21 +206,56 @@ export default function CreditCardLandingPage() {
             </h3>
 
             {/* Network Dropdown Selector */}
-            <div className="w-full max-w-[300px] mb-4">
-              <label className="block text-[11px] font-bold text-slate-500 mb-1 text-left">
+            <div className="w-full max-w-[300px] mb-4 text-left relative" ref={networkDropdownRef}>
+              <label className="block text-[11px] font-bold text-slate-500 mb-1.5">
                 Selected Network
               </label>
               <div className="relative">
-                <select
-                  value={selectedNetwork}
-                  onChange={(e) => setSelectedNetwork(e.target.value)}
-                  className="w-full appearance-none bg-white border-b-2 border-slate-300 py-2 pr-8 text-xs font-bold text-slate-800 focus:outline-none focus:border-[#5b2e80] cursor-pointer"
+                <button
+                  type="button"
+                  onClick={() => setIsNetworkDropdownOpen((prev) => !prev)}
+                  className="w-full bg-white border border-slate-300 hover:border-[#5b2e80] focus:border-[#5b2e80] rounded-xl py-2.5 px-3.5 flex items-center justify-between text-xs font-bold text-slate-800 transition-all shadow-2xs cursor-pointer"
                 >
-                  <option value="Mastercard">Mastercard</option>
-                  <option value="Visa">Visa Signature</option>
-                  <option value="RuPay">RuPay Contactless</option>
-                </select>
-                <ChevronDown size={14} className="absolute right-2 top-2.5 text-slate-500 pointer-events-none" />
+                  <span>
+                    {networkOptions.find((opt) => opt.value === selectedNetwork)?.label || selectedNetwork}
+                  </span>
+                  <ChevronDown 
+                    size={16} 
+                    className={`text-slate-500 transition-transform duration-200 ${
+                      isNetworkDropdownOpen ? 'rotate-180 text-[#5b2e80]' : ''
+                    }`} 
+                  />
+                </button>
+
+                {isNetworkDropdownOpen && (
+                  <div className="absolute top-full left-0 right-0 mt-1.5 bg-white border border-purple-100 rounded-xl shadow-xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-100">
+                    <div className="py-1">
+                      {networkOptions.map((opt) => {
+                        const isSelected = selectedNetwork === opt.value;
+                        return (
+                          <button
+                            key={opt.value}
+                            type="button"
+                            onClick={() => {
+                              setSelectedNetwork(opt.value);
+                              setIsNetworkDropdownOpen(false);
+                            }}
+                            className={`w-full text-left px-3.5 py-2.5 text-xs font-bold flex items-center justify-between transition-colors cursor-pointer ${
+                              isSelected
+                                ? 'bg-[#f4edf9] text-[#5b2e80]'
+                                : 'text-slate-700 hover:bg-slate-50 hover:text-[#5b2e80]'
+                            }`}
+                          >
+                            <span>{opt.label}</span>
+                            {isSelected && (
+                              <span className="text-[#5b2e80] text-sm font-black">✓</span>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
