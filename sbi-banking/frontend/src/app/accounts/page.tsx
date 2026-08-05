@@ -271,30 +271,6 @@ function ViewAllAccountsContent() {
       ) : (
         /* ================= ORIGINAL TABBED ACCOUNTS RELATIONSHIP VIEW ================= */
         <main className="flex-1 max-w-[1320px] w-full mx-auto px-4 py-6">
-=======
-      {/* ================= HEADER ================= */}
-      <SbiGlobalBrandHeader activeNav="Accounts" />
-
-      {/* ================= MAIN CONTENT AREA ================= */}
-      <main className="flex-1 max-w-[1320px] w-full mx-auto px-4 py-6">
-        
-        {/* Breadcrumb Navigation (Matching Screenshot breadcrumbs exactly) */}
-        <div className="flex items-center gap-2 text-xs text-slate-500 mb-4 font-normal select-none">
-          <Link href="/dashboard" className="text-slate-500 hover:text-[#702082] flex items-center transition-colors">
-            <HomeIcon size={14} className="stroke-[1.5px]" />
-          </Link>
-          <span className="text-slate-400 text-[10px] font-bold">&gt;</span>
-          <span className="text-slate-600 font-medium">View All Accounts</span>
-        </div>
-
-        {/* Page Header Title */}
-        <h1 className="text-[26px] font-bold text-[#702082] mb-5 tracking-tight">
-          View All Accounts
-        </h1>
-
-        {/* Large Rounded White Container */}
-        <div className="bg-white rounded-2xl border border-slate-200/70 shadow-sm p-6 space-y-4 min-h-[420px]">
->>>>>>> 51437bd (feat: add YONO ring icons to navbar tabs and YONO Net Banking Lite toggle switch)
           
           {/* Breadcrumb Navigation (Matching Screenshot breadcrumbs exactly) */}
           <div className="flex items-center gap-2 text-xs text-slate-500 mb-4 font-normal select-none">
@@ -304,6 +280,11 @@ function ViewAllAccountsContent() {
             <span className="text-slate-400 text-[10px] font-bold">&gt;</span>
             <span className="text-slate-600 font-medium">View All Accounts</span>
           </div>
+
+          {/* Page Header Title */}
+          <h1 className="text-[26px] font-bold text-[#702082] mb-5 tracking-tight">
+            View All Accounts
+          </h1>
 
           {/* Sub-Navigation Tabs Bar */}
           <div className="flex justify-between items-center border-b border-slate-200/80 mb-6">

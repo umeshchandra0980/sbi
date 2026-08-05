@@ -457,21 +457,12 @@ export default function SbiGlobalBrandHeader({
         <div className="max-w-[1400px] mx-auto flex flex-wrap justify-between items-center gap-2">
           
           {/* Left Top Tabs */}
-<<<<<<< HEAD
-          <div className="flex items-center gap-2">
-            <button 
-              type="button" 
-              onClick={() => router.push('/dashboard')}
-              className={`px-3.5 py-1 text-xs font-bold rounded-t-md transition-colors ${
-                activeTopTab === 'Banking' ? 'bg-white text-[#302985]' : 'text-white/80 hover:text-white'
-=======
           <div className="flex items-end gap-3 md:gap-5">
             <button 
               type="button" 
               onClick={() => router.push('/dashboard')}
               className={`px-4 py-2 text-[13px] font-bold rounded-t-xl transition-colors flex items-center gap-2 relative z-10 ${
                 activeTopTab === 'Banking' ? 'bg-white text-[#502b85]' : 'text-white/90 hover:text-white mb-0.5'
->>>>>>> 51437bd (feat: add YONO ring icons to navbar tabs and YONO Net Banking Lite toggle switch)
               }`}
             >
               <YonoRingIcon 
@@ -484,13 +475,6 @@ export default function SbiGlobalBrandHeader({
             <button 
               type="button" 
               onClick={() => router.push('/home/landingPage/lifestyle')}
-<<<<<<< HEAD
-              className={`px-3.5 py-1 text-xs font-bold rounded-t-md transition-colors ${
-                activeTopTab === 'Lifestyle' ? 'bg-white text-[#302985]' : 'text-white/80 hover:text-white'
-              }`}
-            >
-              Lifestyle
-=======
               className={`px-4 py-2 text-[13px] font-bold rounded-t-xl transition-colors flex items-center gap-2 relative z-10 ${
                 activeTopTab === 'Lifestyle' ? 'bg-white text-[#502b85]' : 'text-white/90 hover:text-white mb-0.5'
               }`}
