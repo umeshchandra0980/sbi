@@ -138,8 +138,8 @@ function SbiGlobalBrandHeaderContent({
         { label: 'Send Money', href: '/home/landingPage/fund-transfer/send-money/select-payee', icon: '📲' },
         { label: 'Manage Payee', href: '/home/landingPage/fund-transfer/send-money/select-payee', icon: '👤' },
         { label: 'Schedule Payments', href: '/home/landingPage/fund-transfer/quick-transfer/bank-selection', icon: '📅' },
-        { label: 'Send Money Abroad', href: '/home/landingPage/fund-transfer/quick-transfer/bank-selection', icon: '🔀' },
-        { label: 'Bill Payments', href: '/dashboard', icon: '🧾' },
+        { label: 'Send Money Abroad', href: '/home/landingPage/fund-transfer/send-money-abroad', icon: '🔀' },
+        { label: 'Bill Payments', href: '/home/landingPage/billPayments/landing', icon: '🧾' },
       ],
       col2Title: 'Quick Links',
       col2Items: [
@@ -467,6 +467,32 @@ function SbiGlobalBrandHeaderContent({
         break;
       case 'Security Question':
         iconPath = '/assets/images/services/Cate_IC_App_Experience.svg';
+        break;
+
+      // Payments
+      case 'Quick Transfer':
+        iconPath = '/assets/images/landing-page/New-Quick-Transfer.svg';
+        break;
+      case 'Send Money':
+        iconPath = '/assets/images/landing-page/New-Send-Money.svg';
+        break;
+      case 'Manage Payee':
+        iconPath = '/assets/images/landing-page/newManage-Payee.svg';
+        break;
+      case 'Schedule Payments':
+        iconPath = '/assets/images/landing-page/New-Schedule-payments.svg';
+        break;
+      case 'Send Money Abroad':
+        iconPath = '/assets/images/landing-page/new-send-money-abroad.svg';
+        break;
+      case 'Bill Payments':
+        iconPath = '/assets/images/landing-page/IC_NewBillpayments.svg';
+        break;
+      case 'Transaction History':
+        iconPath = '/assets/images/landing-page/transaction-history-header.svg';
+        break;
+      case 'Manage Limits':
+        iconPath = '/assets/images/landing-page/manage-limits-header.svg';
         break;
 
       default:
