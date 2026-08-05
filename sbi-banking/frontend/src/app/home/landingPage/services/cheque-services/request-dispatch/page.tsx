@@ -23,7 +23,7 @@ export default function RequestDispatchPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f4f0f8] font-sans text-slate-800 flex flex-col relative">
+    <div className="min-h-screen bg-[#f4f0f8] text-slate-800 flex flex-col relative" style={{ fontFamily: 'Roboto, sans-serif' }}>
       {/* Header */}
       <SbiGlobalBrandHeader activeNav="Services" activeTopTab="Banking" />
 
@@ -31,7 +31,7 @@ export default function RequestDispatchPage() {
       <main className="flex-1 max-w-[1280px] w-full mx-auto px-4 py-6">
         
         {/* Breadcrumb Navigation */}
-        <div className="flex items-center gap-2 text-xs font-semibold text-slate-600 mb-4">
+        <div className="flex items-center gap-2 text-[12px] font-semibold text-slate-600 mb-4">
           <Link href="/dashboard" className="hover:text-[#673391] transition-colors flex items-center gap-1">
             <Home size={14} className="text-[#673391]" />
           </Link>
@@ -44,7 +44,7 @@ export default function RequestDispatchPage() {
         </div>
 
         {/* Page Heading */}
-        <h1 className="text-2xl md:text-3xl font-extrabold text-[#673391] mb-6 tracking-tight">
+        <h1 className="text-[16px] font-extrabold text-[#673391] mb-6 tracking-tight">
           Request Cheque Book / Dispatch Status
         </h1>
 
@@ -73,7 +73,7 @@ export default function RequestDispatchPage() {
             </button>
 
             {/* Modal Title */}
-            <h2 className="text-xl md:text-2xl font-bold text-[#673391] mb-6 tracking-tight pr-8">
+            <h2 className="text-[18px] font-semibold text-[#673391] mb-6 tracking-tight">
               Account type is Non-Cheque Book type
             </h2>
 
@@ -105,7 +105,7 @@ export default function RequestDispatchPage() {
               </div>
 
               {/* Message Text */}
-              <div className="flex-1 text-xs md:text-sm font-normal text-slate-700 leading-relaxed text-center sm:text-left">
+              <div className="flex-1 text-[14px] font-normal text-slate-700 leading-relaxed text-center sm:text-left">
                 Dear Customer, selected Account type is Non-Cheque Book type. To convert account in Cheque Book type, please click on Proceed or to navigate back click on Cancel.
               </div>
             </div>
@@ -115,14 +115,14 @@ export default function RequestDispatchPage() {
               <button
                 type="button"
                 onClick={handleClose}
-                className="bg-white border border-[#673391] hover:bg-purple-50 text-[#673391] font-bold text-xs md:text-sm py-2.5 px-10 rounded-full transition-all cursor-pointer"
+                className="bg-white border border-[#673391] hover:bg-purple-50 text-[#673391] font-semibold text-[14px] py-2.5 px-10 rounded-full transition-all cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleProceed}
-                className="bg-[#673391] hover:bg-[#561578] text-white font-extrabold text-xs md:text-sm py-2.5 px-10 rounded-full shadow-md hover:shadow-lg transition-all cursor-pointer"
+                className="bg-[#673391] hover:bg-[#561578] text-white font-semibold text-[14px] py-2.5 px-10 rounded-full shadow-md hover:shadow-lg transition-all cursor-pointer"
               >
                 Proceed
               </button>

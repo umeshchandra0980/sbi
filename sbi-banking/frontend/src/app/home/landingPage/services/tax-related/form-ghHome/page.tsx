@@ -20,7 +20,7 @@ export default function FormGHHomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f4f0f8] font-sans text-slate-800 flex flex-col relative">
+    <div className="min-h-screen bg-[#f4f0f8] text-slate-800 flex flex-col relative" style={{ fontFamily: 'Roboto, sans-serif' }}>
       {/* Header */}
       <SbiGlobalBrandHeader activeNav="Services" activeTopTab="Banking" />
 
@@ -28,7 +28,7 @@ export default function FormGHHomePage() {
       <main className="flex-1 max-w-[1280px] w-full mx-auto px-4 py-6">
         
         {/* Breadcrumb Navigation */}
-        <div className="flex items-center gap-2 text-xs font-semibold text-slate-600 mb-4">
+        <div className="flex items-center gap-2 text-[12px] font-semibold text-slate-600 mb-4">
           <Link href="/dashboard" className="hover:text-[#673391] transition-colors flex items-center gap-1">
             <Home size={14} className="text-[#673391]" />
           </Link>
@@ -46,19 +46,19 @@ export default function FormGHHomePage() {
           <div className="flex items-center gap-8 border-b border-slate-200 mb-8 pb-1">
             <button 
               type="button" 
-              className="pb-3 border-b-2 border-[#673391] text-[#673391] font-bold text-sm md:text-base cursor-pointer"
+              className="pb-3 border-b-2 border-[#673391] text-[#673391] font-semibold text-[18px] cursor-pointer"
             >
               Submit Form
             </button>
             <button 
               type="button" 
-              className="pb-3 border-b-2 border-transparent text-slate-500 font-medium text-sm md:text-base hover:text-slate-700 cursor-pointer"
+              className="pb-3 border-b-2 border-transparent text-slate-500 font-medium text-[18px] hover:text-slate-700 cursor-pointer"
             >
               Download Forms
             </button>
           </div>
 
-          <div className="text-slate-400 text-sm italic">
+          <div className="text-slate-400 text-[14px] italic">
             Select accounts to proceed with Form 15G/H submission...
           </div>
         </div>
@@ -85,7 +85,7 @@ export default function FormGHHomePage() {
             </button>
 
             {/* Modal Title */}
-            <h2 className="text-xl md:text-2xl font-bold text-[#673391] mb-6 tracking-tight">
+            <h2 className="text-[18px] font-semibold text-[#673391] mb-6 tracking-tight">
               Term Deposit Not Available
             </h2>
 
@@ -109,7 +109,7 @@ export default function FormGHHomePage() {
               </div>
 
               {/* Message Text */}
-              <div className="flex-1 text-sm md:text-base font-normal text-slate-700 leading-relaxed text-center sm:text-left">
+              <div className="flex-1 text-[14px] font-normal text-slate-700 leading-relaxed text-center sm:text-left">
                 You do not have any Term deposit accounts available for Form 15G/H submission.
               </div>
             </div>
@@ -119,7 +119,7 @@ export default function FormGHHomePage() {
               <button
                 type="button"
                 onClick={handleOkay}
-                className="bg-[#673391] hover:bg-[#561578] text-white font-bold text-sm py-3 px-12 rounded-full shadow-md hover:shadow-lg transition-all cursor-pointer"
+                className="bg-[#673391] hover:bg-[#561578] text-white font-semibold text-[14px] py-3 px-12 rounded-full shadow-md hover:shadow-lg transition-all cursor-pointer"
               >
                 Okay
               </button>

@@ -582,25 +582,29 @@ function InsuranceDashboardPageContent() {
 
         </div>
 
-        {/* Insurance Section Heading */}
-        <div>
-          <h1 className="text-2xl font-extrabold text-[#673391]" style={{ fontFamily: 'Roboto, sans-serif' }}>
-            {insuranceType === 'General Insurance' ? 'General Insurance' : 'Life Insurance'}
+        {/* Top Header Section */}
+        <div className="mb-6">
+          <h1 className="text-[18px] font-bold text-[#673391] tracking-tight">
+            {insuranceType === 'General Insurance'
+              ? 'General Insurance'
+              : searchParams.get('insuranceCategory') === '6'
+              ? 'SBI Life - New Smart Samriddhi'
+              : 'Life Insurance'}
           </h1>
           {insuranceType === 'General Insurance' ? (
-            <div className="mt-3 bg-white border border-slate-200/80 rounded-xl p-3.5 text-xs font-bold text-slate-800 shadow-2xs">
+            <div className="mt-3 bg-white border border-slate-200/80 rounded-xl p-3.5 text-[14px] font-medium text-slate-800 shadow-2xs">
               Keep your health, travel, and vehicles safe with our insurance, protecting you from life's unexpected events.
             </div>
           ) : searchParams.get('insuranceCategory') === '6' ? (
-            <div className="mt-3 bg-white border border-slate-200/80 rounded-xl p-3.5 text-xs font-bold text-slate-800 shadow-2xs">
+            <div className="mt-3 bg-white border border-slate-200/80 rounded-xl p-3.5 text-[14px] font-medium text-slate-800 shadow-2xs">
               A Life of assured happiness with ease
             </div>
           ) : activeTab === 'Wealth Creation' ? (
-            <div className="mt-3 bg-[#fbf9fe] border border-purple-100 rounded-xl p-3.5 text-xs font-bold text-slate-800 shadow-2xs">
+            <div className="mt-3 bg-[#fbf9fe] border border-purple-100 rounded-xl p-3.5 text-[14px] font-medium text-slate-800 shadow-2xs">
               An Individual, Unit Linked, Non-Participating, Life Insurance Saving Product
             </div>
           ) : (
-            <p className="text-xs font-semibold text-slate-600 mt-1">
+            <p className="text-[14px] font-normal text-slate-600 mt-1">
               Secure your today and tomorrow with a versatile insurance product
             </p>
           )}
@@ -627,15 +631,15 @@ function InsuranceDashboardPageContent() {
                 key={tab.id}
                 type="button"
                 onClick={() => handleTabChange(tab.id as any)}
-                className={`relative flex flex-col items-center justify-center px-6 py-3 rounded-2xl text-xs font-bold transition-all whitespace-nowrap ${
+                className={`relative flex flex-col items-center justify-center px-6 py-3 rounded-2xl text-[14px] font-semibold transition-all whitespace-nowrap ${
                   isActive
                     ? 'bg-white text-[#673391] shadow-xs border border-purple-100/60'
-                    : 'bg-white/70 text-slate-600 hover:bg-white hover:text-slate-900 border border-slate-200/80'
+                    : 'bg-white/70 text-slate-600 hover:bg-white hover:text-slate-900 border border-slate-200/80 font-normal'
                 }`}
               >
                 <div className="flex items-center gap-2">
                   <span>{tab.icon}</span>
-                  <span className={isActive ? 'text-[#673391] font-extrabold' : ''}>{tab.label}</span>
+                  <span className={isActive ? 'text-[#673391] font-semibold' : ''}>{tab.label}</span>
                 </div>
 
                 {/* Bottom Purple Underline Indicator for Active Tab */}

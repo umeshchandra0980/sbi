@@ -44,7 +44,7 @@ export default function SetSecurityQuestionPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f4f0f8] font-sans text-slate-800 flex flex-col justify-between">
+    <div className="min-h-screen bg-[#f4f0f8] text-slate-800 flex flex-col justify-between" style={{ fontFamily: 'Roboto, sans-serif' }}>
       <div>
         {/* Header */}
         <SbiGlobalBrandHeader activeNav="Services" activeTopTab="Banking" />
@@ -53,7 +53,7 @@ export default function SetSecurityQuestionPage() {
         <main className="max-w-[1280px] w-full mx-auto px-4 py-6">
           
           {/* Breadcrumb Navigation */}
-          <div className="flex items-center gap-2 text-xs font-semibold text-slate-600 mb-4">
+          <div className="flex items-center gap-2 text-[12px] font-semibold text-slate-600 mb-4">
             <Link href="/dashboard" className="hover:text-[#673391] transition-colors flex items-center gap-1">
               <Home size={14} className="text-[#673391]" />
             </Link>
@@ -64,7 +64,7 @@ export default function SetSecurityQuestionPage() {
           </div>
 
           {/* Page Heading */}
-          <h1 className="text-2xl md:text-3xl font-extrabold text-[#673391] mb-6 tracking-tight">
+          <h1 className="text-[18px] font-bold text-[#673391] mb-6 tracking-tight">
             Security Questions
           </h1>
 
@@ -72,16 +72,16 @@ export default function SetSecurityQuestionPage() {
           <div className="bg-white rounded-3xl p-6 md:p-10 shadow-xs border border-slate-100 mb-6">
             
             {/* Title & Subtitle */}
-            <h2 className="text-xl md:text-2xl font-bold text-slate-800 mb-2 tracking-tight">
+            <h2 className="text-[18px] font-semibold text-slate-800 mb-2 tracking-tight">
               Set Security Questions
             </h2>
-            <p className="text-xs md:text-sm text-slate-600 font-medium leading-relaxed mb-6">
+            <p className="text-[14px] text-slate-600 font-normal leading-relaxed mb-6">
               We have introduced additional authentication for safety of your account.<br className="hidden sm:inline" />
               Answer atleast 3 of the security questions to continue.
             </p>
 
             {/* Confidentiality Warning Box */}
-            <div className="bg-[#fff7ed] border border-[#ffedd5] rounded-2xl p-4 flex items-center gap-3 text-xs md:text-sm text-[#c2410c] font-semibold mb-10 max-w-2xl shadow-2xs">
+            <div className="bg-[#fff7ed] border border-[#ffedd5] rounded-2xl p-4 flex items-center gap-3 text-[14px] text-[#c2410c] font-medium mb-10 max-w-2xl shadow-2xs">
               <Info size={18} className="text-[#c2410c] flex-shrink-0" />
               <span>Please maintain confidentiality and do not share these details with anyone.</span>
             </div>
