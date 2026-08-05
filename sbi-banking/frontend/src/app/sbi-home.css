@@ -1240,11 +1240,34 @@ html, body, .site {
 
 /* Official Pre-login Page Specific Layout & Themes */
 .pre-login-wrapper {
-  max-width: 1400px;
+  max-width: 1366px;
   margin: 0 auto;
-  background: #fff;
-  font-family: system-ui, -apple-system, sans-serif;
-  color: #333;
+  background: url(/images/body_bg.jpg) 0px 0px repeat #f0f4f8;
+  font-family: arial, sans-serif !important;
+  font-size: 12px !important;
+  line-height: 14px !important;
+  font-weight: normal !important;
+  font-style: normal !important;
+  font-variant: normal !important;
+  font-stretch: normal !important;
+  color: #222;
+  box-sizing: border-box;
+}
+.pre-login-wrapper *, 
+.pre-login-wrapper ::after, 
+.pre-login-wrapper ::before {
+  box-sizing: border-box;
+}
+.pre-login-wrapper .container,
+.pre-login-wrapper .container-fluid,
+.pre-login-wrapper .container-xxxl {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  width: 100%;
+  padding-right: calc(var(--bs-gutter-x) * .5);
+  padding-left: calc(var(--bs-gutter-x) * .5);
+  margin-right: auto;
+  margin-left: auto;
 }
 .pre-login-header {
   border-bottom: 2.5px solid #032e63;
