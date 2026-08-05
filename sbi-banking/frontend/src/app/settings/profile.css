@@ -739,3 +739,70 @@
   margin-top: 2px;
   font-family: 'Open Sans', sans-serif;
 }
+
+/* Custom Scrollable Tabs Row (with arrow buttons and custom scrollbar track) */
+.acc-tabs-scroll-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 24px;
+  padding: 0 4px;
+  position: relative;
+}
+
+.acc-tabs-arrow-btn {
+  background: none;
+  border: none;
+  color: #888888;
+  font-size: 11px;
+  cursor: pointer;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  transition: color 0.15s ease;
+}
+
+.acc-tabs-arrow-btn:hover {
+  color: #4b1774;
+}
+
+.acc-tabs-row-scrollable {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 8px;
+}
+
+/* Chrome, Safari, and Opera custom scrollbar style */
+.acc-tabs-row-scrollable::-webkit-scrollbar {
+  height: 5px;
+}
+
+.acc-tabs-row-scrollable::-webkit-scrollbar-track {
+  background: #e2e8f0;
+  border-radius: 3px;
+}
+
+.acc-tabs-row-scrollable::-webkit-scrollbar-thumb {
+  background: #8e8e8e;
+  border-radius: 3px;
+}
+
+.acc-tabs-row-scrollable::-webkit-scrollbar-thumb:hover {
+  background: #717171;
+}
+
+/* Adjust active bar positioning for scrollable container */
+.acc-tabs-row-scrollable .acc-tab-btn {
+  padding-bottom: 8px;
+}
+
+.acc-tabs-row-scrollable .acc-tab-btn.active::after {
+  bottom: -9px;
+}

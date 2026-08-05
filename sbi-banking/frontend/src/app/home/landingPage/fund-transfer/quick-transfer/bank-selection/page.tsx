@@ -5,107 +5,28 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { 
-  ChevronLeft, ChevronRight, Upload, CreditCard, Search, Bell, HelpCircle, 
+  ChevronRight, Upload, CreditCard, Bell, HelpCircle, 
   CheckCircle, ArrowRight, ShieldCheck, Download, RefreshCw, Copy
 } from 'lucide-react';
 import './quick-transfer.css';
 import SbiGlobalBrandHeader from '@/components/banking/SbiGlobalBrandHeader';
 
-// Custom SVG Logos for 12 Popular Indian Banks
-const BankLogos: Record<string, JSX.Element> = {
-  'sbi': (
-    <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="50" r="42" fill="#00a5ec"/>
-      <circle cx="50" cy="50" r="13" fill="#ffffff"/>
-      <rect x="45.5" y="50" width="9" height="42" fill="#ffffff"/>
-    </svg>
-  ),
-  'hdfc': (
-    <svg width="45" height="45" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="100" fill="#004b8d" rx="6"/>
-      <rect x="15" y="15" width="70" height="70" stroke="#ed1c24" strokeWidth="12" fill="none"/>
-      <rect x="44" y="15" width="12" height="70" fill="#ffffff"/>
-      <rect x="15" y="44" width="70" height="12" fill="#ffffff"/>
-      <rect x="42" y="42" width="16" height="16" fill="#004b8d"/>
-    </svg>
-  ),
-  'icici': (
-    <svg width="45" height="45" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g transform="rotate(-15 50 50)">
-        <ellipse cx="50" cy="50" rx="42" ry="32" fill="#b02a30" />
-        <path d="M15 58 A 38 28 0 0 0 78 68" stroke="#f37321" strokeWidth="5.5" fill="none" strokeLinecap="round" />
-        <path d="M42 36 V 65 C42 68, 48 68, 52 64" stroke="#ffffff" strokeWidth="9" strokeLinecap="round" fill="none" />
-        <circle cx="42" cy="21" r="7.5" fill="#ffffff" />
-      </g>
-    </svg>
-  ),
-  'axis': (
-    <svg width="45" height="40" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M51 15 L23 68 H38 L51 40 L64 68 H79 L51 15 Z" fill="#971237"/>
-      <path d="M51 40 L69 53 H53 L51 46 Z" fill="#971237" />
-    </svg>
-  ),
-  'kotak': (
-    <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="50" r="44" fill="#003366" />
-      <circle cx="50" cy="50" r="38" stroke="#ed1c24" strokeWidth="6" fill="none"/>
-      <path d="M35 50 C35 35, 50 35, 50 50 C50 65, 65 65, 65 50" stroke="#ffffff" strokeWidth="9" fill="none" strokeLinecap="round"/>
-    </svg>
-  ),
-  'bob': (
-    <svg width="45" height="45" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M22 20 H54 C66 20, 72 26, 72 37 C72 45, 66 50, 58 52 C68 54, 74 61, 74 73 C74 85, 66 90, 52 90 H22 Z" fill="#f05a28" />
-      <rect x="36" y="32" width="18" height="13" rx="3" fill="#ffffff" />
-      <rect x="36" y="62" width="22" height="16" rx="3" fill="#ffffff" />
-      <path d="M12 25 L3 20 M12 37 L2 35 M12 50 L2 50 M12 63 L2 65 M12 75 L3 80" stroke="#f05a28" strokeWidth="5.5" strokeLinecap="round" />
-      <path d="M14 30 L6 26 M14 44 L6 43 M14 56 L6 57 M14 69 L7 72" stroke="#f05a28" strokeWidth="4.5" strokeLinecap="round" />
-    </svg>
-  ),
-  'pnb': (
-    <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="100" rx="18" fill="#a20636"/>
-      <circle cx="50" cy="50" r="28" stroke="#f8c301" strokeWidth="11" fill="none" />
-      <rect x="44.5" y="50" width="11" height="28" fill="#a20636" />
-    </svg>
-  ),
-  'yes': (
-    <svg width="50" height="35" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M15 45 L40 68 L105 15" stroke="#005a9c" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <path d="M38 65 Q 65 65, 95 40" stroke="#ed1c24" strokeWidth="6.5" strokeLinecap="round" fill="none" />
-    </svg>
-  ),
-  'boi': (
-    <svg width="45" height="45" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <polygon points="50,6 62,37 94,37 68,56 78,87 50,68 22,87 32,56 6,37 38,37" fill="#f25a29"/>
-      <circle cx="50" cy="50" r="9" fill="#ffffff" stroke="#0054a6" strokeWidth="1.8" />
-      <rect x="48" y="46" width="4" height="7" fill="#0054a6" rx="0.5" />
-      <line x1="46" y1="46" x2="54" y2="46" stroke="#0054a6" strokeWidth="1" />
-      <line x1="47" y1="52" x2="53" y2="52" stroke="#0054a6" strokeWidth="1" />
-    </svg>
-  ),
-  'idbi': (
-    <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="50" r="42" stroke="#006837" strokeWidth="8" fill="none" />
-      <circle cx="50" cy="50" r="28" fill="#f37023" />
-      <circle cx="50" cy="50" r="14" fill="#ffffff" />
-      <rect x="45" y="32" width="10" height="36" fill="#ffffff" />
-    </svg>
-  ),
-  'union': (
-    <svg width="42" height="42" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M24 25 V52 C24 64, 34 72, 46 72 C58 72, 68 64, 68 52 V25" stroke="#ee1c25" strokeWidth="13" strokeLinecap="round" fill="none" />
-      <path d="M36 25 V48 C36 56, 42 62, 50 62 C58 62, 64 56, 64 48 V25" stroke="#004b8d" strokeWidth="13" strokeLinecap="round" fill="none" />
-    </svg>
-  ),
-  'indusind': (
-    <svg width="45" height="45" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="100" rx="16" fill="#841a1c" />
-      <path d="M25 55 C25 42, 34 30, 48 30 C58 30, 68 40, 78 45 L88 35 L83 50 C88 55, 88 65, 83 70 C78 75, 68 80, 50 80 C34 80, 25 68, 25 55 Z" fill="#ffffff" />
-      <path d="M20 50 L10 45 M22 65 L10 68" stroke="#ffffff" strokeWidth="3" />
-      <circle cx="50" cy="50" r="4.5" fill="#841a1c" />
-    </svg>
-  )
-};;
+
+
+const BankLogoUrls: Record<string, string> = {
+  'sbi': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/sbin_svg',
+  'hdfc': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/hdfc_svg',
+  'icici': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/icic_svg',
+  'axis': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/utib_svg',
+  'kotak': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/kkbk_svg',
+  'bob': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/barb_svg',
+  'pnb': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/punb_svg',
+  'yes': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/yesb_svg',
+  'boi': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/bkid_svg',
+  'idbi': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/ibkl_svg',
+  'union': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/ubin_svg',
+  'indusind': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/indb_svg'
+};
 
 interface PopularBank {
   id: string;
@@ -179,86 +100,68 @@ const ALL_BANKS_LIST = [
 ];
 
 const renderAllBankIcon = (icon: string) => {
-  const isPng = ['axis', 'bob', 'boi', 'hdfc', 'icici'].includes(icon);
-  if (isPng) {
+  const iconUrls: Record<string, string> = {
+    'sbin': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/sbin_svg',
+    'sbi': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/sbin_svg',
+    'hdfc': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/hdfc_svg',
+    'icic': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/icic_svg',
+    'icici': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/icic_svg',
+    'utib': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/utib_svg',
+    'axis': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/utib_svg',
+    'kkbk': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/kkbk_svg',
+    'kotak': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/kkbk_svg',
+    'barb': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/barb_svg',
+    'bob': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/barb_svg',
+    'punb': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/punb_svg',
+    'pnb': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/punb_svg',
+    'yesb': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/yesb_svg',
+    'yes': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/yesb_svg',
+    'bkid': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/bkid_svg',
+    'boi': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/bkid_svg',
+    'ibkl': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/ibkl_svg',
+    'idbi': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/ibkl_svg',
+    'ubin': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/ubin_svg',
+    'union': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/ubin_svg',
+    'indb': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/indb_svg',
+    'indusind': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/indb_svg',
+    'mahb': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/mahb_svg',
+    'maharashtra': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/mahb_svg',
+    'cnrb': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/cnrb_svg',
+    'canara': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/cnrb_svg',
+    'cbin': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/cbin_svg',
+    'central_b': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/cbin_svg',
+    'citi': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/citi_svg',
+    'fdrl': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/fdrl_svg',
+    'federal': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/fdrl_svg',
+    'idib': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/idib_svg',
+    'indian_b': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/idib_svg',
+    'ioba': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/ioba_svg',
+    'iob': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/ioba_svg',
+    'kvbl': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/kvbl_svg',
+    'kvb': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/kvbl_svg',
+    'sibl': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/sibl_svg',
+    'sib': 'https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/sibl_svg'
+  };
+
+  const url = iconUrls[icon.toLowerCase()];
+  if (url) {
     return (
-      <div className="w-7 h-7 rounded-sm overflow-hidden relative flex items-center justify-center bg-white border border-slate-100 shrink-0">
-        <img 
-          src={`/images/${icon}.png`} 
-          alt="" 
-          className="w-full h-full object-cover select-none transform scale-[2.2] origin-[center_25%]" 
-        />
+      <div className="w-7 h-7 flex items-center justify-center shrink-0 rounded-sm overflow-hidden bg-white p-0.5 border border-slate-100">
+        <img src={url} alt="" className="w-full h-full object-contain select-none" />
       </div>
     );
   }
 
-  // Pre-existing SVGs from BankLogos
-  if (BankLogos[icon]) {
-    return (
-      <div className="w-7 h-7 flex items-center justify-center shrink-0">
-        {React.cloneElement(BankLogos[icon], { width: "24", height: "24" })}
-      </div>
-    );
-  }
-
-  // Fallbacks for other major banks
-  if (icon === 'canara') {
-    return (
-      <svg width="24" height="24" viewBox="0 0 40 40" fill="none" className="shrink-0">
-        <polygon points="12,30 28,30 20,16" stroke="#0072bc" strokeWidth="3.5" fill="none" />
-        <polygon points="16,14 32,14 24,28" stroke="#ffcb05" strokeWidth="3.5" fill="none" />
-      </svg>
-    );
-  }
-  if (icon === 'citi') {
-    return (
-      <svg width="26" height="20" viewBox="0 0 40 30" fill="none" className="shrink-0">
-        <path d="M5 22 Q 20 9, 35 22" stroke="#ed1c24" strokeWidth="4.5" strokeLinecap="round" fill="none" />
-        <text x="20" y="24" fontSize="13" fontWeight="900" fill="#0072bc" textAnchor="middle">citi</text>
-      </svg>
-    );
-  }
-  if (icon === 'federal') {
-    return (
-      <svg width="24" height="24" viewBox="0 0 40 40" fill="none" className="shrink-0">
-        <rect width="40" height="40" rx="4" fill="#0054a6" />
-        <path d="M12 12 H28 M12 20 H24 M12 28 H12" stroke="#ffcb05" strokeWidth="4.5" strokeLinecap="round" />
-      </svg>
-    );
-  }
-  if (icon === 'indian_b') {
-    return (
-      <svg width="24" height="24" viewBox="0 0 40 40" fill="none" className="shrink-0">
-        <circle cx="16" cy="20" r="10" stroke="#008cc9" strokeWidth="3.5" fill="none" />
-        <circle cx="24" cy="20" r="10" stroke="#f47a20" strokeWidth="3.5" fill="none" />
-      </svg>
-    );
-  }
-  if (icon === 'central_b') {
-    return (
-      <svg width="24" height="24" viewBox="0 0 40 40" fill="none" className="shrink-0">
-        <rect x="8" y="8" width="24" height="24" stroke="#d32f2f" strokeWidth="3.5" fill="none" />
-        <path d="M20 8 V32 M8 20 H32" stroke="#d32f2f" strokeWidth="3.5" />
-      </svg>
-    );
-  }
-  if (icon === 'iob' || icon === 'maharashtra' || icon === 'kvb' || icon === 'sib') {
-    return (
-      <svg width="24" height="24" viewBox="0 0 40 40" fill="none" className="shrink-0">
-        <circle cx="20" cy="20" r="18" fill="#1e40af" />
-        <text x="20" y="24" fontSize="12" fontWeight="bold" fill="#ffffff" textAnchor="middle">{icon.toUpperCase().slice(0, 3)}</text>
-      </svg>
-    );
-  }
-
-  // Default Temple Icon
+  // Fallback other bank icon matching Use MMID
   return (
-    <svg className="w-5 h-5 text-[#681d82] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="3" y1="21" x2="21" y2="21" />
-      <line x1="3" y1="10" x2="21" y2="10" />
-      <path d="M5 21V10 M9 21V10 M13 21V10 M17 21V10" />
-      <path d="M3 10L12 3L21 10" />
-    </svg>
+    <div className="w-7 h-7 flex items-center justify-center shrink-0 bg-slate-100 rounded-lg text-slate-400 p-1.5 border border-slate-150">
+      <svg className="w-full h-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <line x1="3" y1="21" x2="21" y2="21" />
+        <line x1="3" y1="10" x2="21" y2="10" />
+        <path d="M5 21V10 M9 21V10 M13 21V10 M17 21V10" />
+        <path d="M3 10L12 3L21 10" />
+      </svg>
+    </div>
   );
 };
 
@@ -360,30 +263,49 @@ export default function QuickTransferPage() {
       <div className="qt-sub-header">
         <div className="qt-stepper-container">
           <Link href="/dashboard" className="qt-back-link">
-            <ChevronLeft size={14} /> Back to Home
+            <img src="/assets/images/fund-transfer/arrow-back.svg" alt="Back" className="w-3.5 h-3.5" /> Back to Home
           </Link>
 
           <h1 className="qt-title">Quick Transfer</h1>
 
           {/* Stepper Tabs */}
-          <div className="qt-stepper-track">
+          <div className="grid grid-cols-4 gap-4 w-full select-none mt-4 border-b border-slate-200 pb-2">
             {[
               { id: 1, label: 'Bank Selection' },
               { id: 2, label: 'Payee and Transaction Details' },
               { id: 3, label: 'Authentication' },
               { id: 4, label: 'Receipt' },
-            ].map((st) => (
-              <div 
-                key={st.id} 
-                onClick={() => {
-                  if (st.id < currentStep) setCurrentStep(st.id);
-                }}
-                className={`qt-step-item ${currentStep === st.id ? 'active' : ''} ${currentStep > st.id ? 'completed cursor-pointer' : ''}`}
-              >
-                <span>{st.label}</span>
-                {currentStep === st.id && <div className="qt-step-line" />}
-              </div>
-            ))}
+            ].map((st) => {
+              const isCurrent = currentStep === st.id;
+              const isCompleted = currentStep > st.id;
+              return (
+                <div 
+                  key={st.id} 
+                  onClick={() => {
+                    if (st.id < currentStep) setCurrentStep(st.id);
+                  }}
+                  className={`flex flex-col gap-2 text-left ${st.id < currentStep ? 'cursor-pointer' : ''}`}
+                >
+                  {/* Progress Line */}
+                  <div className="w-full h-1.5 rounded-full overflow-hidden bg-slate-200">
+                    <div 
+                      className={`h-full transition-all duration-300 ${
+                        isCompleted ? 'bg-[#10b981]' : isCurrent ? 'bg-[#702082]' : 'bg-slate-200'
+                      }`}
+                      style={{ width: isCompleted || isCurrent ? '100%' : '0%' }}
+                    />
+                  </div>
+                  {/* Step Label */}
+                  <p 
+                    className={`text-[12.5px] font-extrabold font-sans leading-tight ${
+                      isCurrent ? 'text-[#702082]' : isCompleted ? 'text-green-600' : 'text-slate-400'
+                    }`}
+                  >
+                    {st.label}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -403,22 +325,15 @@ export default function QuickTransferPage() {
                   onClick={() => toast('Upload Cheque Feature')}
                   className="flex items-center gap-1.5 text-[13px] font-bold text-[#681d82] hover:underline bg-transparent border-none cursor-pointer select-none"
                 >
-                  <svg className="w-4.5 h-4.5 text-[#681d82]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" />
-                  </svg>
+                  <img src="/assets/images/fund-transfer/upload.svg" alt="Upload cheque" className="w-4 h-4" />
                   <span>Upload cheque</span>
                 </button>
                 <button 
                   type="button" 
-                  onClick={() => toast('MMID Transfer')}
+                  onClick={() => toast('Use MMID Transfer')}
                   className="flex items-center gap-1.5 text-[13px] font-bold text-[#681d82] hover:underline bg-transparent border-none cursor-pointer select-none"
                 >
-                  <svg className="w-4.5 h-4.5 text-[#681d82]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="3" y1="21" x2="21" y2="21" />
-                    <line x1="3" y1="10" x2="21" y2="10" />
-                    <path d="M5 21V10 M9 21V10 M13 21V10 M17 21V10" />
-                    <path d="M3 10L12 3L21 10" />
-                  </svg>
+                  <img src="/assets/images/fund-transfer/other-bank.svg" alt="Use MMID" className="w-4.5 h-4.5" />
                   <span>Use MMID</span>
                 </button>
               </div>
@@ -429,22 +344,29 @@ export default function QuickTransferPage() {
             {/* 12 Bank Grid */}
             <div className="qt-bank-grid">
               {POPULAR_BANKS.map((b) => {
-                const isPngLogo = ['axis', 'bob', 'boi', 'hdfc', 'icici'].includes(b.id);
+                const logoUrl = BankLogoUrls[b.id];
                 return (
                   <div 
                     key={b.id} 
                     onClick={() => handleBankSelect(b)}
                     className={`qt-bank-card ${selectedBank?.id === b.id ? 'selected' : ''}`}
                   >
-                    <div className="qt-bank-icon-box overflow-hidden relative">
-                      {isPngLogo ? (
+                    <div className="qt-bank-icon-box overflow-hidden relative flex items-center justify-center bg-white rounded-xl shadow-3xs p-1 border border-slate-100">
+                      {logoUrl ? (
                         <img 
-                          src={`/images/${b.id}.png`} 
+                          src={logoUrl} 
                           alt={b.name} 
-                          className="qt-bank-png-logo select-none pointer-events-none" 
+                          className="w-10 h-10 object-contain select-none pointer-events-none" 
                         />
                       ) : (
-                        BankLogos[b.id]
+                        <div className="w-10 h-10 flex items-center justify-center text-slate-400">
+                          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="3" y1="21" x2="21" y2="21" />
+                            <line x1="3" y1="10" x2="21" y2="10" />
+                            <path d="M5 21V10 M9 21V10 M13 21V10 M17 21V10" />
+                            <path d="M3 10L12 3L21 10" />
+                          </svg>
+                        </div>
                       )}
                     </div>
                     <span className="qt-bank-label">
@@ -461,7 +383,7 @@ export default function QuickTransferPage() {
               
               {/* Search Bar with bottom line */}
               <div className="max-w-[320px] mb-6 border-b border-slate-300 py-1 flex items-center select-none">
-                <Search size={16} className="text-slate-400 mr-2 shrink-0" />
+                <img src="/assets/images/fund-transfer/search.svg" alt="Search" className="w-4 h-4 mr-2 shrink-0" />
                 <input 
                   type="text" 
                   placeholder="Search here..." 

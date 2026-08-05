@@ -19,25 +19,13 @@ interface SbiGlobalBrandHeaderProps {
   activeTopTab?: 'Banking' | 'Lifestyle' | 'Rewards';
 }
 
-const YonoRingIcon = ({ className = "w-4 h-4", color }: { className?: string; color?: string }) => (
-  <svg 
-    viewBox="-45 -45 90 90" 
-    className={className} 
-    fill="none" 
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="miter"
-      fillOpacity="0"
-      strokeMiterlimit="10"
-      stroke={color || "currentColor"}
-      strokeOpacity="1"
-      strokeWidth="13"
-      d="M5.692999839782715,36.185001373291016 C-4.301000118255615,37.75699996948242 -13.38700008392334,35.566001892089844 -21.562999725341797,29.613000869750977 C-29.73900032043457,23.660999298095703 -34.61399841308594,15.687000274658203 -36.1870002746582,5.691999912261963 C-37.757999420166016,-4.302000045776367 -35.569000244140625,-13.38700008392334 -29.61400032043457,-21.56399917602539 C-23.65999984741211,-29.73900032043457 -15.685999870300293,-34.61199951171875 -5.692999839782715,-36.183998107910156 C-4.488999843597412,-36.37300109863281 -3.2980000972747803,-36.507999420166016 -2.121000051498413,-36.5890007019043"
-    />
-  </svg>
-);
+const YonoRingIcon = ({ className = "w-4 h-4", color }: { className?: string; color?: string }) => {
+  const isPurple = color === '#502b85';
+  const src = isPurple ? '/assets/images/landing-page/yono_ring_purple.svg' : '/assets/images/landing-page/yono_ring_white.svg';
+  return (
+    <img src={src} alt="Yono Ring" className={`${className} select-none pointer-events-none`} />
+  );
+};
 
 function SbiGlobalBrandHeaderContent({
   activeNav = 'Overview',
@@ -119,7 +107,7 @@ function SbiGlobalBrandHeaderContent({
       ],
       col2Title: 'Quick Links',
       col2Items: [
-        { label: 'View Profile', href: '/profile', icon: '👤' },
+        { label: 'View Profile', href: '/profile?tab=ManageMyProfile', icon: '👤' },
         { label: 'Settings', href: '/settings', icon: '⚙' },
       ]
     },
@@ -277,17 +265,17 @@ function SbiGlobalBrandHeaderContent({
         { label: 'Cheque Services', href: '/home/landingPage/services/cheque-services', icon: '📑' },
         { label: 'Doorstep Banking', href: '/home/landingPage/services/doorstep-banking', icon: '🚪' },
         { label: 'Positive Pay System', href: '/home/landingPage/services/cheque-services/positive-pay', icon: '✍️' },
-        { label: 'Apply/Manage FASTag', href: '/home/landingPage/services/tax-related', icon: '🚗' },
+        { label: 'Apply/Manage FASTag', href: '/home/landingPage/services/fastag', icon: '🚗' },
       ],
       col2Title: 'Quick Links',
       col2Items: [
-        { label: 'Manage Nominee', href: '/profile', icon: '🚪' },
-        { label: 'Manage My Profile', href: '/profile', icon: '👤' },
-        { label: 'e-Secure Lock', href: '/settings', icon: '🔒' },
+        { label: 'Manage Nominee', href: '/profile?tab=ManageNominee', icon: '🚪' },
+        { label: 'Manage My Profile', href: '/profile?tab=ManageMyProfile', icon: '👤' },
+        { label: 'e-Secure Lock', href: '/services/e-secure-lock', icon: '🔒' },
         { label: 'Stop Cheque', href: '/home/landingPage/services/cheque-services/enquire-stop-revoke', icon: '🛑' },
-        { label: 'Update My Security', href: '/settings', icon: '🛡' },
-        { label: 'Report- Unauthorized Transactions', href: '/home/landingPage/services/complaint/help-support', icon: '⚠️' },
-        { label: 'Security Question', href: '/home/landingPage/set-security-question', icon: '📱' },
+        { label: 'Update My Security', href: '/settings?tab=UpdateMySecurity', icon: '🛡' },
+        { label: 'Report- Unauthorized Transactions', href: '/settings', icon: '⚠️' },
+        { label: 'Security Question', href: '/settings?tab=UpdateMySecurity&subTab=SecurityQuestions', icon: '📱' },
       ]
     }
   ];
@@ -490,9 +478,7 @@ function SbiGlobalBrandHeaderContent({
     }
 
     return (
-      <svg className="w-4 h-4 text-[#5b2e80]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 3L2 10h20L12 3z" />
-      </svg>
+      <img src="/assets/images/landing-page/default_bank.svg" alt="" className="w-4 h-4 object-contain select-none pointer-events-none" />
     );
   };
 
@@ -522,7 +508,11 @@ function SbiGlobalBrandHeaderContent({
                 activeTopTab === 'Lifestyle' ? 'bg-[#f5f4f9] text-[#54247C]' : 'text-white/95 hover:text-white mb-0.5'
               }`}
             >
-              <ShoppingBag size={17} strokeWidth={2} className="shrink-0" />
+              <img 
+                src={activeTopTab === 'Lifestyle' ? '/assets/images/landing-page/lifestyle_purple.svg' : '/assets/images/landing-page/lifestyle_white.svg'} 
+                alt="Lifestyle"
+                className="w-4 h-4 flex-shrink-0 select-none pointer-events-none" 
+              />
               <span>Lifestyle</span>
             </button>
 
@@ -533,7 +523,11 @@ function SbiGlobalBrandHeaderContent({
                 activeTopTab === 'Rewards' ? 'bg-[#f5f4f9] text-[#54247C]' : 'text-white/95 hover:text-white mb-0.5'
               }`}
             >
-              <Gift size={17} strokeWidth={2} className="shrink-0" />
+              <img 
+                src={activeTopTab === 'Rewards' ? '/assets/images/landing-page/rewards_purple.svg' : '/assets/images/landing-page/rewards_white.svg'} 
+                alt="Rewards"
+                className="w-4 h-4 flex-shrink-0 select-none pointer-events-none" 
+              />
               <span>Rewards</span>
             </button>
             
@@ -799,7 +793,7 @@ function SbiGlobalBrandHeaderContent({
 
           {/* Profile Circle Pill */}
           <div 
-            onClick={() => router.push('/profile')}
+            onClick={() => router.push('/profile?tab=ManageMyProfile')}
             className="flex items-center gap-2 bg-[#673391] text-white py-1 px-3 rounded-full text-xs font-bold shadow-xs cursor-pointer hover:bg-[#561578] transition-colors flex-shrink-0"
           >
             <div className="w-6 h-6 rounded-full bg-amber-200 text-[#673391] flex items-center justify-center text-[10px] font-black">

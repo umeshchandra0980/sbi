@@ -166,6 +166,16 @@ function SbiLandingPageComponentContent({
     }
   }, []);
 
+  useEffect(() => {
+    if (activeTab === 'Investments' && investmentSubTab === 'Mutual Fund' && mfSubTab === 'Home') {
+      const interval = setInterval(() => {
+        setMfCarouselIndex((prev) => (prev + 1) % 5);
+      }, 4000);
+      return () => clearInterval(interval);
+    }
+  }, [activeTab, investmentSubTab, mfSubTab]);
+
+
   // Pagination and interactive transaction fake data state
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -1835,29 +1845,29 @@ function SbiLandingPageComponentContent({
                       {investmentSubTab === 'Mutual Fund' && (
                         <div className="p-6 flex-1 flex flex-col bg-[#f1f5f9] text-left font-sans w-full">
                           
-                           {/* 1. Mutual Funds Page Tab Navigation */}
-                           {ideasDetail === null && viewingFundInfo === null && (
-                             <div className="flex border-b border-slate-200 mb-6 bg-white rounded-t-xl select-none w-full">
-                               {(['Home', 'Invest', 'Portfolio', 'Ideas', 'More'] as const).map((tab) => {
-                                 const isActive = mfSubTab === tab;
-                                 return (
-                                   <button
-                                     key={tab}
-                                     type="button"
-                                     onClick={() => { setMfSubTab(tab); setIdeasDetail(null); setViewingFundInfo(null); }}
-                                     className={`font-sans font-semibold text-[13px] px-6 py-3 relative transition-all ${
-                                       isActive ? 'text-[#702082] font-bold' : 'text-slate-500 hover:text-slate-800'
-                                     }`}
-                                   >
-                                     <span>{tab}</span>
-                                     {isActive && (
-                                       <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#702082] rounded-t" />
-                                     )}
-                                   </button>
-                                 );
-                               })}
-                             </div>
-                           )}
+                            {/* 1. Mutual Funds Page Tab Navigation */}
+                            {ideasDetail === null && viewingFundInfo === null && (
+                              <div className="flex border-b border-slate-200 mb-6 bg-white rounded-t-xl overflow-hidden select-none w-full shadow-3xs">
+                                {(['Home', 'Invest', 'Portfolio', 'Ideas', 'More'] as const).map((tab) => {
+                                  const isActive = mfSubTab === tab;
+                                  return (
+                                    <button
+                                      key={tab}
+                                      type="button"
+                                      onClick={() => { setMfSubTab(tab); setIdeasDetail(null); setViewingFundInfo(null); }}
+                                      className={`font-sans font-bold text-[13px] flex-1 py-3 text-center relative transition-all ${
+                                        isActive ? 'text-[#702082] bg-[#f5effa]/40 font-bold' : 'text-slate-500 hover:text-[#702082] hover:bg-slate-50/50'
+                                      }`}
+                                    >
+                                      <span>{tab}</span>
+                                      {isActive && (
+                                        <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#702082] rounded-t" />
+                                      )}
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            )}
 
                           {viewingFundInfo !== null ? (
                             /* Detailed Fund Info View */
@@ -2573,22 +2583,36 @@ function SbiLandingPageComponentContent({
                                     <div className="w-full flex-1 relative min-h-[250px] bg-slate-50 flex items-center justify-center overflow-hidden">
                                       {mfCarouselIndex === 0 && (
                                         <img 
-                                          src="/images/landing/WhatsApp Image 2026-08-01 at 9.07.17 PM (1).jpeg" 
+                                          src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/nfo-banner-1" 
                                           alt="Did you start an SIP?" 
                                           className="w-full h-full object-cover"
                                         />
                                       )}
                                       {mfCarouselIndex === 1 && (
                                         <img 
-                                          src="/images/landing/WhatsApp Image 2026-08-01 at 9.07.33 PM.jpeg" 
+                                          src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/sip-banner" 
                                           alt="Make Salary Day Your SIP Day" 
                                           className="w-full h-full object-cover"
                                         />
                                       )}
                                       {mfCarouselIndex === 2 && (
                                         <img 
-                                          src="/assets/images/sip/Jannivesh-Banner.svg" 
+                                          src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/make-salary-day-your-sip-day-english" 
                                           alt="Jan Nivesh SIP" 
+                                          className="w-full h-full object-cover"
+                                        />
+                                      )}
+                                      {mfCarouselIndex === 3 && (
+                                        <img 
+                                          src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/tax-saving-made-easy-english" 
+                                          alt="Tax Saving Made Easy" 
+                                          className="w-full h-full object-cover"
+                                        />
+                                      )}
+                                      {mfCarouselIndex === 4 && (
+                                        <img 
+                                          src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/create-folio-banner" 
+                                          alt="Create Folio Banner" 
                                           className="w-full h-full object-cover"
                                         />
                                       )}
@@ -2596,7 +2620,7 @@ function SbiLandingPageComponentContent({
 
                                     {/* Indicators (Dots) */}
                                     <div className="py-3 flex justify-center gap-1.5 bg-white border-t border-slate-100 select-none w-full">
-                                      {[0, 1, 2].map((idx) => (
+                                      {[0, 1, 2, 3, 4].map((idx) => (
                                         <button
                                           key={idx}
                                           type="button"
@@ -2611,16 +2635,19 @@ function SbiLandingPageComponentContent({
                                   </div>
                                 </div>
 
-                                {/* Jan Nivesh SIP Static Banner (Exact match to reference screenshots) */}
-                                <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col w-full self-stretch select-none">
+                                {/* Jan Nivesh SIP Static Banner */}
+                                <div 
+                                  onClick={() => toast.success("Navigating to JanNivesh...")}
+                                  className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col w-full self-stretch select-none pointer cursor-pointer hover:shadow-md transition-shadow"
+                                >
                                   <img 
-                                    src="/images/landing/WhatsApp Image 2026-08-01 at 9.07.32 PM.jpeg" 
+                                    src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/Jannivesh-Banner_svg" 
                                     alt="Jan Nivesh SIP Banner" 
                                     className="w-full h-auto object-cover"
                                   />
                                 </div>
 
-                                {/* Returns on Mutual Fund SIP Card (EXACT MATCH TO SCREENSHOT 2/3) */}
+                                {/* Returns on Mutual Fund SIP Card */}
                                 <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 space-y-4 text-left flex flex-col items-start justify-start w-full self-stretch">
                                   {/* Badge label */}
                                   <div className="select-none self-start">
@@ -2647,73 +2674,38 @@ function SbiLandingPageComponentContent({
                                     </div>
                                   </div>
 
-                                  {/* Area chart representation */}
-                                  <div className="pt-2 w-full self-stretch">
-                                    <div className="relative h-28 w-full">
-                                      <svg viewBox="0 0 200 100" preserveAspectRatio="none" className="w-full h-full">
-                                        <defs>
-                                          <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="0%" stopColor="#22c55e" stopOpacity="0.45" />
-                                            <stop offset="100%" stopColor="#22c55e" stopOpacity="0.0" />
-                                          </linearGradient>
-                                        </defs>
-                                        {/* Grid lines */}
-                                        <line x1="0" y1="90" x2="200" y2="90" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="3 3" />
-                                        <line x1="0" y1="60" x2="200" y2="60" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="3 3" />
-                                        <line x1="0" y1="30" x2="200" y2="30" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="3 3" />
-                                        
-                                        {/* Chart Fill Area */}
-                                        <path d="M 0 90 Q 50 82 100 68 T 150 42 T 200 10 L 200 90 L 0 90 Z" fill="url(#chartGrad)" />
-                                        
-                                        {/* Chart Line */}
-                                        <path d="M 0 90 Q 50 82 100 68 T 150 42 T 200 10" stroke="#16a34a" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-                                        
-                                        {/* Node marker at peak */}
-                                        <circle cx="200" cy="10" r="4" fill="#16a34a" stroke="#ffffff" strokeWidth="1.5" />
-                                      </svg>
-                                      
-                                      {/* Custom floating labels */}
-                                      <div className="absolute right-0 -top-1 text-[11px] font-bold text-slate-700 font-sans">
-                                        ₹1Cr.
-                                      </div>
-                                      <div className="absolute right-1 bottom-[26px] text-[10px] font-semibold text-slate-500 font-sans bg-white/80 px-1 rounded">
-                                        ₹24.0L inv
-                                      </div>
-                                    </div>
-
-                                    {/* X Axis Timeline Labels */}
-                                    <div className="flex justify-between items-center text-[10px] text-slate-400 font-medium pt-1 font-sans select-none w-full">
-                                      <span>Today</span>
-                                      <span>5Y</span>
-                                      <span>10Y</span>
-                                      <span>15Y</span>
-                                      <span>20Y</span>
-                                    </div>
+                                  {/* Area chart representation using official SVG */}
+                                  <div className="pt-2 w-full self-stretch flex items-center justify-center">
+                                    <img 
+                                      src="https://cdn.onlineyono.sbi.bank.in/documents/d/sbi-yono-2.0/sipchart_svg" 
+                                      alt="SIP Growth Chart" 
+                                      className="w-full h-auto object-contain max-h-[105px]"
+                                    />
                                   </div>
+                                </div>
 
-                                  {/* Start Investing Sub-card banner with watermark outline */}
-                                  <div className="relative bg-[#f1fcf4] border border-[#def7ec] rounded-2xl p-5 overflow-hidden w-full text-left flex flex-col items-start justify-start self-stretch select-none">
-                                    <svg className="absolute right-2 bottom-0 w-24 h-24 text-green-700/10 pointer-events-none" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                      <rect x="52" y="22" width="30" height="30" rx="3" />
-                                      <path d="M57 42 l6-6 5 5 8-8" />
-                                      <path d="M12 62 l16-12 16 12 v24 h-32 z" />
-                                      <rect x="20" y="70" width="8" height="10" />
-                                      <circle cx="70" cy="72" r="6" />
-                                      <circle cx="78" cy="80" r="5" />
+                                {/* Goals Card */}
+                                <div 
+                                  className="relative rounded-2xl p-5 text-left flex flex-col justify-between overflow-hidden min-h-[140px] w-full select-none shadow-sm border border-slate-100"
+                                  style={{
+                                    backgroundImage: `url('https://cdn.onlineyono.sbi.bank.in/documents/d/sbi-yono-2.0/goals_svg')`,
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center'
+                                  }}
+                                >
+                                  <div className="font-extrabold text-[15px] text-slate-800 font-sans leading-snug max-w-[80%]">
+                                    Start investing and achieve your goals faster!
+                                  </div>
+                                  <button 
+                                    type="button"
+                                    onClick={() => toast.success("Opening SIP Calculator...")}
+                                    className="text-[12px] font-black text-[#702082] hover:underline font-sans cursor-pointer mt-4 flex items-center gap-1 self-start"
+                                  >
+                                    Calculate SIP Today 
+                                    <svg className="w-3.5 h-3.5 text-[#702082]" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                                     </svg>
-
-                                    <div className="relative z-10 text-[14px] font-extrabold text-green-950 font-sans leading-snug max-w-[75%]">
-                                      Start investing and achieve your goals faster!
-                                    </div>
-                                    <button 
-                                      type="button"
-                                      onClick={() => toast.success("Opening SIP Calculator...")}
-                                      className="relative z-10 text-[12px] font-extrabold text-[#702082] hover:underline font-sans cursor-pointer mt-3 flex items-center gap-0.5"
-                                    >
-                                      Calculate SIP Today →
-                                    </button>
-                                  </div>
-
+                                  </button>
                                 </div>
 
                               </div>
@@ -2732,10 +2724,10 @@ function SbiLandingPageComponentContent({
                                 </div>
 
                                 {/* Trending Funds Cards Grid */}
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full items-stretch">
                                   
                                   {/* Fund 1: SBI Contra Fund */}
-                                  <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 space-y-4 text-left flex flex-col justify-between w-full">
+                                  <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 space-y-4 text-left flex flex-col justify-between w-full h-full hover:shadow-md transition-shadow">
                                     <div className="space-y-4 w-full">
                                       <div className="flex items-start justify-between w-full">
                                         <div className="flex items-center gap-3">
@@ -2791,7 +2783,7 @@ function SbiLandingPageComponentContent({
                                   </div>
 
                                   {/* Fund 2: SBI Equity Hybrid Fund */}
-                                  <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 space-y-4 text-left flex flex-col justify-between w-full">
+                                  <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 space-y-4 text-left flex flex-col justify-between w-full h-full hover:shadow-md transition-shadow">
                                     <div className="space-y-4 w-full">
                                       <div className="flex items-start justify-between w-full">
                                         <div className="flex items-center gap-3">
@@ -2847,7 +2839,7 @@ function SbiLandingPageComponentContent({
                                   </div>
 
                                   {/* Fund 3: SBI Gold Fund */}
-                                  <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 space-y-4 text-left flex flex-col justify-between w-full">
+                                  <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 space-y-4 text-left flex flex-col justify-between w-full h-full hover:shadow-md transition-shadow">
                                     <div className="space-y-4 w-full">
                                       <div className="flex items-start justify-between w-full">
                                         <div className="flex items-center gap-3">
@@ -2902,12 +2894,12 @@ function SbiLandingPageComponentContent({
                                     </div>
                                   </div>
 
-                                  {/* Investment Assistance Card (matching reference images) */}
-                                  <div className="bg-[#f0f4f8] border border-slate-200/80 rounded-2xl shadow-sm p-5 space-y-3.5 text-left flex flex-col justify-between w-full">
+                                  {/* Investment Assistance Card */}
+                                  <div className="bg-[#f0f4f8] border border-slate-200/80 rounded-2xl shadow-sm p-5 space-y-3.5 text-left flex flex-col justify-between w-full h-full hover:shadow-md transition-shadow">
                                     <div className="space-y-2.5 w-full">
                                       <div className="flex items-center gap-2.5 w-full">
-                                        <div className="w-9 h-9 rounded-xl bg-slate-200/60 text-slate-600 flex items-center justify-center shrink-0">
-                                          <svg className="w-5 h-5 stroke-slate-600" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <div className="w-9 h-9 rounded-xl bg-purple-100/60 text-[#702082] flex items-center justify-center shrink-0">
+                                          <svg className="w-5 h-5 stroke-[#702082]" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                                             <path d="M9 14h2" />
                                             <path d="M9 11h4" />
@@ -2926,7 +2918,7 @@ function SbiLandingPageComponentContent({
                                     <button 
                                       type="button"
                                       onClick={() => toast.success("Starting Risk Profile Assessment...")}
-                                      className="self-start text-[12px] font-extrabold text-[#702082] hover:underline font-sans cursor-pointer mt-2"
+                                      className="self-start text-[12px] font-extrabold text-[#702082] hover:underline font-sans cursor-pointer mt-2 flex items-center gap-0.5"
                                     >
                                       Start Assessment →
                                     </button>
@@ -2953,32 +2945,18 @@ function SbiLandingPageComponentContent({
                                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full">
                                     
                                     {/* Video Card 1: What is Mutual Fund */}
-                                    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs hover:shadow-xs transition-shadow flex flex-col text-left cursor-pointer group" onClick={() => toast("Opening Video: What is Mutual Fund...")}>
-                                      {/* Video Thumbnail */}
-                                      <div className="h-32 relative flex items-center justify-center select-none overflow-hidden">
-                                        <img 
-                                          src="/images/landing/WhatsApp Image 2026-08-01 at 9.07.17 PM.jpeg" 
-                                          alt="What is Mutual Fund" 
-                                          className="absolute inset-0 w-full h-full object-cover"
-                                        />
-                                        {/* Play Icon Overlay */}
-                                        <div className="w-10 h-10 rounded-full bg-slate-900/60 text-white flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform z-10">
-                                          <svg className="w-4 h-4 fill-white ml-0.5" viewBox="0 0 24 24">
-                                            <path d="M8 5v14l11-7z" />
-                                          </svg>
-                                        </div>
-                                        {/* Video controller bar overlay */}
-                                        <div className="absolute bottom-0 left-0 right-0 h-7 bg-gradient-to-t from-black/80 to-transparent flex items-center justify-start gap-3 px-2 z-10">
-                                          <svg className="w-3 h-3 fill-white" viewBox="0 0 24 24">
-                                            <path d="M8 5v14l11-7z" />
-                                          </svg>
-                                          <svg className="w-3 h-3 stroke-white fill-none" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-                                          </svg>
-                                        </div>
-                                        {/* Progress Bar */}
-                                        <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#e11d48] z-20"></div>
+                                    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs hover:shadow-xs transition-shadow flex flex-col text-left group">
+                                      {/* Video Thumbnail / Player */}
+                                      <div className="h-32 relative flex items-center justify-center select-none overflow-hidden bg-slate-900">
+                                        <video 
+                                          className="w-full h-full object-cover" 
+                                          controls 
+                                          preload="metadata" 
+                                          poster="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/what-is-mutual-fund-1"
+                                        >
+                                          <source src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/what-is-mutual-fund-2" type="video/mp4" />
+                                          Your browser does not support the video tag.
+                                        </video>
                                       </div>
                                       {/* Video metadata text */}
                                       <div className="p-3 space-y-1">
@@ -2992,112 +2970,73 @@ function SbiLandingPageComponentContent({
                                     </div>
 
                                     {/* Video Card 2: Benefits of Mutual Funds */}
-                                    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs hover:shadow-xs transition-shadow flex flex-col text-left cursor-pointer group" onClick={() => toast("Opening Video: Benefits of Mutual Funds...")}>
-                                      {/* Video Thumbnail */}
-                                      <div className="h-32 relative flex items-center justify-center select-none overflow-hidden">
-                                        <img 
-                                          src="/images/landing/WhatsApp Image 2026-08-01 at 9.07.17 PM.jpeg" 
-                                          alt="Benefits of Mutual Funds" 
-                                          className="absolute inset-0 w-full h-full object-cover"
-                                        />
-                                        <div className="w-10 h-10 rounded-full bg-slate-900/60 text-white flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform z-10">
-                                          <svg className="w-4 h-4 fill-white ml-0.5" viewBox="0 0 24 24">
-                                            <path d="M8 5v14l11-7z" />
-                                          </svg>
-                                        </div>
-                                        {/* Video controller bar overlay */}
-                                        <div className="absolute bottom-0 left-0 right-0 h-7 bg-gradient-to-t from-black/80 to-transparent flex items-center justify-start gap-3 px-2 z-10">
-                                          <svg className="w-3 h-3 fill-white" viewBox="0 0 24 24">
-                                            <path d="M8 5v14l11-7z" />
-                                          </svg>
-                                          <svg className="w-3 h-3 stroke-white fill-none" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-                                          </svg>
-                                        </div>
-                                        {/* Progress Bar */}
-                                        <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#e11d48] z-20"></div>
+                                    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs hover:shadow-xs transition-shadow flex flex-col text-left group">
+                                      {/* Video Thumbnail / Player */}
+                                      <div className="h-32 relative flex items-center justify-center select-none overflow-hidden bg-slate-900">
+                                        <video 
+                                          className="w-full h-full object-cover" 
+                                          controls 
+                                          preload="metadata" 
+                                          poster="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/what-is-mutual-fund-1"
+                                        >
+                                          <source src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/benefits-of-mutual-funds" type="video/mp4" />
+                                          Your browser does not support the video tag.
+                                        </video>
                                       </div>
                                       <div className="p-3 space-y-1">
                                         <h4 className="font-bold text-[12px] text-slate-800 leading-snug group-hover:text-[#702082] transition-colors font-sans truncate">
                                           Benefits of Mutual Funds
                                         </h4>
                                         <p className="text-[10px] text-slate-500 leading-relaxed font-sans line-clamp-2">
-                                          Benefits of Mutual Funds _ Advantages of Mutual Funds _ SBI Mutual Fund
+                                          Benefits of Mutual Funds_Advantages of Mutual Funds_SBI Mutual Fund
                                         </p>
                                       </div>
                                     </div>
 
                                     {/* Video Card 3: Type of Mutual Funds */}
-                                    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs hover:shadow-xs transition-shadow flex flex-col text-left cursor-pointer group" onClick={() => toast("Opening Video: Type of Mutual Funds...")}>
-                                      {/* Video Thumbnail */}
-                                      <div className="h-32 relative flex items-center justify-center select-none overflow-hidden">
-                                        <img 
-                                          src="/images/landing/WhatsApp Image 2026-08-01 at 9.07.19 PM (1).jpeg" 
-                                          alt="Type of Mutual Funds" 
-                                          className="absolute inset-0 w-full h-full object-cover"
-                                        />
-                                        <div className="w-10 h-10 rounded-full bg-slate-900/60 text-white flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform z-10">
-                                          <svg className="w-4 h-4 fill-white ml-0.5" viewBox="0 0 24 24">
-                                            <path d="M8 5v14l11-7z" />
-                                          </svg>
-                                        </div>
-                                        {/* Video controller bar overlay */}
-                                        <div className="absolute bottom-0 left-0 right-0 h-7 bg-gradient-to-t from-black/80 to-transparent flex items-center justify-start gap-3 px-2 z-10">
-                                          <svg className="w-3 h-3 fill-white" viewBox="0 0 24 24">
-                                            <path d="M8 5v14l11-7z" />
-                                          </svg>
-                                          <svg className="w-3 h-3 stroke-white fill-none" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-                                          </svg>
-                                        </div>
-                                        {/* Progress Bar */}
-                                        <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#e11d48] z-20"></div>
+                                    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs hover:shadow-xs transition-shadow flex flex-col text-left group">
+                                      {/* Video Thumbnail / Player */}
+                                      <div className="h-32 relative flex items-center justify-center select-none overflow-hidden bg-slate-900">
+                                        <video 
+                                          className="w-full h-full object-cover" 
+                                          controls 
+                                          preload="metadata" 
+                                          poster="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/choosing-the-right-mutual-fund"
+                                        >
+                                          <source src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/types-of-mutual-funds" type="video/mp4" />
+                                          Your browser does not support the video tag.
+                                        </video>
                                       </div>
                                       <div className="p-3 space-y-1">
                                         <h4 className="font-bold text-[12px] text-slate-800 leading-snug group-hover:text-[#702082] transition-colors font-sans truncate">
                                           Type of Mutual Funds
                                         </h4>
                                         <p className="text-[10px] text-slate-500 leading-relaxed font-sans line-clamp-2">
-                                          Type of Mutual Funds _ Choosing the Right Mutual Fund _ SBI Mutual Fund
+                                          Type of Mutual Funds_Choosing the Right Mutual Fund_SBI Mutual Fund
                                         </p>
                                       </div>
                                     </div>
 
                                     {/* Video Card 4: What is SIP */}
-                                    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs hover:shadow-xs transition-shadow flex flex-col text-left cursor-pointer group" onClick={() => toast("Opening Video: What is SIP...")}>
-                                      {/* Video Thumbnail */}
-                                      <div className="h-32 relative flex items-center justify-center select-none overflow-hidden">
-                                        <img 
-                                          src="/images/landing/WhatsApp Image 2026-08-01 at 9.07.18 PM.jpeg" 
-                                          alt="What is SIP" 
-                                          className="absolute inset-0 w-full h-full object-cover"
-                                        />
-                                        <div className="w-10 h-10 rounded-full bg-slate-900/60 text-white flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform z-10">
-                                          <svg className="w-4 h-4 fill-white ml-0.5" viewBox="0 0 24 24">
-                                            <path d="M8 5v14l11-7z" />
-                                          </svg>
-                                        </div>
-                                        {/* Video controller bar overlay */}
-                                        <div className="absolute bottom-0 left-0 right-0 h-7 bg-gradient-to-t from-black/80 to-transparent flex items-center justify-start gap-3 px-2 z-10">
-                                          <svg className="w-3 h-3 fill-white" viewBox="0 0 24 24">
-                                            <path d="M8 5v14l11-7z" />
-                                          </svg>
-                                          <svg className="w-3 h-3 stroke-white fill-none" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-                                          </svg>
-                                        </div>
-                                        {/* Progress Bar */}
-                                        <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#e11d48] z-20"></div>
+                                    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs hover:shadow-xs transition-shadow flex flex-col text-left group">
+                                      {/* Video Thumbnail / Player */}
+                                      <div className="h-32 relative flex items-center justify-center select-none overflow-hidden bg-slate-900">
+                                        <video 
+                                          className="w-full h-full object-cover" 
+                                          controls 
+                                          preload="metadata" 
+                                          poster="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/what-is-sip-1"
+                                        >
+                                          <source src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/what-is-sip-2" type="video/mp4" />
+                                          Your browser does not support the video tag.
+                                        </video>
                                       </div>
                                       <div className="p-3 space-y-1">
                                         <h4 className="font-bold text-[12px] text-slate-800 leading-snug group-hover:text-[#702082] transition-colors font-sans truncate">
                                           What is SIP
                                         </h4>
                                         <p className="text-[10px] text-slate-500 leading-relaxed font-sans line-clamp-2">
-                                          What is SIP (Systematic Investment Plan) _ Advantages of SIP _ SIP Mutual Fund
+                                          What is SIP (Systematic Investment Plan)_Advantages of SIP_SIP Mutual Fund
                                         </p>
                                       </div>
                                     </div>
