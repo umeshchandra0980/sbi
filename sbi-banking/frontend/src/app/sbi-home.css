@@ -1242,106 +1242,154 @@ html, body, .site {
 .pre-login-wrapper {
   max-width: 1366px;
   margin: 0 auto;
-  background: url(/images/body_bg.jpg) 0px 0px repeat #f0f4f8;
-  font-family: arial, sans-serif !important;
+  background: url(/images/body_bg.jpg) repeat #fff;
+  font-family: Arial, Helvetica, sans-serif !important;
   font-size: 12px !important;
   line-height: 14px !important;
   font-weight: normal !important;
   font-style: normal !important;
   font-variant: normal !important;
   font-stretch: normal !important;
-  color: #222;
-  box-sizing: border-box;
+  color: #333;
 }
 .pre-login-wrapper *, 
 .pre-login-wrapper ::after, 
 .pre-login-wrapper ::before {
   box-sizing: border-box;
 }
-.pre-login-wrapper .container,
-.pre-login-wrapper .container-fluid,
-.pre-login-wrapper .container-xxxl {
-  --bs-gutter-x: 1.5rem;
-  --bs-gutter-y: 0;
-  width: 100%;
-  padding-right: calc(var(--bs-gutter-x) * .5);
-  padding-left: calc(var(--bs-gutter-x) * .5);
-  margin-right: auto;
-  margin-left: auto;
+
+#wrapper {
+  margin: 0px auto;
+  max-width: 1366px;
+  background: #fff;
+  box-shadow: rgb(207, 207, 207) 3px 15px 15px 3px;
+  position: relative;
+  box-sizing: border-box;
+  padding: 0;
 }
+
 .pre-login-header {
-  border-bottom: 2.5px solid #032e63;
+  border-bottom: 1.5px solid #ddd;
   padding: 12px 20px;
 }
-.pre-login-logo {
+#logo {
+  display: block;
+  background: url(/images/logo.png) no-repeat left center;
+  background-size: contain;
+  width: 250px;
   height: 52px;
-  width: auto;
+  text-decoration: none;
 }
-.pre-login-yono {
+#SbiYonoLogo {
+  display: block;
+  background: url(/images/yono-logo.png) no-repeat right center;
+  background-size: contain;
+  width: 120px;
   height: 48px;
-  width: auto;
 }
-.pre-login-navbar {
+
+#navigation {
   background: #032e63;
-  padding: 4px 16px;
+  padding: 0 15px;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
 }
-.pre-login-navbar .dropdown-menu {
-  background-color: #032e63;
-  border: 1px solid rgba(255,255,255,0.15);
-}
-.pre-login-navbar .dropdown-item {
+#navigation .nav-link {
   color: #fff !important;
-  font-size: 13px;
-  border-bottom: 1px dashed rgba(255,255,255,0.1);
-  padding: 8px 16px;
+  font-size: 13px !important;
+  font-weight: bold !important;
+  padding: 10px 14px !important;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
 }
-.pre-login-navbar .dropdown-item:hover {
-  background-color: #0d4484;
+#navigation .nav-link:hover {
   color: #fddb00 !important;
 }
+#navigation .dropdown-menu {
+  background-color: #032e63;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 0;
+  margin-top: 0;
+}
+#navigation .dropdown-item {
+  color: #fff !important;
+  font-size: 12px !important;
+  border-bottom: 1px dashed rgba(255,255,255,0.1);
+  padding: 8px 16px !important;
+  text-decoration: none;
+}
+#navigation .dropdown-item:hover {
+  background-color: #0d4484 !important;
+  color: #fddb00 !important;
+}
+
 .cacheText {
   background: #fdf6e2;
   border: 1px solid #f5dba5;
   border-radius: 4px;
   padding: 10px 15px;
-  color: #721c24;
-  font-size: 13px;
+  color: #333;
+  font-size: 12px;
+  line-height: 16px;
   text-align: center;
 }
 .cache_blink {
-  font-weight: 700;
+  font-weight: bold;
   color: #d32f2f;
   animation: blink-animation 1.5s steps(5, start) infinite;
 }
 @keyframes blink-animation {
   to { visibility: hidden; }
 }
-.marquee-container {
+
+#wpanel_users {
   background: #e3f2fd;
   border: 1px solid #bbdefb;
   color: #0d47a1;
   padding: 8px 15px;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: bold;
   display: flex;
   align-items: center;
   gap: 12px;
+  border-radius: 4px;
+  margin: 15px 0;
 }
-.marquee-text-flow {
+.scrollMsg_PlayPause_btn {
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+}
+.scrollMsgPlayPause {
+  background: #032e63;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wpanel_marquee {
   flex-grow: 1;
   overflow: hidden;
   position: relative;
-  height: 20px;
+  height: 18px;
 }
-.marquee-text-inner {
+.wpanel_marquee p {
   position: absolute;
   width: 100%;
   height: 100%;
   margin: 0;
-  line-height: 20px;
+  line-height: 18px;
   text-align: left;
   transform: translateX(100%);
   animation: scroll-left-announcement 25s linear infinite;
+  white-space: nowrap;
 }
 @keyframes scroll-left-announcement {
   0% { transform: translateX(100%); }
@@ -1350,82 +1398,236 @@ html, body, .site {
 .marquee-paused {
   animation-play-state: paused !important;
 }
-.banking-card {
+
+#bankingBoxes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 20px 0;
+}
+@media (max-width: 768px) {
+  #bankingBoxes {
+    grid-template-columns: 1fr;
+  }
+}
+.banking_section {
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 4px;
   background: #fff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   padding: 20px;
   text-align: center;
-  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
 }
-.banking-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-}
-.banking-card-title {
-  font-size: 20px;
-  font-weight: 800;
+.banking_section h1,
+.banking_section h2 {
+  font-size: 18px;
+  font-weight: bold;
   color: #032e63;
-  margin-top: 10px;
-  margin-bottom: 15px;
+  margin: 10px 0;
 }
 .personal_highlight {
-  color: #e6007e; /* Pink Yono style */
+  color: #e6007e;
 }
-.login-btn-banner {
-  background: #032e63;
-  color: #fff;
+.loginButton {
+  margin: 15px 0;
+}
+.login--new {
+  background: #0b3875;
+  color: #fff !important;
   border-radius: 4px;
   padding: 10px 24px;
-  font-weight: 700;
-  font-size: 15px;
+  font-weight: bold;
+  font-size: 13px;
   display: inline-flex;
   align-items: center;
   gap: 12px;
   transition: background 0.2s;
   text-decoration: none;
 }
-.login-btn-banner:hover {
-  background: #0c427f;
-  color: #fff;
+.login--new:hover {
+  background: #072c5c;
 }
-.banking-sublink {
+.belowLogSec {
+  height: 20px;
+}
+
+.iconLinks {
+  width: 100%;
+  margin: 20px 0;
+}
+.iconLinks .row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+  gap: 4px;
+}
+.iconLink {
+  border-right: 1px solid #ddd;
+  padding: 4px;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-decoration: none;
-  color: #333;
-  font-size: 12px;
-  font-weight: 600;
-  text-align: center;
-  gap: 6px;
-  padding: 8px 4px;
-  border-right: 1px solid #eee;
 }
-.banking-sublink:last-child {
+.iconLink:last-child {
   border-right: none;
 }
-.banking-sublink img {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
+.banking-card:last-child .iconLinks .row,
+#bankingBoxes > div:last-child .iconLinks .row {
+  grid-template-columns: repeat(3, 1fr);
 }
-.useful-link-item {
+.iconLink a {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 13px;
+  text-decoration: none;
+  color: #333;
+  font-size: 11px;
+  font-weight: bold;
+  text-align: left;
+  line-height: 14px;
+}
+.iconLink a:hover {
+  color: #e6007e;
+}
+.iconLink a::before {
+  content: '';
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+}
+.iconLink a.register::before {
+  background-image: url(/images/new_user.png);
+}
+.iconLink a.how::before {
+  background-image: url(/images/how_do_i.png);
+}
+.iconLink a.customer_care::before {
+  background-image: url(/images/customer_care.png);
+}
+.iconLink a.unlockUser::before {
+  background-image: url(/images/lock_unlock.png);
+}
+.iconLink a.unlockUser {
+  border: 1px solid #c8c8c8;
+  background: #f2f2f2;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+#useful-links {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 4px;
+  margin: 20px 0;
+}
+#useful-links .col {
+  padding: 6px 0;
+}
+#useful-links a {
   color: #032e63;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: bold;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
-.useful-link-item:hover {
+#useful-links a:hover {
   color: #e6007e;
-  text-decoration: underline;
 }
-.social-floating-bar {
+#useful-links a::before {
+  content: '›';
+  font-size: 14px;
+  color: #032e63;
+  font-weight: bold;
+  margin-right: 4px;
+}
+#useful-links a:hover::before {
+  color: #e6007e;
+}
+.btnCollapseWrap {
+  margin: 15px 0;
+}
+.btnCollapse {
+  border: 1px solid #032e63;
+  color: #032e63;
+  font-weight: bold;
+  padding: 6px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+.btnCollapse:hover {
+  background: #eee;
+}
+
+#sbihome-banner-carousel {
+  margin: 20px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #white;
+}
+.carousel-indicators {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #f1f1f1;
+  margin: 0;
+  padding: 8px;
+  list-style: none;
+  position: static;
+}
+.carousel-indicators button {
+  background: transparent;
+  border: 1.5px solid #032e63;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+}
+.carousel-indicators button.active {
+  background: #032e63;
+}
+.carouselPlayPause {
+  border: none !important;
+  background: #032e63 !important;
+  color: #fff;
+  border-radius: 50% !important;
+  width: 16px !important;
+  height: 16px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+#footer {
+  background: #021c3b;
+  color: #fff;
+  padding: 15px 20px;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#footer p {
+  margin: 0;
+}
+
+.socialLinks {
   position: fixed;
   right: 0;
   top: 50%;
@@ -1439,7 +1641,7 @@ html, body, .site {
   border-radius: 8px 0 0 8px;
   box-shadow: -2px 4px 12px rgba(0,0,0,0.15);
 }
-.social-floating-link {
+.socialLink {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1449,7 +1651,7 @@ html, body, .site {
   color: #fff;
   transition: transform 0.2s;
 }
-.social-floating-link:hover {
+.socialLink:hover {
   transform: scale(1.1);
 }
 
