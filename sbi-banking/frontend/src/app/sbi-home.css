@@ -1242,7 +1242,7 @@ html, body, .site {
 .pre-login-wrapper {
   max-width: 1366px;
   margin: 0 auto;
-  background: url(/images/body_bg.jpg) repeat #fff;
+  background: url(/images/body_bg.jpg) repeat #eef2f7;
   font-family: Arial, Helvetica, sans-serif !important;
   font-size: 12px !important;
   line-height: 14px !important;
