@@ -27,6 +27,7 @@ import {
 } from 'lucide-react';
 import './rewards.css';
 import SbiGlobalBrandHeader from '@/components/banking/SbiGlobalBrandHeader';
+import SbiFixedFooter from '@/components/banking/SbiFixedFooter';
 
 export default function SbiRewardsPage() {
   const router = useRouter();
@@ -34,6 +35,7 @@ export default function SbiRewardsPage() {
   const [pointsCount, setPointsCount] = useState<number>(0);
   const [selectedOfferModal, setSelectedOfferModal] = useState<any>(null);
   const [rewardBannerIndex, setRewardBannerIndex] = useState(0);
+  const [rewardStoryIndex, setRewardStoryIndex] = useState(0);
 
   const rewardBanners = [
     { title: "Sustainability Lifestyle", img: "/assets/images/lifestyle/sustainability_lifestyle_banner.png" },
@@ -44,16 +46,16 @@ export default function SbiRewardsPage() {
 
   // Quick Circle Stories / Banners matching SBI YONO Rewards
   const quickBanners = [
-    { name: "Welcome to Yono", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/welcome_64x64" },
-    { name: "Fraud Awareness", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/fraudawareness2_thumbnail_64x6" },
-    { name: "Tax Related Services", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/welcome_64x64" },
-    { name: "e - Secure Lock", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/yp_secure_lock_banner_sbi_thumbnail_64x64_23_11zon" },
-    { name: "Sustainability", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/sustainibility_thumbnail_64x64" },
-    { name: "SIP", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/sip_thumbnail_product_creative_64x64" },
-    { name: "Credit Card", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/welcome_64x64" },
-    { name: "Invest Now", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/sip_thumbnail_product_creative_64x64" },
-    { name: "Secure your future", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/pacl_fbtrc_thumbnail_64x6" },
-    { name: "Dream your Home", img: "/cdn.onlineyono.sbi.bank.in/documents/d/sbi_yono_2.0/pacl_fbtrc_thumbnail_64x6" }
+    { name: "Welcome to Yono", img: "/assets/images/stories/welcome.png" },
+    { name: "Fraud Awareness", img: "/assets/images/stories/fraud_awareness.png" },
+    { name: "Tax Related Services", img: "/assets/images/stories/tax_related.png" },
+    { name: "e - Secure Lock", img: "/assets/images/stories/esecure_lock.png" },
+    { name: "Sustainability", img: "/assets/images/stories/sustainability.png" },
+    { name: "SIP", img: "/assets/images/stories/sip.png" },
+    { name: "Credit Card", img: "/assets/images/stories/credit_card.png" },
+    { name: "Invest Now", img: "/assets/images/stories/invest_now.png" },
+    { name: "Secure your future", img: "/assets/images/stories/secure_future.png" },
+    { name: "Dream your Home", img: "/assets/images/stories/dream_your_home.png" }
   ];
 
   // Offers Data
@@ -158,37 +160,26 @@ export default function SbiRewardsPage() {
       {/* 3. MAIN CONTENT CONTAINER */}
       <main className="rewards-content-container">
         
-        {/* QUICK FEATURE CIRCLE CAROUSEL (MATCHING REWARDS DESIGN) */}
-        <div className="bg-white rounded-3xl p-5 shadow-xs border border-slate-100 mb-6 flex items-center justify-between gap-3 overflow-hidden">
-          <div className="flex items-center gap-5 overflow-x-auto py-1 scrollbar-none">
-            {quickBanners.map((item, idx) => (
-              <div 
-                key={idx} 
-                className="flex flex-col items-center cursor-pointer min-w-[78px] group transition-transform hover:-translate-y-1"
-                onClick={() => toast(`Opening ${item.name}`)}
-              >
-                <div className="w-16 h-16 rounded-full p-[2.5px] bg-gradient-to-tr from-[#673391] via-pink-600 to-purple-800 shadow-xs flex items-center justify-center shrink-0">
-                  <img 
-                    src={item.img} 
-                    alt={item.name} 
-                    className="w-full h-full rounded-full object-cover bg-white"
-                  />
-                </div>
-                <span className="text-[11px] font-bold text-slate-700 text-center max-w-[85px] leading-tight mt-2 line-clamp-2">
-                  {item.name}
-                </span>
+        {/* QUICK FEATURE CIRCLE CAROUSEL (Matching Image 2 - All 10 Stories displayed in a transparent row without side arrows) */}
+        <div className="mb-6 flex items-start gap-3 sm:gap-5 overflow-x-auto scrollbar-none py-1 w-full">
+          {quickBanners.map((item, idx) => (
+            <div 
+              key={idx} 
+              className="flex flex-col items-center cursor-pointer group shrink-0 w-[70px] sm:w-[76px]"
+              onClick={() => toast(`Opening ${item.name}`)}
+            >
+              <div className="w-[52px] h-[52px] sm:w-[58px] sm:h-[58px] rounded-full border-[2.2px] border-[#702082] p-0.5 bg-white shadow-2xs group-hover:scale-105 transition-transform overflow-hidden flex items-center justify-center">
+                <img 
+                  src={item.img} 
+                  alt={item.name} 
+                  className="w-full h-full rounded-full object-cover"
+                />
               </div>
-            ))}
-          </div>
-
-          <button 
-            type="button" 
-            className="w-10 h-10 rounded-full border border-slate-200 bg-white shadow-md flex items-center justify-center text-[#673391] hover:bg-purple-50 transition-all shrink-0 ml-2"
-            onClick={() => toast('More feature icons loaded')}
-            aria-label="Next Features"
-          >
-            <ChevronRight size={20} />
-          </button>
+              <span className="text-[11px] font-bold text-slate-700 text-center leading-tight mt-2 group-hover:text-[#702082] transition-colors line-clamp-2">
+                {item.name}
+              </span>
+            </div>
+          ))}
         </div>
 
         {/* 3-CARD PROMO BANNER CONTAINER (Exact Match to User Screenshot) */}
@@ -977,6 +968,9 @@ export default function SbiRewardsPage() {
 
           </div>
         )}
+
+        {/* FIXED SBI GLOBAL FOOTER (16px Roboto, Fixed at Bottom at All Times) */}
+        <SbiFixedFooter />
 
       </main>
 

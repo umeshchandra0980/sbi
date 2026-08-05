@@ -378,43 +378,46 @@ function SbiGlobalBrandHeaderContent({
 
       // Insurance
       case 'Protection Plans':
-        iconPath = '/images/category-icons/ic_life_insurance.svg';
+        iconPath = '/assets/images/insurance/protectionPlans.svg';
         break;
       case 'Child Plans':
-        iconPath = '/images/category-icons/ic_ppf.svg';
+        iconPath = '/assets/images/insurance/childPlans.svg';
         break;
       case 'Retirement Plans':
-        iconPath = '/images/category-icons/ic_annuity_deposit.svg';
+        iconPath = '/assets/images/insurance/retirementPlans.svg';
         break;
       case 'Wealth Creation':
-        iconPath = '/images/category-icons/ic_mutual_funds.svg';
+        iconPath = '/assets/images/insurance/wealthCreation.svg';
         break;
       case 'Savings Plans':
-        iconPath = '/images/category-icons/ic_fixed_deposit.svg';
+        iconPath = '/assets/images/insurance/savingsPlans.svg';
         break;
       case 'Group Plans':
-        iconPath = '/images/category-icons/ic_personal_loan.svg';
+        iconPath = '/assets/images/insurance/groupPlans.svg';
+        break;
+      case 'Life Insurance':
+        iconPath = '/assets/images/insurance/protectionPlans.svg';
         break;
       case 'Health Plans':
-        iconPath = '/images/category-icons/ic_health_insurance.svg';
+        iconPath = '/assets/images/insurance/IC_NewHealthinsurance.svg';
         break;
       case 'Motor Insurance':
-        iconPath = '/images/category-icons/ic_car_insurance.svg';
+        iconPath = '/assets/images/insurance/IC_NewCarInsurance.svg';
         break;
       case 'Travel Insurance':
-        iconPath = '/images/category-icons/ic_forex_card.svg';
+        iconPath = '/assets/images/insurance/IC_NewTravelInsurance.svg';
         break;
       case 'Accident Insurance':
-        iconPath = '/images/category-icons/ic_accident_insurance.svg';
+        iconPath = '/assets/images/insurance/IC_NewAccidentinsurance.svg';
         break;
       case 'Manage Policies':
-        iconPath = '/images/category-icons/ic_cheque_services.svg';
+        iconPath = '/assets/images/insurance/Cate_IC_Manage_Policies.svg';
         break;
       case 'Resume Application':
-        iconPath = '/images/category-icons/ic_credit_card.svg';
+        iconPath = '/assets/images/insurance/Cate_IC_Resume_application.svg';
         break;
       case 'Tools & Calculators':
-        iconPath = '/images/category-icons/ic_recurring_deposit.svg';
+        iconPath = '/assets/images/insurance/Cate_IC_payout_calculator.svg';
         break;
 
       // Cards
@@ -436,46 +439,46 @@ function SbiGlobalBrandHeaderContent({
 
       // Services
       case 'Account Related':
-        iconPath = '/images/category-icons/account_related.svg';
-        break;
-      case 'Update Profile Details':
-      case 'Manage My Profile':
-        iconPath = '/images/category-icons/manage_profile.svg';
-        break;
-      case 'Doorstep Banking':
-      case 'Manage Nominee':
-        iconPath = '/images/category-icons/doorstep_banking.svg';
+        iconPath = '/assets/images/services/new_account_related_services.svg';
         break;
       case 'Pension Related':
-        iconPath = '/images/category-icons/pension_related.svg';
+        iconPath = '/assets/images/services/Cate_IC_pension.svg';
         break;
       case 'Tax Related':
       case 'ATM / Branch Locator':
-        iconPath = '/images/category-icons/tax_related.svg';
+        iconPath = '/assets/images/services/Cate_IC_tax_related.svg';
         break;
       case 'Cheque Services':
       case 'Positive Pay System':
       case 'Cheque Book Request':
-        iconPath = '/images/category-icons/cheque_services.svg';
+        iconPath = '/assets/images/services/Cate_IC_Cheque_Services.svg';
         break;
-      case 'Stop Cheque':
-        iconPath = '/images/category-icons/stop_cheque.svg';
+      case 'Doorstep Banking':
+        iconPath = '/assets/images/services/IC_doorstepservice.svg';
         break;
       case 'Apply/Manage FASTag':
-        iconPath = '/images/category-icons/fastag.svg';
+        iconPath = '/assets/images/services/Fast_Tag.svg';
+        break;
+      case 'Manage Nominee':
+      case 'Manage My Profile':
+      case 'Update Profile Details':
+        iconPath = '/assets/images/services/manage-profile-header.svg';
         break;
       case 'e-Secure Lock':
       case 'Lock / Unlock User Access':
-        iconPath = '/images/category-icons/esecure_lock.svg';
+        iconPath = '/assets/images/services/esecure-header.svg';
+        break;
+      case 'Stop Cheque':
+        iconPath = '/assets/images/services/Cat_IC_Revoke_stop_cheque.svg';
         break;
       case 'Update My Security':
-        iconPath = '/images/category-icons/update_security.svg';
+        iconPath = '/assets/images/services/update-my-security-header.svg';
         break;
       case 'Report- Unauthorized Transactions':
-        iconPath = '/images/category-icons/unauthorized_transactions.svg';
+        iconPath = '/assets/images/services/Report_unauthorised_transactions_icon.svg';
         break;
       case 'Security Question':
-        iconPath = '/images/category-icons/security_question.svg';
+        iconPath = '/assets/images/services/Cate_IC_App_Experience.svg';
         break;
 
       default:
@@ -494,7 +497,7 @@ function SbiGlobalBrandHeaderContent({
   };
 
   return (
-    <div className="w-full bg-white font-sans z-50">
+    <header className="w-full bg-white font-sans sticky top-0 z-50 shadow-sm">
       
       {/* 1. TOP PURPLE UTILITY HEADER BAR */}
       <div className="bg-[#54247C] text-white text-xs pt-1 px-6 shadow-xs">
@@ -851,7 +854,7 @@ function SbiGlobalBrandHeaderContent({
         </div>
       )}
 
-    </div>
+    </header>
   );
 }
 

@@ -38,6 +38,7 @@ import {
 } from 'lucide-react';
 import './SbiLandingPageComponent.css';
 import SbiGlobalBrandHeader from './SbiGlobalBrandHeader';
+import SbiFixedFooter from './SbiFixedFooter';
 
 interface SbiLandingPageComponentProps {
   initialTab?: 'Transaction' | 'Deposits' | 'Loans' | 'Investments' | 'Insurance';
@@ -5785,6 +5786,9 @@ function SbiLandingPageComponentContent({
           </div>
         </div>
       )}
+
+      {/* FIXED SBI GLOBAL FOOTER (16px Roboto, Fixed at Bottom at All Times) */}
+      <SbiFixedFooter />
 
     </div>
   );

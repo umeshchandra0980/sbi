@@ -33,6 +33,7 @@ import {
 } from 'lucide-react';
 import './lifestyle.css';
 import SbiGlobalBrandHeader from '@/components/banking/SbiGlobalBrandHeader';
+import SbiFixedFooter from '@/components/banking/SbiFixedFooter';
 
 export default function SbiLifestylePage() {
   const router = useRouter();
@@ -389,16 +390,8 @@ export default function SbiLifestylePage() {
         </div>
       </main>
 
-      {/* 4. FOOTER */}
-      <footer className="lifestyle-footer">
-        <div className="lifestyle-footer-links">
-          <span onClick={() => handleServiceClick('About SBI')} className="lifestyle-footer-link cursor-pointer">About SBI</span>
-          <span>|</span>
-          <span onClick={() => handleServiceClick('Terms & Conditions')} className="lifestyle-footer-link cursor-pointer">Terms &amp; Conditions</span>
-          <span>|</span>
-          <span onClick={() => handleServiceClick('Privacy Policy')} className="lifestyle-footer-link cursor-pointer">Privacy Policy</span>
-        </div>
-      </footer>
+      {/* FIXED SBI GLOBAL FOOTER (16px Roboto, Fixed at Bottom at All Times) */}
+      <SbiFixedFooter />
 
     </div>
   );
