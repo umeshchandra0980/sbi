@@ -10,7 +10,7 @@ export default function PositivePayPage() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-[#f4f0f8] font-sans text-slate-800 flex flex-col justify-between">
+    <div className="min-h-screen bg-[#f4f0f8] text-slate-800 flex flex-col justify-between" style={{ fontFamily: 'Roboto, sans-serif' }}>
       <div>
         {/* Header */}
         <SbiGlobalBrandHeader activeNav="Services" activeTopTab="Banking" />
@@ -19,7 +19,7 @@ export default function PositivePayPage() {
         <main className="max-w-[1280px] w-full mx-auto px-4 py-6 pb-24">
           
           {/* Breadcrumb Navigation */}
-          <div className="flex items-center gap-2 text-xs font-semibold text-slate-600 mb-4">
+          <div className="flex items-center gap-2 text-[12px] font-semibold text-slate-600 mb-4">
             <Link href="/dashboard" className="hover:text-[#673391] transition-colors flex items-center gap-1">
               <Home size={14} className="text-[#673391]" />
             </Link>
@@ -32,7 +32,7 @@ export default function PositivePayPage() {
           </div>
 
           {/* Page Heading */}
-          <h1 className="text-2xl md:text-3xl font-extrabold text-[#673391] mb-6 tracking-tight">
+          <h1 className="text-[18px] font-bold text-[#673391] mb-6 tracking-tight">
             Positive Pay System
           </h1>
 
@@ -40,7 +40,7 @@ export default function PositivePayPage() {
           <div className="bg-white rounded-3xl p-8 md:p-10 shadow-xs border border-slate-100 min-h-[420px] flex flex-col justify-between">
             
             {/* Top Notice Paragraph */}
-            <p className="text-xs md:text-sm font-semibold text-slate-700 leading-relaxed text-center max-w-4xl mx-auto mb-8">
+            <p className="text-[14px] font-normal text-slate-700 leading-relaxed text-center max-w-4xl mx-auto mb-8">
               As per RBI directives, Positive Pay System (PPS) for cheque payments is a fraud prevention measure to protect customers against forged / altered cheques. Under PPS, the account holder has to share the details of the cheque to the bank which would be cross-checked with the presented cheque at the time of payment processing.
             </p>
 
@@ -74,7 +74,7 @@ export default function PositivePayPage() {
               </div>
 
               {/* Text Message */}
-              <div className="text-base md:text-lg font-bold text-slate-800 tracking-tight text-center sm:text-left">
+              <div className="text-[18px] font-semibold text-slate-800 tracking-tight text-center sm:text-left">
                 No account available
               </div>
 

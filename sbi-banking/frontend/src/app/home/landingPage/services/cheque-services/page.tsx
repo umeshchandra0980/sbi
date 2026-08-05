@@ -25,7 +25,7 @@ export default function ChequeServicesPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#f4f0f8] font-sans text-slate-800 flex flex-col">
+    <div className="min-h-screen bg-[#f4f0f8] text-slate-800 flex flex-col" style={{ fontFamily: 'Roboto, sans-serif' }}>
       {/* Header */}
       <SbiGlobalBrandHeader activeNav="Services" activeTopTab="Banking" />
 
@@ -33,7 +33,7 @@ export default function ChequeServicesPage() {
       <main className="flex-1 max-w-[1280px] w-full mx-auto px-4 py-6">
         
         {/* Breadcrumb Navigation */}
-        <div className="flex items-center gap-2 text-xs font-semibold text-slate-600 mb-4">
+        <div className="flex items-center gap-2 text-[12px] font-semibold text-slate-600 mb-4">
           <Link href="/dashboard" className="hover:text-[#673391] transition-colors flex items-center gap-1">
             <Home size={14} className="text-[#673391]" />
           </Link>
@@ -44,7 +44,7 @@ export default function ChequeServicesPage() {
         </div>
 
         {/* Page Heading */}
-        <h1 className="text-2xl md:text-3xl font-extrabold text-[#673391] mb-6 tracking-tight">
+        <h1 className="text-[18px] font-bold text-[#673391] mb-6 tracking-tight">
           Cheque Services
         </h1>
 
@@ -66,7 +66,7 @@ export default function ChequeServicesPage() {
                       <circle cx="17" cy="12" r="1.5" fill="currentColor" />
                     </svg>
                   </div>
-                  <span className="text-sm font-bold text-slate-800 group-hover:text-[#673391] transition-colors leading-snug">
+                  <span className="text-[14px] font-semibold text-slate-800 group-hover:text-[#673391] transition-colors leading-snug">
                     {opt.title}
                   </span>
                 </div>

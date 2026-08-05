@@ -20,7 +20,7 @@ export default function InterestCertificatePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f4f0f8] font-sans text-slate-800 flex flex-col relative">
+    <div className="min-h-screen bg-[#f4f0f8] text-slate-800 flex flex-col relative" style={{ fontFamily: 'Roboto, sans-serif' }}>
       {/* Header */}
       <SbiGlobalBrandHeader activeNav="Services" activeTopTab="Banking" />
 
@@ -28,7 +28,7 @@ export default function InterestCertificatePage() {
       <main className="flex-1 max-w-[1280px] w-full mx-auto px-4 py-6">
         
         {/* Breadcrumb Navigation */}
-        <div className="flex items-center gap-2 text-xs font-semibold text-slate-600 mb-4">
+        <div className="flex items-center gap-2 text-[12px] font-semibold text-slate-600 mb-4">
           <Link href="/dashboard" className="hover:text-[#673391] transition-colors flex items-center gap-1">
             <Home size={14} className="text-[#673391]" />
           </Link>
@@ -37,14 +37,14 @@ export default function InterestCertificatePage() {
         </div>
 
         {/* Page Heading */}
-        <h1 className="text-2xl md:text-3xl font-extrabold text-[#673391] mb-6 tracking-tight">
+        <h1 className="text-[18px] font-bold text-[#673391] mb-6 tracking-tight">
           Interest Certificate
         </h1>
 
         {/* Content Box */}
         <div className="bg-white rounded-3xl p-6 md:p-8 shadow-xs border border-slate-100 min-h-[400px]">
           <div className="border-b border-slate-200 pb-3 mb-6">
-            <h2 className="text-sm font-bold text-slate-700">Select a Period</h2>
+            <h2 className="text-[18px] font-semibold text-slate-700">Select a Period</h2>
           </div>
         </div>
       </main>
@@ -70,7 +70,7 @@ export default function InterestCertificatePage() {
             </button>
 
             {/* Modal Title */}
-            <h2 className="text-xl md:text-2xl font-bold text-[#673391] mb-6 tracking-tight">
+            <h2 className="text-[18px] font-semibold text-[#673391] mb-6 tracking-tight">
               Email ID not updated
             </h2>
 
@@ -94,7 +94,7 @@ export default function InterestCertificatePage() {
               </div>
 
               {/* Message Text */}
-              <div className="flex-1 text-sm md:text-base font-normal text-slate-700 leading-relaxed text-center sm:text-left">
+              <div className="flex-1 text-[14px] font-normal text-slate-700 leading-relaxed text-center sm:text-left">
                 We do not have your Email ID in our records. Please add an Email ID and try again.
               </div>
             </div>
@@ -104,9 +104,9 @@ export default function InterestCertificatePage() {
               <button
                 type="button"
                 onClick={handleOkay}
-                className="bg-[#673391] hover:bg-[#561578] text-white font-bold text-sm py-3 px-8 rounded-full shadow-md hover:shadow-lg transition-all cursor-pointer"
+                className="bg-[#673391] hover:bg-[#561578] text-white font-semibold text-[14px] py-3 px-12 rounded-full shadow-md hover:shadow-lg transition-all cursor-pointer"
               >
-                Update Email ID
+                Okay
               </button>
             </div>
 

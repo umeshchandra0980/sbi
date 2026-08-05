@@ -35,7 +35,7 @@ export default function DirectTaxesPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#f4f0f8] font-sans text-slate-800 flex flex-col relative">
+    <div className="min-h-screen bg-[#f4f0f8] text-slate-800 flex flex-col relative" style={{ fontFamily: 'Roboto, sans-serif' }}>
       {/* Header */}
       <SbiGlobalBrandHeader activeNav="Services" activeTopTab="Banking" />
 
@@ -43,7 +43,7 @@ export default function DirectTaxesPage() {
       <main className="flex-1 max-w-[1280px] w-full mx-auto px-4 py-6">
         
         {/* Breadcrumb Navigation */}
-        <div className="flex items-center gap-2 text-xs font-semibold text-slate-600 mb-4">
+        <div className="flex items-center gap-2 text-[12px] font-semibold text-slate-600 mb-4">
           <Link href="/dashboard" className="hover:text-[#673391] transition-colors flex items-center gap-1">
             <Home size={14} className="text-[#673391]" />
           </Link>
@@ -80,12 +80,12 @@ export default function DirectTaxesPage() {
             </button>
 
             {/* Modal Title */}
-            <h2 className="text-lg md:text-xl font-bold text-[#673391] mb-6 pr-8 tracking-tight">
+            <h2 className="text-[18px] font-semibold text-[#673391] mb-6 pr-8 tracking-tight">
               To pay Direct Taxes through the internet, do the following:
             </h2>
 
             {/* Scrollable Instruction List */}
-            <div className="flex-1 overflow-y-auto pr-2 space-y-3 mb-6 text-xs md:text-sm text-slate-700 font-normal leading-relaxed">
+            <div className="flex-1 overflow-y-auto pr-2 space-y-3 mb-6 text-[14px] text-slate-700 font-normal leading-relaxed">
               {steps.map((step, idx) => (
                 <div key={idx} className="flex gap-2">
                   <span className="font-semibold text-slate-800 flex-shrink-0">{idx + 1}.</span>
@@ -93,7 +93,7 @@ export default function DirectTaxesPage() {
                     {step.includes('https://eportal.incometax.gov.in') ? (
                       <>
                         {step.split('https://eportal.incometax.gov.in')[0]}
-                        <a href="https://eportal.incometax.gov.in" target="_blank" rel="noopener noreferrer" className="text-[#673391] font-bold underline hover:opacity-80">
+                        <a href="https://eportal.incometax.gov.in" target="_blank" rel="noopener noreferrer" className="text-[#673391] font-semibold underline hover:opacity-80">
                           https://eportal.incometax.gov.in
                         </a>
                         {step.split('https://eportal.incometax.gov.in')[1]}
@@ -111,7 +111,7 @@ export default function DirectTaxesPage() {
               <button
                 type="button"
                 onClick={handleOkay}
-                className="bg-[#673391] hover:bg-[#561578] text-white font-extrabold text-xs md:text-sm py-3 px-8 rounded-full shadow-md hover:shadow-lg transition-all cursor-pointer"
+                className="bg-[#673391] hover:bg-[#561578] text-white font-semibold text-[14px] py-3 px-8 rounded-full shadow-md hover:shadow-lg transition-all cursor-pointer"
               >
                 Okay
               </button>

@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${openSans.variable} ${roboto.variable}`}>
-      <body className={`${openSans.className} antialiased bg-gray-100 text-sm text-gray-800`}>
+      <body className={`${roboto.className} antialiased bg-gray-100 text-[14px] text-gray-800`}>
         <QueryProvider>
           {children}
           <Toaster
