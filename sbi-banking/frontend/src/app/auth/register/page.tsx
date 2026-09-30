@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import toast from 'react-hot-toast'
-import { RefreshCw } from 'lucide-react'
+import { RefreshCw, ArrowLeft, ChevronRight } from 'lucide-react'
 import { authApi, captchaApi } from '@/lib/api'
 import { COUNTRIES } from '@/data/countries'
 import './register.css'
@@ -132,49 +132,99 @@ export default function RegisterPage() {
 
       <main className="reg-main">
         {step === '1' && (
-          <div className="reg-container">
-            <h1 className="reg-title">New User? Register Here/Activate (For Retail customers only)</h1>
-            <fieldset className="reg-fieldset">
-              <legend>
-                <label className="reg-legend-label">
-                  <span>Please select option for New User Registration / Activation Of Username</span>
-                </label>
-              </legend>
-              <div>
-                <label className="reg-radio">
-                  <input
-                    type="radio"
-                    name="issueCode"
-                    value="registerHere"
-                    checked={regType === 'registerHere'}
-                    onChange={() => setRegType('registerHere')}
+          <div className="reg-landing-container">
+            <button className="back-to-home-btn" onClick={() => router.push('/')}>
+              <ArrowLeft size={16} className="mr-1" /> Back to Home
+            </button>
+            <h1 className="reg-main-title">New User Registration</h1>
+            
+            <div className="reg-split-layout">
+              {/* Left Column - Carousel */}
+              <div className="reg-carousel-col">
+                <div className="reg-carousel-wrapper">
+                  <img 
+                    src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/cyber-security-lr" 
+                    alt="Cyber Security"
+                    className="reg-carousel-img"
                   />
-                  <span>New User Registration</span>
-                </label>
+                  <div className="reg-carousel-controls">
+                    <div className="reg-carousel-indicators">
+                      <span className="reg-indicator active"></span>
+                      <span className="reg-indicator"></span>
+                      <span className="reg-indicator"></span>
+                    </div>
+                    <div className="reg-carousel-arrows">
+                      <button aria-label="Previous">&lt;</button>
+                      <button aria-label="Pause">
+                        <span style={{ fontSize: '12px', fontWeight: 'bold' }}>||</span>
+                      </button>
+                      <button aria-label="Next">&gt;</button>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div>
-                <label className="reg-radio">
-                  <input
-                    type="radio"
-                    name="issueCode"
-                    value="activationOfUserName"
-                    checked={regType === 'activationOfUserName'}
-                    onChange={() => setRegType('activationOfUserName')}
-                  />
-                  <span>Activation Of Username</span>
-                </label>
-              </div>
-            </fieldset>
 
-            <div className="reg-btn-row">
-              <input type="hidden" id="bankCodeValue" value="0" />
-              <button
-                type="button"
-                className="reg-btn"
-                onClick={() => goToStep2(regType)}
-              >
-                Next
-              </button>
+              {/* Vertical Dashed Line */}
+              <div className="reg-vertical-divider"></div>
+
+              {/* Right Column - Options */}
+              <div className="reg-options-col">
+                <h2 className="reg-options-title">Please choose a mode of registration:</h2>
+                
+                <div className="reg-option-card" onClick={() => goToStep2('registerHere')} tabIndex={0}>
+                  <div className="reg-option-icon">
+                    <img src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/credit_card-lp_svg" alt="Debit Card" />
+                  </div>
+                  <div className="reg-option-content">
+                    <h3>Debit Card</h3>
+                    <p>Register account by using one of your debit cards</p>
+                  </div>
+                  <div className="reg-option-arrow">
+                    <ChevronRight size={20} />
+                  </div>
+                </div>
+
+                <div className="reg-option-card" onClick={() => goToStep2('registerHere')} tabIndex={0}>
+                  <div className="reg-option-icon">
+                    <img src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/personal_loan-lp_svg" alt="YONO Mobile App" />
+                  </div>
+                  <div className="reg-option-content">
+                    <h3>YONO Mobile App</h3>
+                    <p>Register account using your Yono Mobile App</p>
+                  </div>
+                  <div className="reg-option-arrow">
+                    <ChevronRight size={20} />
+                  </div>
+                </div>
+
+                <div className="reg-option-card" onClick={() => goToStep2('registerHere')} tabIndex={0}>
+                  <div className="reg-option-icon">
+                    <img src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/current_account-lp_svg" alt="Branch Activation" />
+                  </div>
+                  <div className="reg-option-content">
+                    <h3>Branch Activation</h3>
+                    <p>Register account by visiting the Branch</p>
+                  </div>
+                  <div className="reg-option-arrow">
+                    <ChevronRight size={20} />
+                  </div>
+                </div>
+                
+                {/* Fallback option for "Activation of Username" since it was in the old form */}
+                <div className="reg-option-card" onClick={() => goToStep2('activationOfUserName')} tabIndex={0} style={{ marginTop: '24px', backgroundColor: '#f9f9f9', borderStyle: 'dashed' }}>
+                  <div className="reg-option-icon">
+                    <img src="https://cdn.onlineyono.sbi.bank.in//documents/d/sbi-yono-2.0/update_kyc-lp_svg" alt="Activation of Username" />
+                  </div>
+                  <div className="reg-option-content">
+                    <h3>Activation Of Username</h3>
+                    <p>Already registered? Activate your username here</p>
+                  </div>
+                  <div className="reg-option-arrow">
+                    <ChevronRight size={20} />
+                  </div>
+                </div>
+
+              </div>
             </div>
           </div>
         )}

@@ -1790,64 +1790,110 @@ body, html {
   line-height: 1.35;
 }
 
-/* Legal Footer Bar */
-.sbi-legal-footer {
-  background: #4b1774;
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 600;
-  text-align: center;
-  padding: 16px 0;
-}
+/* ==========================================================================
+   AUTHENTIC SBI ANGULAR FOOTER STYLES (Matching Provided Image)
+   ========================================================================== */
 
-.sbi-legal-footer-links {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.sbi-legal-footer-link {
-  color: #ffffff;
-  text-decoration: none;
-}
-
-.sbi-legal-footer-link:hover {
-  text-decoration: underline;
-}
-
-.sbi-legal-footer-copyright-row {
-  background-color: #f0edf6;
-  border-top: 1px solid #e2e8f0;
-  padding: 12px 32px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 11px;
-  color: #555555;
-  font-weight: 600;
+.footer {
   width: 100%;
+  margin-top: auto;
+  font-family: 'Open Sans', sans-serif;
   box-sizing: border-box;
 }
 
-.sbi-copyright-left {
+.footerHead {
+  background-color: #5b2e80;
+  padding: 6px 0;
+  width: 100%;
+}
+
+.bottomFooter {
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 4px 16px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  flex-wrap: wrap;
+  line-height: 1.6;
 }
 
-.verisign-badge {
-  border: 1px solid #999999;
-  background-color: #ffffff;
-  padding: 2px 8px;
-  font-weight: bold;
-  font-style: italic;
-  font-size: 10px;
-  color: #333333;
+.footer-txt {
+  color: #ffffff !important;
+  text-decoration: underline !important;
+  font-weight: 600;
+  font-size: 13.5px;
+  transition: opacity 0.2s ease;
 }
 
-.view-resolution-text {
-  color: #666666;
+.footer-txt:hover {
+  opacity: 0.85;
+}
+
+.footer-mobile {
+  display: none;
+  background-color: #5b2e80;
+  padding: 12px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.footer-mobile p {
+  margin: 0;
+  padding: 4px 8px;
+}
+
+.footer-mobile a {
+  color: #ffffff;
+  text-decoration: underline;
+  font-size: 12.5px;
+}
+
+.border-line {
+  width: 1px;
+  height: 14px;
+  background-color: rgba(255, 255, 255, 0.4);
+  align-self: center;
+  margin: 0 8px;
+}
+
+.footer-bottom {
+  background-color: #451b66;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 12.5px;
+  font-weight: 400;
+  padding: 10px 0;
+}
+
+.footer-bottom .px-2 {
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 500;
+}
+
+.footer-bottom .px-5 {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+@media (max-width: 768px) {
+  .footerHead {
+    display: none;
+  }
+  .footer-mobile {
+    display: block;
+  }
+  .footer-bottom .row {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+  .footer-bottom .col {
+    text-align: center !important;
+  }
+  .footer-bottom .px-5 {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
 }
 
 /* ==========================================================================
@@ -2011,3 +2057,13 @@ body, html {
   background-position: -278px -5px;
 }
 
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-none {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}

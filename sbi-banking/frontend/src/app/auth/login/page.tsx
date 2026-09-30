@@ -1643,18 +1643,7 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* ================= LEGAL FOOTER BAR ================= */}
-      <footer className="sbi-legal-footer">
-        <div className="sbi-legal-footer-links">
-          <span onClick={handleDemoLogin} className="sbi-legal-footer-link cursor-pointer">RBI Limited Liability Policy</span>
-          <span>|</span>
-          <span onClick={handleDemoLogin} className="sbi-legal-footer-link cursor-pointer">Privacy Statement</span>
-          <span>|</span>
-          <span onClick={handleDemoLogin} className="sbi-legal-footer-link cursor-pointer">Terms of Service (Terms &amp; Conditions)</span>
-          <span>|</span>
-          <span onClick={handleDemoLogin} className="sbi-legal-footer-link cursor-pointer">Disclosure</span>
-        </div>
-      </footer>
+
 
       {/* ================= MODAL: IMPORTANT NOTICES ================= */}
       {showNoticesModal && (
@@ -1765,46 +1754,40 @@ export default function LoginPage() {
         </div>
       )}
 
-      {/* ================= FOOTER BAR WITH CSS SPRITE SOCIAL ICONS ================= */}
-      <footer className="footer-copyright-sbi mt-auto py-3">
-        <div className="container-xxl max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between items-center px-4 gap-4">
-          <div className="copyright-left text-center md:text-start">
-            <p className="p-0 m-0">© State Bank of India (APM Id:Scrv_Tran_564)</p>
-          </div>
-          
-          {/* Social Icons using CSS Sprite */}
-          <div className="flex items-center gap-3">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook">
-              <span className="social-icon facebook" />
-            </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="Twitter / X" aria-label="Twitter">
-              <span className="social-icon twitter" />
-            </a>
-            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube">
-              <span className="social-icon youtube" />
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn">
-              <span className="social-icon linkedin" />
-            </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram">
-              <span className="social-icon instagram" />
-            </a>
-            <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" title="Pinterest" aria-label="Pinterest">
-              <span className="social-icon pinterest" />
-            </a>
-            <a href="https://crh.sbi.bank.in" target="_blank" rel="noopener noreferrer" title="Contact Us" aria-label="Contact Us">
-              <span className="social-icon contact" />
-            </a>
-            <a href="https://api.whatsapp.com" target="_blank" rel="noopener noreferrer" title="WhatsApp" aria-label="WhatsApp">
-              <span className="social-icon whatsapp" />
-            </a>
-          </div>
-
-          <div className="text-center md:text-end">
-            <p className="p-0 m-0">Site best viewed at 1280 × 720 resolution in Microsoft Edge 100+, Mozilla 100+, Google Chrome 111+</p>
+      {/* ================= FOOTER ================= */}
+      <div className="footer mt-auto">
+        <div className="footerHead container-xxl">
+          <div className="row p-2">
+            <footer className="col bottomFooter">
+              <a tabIndex={0} rel="noopener" target="_blank" className="footer-txt me-1" href="https://www.rbi.org.in/commonman/english/scripts/Notification.aspx?Id=2336" aria-label="RBI Limited Liability Policy">RBI Limited Liability Policy</a> | <a tabIndex={0} rel="noopener" target="_blank" className="footer-txt ms-1 me-1" href="/information-pages/privacy-policy" aria-label="Privacy Statement">Privacy Statement</a> | <a tabIndex={0} rel="noopener" target="_blank" className="footer-txt ms-1 me-1" href="/information-pages/terms-of-service" aria-label="Terms of Service (Terms &amp; Conditions)">Terms of Service (Terms &amp; Conditions)</a> | <a tabIndex={0} rel="noopener" target="_blank" className="footer-txt ms-1" href="/information-pages/disclosure" aria-label="Disclosure">Disclosure</a>
+            </footer>
           </div>
         </div>
-      </footer>
+        <div className="footer-mobile">
+          <div className="d-flex text-center justify-content-center">
+            <p><a target="_blank" rel="noopener" href="https://bank.sbi/web/about-us" tabIndex={0} aria-label="About SBI">About SBI</a></p>
+            <div className="border-line"></div>
+            <p className="borderLeftRight"><a target="_blank" rel="noopener" href="https://retail.onlinesbi.sbi/sbijava/retail/html/aboutus.html" tabIndex={0} aria-label="About SBI Online">About SBI Online</a></p>
+          </div>
+          <div className="d-flex text-center justify-content-center">
+            <p className="borderRight"><a target="_blank" rel="noopener" href="/information-pages/terms-of-service" tabIndex={0} aria-label="Terms and Conditions">Terms and Conditions</a></p>
+            <div className="border-line"></div>
+            <p><a target="_blank" rel="noopener" href="/information-pages/privacy-policy" tabIndex={0} aria-label="Privacy Policy">Privacy Policy</a></p>
+          </div>
+        </div>
+        <div className="footer-bottom p-2 mt-2">
+          <div className="container-xxl">
+            <div className="row">
+              <div className="col text-start">
+                <div className="px-2"> © State Bank of India (APM&nbsp;Id:APP06140)</div>
+              </div>
+              <div className="col text-end">
+                <div className="px-5">Site best viewed at 1024 x 768 resolution in Microsoft Edge 79+, Mozilla 96+, Google Chrome 97+.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </div>
   );

@@ -1,0 +1,364 @@
+/* YONO SBI Account Identification Styling */
+:root {
+  --yono-purple: #673391;
+  --yono-purple-dark: #4F286F;
+  --yono-purple-light: #76479B;
+  --yono-purple-bg: #F1F0F4;
+  --yono-subtle-blue: #EEEEF6;
+  --yono-text-dark: #313131;
+  --yono-text-muted: #646464;
+  --yono-text-purple: #673391;
+}
+
+.yono-page-wrapper {
+  min-height: 100vh;
+  background-color: #FFFFFF;
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #333333;
+}
+
+/* Top Purple Utility Header */
+.yono-top-bar {
+  background-color: var(--yono-purple);
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.yono-top-left {
+  display: flex;
+  align-items: center;
+}
+
+.yono-tab-active {
+  background-color: #E5E5F2;
+  color: var(--yono-purple);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 24px;
+  border-radius: 12px 12px 0 0;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.yono-top-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.yono-top-link {
+  color: #FFFFFF;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: opacity 0.2s;
+}
+
+.yono-top-link:hover {
+  opacity: 0.85;
+}
+
+.yono-divider {
+  width: 1px;
+  height: 14px;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.yono-font-size-ctrl {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-weight: 600;
+}
+
+/* Main Navigation Bar */
+.yono-nav-bar {
+  background-color: #FCFCFC;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 40px;
+  border-bottom: 1px solid #EAEAEA;
+  box-shadow: 0 2px 8px rgba(103, 51, 145, 0.06);
+}
+
+.yono-logo-container {
+  display: flex;
+  align-items: center;
+  margin-right: 50px;
+  cursor: pointer;
+}
+
+.yono-logo-text {
+  font-size: 22px;
+  font-weight: 900;
+  color: #0088CC;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.yono-logo-badge {
+  color: var(--yono-purple);
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.yono-logo-sub {
+  font-size: 10px;
+  color: var(--yono-purple);
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-left: 2px;
+  display: block;
+}
+
+.yono-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.yono-nav-item {
+  color: #313131;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 8px 0;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+
+.yono-nav-item:hover {
+  color: var(--yono-purple);
+}
+
+/* Content Container */
+.yono-main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px 80px 20px;
+}
+
+.yono-breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--yono-purple);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  margin-bottom: 16px;
+  cursor: pointer;
+}
+
+.yono-breadcrumb:hover {
+  text-decoration: underline;
+}
+
+.yono-page-heading {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--yono-purple);
+  margin: 0 0 28px 0;
+}
+
+/* Form Card Component */
+.yono-card {
+  background-color: #FCFCFC;
+  border-radius: 16px;
+  border: 1px solid #ECECEC;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  display: flex;
+  min-height: 480px;
+  overflow: hidden;
+}
+
+/* Left Illustration Column */
+.yono-card-left {
+  flex: 1;
+  background-color: #FAF9FD;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  border-right: 1px solid #F0EEF5;
+}
+
+.yono-illustration {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+}
+
+/* Right Form Column */
+.yono-card-right {
+  flex: 1.2;
+  padding: 50px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.yono-section-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--yono-purple);
+  margin: 0 0 36px 0;
+}
+
+.yono-form-group {
+  margin-bottom: 32px;
+  position: relative;
+}
+
+.yono-field-label {
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+  color: #646464;
+  margin-bottom: 6px;
+}
+
+.yono-input-underlined {
+  width: 100%;
+  border: none;
+  border-bottom: 1.5px solid #AFAFAF;
+  background: transparent;
+  padding: 8px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #191919;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.yono-input-underlined:focus {
+  border-bottom-color: var(--yono-purple);
+  border-bottom-width: 2px;
+}
+
+.yono-helper-box {
+  background-color: #EEEFF8;
+  color: #4F4DA6;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 8px 12px;
+  margin-top: 4px;
+  border-radius: 4px;
+  display: block;
+}
+
+/* Captcha Block */
+.yono-captcha-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.yono-captcha-input-container {
+  flex: 1;
+}
+
+.yono-captcha-box-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.yono-captcha-img-box {
+  background-color: #FFFFFF;
+  border: 1.5px solid #DCDCDC;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: #2D1342;
+  user-select: none;
+  background-image: repeating-linear-gradient(45deg, #f5f5f5, #f5f5f5 10px, #ffffff 10px, #ffffff 20px);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);
+  min-width: 130px;
+  text-align: center;
+}
+
+.yono-icon-btn {
+  background: #FFFFFF;
+  border: 1px solid #DCDCDC;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--yono-purple);
+  transition: all 0.2s;
+}
+
+.yono-icon-btn:hover {
+  background-color: #F1F0F4;
+  border-color: var(--yono-purple);
+}
+
+/* Footer Action */
+.yono-action-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.yono-btn-proceed {
+  background-color: var(--yono-purple);
+  color: #FFFFFF;
+  border: none;
+  padding: 12px 36px;
+  border-radius: 40px;
+  font-size: 16px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(103, 51, 145, 0.2);
+}
+
+.yono-btn-proceed:hover:not(:disabled) {
+  background-color: var(--yono-purple-dark);
+  transform: translateY(-1px);
+}
+
+.yono-btn-proceed:disabled {
+  background-color: #E5E5F2;
+  color: #AFAFAF;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+@media (max-width: 900px) {
+  .yono-card {
+    flex-direction: column;
+  }
+  .yono-card-right {
+    padding: 30px 24px;
+  }
+  .yono-nav-links {
+    display: none;
+  }
+}
