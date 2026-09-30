@@ -7,7 +7,7 @@ from app.models.models import User
 from app.schemas.schemas import (
     LoginRequest, OTPVerifyRequest, TokenResponse,
     RefreshRequest, ChangePasswordRequest, MessageResponse, UserResponse,
-    RegistrationRequest, ActivationRequest,
+    RegistrationRequest, ActivationRequest, UserUpdate,
 )
 from app.services.auth_service import (
     authenticate_user, create_otp_session,
@@ -74,6 +74,30 @@ def change_pwd(
 
 @router.get("/me", response_model=UserResponse)
 def get_me(current_user: User = Depends(get_current_user)):
+    return current_user
+
+
+@router.patch("/me", response_model=UserResponse)
+def update_me(
+    data: UserUpdate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """Update current user profile information."""
+    if data.email is not None and data.email != current_user.email:
+        existing = db.query(User).filter(User.email == data.email, User.id != current_user.id).first()
+        if existing:
+            raise HTTPException(status_code=400, detail="Email is already in use by another account")
+        current_user.email = data.email
+    if data.phone is not None:
+        current_user.phone = data.phone
+    if data.full_name is not None:
+        current_user.full_name = data.full_name
+    if data.address is not None:
+        current_user.address = data.address
+
+    db.commit()
+    db.refresh(current_user)
     return current_user
 
 

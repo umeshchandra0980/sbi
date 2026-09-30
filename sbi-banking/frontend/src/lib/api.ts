@@ -291,6 +291,9 @@ export const authApi = {
 
   me: () => api.get('/auth/me'),
 
+  updateProfile: (data: { full_name?: string; email?: string; phone?: string; address?: string }) =>
+    api.patch('/auth/me', data),
+
   changePassword: (data: { current_password: string; new_password: string; confirm_password: string }) =>
     api.post('/auth/change-password', data),
 

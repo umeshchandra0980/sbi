@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { accountsApi, transactionsApi } from '@/lib/api'
-import { formatIndianCurrency, formatDate } from '@/lib/utils'
+import { formatIndianCurrency, formatDate, downloadTransactionStatement } from '@/lib/utils'
 import { Download, FileText, Eye } from 'lucide-react'
 import toast from 'react-hot-toast'
 
@@ -44,7 +44,13 @@ export default function StatementsPage() {
   const selectedAcc = accounts?.find((a: any) => a.id === selectedAccount)
 
   const handleDownload = () => {
-    toast.success(`Statement download initiated (${format.toUpperCase()})`)
+    if (txnData?.items?.length) {
+      const ok = downloadTransactionStatement(txnData.items, selectedAcc?.account_number || 'ACCOUNT', format)
+      if (ok) toast.success(`Statement file downloaded successfully (${format.toUpperCase()})`)
+      else toast.error('Failed to generate statement file')
+    } else {
+      toast.error('No transactions available in selected period to download')
+    }
   }
 
   const credits = txnData?.items?.filter((t: any) => t.type === 'credit').reduce((s: number, t: any) => s + parseFloat(t.amount), 0) || 0

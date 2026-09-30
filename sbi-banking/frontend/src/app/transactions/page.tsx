@@ -3,8 +3,9 @@ import { useState, useEffect, Suspense } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'next/navigation'
 import { accountsApi, transactionsApi } from '@/lib/api'
-import { formatIndianCurrency, formatDate } from '@/lib/utils'
+import { formatIndianCurrency, formatDate, downloadTransactionStatement } from '@/lib/utils'
 import { Search, Filter, Download, ChevronLeft, ChevronRight } from 'lucide-react'
+import toast from 'react-hot-toast'
 
 function TransactionsContent() {
   const searchParams = useSearchParams()
@@ -51,7 +52,18 @@ function TransactionsContent() {
     <div className="p-5 space-y-4">
       <div className="flex justify-between items-center">
         <h2 className="text-base font-bold text-gray-800">Transaction History</h2>
-        <button className="flex items-center gap-1.5 text-xs border border-sbi-blue text-sbi-blue px-3 py-1.5 rounded hover:bg-sbi-blue hover:text-white transition-colors">
+        <button
+          onClick={() => {
+            if (data?.items?.length) {
+              const ok = downloadTransactionStatement(data.items, selectedAcc?.account_number || 'ACCOUNT', 'csv')
+              if (ok) toast.success('Transaction history downloaded (CSV)')
+              else toast.error('Failed to download statement file')
+            } else {
+              toast.error('No transactions available to download')
+            }
+          }}
+          className="flex items-center gap-1.5 text-xs border border-sbi-blue text-sbi-blue px-3 py-1.5 rounded hover:bg-sbi-blue hover:text-white transition-colors"
+        >
           <Download size={12} /> Download Statement
         </button>
       </div>

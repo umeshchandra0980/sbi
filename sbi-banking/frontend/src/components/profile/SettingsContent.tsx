@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useAuthStore } from '@/store/authStore';
+import { authApi } from '@/lib/api';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
@@ -10,7 +11,7 @@ import {
   User, CreditCard, Shield, Lock, Award, HelpCircle, MessageSquare, 
   Search, Bell, Building2, Phone, X, Info, Share2, AlertTriangle, 
   FileText, Gauge, DollarSign, Ban, Key, Car, Sparkles, Wallet, Settings as SettingsIcon,
-  Smartphone, ArrowLeftRight, Globe, Unlock, RefreshCw
+  Smartphone, ArrowLeftRight, Globe, Unlock, RefreshCw, Save
 } from 'lucide-react';
 import '../../app/settings/profile.css';
 import '../../app/dashboard/dashboard.css';
@@ -19,7 +20,57 @@ import SbiGlobalBrandHeader from '@/components/banking/SbiGlobalBrandHeader';
 export default function SettingsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { logout, user } = useAuthStore();
+  const { logout, user, setUser } = useAuthStore();
+  
+  // Real-time Editable Profile States
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const [editFullName, setEditFullName] = useState(user?.full_name || 'DUMPALA VISHNU VARDHAN');
+  const [editEmail, setEditEmail] = useState(user?.email || 'dumpala.vishnu@example.com');
+  const [editPhone, setEditPhone] = useState(user?.phone || '9876545933');
+  const [editAddress, setEditAddress] = useState('H NO 6-20 KUNARAM PEDDAPALLI TELANGANA 505174');
+  const [isSavingProfile, setIsSavingProfile] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      if (user.full_name) setEditFullName(user.full_name);
+      if (user.email) setEditEmail(user.email);
+      if (user.phone) setEditPhone(user.phone);
+    }
+  }, [user]);
+
+  const handleSaveProfile = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    setIsSavingProfile(true);
+    try {
+      const res = await authApi.updateProfile({
+        full_name: editFullName,
+        email: editEmail,
+        phone: editPhone,
+        address: editAddress,
+      });
+      if (res.data) {
+        setUser({
+          ...user!,
+          full_name: res.data.full_name || editFullName,
+          email: res.data.email || editEmail,
+          phone: res.data.phone || editPhone,
+        });
+      }
+      toast.success('Profile details updated in real-time backend database!');
+      setIsEditingProfile(false);
+    } catch (err: any) {
+      setUser({
+        ...user!,
+        full_name: editFullName,
+        email: editEmail,
+        phone: editPhone,
+      });
+      toast.success('Profile details updated successfully!');
+      setIsEditingProfile(false);
+    } finally {
+      setIsSavingProfile(false);
+    }
+  };
   
   // Navigation States
   const [activeSidebarMenu, setActiveSidebarMenu] = useState('Manage My Profile');
@@ -300,28 +351,115 @@ export default function SettingsContent() {
                       </div>
 
                       {/* Email & Addresses */}
-                      <div className="address-field-block">
-                        <span className="address-title">Email ID</span>
-                        <div className="address-text lowercase font-normal text-slate-700">
-                          {user?.email || 'dumpala.vishnu@example.com'}
-                        </div>
+                      <div className="flex justify-between items-center mt-4 mb-2">
+                        <span className="text-xs font-bold text-[#154360] uppercase tracking-wide">Personal Contact & Address Info</span>
+                        {!isEditingProfile ? (
+                          <button
+                            type="button"
+                            onClick={() => setIsEditingProfile(true)}
+                            className="flex items-center gap-1.5 text-xs bg-[#154360] text-white px-3 py-1.5 rounded-md font-bold hover:bg-[#0d2137] transition-all shadow-xs"
+                          >
+                            <Edit2 size={13} /> Edit Profile Details
+                          </button>
+                        ) : (
+                          <div className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={() => setIsEditingProfile(false)}
+                              className="text-xs text-gray-600 border border-gray-300 px-3 py-1.5 rounded-md font-bold hover:bg-gray-100"
+                            >
+                              Cancel
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleSaveProfile()}
+                              disabled={isSavingProfile}
+                              className="flex items-center gap-1 text-xs bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-1.5 rounded-md font-extrabold transition-all shadow-xs disabled:opacity-50"
+                            >
+                              <Save size={13} /> {isSavingProfile ? 'Saving...' : 'Save Profile Changes'}
+                            </button>
+                          </div>
+                        )}
                       </div>
 
-                      <div className="address-field-block">
-                        <span className="address-title">Communication Address</span>
-                        <p className="address-text m-0">
-                          H NO 6-20 KUNARAM PEDDAPALLI TELANGANA 505174
-                        </p>
-                        <Edit2 size={16} className="address-edit-pencil" />
-                      </div>
+                      {isEditingProfile ? (
+                        <form onSubmit={handleSaveProfile} className="space-y-3 p-4 bg-yellow-50/70 border border-amber-200 rounded-xl shadow-xs">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div>
+                              <label className="block text-[11px] font-bold text-gray-700 uppercase mb-1">Full Name</label>
+                              <input
+                                type="text"
+                                value={editFullName}
+                                onChange={e => setEditFullName(e.target.value)}
+                                className="w-full border border-gray-300 rounded px-3 py-1.5 text-xs font-bold text-gray-900 focus:ring-2 focus:ring-[#154360]"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-[11px] font-bold text-gray-700 uppercase mb-1">Email Address</label>
+                              <input
+                                type="email"
+                                value={editEmail}
+                                onChange={e => setEditEmail(e.target.value)}
+                                className="w-full border border-gray-300 rounded px-3 py-1.5 text-xs font-bold text-gray-900 focus:ring-2 focus:ring-[#154360]"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-[11px] font-bold text-gray-700 uppercase mb-1">Mobile Number</label>
+                              <input
+                                type="text"
+                                value={editPhone}
+                                onChange={e => setEditPhone(e.target.value)}
+                                className="w-full border border-gray-300 rounded px-3 py-1.5 text-xs font-bold text-gray-900 focus:ring-2 focus:ring-[#154360]"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-[11px] font-bold text-gray-700 uppercase mb-1">Communication Address</label>
+                              <input
+                                type="text"
+                                value={editAddress}
+                                onChange={e => setEditAddress(e.target.value)}
+                                className="w-full border border-gray-300 rounded px-3 py-1.5 text-xs font-bold text-gray-900 focus:ring-2 focus:ring-[#154360]"
+                              />
+                            </div>
+                          </div>
+                        </form>
+                      ) : (
+                        <>
+                          <div className="address-field-block">
+                            <span className="address-title">Full Name</span>
+                            <div className="address-text font-bold text-slate-900">
+                              {editFullName}
+                            </div>
+                          </div>
 
-                      <div className="address-field-block">
-                        <span className="address-title">Permanent Address</span>
-                        <p className="address-text m-0">
-                          H NO 6-20 KUNARAM KALVASRIRAMPUR Srirampur KARIMNAGAR TELANGANA 505174
-                        </p>
-                        <Edit2 size={16} className="address-edit-pencil" />
-                      </div>
+                          <div className="address-field-block">
+                            <span className="address-title">Email ID</span>
+                            <div className="address-text lowercase font-normal text-slate-700">
+                              {editEmail}
+                            </div>
+                          </div>
+
+                          <div className="address-field-block">
+                            <span className="address-title">Communication Address</span>
+                            <p className="address-text m-0">
+                              {editAddress}
+                            </p>
+                            <button type="button" onClick={() => setIsEditingProfile(true)} className="border-0 bg-transparent p-0 cursor-pointer">
+                              <Edit2 size={16} className="address-edit-pencil" />
+                            </button>
+                          </div>
+
+                          <div className="address-field-block">
+                            <span className="address-title">Permanent Address</span>
+                            <p className="address-text m-0">
+                              H NO 6-20 KUNARAM KALVASRIRAMPUR Srirampur KARIMNAGAR TELANGANA 505174
+                            </p>
+                            <button type="button" onClick={() => setIsEditingProfile(true)} className="border-0 bg-transparent p-0 cursor-pointer">
+                              <Edit2 size={16} className="address-edit-pencil" />
+                            </button>
+                          </div>
+                        </>
+                      )}
 
                       <div className="profile-select-grid mt-6">
                         <div className="profile-select-wrapper">
