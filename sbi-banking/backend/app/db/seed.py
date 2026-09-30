@@ -231,7 +231,7 @@ def seed():
         db.add(savings2)
 
         db.commit()
-        print("✅ Seed complete!")
+        print("[OK] Seed complete!")
         print()
         print("=" * 50)
         print("Demo Credentials")

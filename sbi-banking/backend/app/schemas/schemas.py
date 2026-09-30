@@ -298,6 +298,29 @@ class PaginatedResponse(BaseModel):
     pages: int
 
 
+class UserDetailResponse(UserAdminResponse):
+    accounts: List["AccountResponse"] = []
+
+
+class RoleChangeRequest(BaseModel):
+    role: UserRole
+
+
+class AuditLogResponse(BaseModel):
+    id: str
+    user_id: Optional[str] = None
+    action: str
+    resource: Optional[str] = None
+    resource_id: Optional[str] = None
+    ip_address: Optional[str] = None
+    status: Optional[str] = None
+    details: Optional[str] = None
+    created_at: datetime
+    admin_username: Optional[str] = None
+
+    model_config = {"from_attributes": True}
+
+
 # ── Misc ──────────────────────────────────────────────────────
 class MessageResponse(BaseModel):
     message: str
