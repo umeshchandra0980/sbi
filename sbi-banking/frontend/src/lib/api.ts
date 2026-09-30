@@ -157,6 +157,7 @@ api.defaults.adapter = async (config) => {
           role: 'customer',
           status: 'active',
           is_verified: true,
+          failed_login_attempts: 0,
           created_at: new Date().toISOString()
         }
       ];
@@ -165,6 +166,54 @@ api.defaults.adapter = async (config) => {
         users: userList,
         total: 1
       };
+    } else if (url.includes('/admin/accounts')) {
+      const accList = [
+        {
+          id: 'mock-acc-1',
+          account_number: '12345678901',
+          account_type: 'savings',
+          status: 'active',
+          balance: 248750.00,
+          available_balance: 248750.00,
+          branch_name: 'MG Road Branch, Bengaluru',
+          ifsc_code: 'SBIN0000001',
+          owner_name: 'Bypassed Demo User',
+          owner_username: 'demo.bypass',
+          created_at: new Date().toISOString()
+        }
+      ];
+      responseData = { items: accList, total: 1 };
+    } else if (url.includes('/admin/transfers')) {
+      const trList = [
+        {
+          id: 'mock-tr-1',
+          transfer_ref: 'TRF12345678',
+          source_account_id: 'mock-acc-1',
+          beneficiary_name: 'Amit Kumar',
+          beneficiary_account: '98765432109',
+          beneficiary_ifsc: 'HDFC0001234',
+          amount: 15000.00,
+          transfer_mode: 'IMPS',
+          status: 'completed',
+          remarks: 'Vendor payment',
+          created_at: new Date().toISOString()
+        }
+      ];
+      responseData = { items: trList, total: 1 };
+    } else if (url.includes('/admin/audit-logs')) {
+      const logList = [
+        {
+          id: 'mock-log-1',
+          user_id: 'mock-user-id',
+          admin_username: 'admin',
+          action: 'login',
+          resource: 'user',
+          ip_address: '127.0.0.1',
+          details: 'Admin logged into portal',
+          created_at: new Date().toISOString()
+        }
+      ];
+      responseData = { items: logList, total: 1 };
     } else {
       responseData = {};
     }
@@ -288,8 +337,18 @@ export const transfersApi = {
 export const adminApi = {
   stats: () => api.get('/admin/stats'),
   listUsers: (params?: object) => api.get('/admin/users', { params }),
+  getUserDetail: (id: string) => api.get(`/admin/users/${id}`),
   createUser: (data: object) => api.post('/admin/users', data),
+  editUser: (id: string, data: object) => api.patch(`/admin/users/${id}`, data),
+  changeUserRole: (id: string, role: string) => api.patch(`/admin/users/${id}/role`, { role }),
+  resetUserPassword: (id: string) => api.post(`/admin/users/${id}/reset-password`),
   lockUser: (id: string) => api.patch(`/admin/users/${id}/lock`),
   unlockUser: (id: string) => api.patch(`/admin/users/${id}/unlock`),
+  suspendUser: (id: string) => api.patch(`/admin/users/${id}/suspend`),
+  listAccounts: (params?: object) => api.get('/admin/accounts', { params }),
+  freezeAccount: (id: string) => api.patch(`/admin/accounts/${id}/freeze`),
+  unfreezeAccount: (id: string) => api.patch(`/admin/accounts/${id}/unfreeze`),
   listTransactions: (params?: object) => api.get('/admin/transactions', { params }),
+  listTransfers: (params?: object) => api.get('/admin/transfers', { params }),
+  listAuditLogs: (params?: object) => api.get('/admin/audit-logs', { params }),
 }
