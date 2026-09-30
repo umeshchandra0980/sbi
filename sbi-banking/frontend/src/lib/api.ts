@@ -118,42 +118,51 @@ api.defaults.adapter = async (config) => {
     } else if (url.includes('/transfers')) {
       responseData = [];
     } else if (url.includes('/transactions')) {
+      const txList = [
+        {
+          id: 'mock-txn-1',
+          transaction_ref: 'SBIMOCK12345',
+          type: 'credit',
+          category: 'salary',
+          amount: 85000.00,
+          balance_after: 248750.00,
+          description: 'Mock Salary Credit',
+          value_date: new Date().toISOString(),
+        }
+      ];
       responseData = {
-        transactions: [
-          {
-            id: 'mock-txn-1',
-            transaction_ref: 'SBIMOCK12345',
-            type: 'credit',
-            category: 'salary',
-            amount: 85000.00,
-            balance_after: 248750.00,
-            description: 'Mock Salary Credit',
-            value_date: new Date().toISOString(),
-          }
-        ],
+        items: txList,
+        transactions: txList,
         total: 1
       };
     } else if (url.includes('/admin/stats')) {
       responseData = {
         total_users: 10,
         active_users: 8,
+        locked_users: 1,
+        total_accounts: 15,
         total_balance: 1540000.00,
+        total_transactions_today: 42,
+        total_transfers_today: 18,
+        pending_transfers: 2,
         pending_registrations: 2
       };
     } else if (url.includes('/admin/users')) {
+      const userList = [
+        {
+          id: 'mock-user-id',
+          username: 'demo.bypass',
+          email: 'demo.bypass@example.com',
+          full_name: 'Bypassed Demo User',
+          role: 'customer',
+          status: 'active',
+          is_verified: true,
+          created_at: new Date().toISOString()
+        }
+      ];
       responseData = {
-        users: [
-          {
-            id: 'mock-user-id',
-            username: 'demo.bypass',
-            email: 'demo.bypass@example.com',
-            full_name: 'Bypassed Demo User',
-            role: 'customer',
-            status: 'active',
-            is_verified: true,
-            created_at: new Date().toISOString()
-          }
-        ],
+        items: userList,
+        users: userList,
         total: 1
       };
     } else {
